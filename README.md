@@ -1,2 +1,3 @@
 # windsurf
  basico
+# italiano-pareto
