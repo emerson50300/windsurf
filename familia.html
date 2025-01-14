@@ -1,312 +1,275 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>La Familia - Italiano Básico</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>La Familia en Italiano</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1951834226818406"
+     crossorigin="anonymous"></script>
     <style>
-        .family-section {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .family-section h2 {
-            color: #4CAF50;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #4CAF50;
-        }
-
         .family-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
-            margin-bottom: 2rem;
+            padding: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .family-card {
-            background: #f8f9fa;
+            background: white;
             border-radius: 10px;
-            padding: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            transition: all 0.3s ease;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.2s;
         }
 
         .family-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+        }
+
+        .family-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
         }
 
         .italian-word {
             color: #4CAF50;
-            font-weight: 500;
-            font-size: 1.1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
         }
 
         .spanish-word {
             color: #666;
-            font-size: 0.9rem;
-        }
-
-        .audio-btn {
-            background: none;
-            border: none;
-            color: #4CAF50;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-        }
-
-        .audio-btn:hover {
-            background: rgba(76, 175, 80, 0.1);
-        }
-
-        .section-intro {
-            color: #666;
-            margin-bottom: 2rem;
             font-size: 1.1rem;
-            line-height: 1.6;
         }
 
-        .back-btn {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
+        .pronunciation {
+            color: #888;
+            font-style: italic;
+            margin: 0.5rem 0;
+        }
+
+        .audio-button {
             background: #4CAF50;
             color: white;
-            padding: 1rem;
-            border-radius: 50%;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background 0.2s;
         }
 
-        .back-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        .audio-button:hover {
+            background: #388E3C;
+        }
+
+        @media (max-width: 768px) {
+            .family-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                padding: 0.8rem;
+            }
+
+            .family-card {
+                padding: 1.2rem;
+            }
+
+            .family-icon {
+                font-size: 2rem;
+            }
+
+            .italian-word {
+                font-size: 1.3rem;
+            }
+
+            .spanish-word {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <nav>
-        <a href="index.html">Inicio</a>
-        <a href="alfabeto.html">Alfabeto</a>
-        <a href="numeros.html">Números</a>
-        <a href="hora.html">Hora</a>
-        <a href="familia.html" class="active">Familia</a>
-    </nav>
-
     <div class="container">
-        <h1>La Familia en Italiano</h1>
-        <p class="section-intro">
-            Aprende el vocabulario esencial para hablar sobre la familia en italiano. 
-            Cada palabra incluye su pronunciación. Haz clic en el ícono del altavoz para escuchar.
-        </p>
+        <!-- Anuncio Superior -->
+        <div class="ad-container ad-top">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1951834226818406"
+                 data-ad-slot="TUSLOT1"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
 
-        <div class="family-section">
-            <h2><i class="fas fa-home"></i> La Familia Original</h2>
-            <div id="original" class="family-grid">
+        <header>
+            <h1>La Familia en Italiano</h1>
+            <p>Aprende el vocabulario de la familia en italiano</p>
+        </header>
+
+        <div class="family-grid">
+            <div class="family-card">
+                <div class="family-icon">👨</div>
+                <div class="italian-word">Il padre</div>
+                <div class="spanish-word">El padre</div>
+                <div class="pronunciation">[il PA-dre]</div>
+                <button class="audio-button" onclick="speak('il padre')">🔊 Escuchar</button>
+            </div>
+
+            <div class="family-card">
+                <div class="family-icon">👩</div>
+                <div class="italian-word">La madre</div>
+                <div class="spanish-word">La madre</div>
+                <div class="pronunciation">[la MA-dre]</div>
+                <button class="audio-button" onclick="speak('la madre')">🔊 Escuchar</button>
+            </div>
+
+            <div class="family-card">
+                <div class="family-icon">👦</div>
+                <div class="italian-word">Il figlio</div>
+                <div class="spanish-word">El hijo</div>
+                <div class="pronunciation">[il FI-lyo]</div>
+                <button class="audio-button" onclick="speak('il figlio')">🔊 Escuchar</button>
+            </div>
+
+            <div class="family-card">
+                <div class="family-icon">👧</div>
+                <div class="italian-word">La figlia</div>
+                <div class="spanish-word">La hija</div>
+                <div class="pronunciation">[la FI-lya]</div>
+                <button class="audio-button" onclick="speak('la figlia')">🔊 Escuchar</button>
+            </div>
+
+            <div class="family-card">
+                <div class="family-icon">👴</div>
+                <div class="italian-word">Il nonno</div>
+                <div class="spanish-word">El abuelo</div>
+                <div class="pronunciation">[il NON-no]</div>
+                <button class="audio-button" onclick="speak('il nonno')">🔊 Escuchar</button>
+            </div>
+
+            <div class="family-card">
+                <div class="family-icon">👵</div>
+                <div class="italian-word">La nonna</div>
+                <div class="spanish-word">La abuela</div>
+                <div class="pronunciation">[la NON-na]</div>
+                <button class="audio-button" onclick="speak('la nonna')">🔊 Escuchar</button>
             </div>
         </div>
 
-        <div class="family-section">
-            <h2><i class="fas fa-ring"></i> La Familia Adquirida</h2>
-            <div id="adquirida" class="family-grid">
+        <!-- Anuncio Intermedio -->
+        <div class="ad-container ad-middle">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1951834226818406"
+                 data-ad-slot="TUSLOT2"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <div class="family-grid">
+            <div class="family-card">
+                <div class="family-icon">👨‍👩‍👧‍👦</div>
+                <div class="italian-word">La famiglia</div>
+                <div class="spanish-word">La familia</div>
+                <div class="pronunciation">[la fa-MI-lya]</div>
+                <button class="audio-button" onclick="speak('la famiglia')">🔊 Escuchar</button>
+            </div>
+
+            <div class="family-card">
+                <div class="family-icon">👫</div>
+                <div class="italian-word">I genitori</div>
+                <div class="spanish-word">Los padres</div>
+                <div class="pronunciation">[i je-ni-TO-ri]</div>
+                <button class="audio-button" onclick="speak('i genitori')">🔊 Escuchar</button>
+            </div>
+
+            <div class="family-card">
+                <div class="family-icon">👬</div>
+                <div class="italian-word">Il fratello</div>
+                <div class="spanish-word">El hermano</div>
+                <div class="pronunciation">[il fra-TE-lo]</div>
+                <button class="audio-button" onclick="speak('il fratello')">🔊 Escuchar</button>
+            </div>
+
+            <div class="family-card">
+                <div class="family-icon">👭</div>
+                <div class="italian-word">La sorella</div>
+                <div class="spanish-word">La hermana</div>
+                <div class="pronunciation">[la so-RE-la]</div>
+                <button class="audio-button" onclick="speak('la sorella')">🔊 Escuchar</button>
+            </div>
+
+            <div class="family-card">
+                <div class="family-icon">👨‍👩‍👦</div>
+                <div class="italian-word">I figli</div>
+                <div class="spanish-word">Los hijos</div>
+                <div class="pronunciation">[i FI-lyi]</div>
+                <button class="audio-button" onclick="speak('i figli')">🔊 Escuchar</button>
+            </div>
+
+            <div class="family-card">
+                <div class="family-icon">👨‍👩‍👧</div>
+                <div class="italian-word">Le figlie</div>
+                <div class="spanish-word">Las hijas</div>
+                <div class="pronunciation">[le FI-lye]</div>
+                <button class="audio-button" onclick="speak('le figlie')">🔊 Escuchar</button>
             </div>
         </div>
 
-        <div class="family-section">
-            <h2><i class="fas fa-user-friends"></i> Los Abuelos</h2>
-            <div id="abuelos" class="family-grid">
-            </div>
-        </div>
-
-        <div class="family-section">
-            <h2><i class="fas fa-child"></i> Los Nietos</h2>
-            <div id="nietos" class="family-grid">
-            </div>
-        </div>
-
-        <div class="family-section">
-            <h2><i class="fas fa-users"></i> Los Tíos y los Primos</h2>
-            <div id="tios_primos" class="family-grid">
-            </div>
-        </div>
-
-        <div class="family-section">
-            <h2><i class="fas fa-user-friends"></i> Los Sobrinos</h2>
-            <div id="sobrinos" class="family-grid">
-            </div>
-        </div>
-
-        <div class="family-section">
-            <h2><i class="fas fa-handshake"></i> La Familia Política</h2>
-            <div id="politica" class="family-grid">
-            </div>
-        </div>
-
-        <div class="family-section">
-            <h2><i class="fas fa-people-arrows"></i> La Familia Reconstruida</h2>
-            <div id="reconstruida" class="family-grid">
-            </div>
-        </div>
-
-        <div class="family-section">
-            <h2><i class="fas fa-baby"></i> Los Niños</h2>
-            <div id="ninos" class="family-grid">
-            </div>
-        </div>
-
-        <div class="family-section">
-            <h2><i class="fas fa-heart"></i> El Estado Civil</h2>
-            <div id="estado_civil" class="family-grid">
-            </div>
+        <!-- Anuncio Inferior -->
+        <div class="ad-container ad-bottom">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1951834226818406"
+                 data-ad-slot="TUSLOT3"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
         </div>
     </div>
 
-    <a href="index.html" class="back-btn" title="Volver al inicio">
-        <i class="fas fa-home"></i>
-    </a>
-
     <script>
+        const synth = window.speechSynthesis;
+        let voices = [];
+
+        function loadVoices() {
+            voices = synth.getVoices();
+        }
+
+        loadVoices();
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = loadVoices;
+        }
+
         function speak(text) {
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'it-IT';
-                utterance.rate = 0.8;
-                
-                const voices = speechSynthesis.getVoices();
-                const italianVoice = voices.find(voice => voice.lang.includes('it-IT'));
-                if (italianVoice) {
-                    utterance.voice = italianVoice;
-                }
-
-                window.speechSynthesis.speak(utterance);
+            if (synth.speaking) {
+                synth.cancel();
             }
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'it-IT';
+            utterance.rate = 0.9;
+            utterance.pitch = 1.0;
+            utterance.volume = 1.0;
+
+            const italianVoice = voices.find(voice => voice.lang.includes('it-IT'));
+            if (italianVoice) {
+                utterance.voice = italianVoice;
+            }
+
+            synth.speak(utterance);
         }
-
-        // Cargar las voces cuando estén disponibles
-        speechSynthesis.onvoiceschanged = () => {
-            const voices = speechSynthesis.getVoices();
-            console.log('Voces disponibles:', voices);
-        };
-
-        // Datos de la familia
-        const familyData = {
-            'original': {
-                'i genitori': 'los padres',
-                'la madre': 'la madre',
-                'il padre': 'el padre',
-                'i fratelli': 'los hermanos',
-                'la sorella': 'la hermana',
-                'il fratello': 'el hermano',
-                'la mamma': 'la mamá',
-                'il papà': 'el papá',
-                'il babbo': 'el papá',
-                'la moglie': 'la mujer',
-                'il marito': 'el marido'
-            },
-            'adquirida': {
-                'i coniugi': 'los esposos',
-                'la sposa': 'la esposa',
-                'lo sposo': 'el esposo',
-                'i figli': 'los hijos',
-                'la figlia': 'la hija',
-                'il figlio': 'el hijo',
-                'il padrino': 'el padrino',
-                'la madrina': 'la madrina'
-            },
-            'abuelos': {
-                'i nonni': 'los abuelos',
-                'la nonna': 'la abuela',
-                'il nonno': 'el abuelo',
-                'i bisnonni': 'los bisabuelos',
-                'la bisnonna': 'la bisabuela',
-                'il bisnonno': 'el bisabuelo'
-            },
-            'nietos': {
-                'il nipote': 'el nieto',
-                'la nipote': 'la nieta'
-            },
-            'tios_primos': {
-                'la zia': 'la tía',
-                'lo zio': 'el tío',
-                'la cugina': 'la prima',
-                'il cugino': 'el primo'
-            },
-            'sobrinos': {
-                'la nipote': 'la sobrina',
-                'il nipote': 'el sobrino'
-            },
-            'politica': {
-                'la suocera': 'la suegra',
-                'il suocero': 'el suegro',
-                'i suoceri': 'los suegros',
-                'la cognata': 'la cuñada',
-                'il cognato': 'el cuñado',
-                'la nuora': 'la nuera',
-                'il genero': 'el yerno'
-            },
-            'reconstruida': {
-                'la matrigna': 'la madrastra',
-                'il patrigno': 'el padrastro',
-                'la figliastra': 'la hijastra',
-                'il figliastro': 'el hijastro',
-                'il fratellastro': 'el hermanastro',
-                'la sorellastra': 'la hermanastra'
-            },
-            'ninos': {
-                'il bambino': 'el niño',
-                'il neonato': 'el bebé',
-                'la ragazza': 'la chica',
-                'il ragazzo': 'el chico',
-                'il gemello': 'el gemelo',
-                'la gemella': 'la gemela',
-                'il primogenito': 'el primogénito'
-            },
-            'estado_civil': {
-                'celibe': 'soltero',
-                'nubile': 'soltera',
-                'sposato': 'casado',
-                'sposata': 'casada',
-                'divorziato': 'divorciado',
-                'divorziata': 'divorciada',
-                'vedovo': 'viudo',
-                'vedova': 'viuda'
-            }
-        };
-
-        // Función para crear las tarjetas de familia
-        function createFamilyCards() {
-            for (let [category, words] of Object.entries(familyData)) {
-                const grid = document.querySelector(`#${category}`);
-                if (grid) {
-                    for (let [italian, spanish] of Object.entries(words)) {
-                        const card = document.createElement('div');
-                        card.className = 'family-card';
-                        card.innerHTML = `
-                            <button class="audio-btn" onclick="speak('${italian}')">
-                                <i class="fas fa-volume-up"></i>
-                            </button>
-                            <div>
-                                <div class="italian-word">${italian}</div>
-                                <div class="spanish-word">${spanish}</div>
-                            </div>
-                        `;
-                        grid.appendChild(card);
-                    }
-                }
-            }
-        }
-
-        // Llamar a la función cuando el documento esté cargado
-        document.addEventListener('DOMContentLoaded', createFamilyCards);
     </script>
 </body>
 </html>
