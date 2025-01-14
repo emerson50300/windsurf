@@ -129,6 +129,127 @@ section {
     color: #666;
 }
 
+.verb-list {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.verb-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.verb-grid div {
+    padding: 10px;
+    background-color: white;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.verb-grid div:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.verb-grid a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    padding: 10px;
+    background-color: white;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.verb-grid a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    color: #3498db;
+}
+
+/* Estilos para la página de conjugación de verbos */
+.verb-conjugation {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.verb-conjugation h1 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.verb-type {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    margin-bottom: 30px;
+}
+
+.conjugation-section {
+    margin-bottom: 40px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.conjugation-section h2 {
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.tense-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.tense-block {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.tense-block h3 {
+    color: #3498db;
+    margin-bottom: 15px;
+}
+
+.tense-block ul {
+    list-style: none;
+    padding: 0;
+}
+
+.tense-block li {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.other-forms {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.other-forms p {
+    margin: 10px 0;
+}
+
+.other-forms strong {
+    color: #3498db;
+}
+
 @media (max-width: 768px) {
     .container {
         padding: 1rem;
