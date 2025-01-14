@@ -12,21 +12,23 @@
             padding: 20px;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 10px;
+            gap: 15px;
         }
         .verb-button {
             background: white;
             border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 10px;
+            border-radius: 8px;
+            padding: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.2s;
+            font-size: 1rem;
         }
         .verb-button:hover {
             transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         .modal {
             display: none;
@@ -37,15 +39,18 @@
             height: 100%;
             background: rgba(0,0,0,0.5);
             z-index: 1000;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
         .modal-content {
             background: white;
-            margin: 5% auto;
+            margin: 20px auto;
             padding: 20px;
             width: 90%;
             max-width: 800px;
             border-radius: 8px;
             position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
         .close {
             position: absolute;
@@ -54,11 +59,16 @@
             font-size: 24px;
             cursor: pointer;
             color: #666;
+            padding: 5px;
+            line-height: 1;
         }
         .verb-title {
             color: #009688;
             font-size: 24px;
             margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         .verb-type {
             color: #666;
@@ -69,15 +79,17 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            background: white;
         }
         .conjugation-table th {
             background: #f5f5f5;
-            padding: 10px;
+            padding: 12px;
             text-align: left;
             color: #009688;
+            font-weight: 600;
         }
         .conjugation-table td {
-            padding: 10px;
+            padding: 12px;
             border-bottom: 1px solid #eee;
         }
         .audio-button {
@@ -87,25 +99,47 @@
             color: #009688;
             font-size: 1.2em;
             padding: 5px;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
         }
         .audio-button:hover {
-            color: #00796b;
-        }
-        .verb-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            background: rgba(0,150,136,0.1);
         }
         @media (max-width: 768px) {
+            .verbs-container {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 10px;
+                padding: 10px;
+            }
+            .verb-button {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
             .modal-content {
                 margin: 0;
                 width: 100%;
                 height: 100%;
                 border-radius: 0;
-                overflow-y: auto;
             }
             .conjugation-table {
                 font-size: 14px;
+            }
+            .conjugation-table th,
+            .conjugation-table td {
+                padding: 8px;
+            }
+            .verb-title {
+                font-size: 20px;
+            }
+            .audio-button {
+                width: 28px;
+                height: 28px;
+                font-size: 1em;
             }
         }
     </style>
@@ -162,8 +196,30 @@
                     }
                 }
             },
-            'abbassare': {
-                meaning: 'bajar',
+            'abbandonare': { 
+                meaning: 'abandonar', 
+                type: 'regulare',
+                conjugations: {
+                    presente: {
+                        'io': 'abbandono',
+                        'tu': 'abbandoni',
+                        'lui/lei': 'abbandona',
+                        'noi': 'abbandoniamo',
+                        'voi': 'abbandonate',
+                        'loro': 'abbandonano'
+                    },
+                    'passato prossimo': {
+                        'io': 'ho abbandonato',
+                        'tu': 'hai abbandonato',
+                        'lui/lei': 'ha abbandonato',
+                        'noi': 'abbiamo abbandonato',
+                        'voi': 'avete abbandonato',
+                        'loro': 'hanno abbandonato'
+                    }
+                }
+            },
+            'abbassare': { 
+                meaning: 'bajar', 
                 type: 'regulare',
                 conjugations: {
                     presente: {
@@ -183,22 +239,120 @@
                         'loro': 'hanno abbassato'
                     }
                 }
-            }
-            // Agregar más verbos aquí
+            },
+            'abbattere': { meaning: 'derribar', type: 'regulare' },
+            'abbinare': { meaning: 'combinar', type: 'regulare' },
+            'abbondare': { meaning: 'abundar', type: 'regulare' },
+            'abbottonare': { meaning: 'abotonar', type: 'regulare' },
+            'abbracciare': { meaning: 'abrazar', type: 'regulare' },
+            'abitare': { meaning: 'habitar', type: 'regulare' },
+            'abituarsi': { meaning: 'acostumbrarse', type: 'regulare' },
+            'accadere': { meaning: 'suceder', type: 'irregolare' },
+            'accarezzare': { meaning: 'acariciar', type: 'regulare' },
+            'accendere': { meaning: 'encender', type: 'irregolare' },
+            'accettare': { meaning: 'aceptar', type: 'regulare' },
+            'accompagnare': { meaning: 'acompañar', type: 'regulare' },
+            'accorciare': { meaning: 'acortar', type: 'regulare' },
+            'accorgersi': { meaning: 'darse cuenta', type: 'irregolare' },
+            'accostare': { meaning: 'acercar', type: 'regulare' },
+            'accusare': { meaning: 'acusar', type: 'regulare' },
+            'acquistare': { meaning: 'comprar', type: 'regulare' },
+            'adattarsi': { meaning: 'adaptarse', type: 'regulare' },
+            'addolcire': { meaning: 'endulzar', type: 'regulare' },
+            'addormentarsi': { meaning: 'dormirse', type: 'regulare' },
+            'adorare': { meaning: 'adorar', type: 'regulare' },
+            'affacciarsi': { meaning: 'asomarse', type: 'regulare' },
+            'affermare': { meaning: 'afirmar', type: 'regulare' },
+            'afferrare': { meaning: 'agarrar', type: 'regulare' },
+            'affettare': { meaning: 'cortar en rodajas', type: 'regulare' },
+            'affittare': { meaning: 'alquilar', type: 'regulare' },
+            'affondare': { meaning: 'hundir', type: 'regulare' },
+            'aggiungere': { meaning: 'añadir', type: 'irregolare' },
+            'aggiustare': { meaning: 'arreglar', type: 'regulare' },
+            'aggrapparsi': { meaning: 'agarrarse', type: 'regulare' },
+            'aggredire': { meaning: 'agredir', type: 'irregolare' },
+            'agire': { meaning: 'actuar', type: 'irregolare' },
+            'aiutare': { meaning: 'ayudar', type: 'regulare' },
+            'allacciare': { meaning: 'atar', type: 'regulare' },
+            'allenarsi': { meaning: 'entrenarse', type: 'regulare' },
+            'allontanarsi': { meaning: 'alejarse', type: 'regulare' },
+            'allungare': { meaning: 'alargar', type: 'regulare' },
+            'alzare': { meaning: 'levantar', type: 'regulare' },
+            'alzarsi': { meaning: 'levantarse', type: 'regulare' },
+            'amare': { meaning: 'amar', type: 'regulare' },
+            'ambientare': { meaning: 'ambientar', type: 'regulare' },
+            'ammazzare': { meaning: 'matar', type: 'regulare' },
+            'ammirare': { meaning: 'admirar', type: 'regulare' },
+            'andare': { meaning: 'ir', type: 'irregolare' },
+            'annoiarsi': { meaning: 'aburrirse', type: 'regulare' },
+            'anticipare': { meaning: 'anticipar', type: 'regulare' },
+            'appartenere': { meaning: 'pertenecer', type: 'irregolare' },
+            'aprire': { meaning: 'abrir', type: 'irregolare' },
+            'arrabbiarsi': { meaning: 'enfadarse', type: 'regulare' },
+            'arrangiarsi': { meaning: 'arreglárselas', type: 'regulare' },
+            'arrestare': { meaning: 'arrestar', type: 'regulare' },
+            'arrivare': { meaning: 'llegar', type: 'regulare' },
+            'arrotolare': { meaning: 'enrollar', type: 'regulare' },
+            'arrugginirsi': { meaning: 'oxidarse', type: 'regulare' },
+            'asciugare': { meaning: 'secar', type: 'regulare' },
+            'ascoltare': { meaning: 'escuchar', type: 'regulare' },
+            'aspettare': { meaning: 'esperar', type: 'regulare' },
+            'assaggiare': { meaning: 'probar', type: 'regulare' },
+            'assassinare': { meaning: 'asesinar', type: 'regulare' },
+            'assicurare': { meaning: 'asegurar', type: 'regulare' },
+            'assistere': { meaning: 'asistir', type: 'irregolare' },
+            'associare': { meaning: 'asociar', type: 'regulare' },
+            'assolvere': { meaning: 'absolver', type: 'irregolare' },
+            'assomigliare': { meaning: 'parecerse', type: 'regulare' },
+            'attaccare': { meaning: 'atacar', type: 'regulare' },
+            'attirare': { meaning: 'atraer', type: 'regulare' },
+            'attrarre': { meaning: 'atraer', type: 'irregolare' },
+            'attrezzare': { meaning: 'equipar', type: 'regulare' },
+            'aumentare': { meaning: 'aumentar', type: 'regulare' },
+            'avallare': { meaning: 'avalar', type: 'regulare' },
+            'avere': { meaning: 'tener', type: 'irregolare' },
+            'avvertire': { meaning: 'advertir', type: 'irregolare' },
+            'avvicinarsi': { meaning: 'acercarse', type: 'regulare' },
+            'avvisare': { meaning: 'avisar', type: 'regulare' },
+            'avvitare': { meaning: 'atornillar', type: 'regulare' },
+            'avvolgere': { meaning: 'envolver', type: 'irregolare' }
         };
 
         function playAudio(text) {
-            const utterance = encodeURIComponent(text);
-            const audio = new Audio(`https://translate.google.com/translate_tts?ie=UTF-8&tl=it&client=tw-ob&q=${utterance}`);
-            audio.play().catch(error => {
-                console.log('Error playing audio:', error);
-            });
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'it-IT';
+            utterance.rate = 1.0; // Velocidad normal
+            utterance.pitch = 1.0; // Tono normal
+            utterance.volume = 1.0; // Volumen máximo
+            window.speechSynthesis.speak(utterance);
         }
 
         function showVerb(verb) {
             const verbInfo = verbs[verb];
             const modal = document.getElementById('verbModal');
             const content = document.getElementById('modalContent');
+
+            // Conjugaciones por defecto si no están definidas
+            const defaultConjugations = {
+                presente: {
+                    'io': '(conjugación pendiente)',
+                    'tu': '(conjugación pendiente)',
+                    'lui/lei': '(conjugación pendiente)',
+                    'noi': '(conjugación pendiente)',
+                    'voi': '(conjugación pendiente)',
+                    'loro': '(conjugación pendiente)'
+                },
+                'passato prossimo': {
+                    'io': '(conjugación pendiente)',
+                    'tu': '(conjugación pendiente)',
+                    'lui/lei': '(conjugación pendiente)',
+                    'noi': '(conjugación pendiente)',
+                    'voi': '(conjugación pendiente)',
+                    'loro': '(conjugación pendiente)'
+                }
+            };
+
+            const conjugations = verbInfo.conjugations || defaultConjugations;
 
             content.innerHTML = `
                 <div class="verb-header">
@@ -214,12 +368,16 @@
                         <th>Passato Prossimo</th>
                         <th>Audio</th>
                     </tr>
-                    ${Object.keys(verbInfo.conjugations.presente).map(pronoun => `
+                    ${Object.keys(conjugations.presente).map(pronoun => `
                         <tr>
-                            <td>${pronoun} ${verbInfo.conjugations.presente[pronoun]}</td>
-                            <td><button onclick="playAudio('${pronoun} ${verbInfo.conjugations.presente[pronoun]}')" class="audio-button">🔊</button></td>
-                            <td>${pronoun} ${verbInfo.conjugations['passato prossimo'][pronoun]}</td>
-                            <td><button onclick="playAudio('${pronoun} ${verbInfo.conjugations['passato prossimo'][pronoun]}')" class="audio-button">🔊</button></td>
+                            <td>${pronoun} ${conjugations.presente[pronoun]}</td>
+                            <td>${conjugations.presente[pronoun] !== '(conjugación pendiente)' ? 
+                                `<button onclick="playAudio('${pronoun} ${conjugations.presente[pronoun]}')" class="audio-button">🔊</button>` : 
+                                ''}</td>
+                            <td>${pronoun} ${conjugations['passato prossimo'][pronoun]}</td>
+                            <td>${conjugations['passato prossimo'][pronoun] !== '(conjugación pendiente)' ? 
+                                `<button onclick="playAudio('${pronoun} ${conjugations['passato prossimo'][pronoun]}')" class="audio-button">🔊</button>` : 
+                                ''}</td>
                         </tr>
                     `).join('')}
                 </table>
