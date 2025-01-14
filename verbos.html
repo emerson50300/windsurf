@@ -6,16 +6,16 @@
     <title>Verbos Italianos</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        .verb-grid {
+        .verbs-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             gap: 10px;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
         }
         .verb-button {
-            background-color: #fff;
+            background: white;
             border: 1px solid #ddd;
             border-radius: 4px;
             padding: 10px;
@@ -23,10 +23,9 @@
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: transform 0.2s;
         }
         .verb-button:hover {
-            background-color: #f8f9fa;
             transform: translateY(-2px);
         }
         .modal {
@@ -36,11 +35,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.5);
             z-index: 1000;
         }
         .modal-content {
-            background-color: white;
+            background: white;
             margin: 5% auto;
             padding: 20px;
             width: 90%;
@@ -50,34 +49,29 @@
         }
         .close {
             position: absolute;
-            right: 20px;
+            right: 15px;
             top: 10px;
             font-size: 24px;
             cursor: pointer;
+            color: #666;
         }
         .verb-title {
             color: #009688;
             font-size: 24px;
             margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
-        .verb-meaning {
-            font-style: italic;
+        .verb-type {
             color: #666;
+            font-style: italic;
             margin-bottom: 20px;
-        }
-        .conjugation-section {
-            margin-top: 20px;
         }
         .conjugation-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
+            margin-top: 20px;
         }
         .conjugation-table th {
-            background-color: #f8f9fa;
+            background: #f5f5f5;
             padding: 10px;
             text-align: left;
             color: #009688;
@@ -97,18 +91,21 @@
         .audio-button:hover {
             color: #00796b;
         }
+        .verb-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
         @media (max-width: 768px) {
             .modal-content {
                 margin: 0;
                 width: 100%;
                 height: 100%;
                 border-radius: 0;
+                overflow-y: auto;
             }
             .conjugation-table {
                 font-size: 14px;
-            }
-            .verb-title {
-                font-size: 20px;
             }
         }
     </style>
@@ -132,17 +129,63 @@
         <p>Aprende los verbos más importantes del italiano</p>
     </div>
 
-    <div class="verb-grid" id="verbGrid"></div>
+    <div class="verbs-container" id="verbsContainer"></div>
 
     <div class="modal" id="verbModal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
+            <span class="close">&times;</span>
             <div id="modalContent"></div>
         </div>
     </div>
 
     <script>
-        const verbs = ['abbaiare', 'abbandonare', 'abbassare', 'abbattere', 'abbinare', 'abbondare', 'abbottonare', 'abbracciare', 'abitare', 'abituarsi', 'accadere', 'accarezzare', 'accendere', 'accettare', 'accompagnare', 'accorciare', 'accorgersi', 'accostare', 'accusare', 'acquistare', 'adattarsi', 'addolcire', 'addormentarsi', 'adorare', 'affacciarsi', 'affermare', 'afferrare', 'affettare', 'affittare', 'affondare', 'aggiungere', 'aggiustare', 'aggrapparsi', 'aggredire', 'agire', 'aiutare', 'allacciare', 'allenarsi', 'allontanarsi', 'allungare', 'alzare', 'alzarsi', 'amare', 'ambientare', 'ammazzare', 'ammirare', 'andare', 'annoiarsi', 'anticipare', 'appartenere', 'aprire', 'arrabbiarsi', 'arrangiarsi', 'arrestare', 'arrivare', 'arrotolare', 'arrugginirsi', 'asciugare', 'ascoltare', 'aspettare', 'assaggiare', 'assassinare', 'assicurare', 'assistere', 'associare', 'assolvere', 'assomigliare', 'attaccare', 'attirare', 'attrarre', 'attrezzare', 'aumentare', 'avallare', 'avere', 'avvertire', 'avvicinarsi', 'avvisare', 'avvitare', 'avvolgere'];
+        const verbs = {
+            'abbaiare': {
+                meaning: 'ladrar',
+                type: 'irregolare',
+                conjugations: {
+                    presente: {
+                        'io': 'abbaio',
+                        'tu': 'abbai',
+                        'lui/lei': 'abbaia',
+                        'noi': 'abbaiamo',
+                        'voi': 'abbaiate',
+                        'loro': 'abbaiano'
+                    },
+                    'passato prossimo': {
+                        'io': 'ho abbaiato',
+                        'tu': 'hai abbaiato',
+                        'lui/lei': 'ha abbaiato',
+                        'noi': 'abbiamo abbaiato',
+                        'voi': 'avete abbaiato',
+                        'loro': 'hanno abbaiato'
+                    }
+                }
+            },
+            'abbassare': {
+                meaning: 'bajar',
+                type: 'regulare',
+                conjugations: {
+                    presente: {
+                        'io': 'abbasso',
+                        'tu': 'abbassi',
+                        'lui/lei': 'abbassa',
+                        'noi': 'abbassiamo',
+                        'voi': 'abbassate',
+                        'loro': 'abbassano'
+                    },
+                    'passato prossimo': {
+                        'io': 'ho abbassato',
+                        'tu': 'hai abbassato',
+                        'lui/lei': 'ha abbassato',
+                        'noi': 'abbiamo abbassato',
+                        'voi': 'avete abbassato',
+                        'loro': 'hanno abbassato'
+                    }
+                }
+            }
+            // Agregar más verbos aquí
+        };
 
         function playAudio(text) {
             const utterance = encodeURIComponent(text);
@@ -153,75 +196,41 @@
         }
 
         function showVerb(verb) {
+            const verbInfo = verbs[verb];
             const modal = document.getElementById('verbModal');
             const content = document.getElementById('modalContent');
-            
-            const conjugations = {
-                abbaiare: {
-                    meaning: 'ladrar',
-                    type: 'irregolare',
-                    presente: {
-                        'io': 'abbaio',
-                        'tu': 'abbai',
-                        'lui/lei': 'abbaia',
-                        'noi': 'abbaiamo',
-                        'voi': 'abbaiate',
-                        'loro': 'abbaiano'
-                    },
-                    passato: {
-                        'io': 'ho abbaiato',
-                        'tu': 'hai abbaiato',
-                        'lui/lei': 'ha abbaiato',
-                        'noi': 'abbiamo abbaiato',
-                        'voi': 'avete abbaiato',
-                        'loro': 'hanno abbaiato'
-                    }
-                }
-                // Agregar más verbos aquí
-            };
-
-            const verbInfo = conjugations[verb] || {
-                meaning: '(significado pendiente)',
-                type: 'regulare',
-                presente: {},
-                passato: {}
-            };
 
             content.innerHTML = `
-                <div class="verb-title">
-                    ${verb.toUpperCase()} [${verbInfo.meaning}]
+                <div class="verb-header">
+                    <h2 class="verb-title">${verb.toUpperCase()} [${verbInfo.meaning}]</h2>
                     <button onclick="playAudio('${verb}')" class="audio-button">🔊</button>
                 </div>
-                <div class="verb-meaning">
-                    Verbo ${verbInfo.type}
-                </div>
-                <div class="conjugation-section">
-                    <h3>INDICATIVO</h3>
-                    <table class="conjugation-table">
+                <div class="verb-type">Verbo ${verbInfo.type}</div>
+                <h3>INDICATIVO</h3>
+                <table class="conjugation-table">
+                    <tr>
+                        <th>Presente</th>
+                        <th>Audio</th>
+                        <th>Passato Prossimo</th>
+                        <th>Audio</th>
+                    </tr>
+                    ${Object.keys(verbInfo.conjugations.presente).map(pronoun => `
                         <tr>
-                            <th>Presente</th>
-                            <th>Audio</th>
-                            <th>Passato Prossimo</th>
-                            <th>Audio</th>
+                            <td>${pronoun} ${verbInfo.conjugations.presente[pronoun]}</td>
+                            <td><button onclick="playAudio('${pronoun} ${verbInfo.conjugations.presente[pronoun]}')" class="audio-button">🔊</button></td>
+                            <td>${pronoun} ${verbInfo.conjugations['passato prossimo'][pronoun]}</td>
+                            <td><button onclick="playAudio('${pronoun} ${verbInfo.conjugations['passato prossimo'][pronoun]}')" class="audio-button">🔊</button></td>
                         </tr>
-                        ${Object.entries(verbInfo.presente).map(([pronoun, form]) => `
-                            <tr>
-                                <td>${pronoun} ${form}</td>
-                                <td><button onclick="playAudio('${pronoun} ${form}')" class="audio-button">🔊</button></td>
-                                <td>${pronoun} ${verbInfo.passato[pronoun]}</td>
-                                <td><button onclick="playAudio('${pronoun} ${verbInfo.passato[pronoun]}')" class="audio-button">🔊</button></td>
-                            </tr>
-                        `).join('')}
-                    </table>
-                </div>
+                    `).join('')}
+                </table>
             `;
-            
+
             modal.style.display = 'block';
         }
 
-        function closeModal() {
-            const modal = document.getElementById('verbModal');
-            modal.style.display = 'none';
+        // Cerrar modal
+        document.querySelector('.close').onclick = function() {
+            document.getElementById('verbModal').style.display = 'none';
         }
 
         // Cerrar modal cuando se hace clic fuera
@@ -232,9 +241,9 @@
             }
         }
 
-        // Crear grid de verbos
-        const grid = document.getElementById('verbGrid');
-        verbs.forEach(verb => {
+        // Crear botones de verbos
+        const container = document.getElementById('verbsContainer');
+        Object.keys(verbs).forEach(verb => {
             const button = document.createElement('div');
             button.className = 'verb-button';
             button.innerHTML = `
@@ -242,7 +251,7 @@
                 <button onclick="event.stopPropagation(); playAudio('${verb}')" class="audio-button">🔊</button>
             `;
             button.onclick = () => showVerb(verb);
-            grid.appendChild(button);
+            container.appendChild(button);
         });
     </script>
 </body>
