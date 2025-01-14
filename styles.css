@@ -1,318 +1,108 @@
 :root {
-    --primary: #008C45;
-    --secondary: #CD212A;
-    --background: #F4F5F0;
+    --primary: #4CAF50;
+    --primary-dark: #388E3C;
+    --primary-light: #C8E6C9;
+    --accent: #FF5722;
+    --text-primary: #212121;
+    --text-secondary: #757575;
+    --divider: #BDBDBD;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
 }
 
 body {
-    font-family: system-ui, -apple-system, sans-serif;
-    background-color: var(--background);
-    min-height: 100vh;
+    background-color: #f5f5f5;
+    color: var(--text-primary);
+    line-height: 1.6;
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 2rem 1rem;
-}
-
-nav {
-    background-color: white;
-    padding: 1rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin-bottom: 2rem;
-}
-
-nav a {
-    color: #333;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    margin: 0 0.5rem;
-    border-radius: 4px;
-    transition: all 0.2s;
-}
-
-nav a:hover {
-    background-color: var(--primary);
-    color: white;
-}
-
-nav a.active {
-    background-color: var(--primary);
-    color: white;
-}
-
-header {
-    text-align: center;
-    margin-bottom: 3rem;
-}
-
-h1 {
-    color: var(--primary);
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-}
-
-h2 {
-    color: var(--primary);
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-}
-
-.content {
-    background: white;
     padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 1rem 0;
-}
-
-th, td {
-    padding: 1rem;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #f5f5f5;
-    font-weight: bold;
-    color: var(--primary);
-}
-
-tr:hover {
-    background-color: #f9f9f9;
-}
-
-.play-button, .audio-btn {
-    background-color: var(--primary);
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    transition: all 0.2s;
-}
-
-.play-button:hover, .audio-btn:hover {
-    background-color: #006634;
-    transform: translateY(-2px);
-}
-
-.play-button i, .audio-btn i {
-    font-size: 1.2rem;
-}
-
-section {
-    margin-bottom: 3rem;
-}
-
-.tip {
-    background-color: #f5f5f5;
-    padding: 1rem;
-    border-radius: 4px;
-    margin: 1rem 0;
-    color: #666;
-}
-
-.verb-list {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.verb-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 10px;
-    background-color: #f5f5f5;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.verb-grid div {
-    padding: 10px;
-    background-color: white;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-}
-
-.verb-grid div:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.verb-grid a {
-    text-decoration: none;
-    color: #333;
-    display: block;
-    padding: 10px;
-    background-color: white;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-}
-
-.verb-grid a:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    color: #3498db;
-}
-
-/* Estilos para la página de conjugación de verbos */
-.verb-conjugation {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.verb-conjugation h1 {
-    color: #2c3e50;
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-.verb-type {
-    text-align: center;
-    color: #666;
-    font-style: italic;
-    margin-bottom: 30px;
-}
-
-.conjugation-section {
-    margin-bottom: 40px;
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.conjugation-section h2 {
-    color: #2c3e50;
-    border-bottom: 2px solid #3498db;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-}
-
-.tense-grid {
+.grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+    gap: 2rem;
+    padding: 1rem;
 }
 
-.tense-block {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+.card {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    min-height: 300px;
 }
 
-.tense-block h3 {
-    color: #3498db;
-    margin-bottom: 15px;
+.card:hover {
+    transform: translateY(-5px);
 }
 
-.tense-block ul {
-    list-style: none;
-    padding: 0;
+.card-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 1rem;
+    color: var(--primary);
 }
 
-.tense-block li {
-    padding: 8px 0;
-    border-bottom: 1px solid #eee;
-}
-
-.other-forms {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-}
-
-.other-forms p {
-    margin: 10px 0;
-}
-
-.other-forms strong {
-    color: #3498db;
-}
-
-/* Estilos para la página de verbos */
-.verb-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 10px;
-    padding: 20px;
-}
-
-.verb-button {
-    padding: 10px 15px;
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: lowercase;
-    font-size: 0.9rem;
-}
-
-.verb-button:hover {
-    background-color: #3498db;
+.explore-button {
+    background: var(--primary);
     color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: auto;
+    width: 100%;
+}
+
+.explore-button:hover {
+    background: var(--primary-dark);
     transform: translateY(-2px);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.conjugation-block {
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+/* Contenedores de anuncios */
+.ad-container {
+    width: 100%;
+    max-width: 970px;
+    margin: 2rem auto;
+    text-align: center;
+    min-height: 90px;
+    background: #f5f5f5;
+    border-radius: 10px;
+    padding: 1rem;
+    overflow: hidden;
 }
 
-.conjugation-block h4 {
-    color: #3498db;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #3498db;
-    padding-bottom: 5px;
+.ad-top {
+    margin-top: 0;
 }
 
-.conjugation-block ul {
-    list-style: none;
-    padding: 0;
+.ad-middle {
+    margin: 3rem auto;
 }
 
-.conjugation-block li {
-    padding: 8px 0;
-    border-bottom: 1px solid #dee2e6;
-}
-
-.verb-type {
-    color: #666;
-    font-style: italic;
-    margin-bottom: 20px;
-}
-
-#conjugationSection {
-    margin-top: 40px;
-    padding: 20px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+.ad-bottom {
+    margin-bottom: 0;
 }
 
 @media (max-width: 768px) {
@@ -320,89 +110,58 @@ section {
         padding: 1rem;
     }
 
-    h1 {
-        font-size: 2rem;
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
     }
 
-    h2 {
-        font-size: 1.5rem;
+    .card {
+        padding: 1.5rem;
+        min-height: auto;
     }
 
-    table {
+    .card h2 {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+    }
+
+    .card p {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+
+    .explore-button {
+        padding: 0.6rem 1.5rem;
         font-size: 0.9rem;
     }
 
-    th, td {
-        padding: 0.75rem;
+    .ad-container {
+        margin: 1.5rem auto;
+        min-height: 60px;
+        padding: 0.5rem;
+    }
+
+    .ad-middle {
+        margin: 2rem auto;
     }
 }
 
-/* Estilos específicos para el chat */
-.chat-container {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    overflow: hidden;
-}
+@media (max-width: 480px) {
+    .grid {
+        padding: 0.5rem;
+    }
 
-.chat-messages {
-    height: 400px;
-    overflow-y: auto;
-    padding: 1rem;
-}
+    .card {
+        padding: 1rem;
+        border-radius: 10px;
+    }
 
-.message {
-    margin-bottom: 1rem;
-    padding: 1rem;
-    border-radius: 8px;
-}
+    .explore-button {
+        padding: 0.5rem 1.2rem;
+    }
 
-.user-message {
-    background: #e3f2fd;
-    margin-left: auto;
-    max-width: 80%;
-}
-
-.bot-message {
-    background: #f5f5f5;
-    margin-right: auto;
-    max-width: 80%;
-}
-
-.chat-input {
-    display: flex;
-    padding: 1rem;
-    background: #f5f5f5;
-    gap: 0.5rem;
-}
-
-.chat-input input {
-    flex: 1;
-    padding: 0.5rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-.chat-input button {
-    background: var(--primary);
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.suggestion-btn {
-    background: white;
-    border: 1px solid var(--primary);
-    color: var(--primary);
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.suggestion-btn:hover {
-    background: var(--primary);
-    color: white;
+    .ad-container {
+        margin: 1rem auto;
+        min-height: 50px;
+    }
 }
