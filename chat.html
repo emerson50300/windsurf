@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Chat Italiano</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1951834226818406"
+     crossorigin="anonymous"></script>
     <style>
         * {
             margin: 0;
@@ -57,6 +59,13 @@
             margin-right: auto;
         }
 
+        .translation {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
         .input-container {
             display: flex;
             gap: 1rem;
@@ -96,6 +105,7 @@
             cursor: pointer;
             padding: 0.2rem;
             font-size: 1.2rem;
+            margin-left: 0.5rem;
         }
 
         .suggestions {
@@ -167,10 +177,29 @@
                 font-size: 0.9rem;
             }
         }
+
+        .ad-container {
+            width: 100%;
+            margin: 1rem 0;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <div class="chat-container">
+        <!-- Anuncio Superior -->
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1951834226818406"
+                 data-ad-slot="TUSLOT1"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
         <div class="suggestions">
             <div class="suggestion">¿Cómo se dice "hola"?</div>
             <div class="suggestion">¿Cómo se conjuga "essere"?</div>
@@ -185,9 +214,24 @@
             <input type="text" id="userInput" placeholder="Escribe tu pregunta...">
             <button onclick="sendMessage()">Enviar</button>
         </div>
+
+        <!-- Anuncio Inferior -->
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1951834226818406"
+                 data-ad-slot="TUSLOT2"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
     </div>
 
     <script>
+        const TRANSLATE_API_KEY = 'AIzaSyCEIicKmkzZQ7kOy0yBSVt4Dc3s80GwKYw';
+        const GEMINI_API_KEY = 'AIzaSyCEIicKmkzZQ7kOy0yBSVt4Dc3s80GwKYw';
         const synth = window.speechSynthesis;
         let voices = [];
 
@@ -207,7 +251,7 @@
 
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = 'it-IT';
-            utterance.rate = 0.9; // Velocidad un poco más lenta que normal
+            utterance.rate = 0.9;
             utterance.pitch = 1.0;
             utterance.volume = 1.0;
 
@@ -219,40 +263,155 @@
             synth.speak(utterance);
         }
 
-        function addMessage(text, isUser) {
-            const messages = document.getElementById('messages');
+        async function translateText(text, targetLang) {
+            const url = `https://translation.googleapis.com/language/translate/v2?key=${TRANSLATE_API_KEY}`;
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        q: text,
+                        target: targetLang
+                    })
+                });
+
+                const data = await response.json();
+                if (data.data && data.data.translations) {
+                    return data.data.translations[0].translatedText;
+                }
+                return null;
+            } catch (error) {
+                console.error('Error en la traducción:', error);
+                return null;
+            }
+        }
+
+        async function getGeminiResponse(prompt) {
+            const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
+            
+            try {
+                const response = await fetch(`${url}?key=${GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: `Actúa como un profesor de italiano amigable y paciente. Responde en italiano y mantén las respuestas cortas y fáciles de entender. Si la pregunta es en español, responde en italiano. Pregunta: ${prompt}`
+                            }]
+                        }]
+                    })
+                });
+
+                const data = await response.json();
+                if (data.candidates && data.candidates[0].content.parts[0].text) {
+                    return data.candidates[0].content.parts[0].text;
+                }
+                return null;
+            } catch (error) {
+                console.error('Error con Gemini:', error);
+                return null;
+            }
+        }
+
+        function addMessage(text, isUser = false, translation = '') {
+            const messagesDiv = document.getElementById('messages');
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
             
+            let messageContent = text;
             if (!isUser) {
-                // Agregar botón de audio solo para mensajes del bot
-                const audioButton = document.createElement('button');
-                audioButton.className = 'audio-button';
-                audioButton.innerHTML = '🔊';
-                audioButton.onclick = () => speak(text);
-                messageDiv.appendChild(audioButton);
+                messageContent += ` <button class="audio-button" onclick="speak('${text.replace(/'/g, "\\'")}')">🔊</button>`;
             }
             
-            messageDiv.appendChild(document.createTextNode(text));
-            messages.appendChild(messageDiv);
-            messages.scrollTop = messages.scrollHeight;
+            messageDiv.innerHTML = messageContent;
+
+            if (translation) {
+                const translationDiv = document.createElement('div');
+                translationDiv.className = 'translation';
+                translationDiv.textContent = translation;
+                messageDiv.appendChild(translationDiv);
+            }
+
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
 
-        function sendMessage() {
+        const responses = {
+            "hola": "Ciao! (Informal) o Buongiorno! (Formal)",
+            "gracias": "Grazie!",
+            "por favor": "Per favore!",
+            "buenos días": "Buongiorno!",
+            "buenas noches": "Buonanotte!",
+            "cómo estás": "Come stai? (Informal) o Come sta? (Formal)",
+            "adiós": "Arrivederci! (Formal) o Ciao! (Informal)",
+            "hasta luego": "A dopo!",
+            "me llamo": "Mi chiamo",
+            "mucho gusto": "Piacere!",
+            "no entiendo": "Non capisco",
+            "hablas español": "Parli spagnolo?",
+            "hablas italiano": "Parli italiano?",
+            "cómo te llamas": "Come ti chiami?",
+            "qué hora es": "Che ora è?",
+            "dónde está": "Dov'è?",
+            "cuánto cuesta": "Quanto costa?",
+            "perdón": "Scusi! (Formal) o Scusa! (Informal)",
+            "de nada": "Prego!",
+            "buen provecho": "Buon appetito!",
+            "salud": "Salute!",
+            "feliz cumpleaños": "Buon compleanno!",
+            "feliz navidad": "Buon Natale!",
+            "feliz año nuevo": "Felice Anno Nuovo!"
+        };
+
+        async function sendMessage() {
             const input = document.getElementById('userInput');
-            const text = input.value.trim();
+            const text = input.value.trim().toLowerCase();
             
             if (text) {
                 addMessage(text, true);
                 input.value = '';
-                
-                // Simular respuesta del bot
-                setTimeout(() => {
-                    const response = "Ciao! Sono il tuo assistente italiano. Come posso aiutarti oggi?";
-                    addMessage(response, false);
-                }, 1000);
+
+                let response;
+                // Primero intentamos encontrar una respuesta predefinida
+                for (const [key, value] of Object.entries(responses)) {
+                    if (text.includes(key)) {
+                        response = value;
+                        break;
+                    }
+                }
+
+                // Si no hay respuesta predefinida, usamos Gemini
+                if (!response) {
+                    response = await getGeminiResponse(text);
+                }
+
+                // Si Gemini falla, usamos traducción simple
+                if (!response) {
+                    response = await translateText(text, 'it');
+                }
+
+                if (response) {
+                    // Traducimos la respuesta al español para mostrarla como traducción
+                    const translation = await translateText(response, 'es');
+                    addMessage(response, false, translation);
+                } else {
+                    addMessage("Mi dispiace, non ho capito. (Lo siento, no entendí)", false);
+                }
             }
         }
+
+        // Manejar sugerencias
+        document.querySelectorAll('.suggestion').forEach(suggestion => {
+            suggestion.addEventListener('click', function() {
+                document.getElementById('userInput').value = this.textContent;
+                sendMessage();
+            });
+        });
 
         // Manejar Enter en el input
         document.getElementById('userInput').addEventListener('keypress', function(e) {
@@ -261,18 +420,8 @@
             }
         });
 
-        // Manejar clic en sugerencias
-        document.querySelectorAll('.suggestion').forEach(suggestion => {
-            suggestion.addEventListener('click', function() {
-                document.getElementById('userInput').value = this.textContent;
-                sendMessage();
-            });
-        });
-
-        // Mensaje inicial
-        setTimeout(() => {
-            addMessage("Ciao! Sono qui per aiutarti a imparare l'italiano. Fammi una domanda!", false);
-        }, 500);
+        // Mensaje de bienvenida
+        addMessage("Ciao! Sono il tuo insegnante di italiano. Come posso aiutarti oggi?", false, "¡Hola! Soy tu profesor de italiano. ¿Cómo puedo ayudarte hoy?");
     </script>
 </body>
 </html>
