@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Hora en Italiano</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="audio.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .time-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+        }
+
+        h2 {
+            color: #2196F3;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .example {
+            font-style: italic;
+            color: #666;
+            margin: 10px 0;
+        }
+
+        .tip {
+            background-color: #e7f3fe;
+            border-left: 6px solid #2196F3;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        .fas {
+            margin-right: 10px;
+            color: #2196F3;
+        }
+
+        .speak-btn {
+            background: #4CAF50;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .speak-btn:hover {
+            background: #45a049;
+        }
+
+        .flex-cell {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .time-example {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>La Hora en Italiano</h1>
+
+    <div class="time-section">
+        <h2><i class="fas fa-clock"></i>Construcciones de la Hora</h2>
+        <p>Existen 2 tipos de construcciones para expresar la hora en italiano:</p>
+
+        <div class="tip">
+            <h3 class="flex-cell">Modo hablado (reloj de 12 horas)
+                <button class="speak-btn" onclick="speak('Che ore sono?')">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+            </h3>
+            <div class="time-example flex-cell">
+                Che ore sono?
+                <button class="speak-btn" onclick="speak('Che ore sono?')">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+            </div>
+            <div class="time-example flex-cell">
+                Sono le quattro e mezza
+                <button class="speak-btn" onclick="speak('Sono le quattro e mezza')">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="tip">
+            <h3 class="flex-cell">Modo oficial (reloj de 24 horas)
+                <button class="speak-btn" onclick="speak('Il volo Roma-Madrid parte alle ventitré e dieci minuti')">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+            </h3>
+            <div class="time-example flex-cell">
+                Il volo Roma-Madrid parte alle ventitré e dieci minuti
+                <button class="speak-btn" onclick="speak('Il volo Roma-Madrid parte alle ventitré e dieci minuti')">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="time-section">
+        <h2><i class="fas fa-clock"></i>Construcción de la hora en modo hablado</h2>
+        <table>
+            <tr>
+                <th>Hora</th>
+                <th>Italiano</th>
+                <th>Español</th>
+            </tr>
+            <tr>
+                <td>13:00</td>
+                <td class="flex-cell">È l'una
+                    <button class="speak-btn" onclick="speak('È l\'una')">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </td>
+                <td>Es la una</td>
+            </tr>
+            <tr>
+                <td>16:00</td>
+                <td class="flex-cell">Sono le quattro
+                    <button class="speak-btn" onclick="speak('Sono le quattro')">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </td>
+                <td>Son las cuatro</td>
+            </tr>
+            <tr>
+                <td>16:15</td>
+                <td class="flex-cell">quattro e quindici
+                    <button class="speak-btn" onclick="speak('quattro e quindici')">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </td>
+                <td>las cuatro y cuarto</td>
+            </tr>
+            <tr>
+                <td>16:30</td>
+                <td class="flex-cell">quattro e mezza
+                    <button class="speak-btn" onclick="speak('quattro e mezza')">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </td>
+                <td>las cuatro y media</td>
+            </tr>
+            <tr>
+                <td>16:45</td>
+                <td class="flex-cell">quattro e tre quarti
+                    <button class="speak-btn" onclick="speak('quattro e tre quarti')">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </td>
+                <td>las cuatro y tres cuartos</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="time-section">
+        <h2><i class="fas fa-sun"></i>Momentos del día</h2>
+        <table>
+            <tr>
+                <th>Italiano</th>
+                <th>Español</th>
+                <th>Ejemplo</th>
+            </tr>
+            <tr>
+                <td class="flex-cell">mattina
+                    <button class="speak-btn" onclick="speak('mattina')">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </td>
+                <td>mañana</td>
+                <td class="flex-cell">Ci vediamo domattina, alle dieci
+                    <button class="speak-btn" onclick="speak('Ci vediamo domattina, alle dieci')">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td class="flex-cell">pomeriggio
+                    <button class="speak-btn" onclick="speak('pomeriggio')">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </td>
+                <td>tarde</td>
+                <td class="flex-cell">Ci vediamo oggi pomeriggio, alle sei
+                    <button class="speak-btn" onclick="speak('Ci vediamo oggi pomeriggio, alle sei')">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td class="flex-cell">sera
+                    <button class="speak-btn" onclick="speak('sera')">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </td>
+                <td>tarde-noche</td>
+                <td class="flex-cell">Ci vediamo stasera, alle sette e mezzo
+                    <button class="speak-btn" onclick="speak('Ci vediamo stasera, alle sette e mezzo')">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="time-section">
+        <h2><i class="fas fa-question-circle"></i>¿Qué hora es?</h2>
+        <div class="tip">
+            <h3>Formal:</h3>
+            <div class="time-example flex-cell">
+                Scusi, sa dirmi che ore sono?
+                <button class="speak-btn" onclick="speak('Scusi, sa dirmi che ore sono?')">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+            </div>
+            <div class="time-example flex-cell">
+                Scusi, sa dirmi l'ora?
+                <button class="speak-btn" onclick="speak('Scusi, sa dirmi l\'ora?')">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="tip">
+            <h3>Informal:</h3>
+            <div class="time-example flex-cell">
+                Che ore sono?
+                <button class="speak-btn" onclick="speak('Che ore sono?')">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+            </div>
+            <div class="time-example flex-cell">
+                Sai che ore sono?
+                <button class="speak-btn" onclick="speak('Sai che ore sono?')">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function speak(text) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'it-IT';
+            speechSynthesis.speak(utterance);
+        }
+
+        // Añadir interactividad a las tablas
+        document.querySelectorAll('tr').forEach(row => {
+            row.addEventListener('mouseover', () => {
+                if (!row.querySelector('th')) { // Skip header rows
+                    row.style.backgroundColor = '#e6ffe6';
+                }
+            });
+            
+            row.addEventListener('mouseout', () => {
+                if (!row.querySelector('th')) {
+                    row.style.backgroundColor = row.rowIndex % 2 === 0 ? '#f9f9f9' : 'white';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

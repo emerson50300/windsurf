@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Gli Animali - Italiano Básico</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .animals-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .animals-section h2 {
+            color: #4CAF50;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #4CAF50;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .animals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .animal-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .animal-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .italian-word {
+            color: #4CAF50;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        .spanish-word {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .audio-btn {
+            background: none;
+            border: none;
+            color: #4CAF50;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .audio-btn:hover {
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .section-intro {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .verbs-section {
+            background: #f0f7f0;
+        }
+
+        .back-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #4CAF50;
+            color: white;
+            padding: 1rem;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+    </style>
+    <script src="audio.js"></script>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="alfabeto.html">Alfabeto</a>
+        <a href="numeros.html">Números</a>
+        <a href="hora.html">Hora</a>
+        <a href="animales.html" class="active">Animales</a>
+    </nav>
+
+    <div class="container">
+        <h1>Gli Animali (Los Animales)</h1>
+        <p class="section-intro">
+            Descubre el fascinante mundo de los animales en italiano. 
+            Cada palabra incluye su pronunciación. Haz clic en el ícono del altavoz para escuchar.
+        </p>
+
+        <div class="animals-section">
+            <h2><i class="fas fa-cat"></i> Los Animales Domésticos</h2>
+            <div id="domesticos" class="animals-grid"></div>
+        </div>
+
+        <div class="animals-section">
+            <h2><i class="fas fa-horse"></i> Los Animales de Granja</h2>
+            <div id="granja" class="animals-grid"></div>
+        </div>
+
+        <div class="animals-section">
+            <h2><i class="fas fa-paw"></i> Los Mamíferos</h2>
+            <div id="mamiferos" class="animals-grid"></div>
+        </div>
+
+        <div class="animals-section">
+            <h2><i class="fas fa-water"></i> Los Mamíferos Marinos</h2>
+            <div id="mamiferos_marinos" class="animals-grid"></div>
+        </div>
+
+        <div class="animals-section">
+            <h2><i class="fas fa-dove"></i> Los Pájaros / Las Aves</h2>
+            <div id="aves" class="animals-grid"></div>
+        </div>
+
+        <div class="animals-section">
+            <h2><i class="fas fa-fish"></i> Los Peces</h2>
+            <div id="peces" class="animals-grid"></div>
+        </div>
+
+        <div class="animals-section">
+            <h2><i class="fas fa-dragon"></i> Los Reptiles</h2>
+            <div id="reptiles" class="animals-grid"></div>
+        </div>
+
+        <div class="animals-section">
+            <h2><i class="fas fa-frog"></i> Los Anfibios</h2>
+            <div id="anfibios" class="animals-grid"></div>
+        </div>
+
+        <div class="animals-section">
+            <h2><i class="fas fa-bug"></i> Los Insectos</h2>
+            <div id="insectos" class="animals-grid"></div>
+        </div>
+
+        <div class="animals-section">
+            <h2><i class="fas fa-spider"></i> Otros Animales Terrestres</h2>
+            <div id="otros_terrestres" class="animals-grid"></div>
+        </div>
+
+        <div class="animals-section">
+            <h2><i class="fas fa-fish"></i> Otros Animales Marinos</h2>
+            <div id="otros_marinos" class="animals-grid"></div>
+        </div>
+
+        <div class="animals-section verbs-section">
+            <h2><i class="fas fa-volume-up"></i> Verbos relacionados con los Animales</h2>
+            <div id="verbos" class="animals-grid"></div>
+        </div>
+    </div>
+
+    <a href="index.html" class="back-btn" title="Volver al inicio">
+        <i class="fas fa-home"></i>
+    </a>
+
+    <script>
+        // Datos de los animales
+        const animalsData = {
+            'domesticos': {
+                'il gatto': 'el gato',
+                'il cane': 'el perro',
+                'il criceto': 'el hamster'
+            },
+            'granja': {
+                'la gallina': 'la gallina',
+                "l'oca": 'el ganso',
+                'la capra': 'la cabra',
+                "l'asino": 'el burro',
+                'il cavallo': 'el caballo',
+                'la cavalla': 'la yegua',
+                'il maiale': 'el cerdo',
+                'il toro': 'el toro',
+                'la mucca': 'la vaca',
+                "l'anatra": 'el pato',
+                'la pecora': 'la oveja',
+                'il gallo': 'el gallo'
+            },
+            'mamiferos': {
+                'la lince': 'el lince',
+                'il coyote': 'el coyote',
+                "l'antilope": 'el antílope',
+                'lo scoiattolo': 'la ardilla',
+                "l'elefante": 'el elefante',
+                'il pipistrello': 'el murciélago',
+                'il cervo': 'el ciervo',
+                'il cammello': 'el camello',
+                'la lepre': 'la liebre',
+                "l'alce": 'el alce',
+                'la donnola': 'la comadreja',
+                'la giraffa': 'la jirafa',
+                'la nutria': 'la nutria',
+                'la pantera': 'la pantera',
+                'il topo': 'el ratón',
+                'il furetto': 'el hurón',
+                'il leone': 'el león',
+                'il lupo': 'el lobo',
+                "l'orso": 'el oso',
+                'il procione': 'el mapache',
+                'la renna': 'el reno',
+                'il rinoceronte': 'el rinoceronte',
+                'il cinghiale': 'el jabalí',
+                'la scimmia': 'el mono',
+                'la zebra': 'la cebra',
+                'la volpe': 'el zorro',
+                'il coniglio': 'el conejo',
+                'la tigre': 'el tigre'
+            },
+            'mamiferos_marinos': {
+                'il delfino': 'el delfín',
+                "l'orca": 'la orca',
+                'la foca': 'la foca',
+                'il capodoglio': 'el cachalote',
+                'il tricheco': 'la morsa',
+                'la balena': 'la ballena'
+            },
+            'aves': {
+                'il merlo': 'el mirlo',
+                'la gru': 'la grulla',
+                "l'aquila": 'el águila',
+                'il falco': 'el halcón',
+                'lo struzzo': 'la avestruz',
+                'il gufo': 'el búho',
+                'la pernice': 'la perdiz',
+                'il pinguino': 'el pingüino',
+                'la quaglia': 'la codorniz',
+                'il gabbiano': 'la gaviota',
+                'il passero': 'el gorrión',
+                'la rondine': 'la golondrina',
+                'il cigno': 'el cisne',
+                'il pavone': 'el pavo real',
+                "l'avvoltoio": 'el buitre'
+            },
+            'peces': {
+                "l'acciuga": 'la anchoa',
+                'il barbo': 'el barbo',
+                'il branzino': 'la lubina',
+                'il besugo': 'el besugo',
+                'il baccalà': 'el bacalao',
+                "l'anguilla": 'la anguila',
+                'la trota': 'la trucha',
+                'la cernia': 'el mero',
+                "l'aringa": 'el arenque',
+                'il salmone': 'el salmón',
+                'lo squalo': 'el tiburón',
+                'lo storione': 'el esturión'
+            },
+            'reptiles': {
+                'il coccodrillo': 'el cocodrilo',
+                'la lucertola': 'el lagarto',
+                'il serpente': 'la serpiente',
+                'la tartaruga': 'la tortuga',
+                'la vipera': 'la víbora'
+            },
+            'anfibios': {
+                'la rana': 'la rana',
+                'la salamandra': 'la salamandra'
+            },
+            'insectos': {
+                'la formica': 'la hormiga',
+                "l'ape": 'la abeja',
+                'lo scarabeo': 'el escarabajo',
+                'la tarma': 'polilla',
+                'il grillo': 'grillo',
+                'la libellula': 'la libélula',
+                'la pulce': 'la pulga',
+                'la mosca': 'la mosca',
+                'la lucciola': 'la luciérnaga',
+                'la cavalletta': 'el saltamontes',
+                'il tafano': 'el tábano',
+                'la coccinella': 'la mariquita',
+                'il pidocchio': 'el piojo',
+                'la zanzara': 'el mosquito',
+                "l'afide": 'el pulgón',
+                'lo scarafaggio': 'la cucaracha',
+                'la tèrmite': 'la termita',
+                'la vespa': 'la avispa'
+            },
+            'otros_terrestres': {
+                'il bruco': 'la oruga',
+                'il millepiedi': 'el ciempiés',
+                'il riccio': 'el erizo',
+                'lo scorpione': 'el escorpión',
+                'la chiocciola': 'el caracol',
+                'il ragno': 'la araña',
+                'il verme': 'el gusano'
+            },
+            'otros_marinos': {
+                'la vongola': 'la almeja',
+                'il granchio': 'el cangrejo',
+                "l'astice": 'el bogavante',
+                "l'aragosta": 'la langosta',
+                "l'ostrica": 'la ostra',
+                'il calamaro': 'el calamar'
+            },
+            'verbos': {
+                'abbaiare': 'ladrar',
+                'belare': 'balar',
+                'ululare': 'aullar',
+                'miagolare': 'maullar',
+                'muggire': 'mugir'
+            }
+        };
+
+        // Función para crear las tarjetas de los animales
+        function createAnimalCards() {
+            for (let [category, animals] of Object.entries(animalsData)) {
+                const grid = document.getElementById(category);
+                if (grid) {
+                    for (let [italian, spanish] of Object.entries(animals)) {
+                        const card = document.createElement('div');
+                        card.className = 'animal-card';
+                        card.innerHTML = `
+                            <button class="audio-btn" onclick="speak('${italian}')" 
+                                    title="Escuchar pronunciación">
+                                <i class="fas fa-volume-up"></i>
+                            </button>
+                            <div>
+                                <div class="italian-word">${italian}</div>
+                                <div class="spanish-word">${spanish}</div>
+                            </div>
+                        `;
+                        grid.appendChild(card);
+                    }
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', createAnimalCards);
+    </script>
+</body>
+</html>

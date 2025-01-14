@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base href="." />
+<title>Fechas en italiano</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+  }
+  
+  .date-section {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .example {
+    font-style: italic;
+    color: #666;
+  }
+  
+  .tip {
+    background-color: #e7f3fe;
+    border-left: 6px solid #2196F3;
+    padding: 10px;
+    margin: 10px 0;
+  }
+  
+  .fas {
+    margin-right: 10px;
+    color: #2196F3;
+  }
+
+  .speak-btn {
+    background: #4CAF50;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+
+  .speak-btn:hover {
+    background: #45a049;
+  }
+
+  .flex-cell {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+  <h1 style="text-align:center;">Fechas en italiano</h1>
+
+  <div class="date-section">
+    <h2><i class="fas fa-calendar"></i>Los días de la semana</h2>
+    <table>
+      <tr>
+        <th>Italiano</th>
+        <th>Español</th>
+      </tr>
+      <tr>
+        <td class="flex-cell">lunedì <button class="speak-btn" onclick="speak('lunedì')"><i class="fas fa-volume-up"></i></button></td>
+        <td>lunes</td>
+      </tr>
+      <tr>
+        <td class="flex-cell">martedì <button class="speak-btn" onclick="speak('martedì')"><i class="fas fa-volume-up"></i></button></td>
+        <td>martes</td>
+      </tr>
+      <tr>
+        <td class="flex-cell">mercoledì <button class="speak-btn" onclick="speak('mercoledì')"><i class="fas fa-volume-up"></i></button></td>
+        <td>miércoles</td>
+      </tr>
+      <tr>
+        <td class="flex-cell">giovedì <button class="speak-btn" onclick="speak('giovedì')"><i class="fas fa-volume-up"></i></button></td>
+        <td>jueves</td>
+      </tr>
+      <tr>
+        <td class="flex-cell">venerdì <button class="speak-btn" onclick="speak('venerdì')"><i class="fas fa-volume-up"></i></button></td>
+        <td>viernes</td>
+      </tr>
+      <tr>
+        <td class="flex-cell">sabato <button class="speak-btn" onclick="speak('sabato')"><i class="fas fa-volume-up"></i></button></td>
+        <td>sábado</td>
+      </tr>
+      <tr>
+        <td class="flex-cell">domenica <button class="speak-btn" onclick="speak('domenica')"><i class="fas fa-volume-up"></i></button></td>
+        <td>domingo</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="date-section">
+    <h2><i class="fas fa-calendar-alt"></i>Los meses</h2>
+    <table>
+      <tr>
+        <th>Italiano</th>
+        <th>Español</th>
+      </tr>
+      <tr>
+        <td class="flex-cell">gennaio <button class="speak-btn" onclick="speak('gennaio')"><i class="fas fa-volume-up"></i></button></td>
+        <td>enero</td>
+      </tr>
+      <tr>
+        <td class="flex-cell">febbraio <button class="speak-btn" onclick="speak('febbraio')"><i class="fas fa-volume-up"></i></button></td>
+        <td>febrero</td>
+      </tr>
+      <tr>
+        <td class="flex-cell">marzo <button class="speak-btn" onclick="speak('marzo')"><i class="fas fa-volume-up"></i></button></td>
+        <td>marzo</td>
+      </tr>
+      <tr>
+        <td class="flex-cell">aprile <button class="speak-btn" onclick="speak('aprile')"><i class="fas fa-volume-up"></i></button></td>
+        <td>abril</td>
+      </tr>
+      <tr>
+        <td class="flex-cell">maggio <button class="speak-btn" onclick="speak('maggio')"><i class="fas fa-volume-up"></i></button></td>
+        <td>mayo</td>
+      </tr>
+      <tr>
+        <td class="flex-cell">giugno <button class="speak-btn" onclick="speak('giugno')"><i class="fas fa-volume-up"></i></button></td>
+        <td>junio</td>
+      </tr>
+      <tr>
+        <td class="flex-cell">luglio <button class="speak-btn" onclick="speak('luglio')"><i class="fas fa-volume-up"></i></button></td>
+        <td>julio</td>
+      </tr>
+      <tr>
+        <td class="flex-cell">agosto <button class="speak-btn" onclick="speak('agosto')"><i class="fas fa-volume-up"></i></button></td>
+        <td>agosto</td>
+      </tr>
+      <tr>
+        <td class="flex-cell">settembre <button class="speak-btn" onclick="speak('settembre')"><i class="fas fa-volume-up"></i></button></td>
+        <td>septiembre</td>
+      </tr>
+      <tr>
+        <td class="flex-cell">ottobre <button class="speak-btn" onclick="speak('ottobre')"><i class="fas fa-volume-up"></i></button></td>
+        <td>octubre</td>
+      </tr>
+      <tr>
+        <td class="flex-cell">novembre <button class="speak-btn" onclick="speak('novembre')"><i class="fas fa-volume-up"></i></button></td>
+        <td>noviembre</td>
+      </tr>
+      <tr>
+        <td class="flex-cell">dicembre <button class="speak-btn" onclick="speak('dicembre')"><i class="fas fa-volume-up"></i></button></td>
+        <td>diciembre</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="date-section">
+    <h2><i class="fas fa-info-circle"></i>Cómo decir la fecha en italiano</h2>
+    <div class="tip">
+      En italiano, la fecha se dice así:
+      <br>
+      <span class="example">il + [número del día] + [mes] + [año]</span>
+    </div>
+    
+    <h3>Ejemplos:</h3>
+    <ul>
+      <li class="flex-cell">25 de diciembre de 2023 → il venticinque dicembre duemilaventitré 
+        <button class="speak-btn" onclick="speak('il venticinque dicembre duemilaventitré')">
+          <i class="fas fa-volume-up"></i>
+        </button>
+      </li>
+      <li class="flex-cell">1 de enero de 2024 → il primo gennaio duemilaventiquattro
+        <button class="speak-btn" onclick="speak('il primo gennaio duemilaventiquattro')">
+          <i class="fas fa-volume-up"></i>
+        </button>
+      </li>
+      <li class="flex-cell">15 de agosto de 2023 → il quindici agosto duemilaventitré
+        <button class="speak-btn" onclick="speak('il quindici agosto duemilaventitré')">
+          <i class="fas fa-volume-up"></i>
+        </button>
+      </li>
+    </ul>
+    
+    <div class="tip">
+      <strong>Nota:</strong> A diferencia del español, en italiano:
+      <ul>
+        <li>Los días de la semana y los meses se escriben en minúscula</li>
+        <li>No se usa "de" entre el día y el mes</li>
+        <li>El primer día del mes se dice "primo" en lugar del número "uno"</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="date-section">
+    <h2><i class="fas fa-clock"></i>Expresiones temporales útiles</h2>
+    <table>
+      <tr>
+        <th>Italiano</th>
+        <th>Español</th>
+      </tr>
+      <tr>
+        <td class="flex-cell">oggi <button class="speak-btn" onclick="speak('oggi')"><i class="fas fa-volume-up"></i></button></td>
+        <td>hoy</td>
+      </tr>
+      <tr>
+        <td class="flex-cell">domani <button class="speak-btn" onclick="speak('domani')"><i class="fas fa-volume-up"></i></button></td>
+        <td>mañana</td>
+      </tr>
+      <tr>
+        <td class="flex-cell">ieri <button class="speak-btn" onclick="speak('ieri')"><i class="fas fa-volume-up"></i></button></td>
+        <td>ayer</td>
+      </tr>
+      <tr>
+        <td class="flex-cell">la settimana prossima <button class="speak-btn" onclick="speak('la settimana prossima')"><i class="fas fa-volume-up"></i></button></td>
+        <td>la próxima semana</td>
+      </tr>
+      <tr>
+        <td class="flex-cell">il mese scorso <button class="speak-btn" onclick="speak('il mese scorso')"><i class="fas fa-volume-up"></i></button></td>
+        <td>el mes pasado</td>
+      </tr>
+      <tr>
+        <td class="flex-cell">l'anno prossimo <button class="speak-btn" onclick="speak('l\'anno prossimo')"><i class="fas fa-volume-up"></i></button></td>
+        <td>el próximo año</td>
+      </tr>
+    </table>
+  </div>
+
+  <script>
+    function speak(text) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'it-IT';
+      speechSynthesis.speak(utterance);
+    }
+
+    // Añadir interactividad a las tablas
+    document.querySelectorAll('tr').forEach(row => {
+      row.addEventListener('mouseover', () => {
+        if (!row.querySelector('th')) { // Skip header rows
+          row.style.backgroundColor = '#e6ffe6';
+        }
+      });
+      
+      row.addEventListener('mouseout', () => {
+        if (!row.querySelector('th')) {
+          row.style.backgroundColor = row.rowIndex % 2 === 0 ? '#f9f9f9' : 'white';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

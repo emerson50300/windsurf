@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Italiano</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .chat-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 1rem;
+            max-width: 80%;
+        }
+
+        .user-message {
+            background: #e3f2fd;
+            margin-left: auto;
+            border-bottom-right-radius: 0.2rem;
+        }
+
+        .bot-message {
+            background: #f5f5f5;
+            margin-right: auto;
+            border-bottom-left-radius: 0.2rem;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 1rem;
+            background: #f5f5f5;
+            border-top: 1px solid #ddd;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+
+        .chat-input button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .chat-input button:hover {
+            background: #006634;
+        }
+
+        .suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: #f9f9f9;
+        }
+
+        .suggestion-btn {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .suggestion-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        .category-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .category-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .category-card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .italian-word {
+            color: var(--primary);
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .italian-word:hover {
+            text-decoration: underline;
+        }
+        
+        .practice-section {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+        
+        .practice-section h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .audio-btn {
+            margin-top: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .audio-btn:hover {
+            background: #006634;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="alfabeto.html">Alfabeto</a>
+        <a href="numeros.html">Números</a>
+        <a href="hora.html">Hora</a>
+        <a href="colores.html">Colores</a>
+        <a href="chat.html" class="active">Chat</a>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-comments"></i> Chat de Italiano</h1>
+            <p>Practica italiano con nuestro chat inteligente. Haz preguntas sobre gramática, vocabulario, verbos y más.</p>
+        </header>
+
+        <div class="content">
+            <div class="categories">
+                <div class="category-card" onclick="loadCategory('verbs')">
+                    <i class="fas fa-running"></i>
+                    <h3>Verbos</h3>
+                    <p>Conjugaciones y usos</p>
+                </div>
+                <div class="category-card" onclick="loadCategory('vocabulary')">
+                    <i class="fas fa-book"></i>
+                    <h3>Vocabulario</h3>
+                    <p>Palabras y significados</p>
+                </div>
+                <div class="category-card" onclick="loadCategory('phrases')">
+                    <i class="fas fa-comments"></i>
+                    <h3>Frases</h3>
+                    <p>Expresiones comunes</p>
+                </div>
+                <div class="category-card" onclick="loadCategory('grammar')">
+                    <i class="fas fa-pencil-alt"></i>
+                    <h3>Gramática</h3>
+                    <p>Reglas y estructuras</p>
+                </div>
+                <div class="category-card" onclick="loadCategory('practice')">
+                    <i class="fas fa-play"></i>
+                    <h3>Práctica</h3>
+                    <p>Ejercicios y actividades</p>
+                </div>
+            </div>
+
+            <div class="chat-container">
+                <div class="chat-header">
+                    <h2><i class="fas fa-robot"></i> Asistente de Italiano</h2>
+                </div>
+
+                <div class="suggestions">
+                    <button class="suggestion-btn" onclick="askQuestion('¿Cómo se conjuga el verbo essere en presente?')">
+                        Conjugación de "essere"
+                    </button>
+                    <button class="suggestion-btn" onclick="askQuestion('¿Cuál es la diferencia entre passato prossimo y imperfetto?')">
+                        Diferencia entre passato prossimo e imperfetto
+                    </button>
+                    <button class="suggestion-btn" onclick="askQuestion('¿Cómo se usa el condicional en italiano?')">
+                        Uso del condicional
+                    </button>
+                    <button class="suggestion-btn" onclick="askQuestion('¿Cuál es la pronunciación de la palabra "pizza"?')">
+                        Pronunciación de "pizza"
+                    </button>
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                </div>
+
+                <div class="chat-input">
+                    <input type="text" id="userInput" placeholder="Escribe tu pregunta aquí..." 
+                           onkeypress="if(event.key === 'Enter') sendMessage()">
+                    <button onclick="sendMessage()">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuración de la API de Gemini
+        const GEMINI_API_KEY = 'AIzaSyCEIicKmkzZQ7kOy0yBSVt4Dc3s80GwKYw';
+        const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
+
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Agregar mensaje del usuario
+            addMessage(message, 'user');
+            input.value = '';
+
+            try {
+                // Preparar el prompt para Gemini
+                const prompt = `Actúa como un profesor de italiano. El usuario pregunta: "${message}". 
+                              Responde en español pero incluye ejemplos en italiano. 
+                              Si es una pregunta sobre gramática, incluye explicaciones claras y ejemplos.
+                              Si es una solicitud de vocabulario, incluye la pronunciación.
+                              Si es sobre frases comunes, proporciona contextos de uso.`;
+
+                const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: prompt
+                            }]
+                        }]
+                    })
+                });
+
+                const data = await response.json();
+                const botResponse = data.candidates[0].content.parts[0].text;
+                
+                // Agregar respuesta del bot
+                addMessage(botResponse, 'bot');
+
+                // Si la respuesta contiene palabras en italiano, agregar botón de audio
+                const italianWords = botResponse.match(/\b[A-Za-zàèéìíòóùú]+\b/g);
+                if (italianWords) {
+                    const audioButton = document.createElement('button');
+                    audioButton.className = 'audio-btn';
+                    audioButton.innerHTML = '<i class="fas fa-volume-up"></i> Escuchar';
+                    audioButton.onclick = () => playSound(italianWords.join(', '));
+                    document.querySelector('.chat-messages').lastElementChild.appendChild(audioButton);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                addMessage('Lo siento, ha ocurrido un error. Por favor, intenta de nuevo.', 'bot');
+            }
+        }
+
+        // Categorías predefinidas con ejemplos
+        const categoryContent = {
+            verbs: [
+                "¿Cómo se conjuga el verbo essere en presente?",
+                "¿Cuál es la diferencia entre passato prossimo y imperfetto?",
+                "Explica los verbos reflexivos en italiano",
+                "¿Cómo se usa el condicional en italiano?"
+            ],
+            vocabulary: [
+                "Vocabulario de viajes en italiano",
+                "Palabras más comunes en italiano",
+                "Vocabulario para restaurantes",
+                "Expresiones de cortesía en italiano"
+            ],
+            phrases: [
+                "Frases para pedir direcciones",
+                "¿Cómo pedir ayuda en italiano?",
+                "Expresiones coloquiales más usadas",
+                "Frases románticas en italiano"
+            ],
+            grammar: [
+                "Explicar el uso de artículos",
+                "Reglas de género y número",
+                "Uso de preposiciones",
+                "Concordancia de adjetivos"
+            ],
+            practice: [
+                "Ejercicio de conversación básica",
+                "Práctica de pronunciación",
+                "Ejercicios de comprensión",
+                "Situaciones cotidianas"
+            ]
+        };
+
+        function loadCategory(category) {
+            const suggestions = document.querySelector('.suggestions');
+            suggestions.innerHTML = '';
+            
+            categoryContent[category].forEach(question => {
+                const button = document.createElement('button');
+                button.className = 'suggestion-btn';
+                button.textContent = question;
+                button.onclick = () => askQuestion(question);
+                suggestions.appendChild(button);
+            });
+        }
+
+        function addMessage(text, type) {
+            const messages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}-message`;
+            
+            // Formatear el texto si contiene palabras en italiano
+            const formattedText = text.replace(/\b[A-Za-zàèéìíòóùú]+\b/g, match => {
+                if (!/[aeiouàèéìíòóùú]/i.test(match)) return match; // Si no contiene vocales, no es italiano
+                return `<span class="italian-word">${match}</span>`;
+            });
+            
+            messageDiv.innerHTML = formattedText;
+            messages.appendChild(messageDiv);
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        function askQuestion(question) {
+            document.getElementById('userInput').value = question;
+            sendMessage();
+        }
+
+        // Sistema de audio mejorado
+        function speak(text, rate = 0.8) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'it-IT';
+                utterance.rate = rate;
+                
+                const voices = speechSynthesis.getVoices();
+                const italianVoice = voices.find(voice => voice.lang.includes('it-IT'));
+                if (italianVoice) {
+                    utterance.voice = italianVoice;
+                }
+
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        speechSynthesis.onvoiceschanged = () => {
+            const voices = speechSynthesis.getVoices();
+            console.log('Voces disponibles:', voices);
+        };
+
+        function playSound(text) {
+            setTimeout(() => speak(text), 100);
+        }
+
+        // Mensaje inicial
+        window.onload = () => {
+            addMessage('Ciao! Sono il tuo assistente di italiano. ¿Qué te gustaría aprender hoy? Puedes preguntarme sobre gramática, vocabulario, pronunciación o cualquier tema relacionado con el italiano.', 'bot');
+        };
+    </script>
+</body>
+</html>

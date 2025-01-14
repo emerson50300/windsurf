@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alfabeto Italiano</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="audio.js"></script>
+    <style>
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .letter {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .pronunciation {
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .example {
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .play-button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+        }
+
+        .play-button:hover {
+            background-color: #006634;
+        }
+
+        @media (max-width: 600px) {
+            .letter {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="alfabeto.html" class="active">Alfabeto</a>
+        <a href="numeros.html">Números</a>
+        <a href="hora.html">Hora</a>
+        <a href="colores.html">Colores</a>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1>El Alfabeto Italiano</h1>
+            <p>El alfabeto italiano tiene 21 letras. Las letras J, K, W, X e Y solo se usan en palabras extranjeras como:
+J: "jazz"
+K: "karate"
+W: "web"
+X: "xilofono"
+Y: "yogurt"</p>
+        </header>
+
+        <div class="grid" id="alphabetGrid"></div>
+
+        <footer>
+            <p>Haga clic en cualquier tarjeta para escuchar la pronunciación.</p>
+        </footer>
+    </div>
+
+    <script>
+        const alphabet = [
+            { letter: 'A', pronunciation: 'a', example: 'amore' },
+            { letter: 'B', pronunciation: 'bi', example: 'bello' },
+            { letter: 'C', pronunciation: 'ci', example: 'ciao' },
+            { letter: 'D', pronunciation: 'di', example: 'dolce' },
+            { letter: 'E', pronunciation: 'e', example: 'estate' },
+            { letter: 'F', pronunciation: 'effe', example: 'festa' },
+            { letter: 'G', pronunciation: 'gi', example: 'gatto' },
+            { letter: 'H', pronunciation: 'acca', example: 'hotel' },
+            { letter: 'I', pronunciation: 'i', example: 'italiano' },
+            { letter: 'L', pronunciation: 'elle', example: 'luna' },
+            { letter: 'M', pronunciation: 'emme', example: 'mare' },
+            { letter: 'N', pronunciation: 'enne', example: 'notte' },
+            { letter: 'O', pronunciation: 'o', example: 'oro' },
+            { letter: 'P', pronunciation: 'pi', example: 'pasta' },
+            { letter: 'Q', pronunciation: 'cu', example: 'quanto' },
+            { letter: 'R', pronunciation: 'erre', example: 'rosa' },
+            { letter: 'S', pronunciation: 'esse', example: 'sole' },
+            { letter: 'T', pronunciation: 'ti', example: 'tempo' },
+            { letter: 'U', pronunciation: 'u', example: 'uva' },
+            { letter: 'V', pronunciation: 'vu', example: 'vita' },
+            { letter: 'Z', pronunciation: 'zeta', example: 'zero' }
+        ];
+
+        function createLetterCard(data) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            
+            card.innerHTML = `
+                <div class="letter">${data.letter}</div>
+                <div class="pronunciation">${data.pronunciation}</div>
+                <div class="example">${data.example}</div>
+                <button class="play-button" onclick="playSound('${data.pronunciation}')">
+                    <i class="fas fa-volume-up"></i>
+                    Escuchar
+                </button>
+            `;
+            
+            return card;
+        }
+
+        function speak(text, rate = 0.8) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'it-IT';
+                utterance.rate = rate;
+                
+                // Obtener la voz italiana si está disponible
+                const voices = speechSynthesis.getVoices();
+                const italianVoice = voices.find(voice => voice.lang.includes('it-IT'));
+                if (italianVoice) {
+                    utterance.voice = italianVoice;
+                }
+
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        // Cargar voces cuando estén disponibles
+        speechSynthesis.onvoiceschanged = () => {
+            const voices = speechSynthesis.getVoices();
+            console.log('Voces disponibles:', voices);
+        };
+
+        // Función para reproducir el sonido con un pequeño retraso para mejor calidad
+        function playSound(text) {
+            setTimeout(() => speak(text), 100);
+        }
+
+        function initialize() {
+            const grid = document.getElementById('alphabetGrid');
+            alphabet.forEach(letter => {
+                grid.appendChild(createLetterCard(letter));
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', initialize);
+    </script>
+</body>
+</html>

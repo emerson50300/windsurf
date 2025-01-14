@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>La Familia - Italiano Básico</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .family-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .family-section h2 {
+            color: #4CAF50;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #4CAF50;
+        }
+
+        .family-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .family-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .family-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .italian-word {
+            color: #4CAF50;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        .spanish-word {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .audio-btn {
+            background: none;
+            border: none;
+            color: #4CAF50;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .audio-btn:hover {
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .section-intro {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .back-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #4CAF50;
+            color: white;
+            padding: 1rem;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="alfabeto.html">Alfabeto</a>
+        <a href="numeros.html">Números</a>
+        <a href="hora.html">Hora</a>
+        <a href="familia.html" class="active">Familia</a>
+    </nav>
+
+    <div class="container">
+        <h1>La Familia en Italiano</h1>
+        <p class="section-intro">
+            Aprende el vocabulario esencial para hablar sobre la familia en italiano. 
+            Cada palabra incluye su pronunciación. Haz clic en el ícono del altavoz para escuchar.
+        </p>
+
+        <div class="family-section">
+            <h2><i class="fas fa-home"></i> La Familia Original</h2>
+            <div id="original" class="family-grid">
+            </div>
+        </div>
+
+        <div class="family-section">
+            <h2><i class="fas fa-ring"></i> La Familia Adquirida</h2>
+            <div id="adquirida" class="family-grid">
+            </div>
+        </div>
+
+        <div class="family-section">
+            <h2><i class="fas fa-user-friends"></i> Los Abuelos</h2>
+            <div id="abuelos" class="family-grid">
+            </div>
+        </div>
+
+        <div class="family-section">
+            <h2><i class="fas fa-child"></i> Los Nietos</h2>
+            <div id="nietos" class="family-grid">
+            </div>
+        </div>
+
+        <div class="family-section">
+            <h2><i class="fas fa-users"></i> Los Tíos y los Primos</h2>
+            <div id="tios_primos" class="family-grid">
+            </div>
+        </div>
+
+        <div class="family-section">
+            <h2><i class="fas fa-user-friends"></i> Los Sobrinos</h2>
+            <div id="sobrinos" class="family-grid">
+            </div>
+        </div>
+
+        <div class="family-section">
+            <h2><i class="fas fa-handshake"></i> La Familia Política</h2>
+            <div id="politica" class="family-grid">
+            </div>
+        </div>
+
+        <div class="family-section">
+            <h2><i class="fas fa-people-arrows"></i> La Familia Reconstruida</h2>
+            <div id="reconstruida" class="family-grid">
+            </div>
+        </div>
+
+        <div class="family-section">
+            <h2><i class="fas fa-baby"></i> Los Niños</h2>
+            <div id="ninos" class="family-grid">
+            </div>
+        </div>
+
+        <div class="family-section">
+            <h2><i class="fas fa-heart"></i> El Estado Civil</h2>
+            <div id="estado_civil" class="family-grid">
+            </div>
+        </div>
+    </div>
+
+    <a href="index.html" class="back-btn" title="Volver al inicio">
+        <i class="fas fa-home"></i>
+    </a>
+
+    <script>
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'it-IT';
+                utterance.rate = 0.8;
+                
+                const voices = speechSynthesis.getVoices();
+                const italianVoice = voices.find(voice => voice.lang.includes('it-IT'));
+                if (italianVoice) {
+                    utterance.voice = italianVoice;
+                }
+
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        // Cargar las voces cuando estén disponibles
+        speechSynthesis.onvoiceschanged = () => {
+            const voices = speechSynthesis.getVoices();
+            console.log('Voces disponibles:', voices);
+        };
+
+        // Datos de la familia
+        const familyData = {
+            'original': {
+                'i genitori': 'los padres',
+                'la madre': 'la madre',
+                'il padre': 'el padre',
+                'i fratelli': 'los hermanos',
+                'la sorella': 'la hermana',
+                'il fratello': 'el hermano',
+                'la mamma': 'la mamá',
+                'il papà': 'el papá',
+                'il babbo': 'el papá',
+                'la moglie': 'la mujer',
+                'il marito': 'el marido'
+            },
+            'adquirida': {
+                'i coniugi': 'los esposos',
+                'la sposa': 'la esposa',
+                'lo sposo': 'el esposo',
+                'i figli': 'los hijos',
+                'la figlia': 'la hija',
+                'il figlio': 'el hijo',
+                'il padrino': 'el padrino',
+                'la madrina': 'la madrina'
+            },
+            'abuelos': {
+                'i nonni': 'los abuelos',
+                'la nonna': 'la abuela',
+                'il nonno': 'el abuelo',
+                'i bisnonni': 'los bisabuelos',
+                'la bisnonna': 'la bisabuela',
+                'il bisnonno': 'el bisabuelo'
+            },
+            'nietos': {
+                'il nipote': 'el nieto',
+                'la nipote': 'la nieta'
+            },
+            'tios_primos': {
+                'la zia': 'la tía',
+                'lo zio': 'el tío',
+                'la cugina': 'la prima',
+                'il cugino': 'el primo'
+            },
+            'sobrinos': {
+                'la nipote': 'la sobrina',
+                'il nipote': 'el sobrino'
+            },
+            'politica': {
+                'la suocera': 'la suegra',
+                'il suocero': 'el suegro',
+                'i suoceri': 'los suegros',
+                'la cognata': 'la cuñada',
+                'il cognato': 'el cuñado',
+                'la nuora': 'la nuera',
+                'il genero': 'el yerno'
+            },
+            'reconstruida': {
+                'la matrigna': 'la madrastra',
+                'il patrigno': 'el padrastro',
+                'la figliastra': 'la hijastra',
+                'il figliastro': 'el hijastro',
+                'il fratellastro': 'el hermanastro',
+                'la sorellastra': 'la hermanastra'
+            },
+            'ninos': {
+                'il bambino': 'el niño',
+                'il neonato': 'el bebé',
+                'la ragazza': 'la chica',
+                'il ragazzo': 'el chico',
+                'il gemello': 'el gemelo',
+                'la gemella': 'la gemela',
+                'il primogenito': 'el primogénito'
+            },
+            'estado_civil': {
+                'celibe': 'soltero',
+                'nubile': 'soltera',
+                'sposato': 'casado',
+                'sposata': 'casada',
+                'divorziato': 'divorciado',
+                'divorziata': 'divorciada',
+                'vedovo': 'viudo',
+                'vedova': 'viuda'
+            }
+        };
+
+        // Función para crear las tarjetas de familia
+        function createFamilyCards() {
+            for (let [category, words] of Object.entries(familyData)) {
+                const grid = document.querySelector(`#${category}`);
+                if (grid) {
+                    for (let [italian, spanish] of Object.entries(words)) {
+                        const card = document.createElement('div');
+                        card.className = 'family-card';
+                        card.innerHTML = `
+                            <button class="audio-btn" onclick="speak('${italian}')">
+                                <i class="fas fa-volume-up"></i>
+                            </button>
+                            <div>
+                                <div class="italian-word">${italian}</div>
+                                <div class="spanish-word">${spanish}</div>
+                            </div>
+                        `;
+                        grid.appendChild(card);
+                    }
+                }
+            }
+        }
+
+        // Llamar a la función cuando el documento esté cargado
+        document.addEventListener('DOMContentLoaded', createFamilyCards);
+    </script>
+</body>
+</html>

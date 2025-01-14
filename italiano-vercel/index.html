@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprende Italiano - Curso Básico</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2196F3;
+            --hover-color: #1976D2;
+            --light-bg: #f5f5f5;
+            --shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: var(--light-bg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        nav {
+            background: white;
+            padding: 1rem;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+        }
+
+        nav button {
+            background: none;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--primary-color);
+            transition: color 0.3s;
+            white-space: nowrap;
+        }
+
+        nav button:hover {
+            color: var(--hover-color);
+        }
+
+        .section {
+            display: none;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        .grid-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        .grid-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .grid-item h3 {
+            margin: 0.5rem 0;
+            color: var(--primary-color);
+        }
+
+        .grid-item p {
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .number-grid, .time-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        .section h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+        }
+
+        .section h2 {
+            color: var(--primary-color);
+            margin: 2rem 0 1rem;
+        }
+
+        .category-title {
+            text-align: center;
+            color: var(--primary-color);
+            margin: 2rem 0 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* Botones de audio */
+        .audio-btn {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+            position: absolute;
+            right: 0.5rem;
+            top: 0.5rem;
+        }
+
+        .audio-btn:hover {
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .audio-btn i {
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 0.5rem;
+            }
+
+            nav button {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+
+            .container {
+                padding: 0.5rem;
+            }
+
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+                margin-bottom: 1rem;
+            }
+
+            .grid-container {
+                gap: 1rem;
+            }
+
+            .grid-item {
+                padding: 1rem;
+            }
+
+            .animal-category {
+                padding: 1rem;
+            }
+
+            .category-title {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <button onclick="showSection('home')">Inicio</button>
+        <button onclick="showSection('alphabet')">Alfabeto</button>
+        <button onclick="showSection('numbers')">Números</button>
+        <button onclick="showSection('time')">Hora</button>
+        <button onclick="showSection('animals')">Animales</button>
+    </nav>
+
+    <!-- Sección Inicio -->
+    <section id="home" class="section active">
+        <div class="container">
+            <h1>Aprende Italiano - Curso Básico</h1>
+            <div class="grid-container">
+                <div class="grid-item">
+                    <h3>Alfabeto y Pronunciación</h3>
+                    <p>Aprende el alfabeto italiano y su correcta pronunciación.</p>
+                </div>
+                <div class="grid-item">
+                    <h3>Números</h3>
+                    <p>Domina los números en italiano, desde básicos hasta avanzados.</p>
+                </div>
+                <div class="grid-item">
+                    <h3>La Hora</h3>
+                    <p>Aprende a decir y preguntar la hora en italiano.</p>
+                </div>
+                <div class="grid-item">
+                    <h3>Los Animales</h3>
+                    <p>Vocabulario completo sobre animales en italiano.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Alfabeto -->
+    <section id="alphabet" class="section">
+        <div class="container">
+            <h1>L'alfabeto Italiano</h1>
+            <div class="grid-container" id="alphabetGrid"></div>
+        </div>
+    </section>
+
+    <!-- Sección Números -->
+    <section id="numbers" class="section">
+        <div class="container">
+            <h1>I Numeri</h1>
+            <div class="grid-container" id="numbersGrid"></div>
+        </div>
+    </section>
+
+    <!-- Sección Hora -->
+    <section id="time" class="section">
+        <div class="container">
+            <h1>L'ora</h1>
+            <div class="grid-container" id="timeGrid"></div>
+        </div>
+    </section>
+
+    <!-- Sección Animales -->
+    <section id="animals" class="section">
+        <div class="container">
+            <h1>Gli Animali</h1>
+            <div id="animalsContainer">
+                <!-- Las categorías se agregarán aquí dinámicamente -->
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Sistema de navegación y audio
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        // Sistema de audio
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const cleanText = prepareTextForSpeech(text);
+                const utterance = new SpeechSynthesisUtterance(cleanText);
+                utterance.lang = 'it-IT';
+                utterance.rate = 0.8;
+                utterance.pitch = 1.0;
+                utterance.volume = 1.0;
+                
+                setItalianVoice(utterance);
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function prepareTextForSpeech(text) {
+            const replacements = {
+                "l'oca": "loca",
+                "l'aquila": "laquila",
+                "l'ape": "lape",
+                "l'alce": "lalce",
+                "l'orso": "lorso",
+                "l'orca": "lorca",
+                "l'ostrica": "lostrica",
+                "l'aragosta": "laragosta",
+                "l'astice": "lastice",
+                "l'anguilla": "languilla",
+                "l'aringa": "laringa",
+                "l'anatra": "lanatra",
+                "l'antilope": "lantilope",
+                "l'elefante": "lelefante",
+                "l'afide": "lafide",
+                "l'avvoltoio": "lavvoltoio"
+            };
+
+            let cleanText = text.toLowerCase();
+            for (let [original, replacement] of Object.entries(replacements)) {
+                cleanText = cleanText.replace(new RegExp(original, 'gi'), replacement);
+            }
+            return cleanText;
+        }
+
+        function setItalianVoice(utterance) {
+            const voices = speechSynthesis.getVoices();
+            const italianVoice = voices.find(voice => 
+                voice.lang === 'it-IT' && voice.name.includes('Google')
+            ) || voices.find(voice => 
+                voice.lang === 'it-IT'
+            ) || voices.find(voice => 
+                voice.lang.startsWith('it')
+            );
+
+            if (italianVoice) {
+                utterance.voice = italianVoice;
+            }
+        }
+
+        // Datos del alfabeto
+        const alphabet = [
+            { letter: 'A a', pronunciation: 'a' },
+            { letter: 'B b', pronunciation: 'bi' },
+            { letter: 'C c', pronunciation: 'ci' },
+            { letter: 'D d', pronunciation: 'di' },
+            { letter: 'E e', pronunciation: 'e' },
+            { letter: 'F f', pronunciation: 'effe' },
+            { letter: 'G g', pronunciation: 'gi' },
+            { letter: 'H h', pronunciation: 'acca' },
+            { letter: 'I i', pronunciation: 'i' },
+            { letter: 'L l', pronunciation: 'elle' },
+            { letter: 'M m', pronunciation: 'emme' },
+            { letter: 'N n', pronunciation: 'enne' },
+            { letter: 'O o', pronunciation: 'o' },
+            { letter: 'P p', pronunciation: 'pi' },
+            { letter: 'Q q', pronunciation: 'cu' },
+            { letter: 'R r', pronunciation: 'erre' },
+            { letter: 'S s', pronunciation: 'esse' },
+            { letter: 'T t', pronunciation: 'ti' },
+            { letter: 'U u', pronunciation: 'u' },
+            { letter: 'V v', pronunciation: 'vu' },
+            { letter: 'Z z', pronunciation: 'zeta' }
+        ];
+
+        // Datos de números
+        const numbers = [
+            { number: '0', italian: 'zero' },
+            { number: '1', italian: 'uno' },
+            { number: '2', italian: 'due' },
+            { number: '3', italian: 'tre' },
+            { number: '4', italian: 'quattro' },
+            { number: '5', italian: 'cinque' },
+            { number: '6', italian: 'sei' },
+            { number: '7', italian: 'sette' },
+            { number: '8', italian: 'otto' },
+            { number: '9', italian: 'nove' },
+            { number: '10', italian: 'dieci' },
+            { number: '11', italian: 'undici' },
+            { number: '12', italian: 'dodici' },
+            { number: '13', italian: 'tredici' },
+            { number: '14', italian: 'quattordici' },
+            { number: '15', italian: 'quindici' },
+            { number: '16', italian: 'sedici' },
+            { number: '17', italian: 'diciassette' },
+            { number: '18', italian: 'diciotto' },
+            { number: '19', italian: 'diciannove' },
+            { number: '20', italian: 'venti' },
+            { number: '30', italian: 'trenta' },
+            { number: '40', italian: 'quaranta' },
+            { number: '50', italian: 'cinquanta' },
+            { number: '60', italian: 'sessanta' },
+            { number: '70', italian: 'settanta' },
+            { number: '80', italian: 'ottanta' },
+            { number: '90', italian: 'novanta' },
+            { number: '100', italian: 'cento' },
+            { number: '1000', italian: 'mille' }
+        ];
+
+        // Datos de la hora
+        const timeExpressions = [
+            { expression: "Che ora è?", translation: "¿Qué hora es?" },
+            { expression: "È l'una", translation: "Es la una" },
+            { expression: "Sono le due", translation: "Son las dos" },
+            { expression: "È mezzogiorno", translation: "Es mediodía" },
+            { expression: "È mezzanotte", translation: "Es medianoche" },
+            { expression: "e un quarto", translation: "y cuarto" },
+            { expression: "e mezza", translation: "y media" },
+            { expression: "meno un quarto", translation: "menos cuarto" },
+            { expression: "di mattina", translation: "de la mañana" },
+            { expression: "del pomeriggio", translation: "de la tarde" },
+            { expression: "di sera", translation: "de la noche" },
+            { expression: "di notte", translation: "de la madrugada" }
+        ];
+
+        // Datos de animales
+        const animals = {
+            'Animales domésticos': [
+                { name: 'il cane', translation: 'el perro' },
+                { name: 'il gatto', translation: 'el gato' },
+                { name: 'il coniglio', translation: 'el conejo' },
+                { name: 'il criceto', translation: 'el hámster' },
+                { name: 'il pappagallo', translation: 'el loro' }
+            ],
+            'Animales de granja': [
+                { name: 'la mucca', translation: 'la vaca' },
+                { name: 'il maiale', translation: 'el cerdo' },
+                { name: 'la pecora', translation: 'la oveja' },
+                { name: 'la gallina', translation: 'la gallina' },
+                { name: 'il cavallo', translation: 'el caballo' }
+            ],
+            'Animales salvajes': [
+                { name: 'il leone', translation: 'el león' },
+                { name: 'la tigre', translation: 'el tigre' },
+                { name: "l'elefante", translation: 'el elefante' },
+                { name: 'la giraffa', translation: 'la jirafa' },
+                { name: 'il lupo', translation: 'el lobo' }
+            ]
+        };
+
+        // Funciones de inicialización
+        function initializeAlphabet() {
+            const grid = document.getElementById('alphabetGrid');
+            grid.innerHTML = alphabet.map(item => `
+                <div class="grid-item">
+                    <h3>${item.letter}</h3>
+                    <p>Pronunciación: ${item.pronunciation}</p>
+                    <button class="audio-btn" onclick="speak('${item.letter.split(' ')[0]}')">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function initializeNumbers() {
+            const grid = document.getElementById('numbersGrid');
+            grid.innerHTML = numbers.map(item => `
+                <div class="grid-item">
+                    <h3>${item.number}</h3>
+                    <p>${item.italian}</p>
+                    <button class="audio-btn" onclick="speak('${item.italian}')">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function initializeTime() {
+            const grid = document.getElementById('timeGrid');
+            grid.innerHTML = timeExpressions.map(item => `
+                <div class="grid-item">
+                    <h3>${item.expression}</h3>
+                    <p>${item.translation}</p>
+                    <button class="audio-btn" onclick="speak('${item.expression}')">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function initializeAnimals() {
+            const container = document.getElementById('animalsContainer');
+            container.innerHTML = Object.entries(animals).map(([category, items]) => `
+                <div class="animal-category">
+                    <h2 class="category-title">${category}</h2>
+                    <div class="grid-container">
+                        ${items.map(animal => `
+                            <div class="grid-item">
+                                <h3>${animal.name}</h3>
+                                <p>${animal.translation}</p>
+                                <button class="audio-btn" onclick="speak('${animal.name}')">
+                                    <i class="fas fa-volume-up"></i>
+                                </button>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Inicializar todo cuando se carga la página
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeAlphabet();
+            initializeNumbers();
+            initializeTime();
+            initializeAnimals();
+
+            // Cargar voces cuando estén disponibles
+            if ('speechSynthesis' in window) {
+                speechSynthesis.onvoiceschanged = () => {
+                    const voices = speechSynthesis.getVoices();
+                    console.log('Voces disponibles:', voices.map(v => `${v.name} (${v.lang})`));
+                };
+            }
+
+            // Ajustar altura en móvil
+            function adjustHeight() {
+                const vh = window.innerHeight * 0.01;
+                document.documentElement.style.setProperty('--vh', `${vh}px`);
+            }
+
+            window.addEventListener('resize', adjustHeight);
+            adjustHeight();
+        });
+    </script>
+</body>
+</html>

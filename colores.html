@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colores en Italiano</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="alfabeto.html">Alfabeto</a>
+        <a href="numeros.html">Números</a>
+        <a href="hora.html">Hora</a>
+        <a href="colores.html" class="active">Colores</a>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1>Los Colores en Italiano</h1>
+            <p>Aprende los colores en italiano y sus diferentes formas según el género y número.</p>
+        </header>
+
+        <div class="content">
+            <section>
+                <h2><i class="fas fa-venus-mars"></i> Colores con género</h2>
+                <p>Algunos colores cambian según el género (masculino/femenino) y el número (singular/plural).</p>
+                
+                <table>
+                    <tr>
+                        <th>Color</th>
+                        <th>Masculino</th>
+                        <th>Femenino</th>
+                        <th>Plural Masculino</th>
+                        <th>Plural Femenino</th>
+                        <th>Significado</th>
+                        <th>Audio</th>
+                    </tr>
+                    <tr>
+                        <td><div class="color-sample" style="background-color: #007fff"></div></td>
+                        <td>azzurro</td>
+                        <td>azzurra</td>
+                        <td>azzurri</td>
+                        <td>azzurre</td>
+                        <td>azul</td>
+                        <td><button class="audio-btn" onclick="playColorWithGender('azzurro', 'masculino')"><i class="fas fa-volume-up"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td><div class="color-sample" style="background-color: #ffffff"></div></td>
+                        <td>bianco</td>
+                        <td>bianca</td>
+                        <td>bianchi</td>
+                        <td>bianche</td>
+                        <td>blanco/a</td>
+                        <td><button class="audio-btn" onclick="playColorWithGender('bianco', 'masculino')"><i class="fas fa-volume-up"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td><div class="color-sample" style="background-color: #000000"></div></td>
+                        <td>nero</td>
+                        <td>nera</td>
+                        <td>neri</td>
+                        <td>nere</td>
+                        <td>negro/a</td>
+                        <td><button class="audio-btn" onclick="playColorWithGender('nero', 'masculino')"><i class="fas fa-volume-up"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td><div class="color-sample" style="background-color: #808080"></div></td>
+                        <td>grigio</td>
+                        <td>grigia</td>
+                        <td>grigi</td>
+                        <td>grige</td>
+                        <td>gris</td>
+                        <td><button class="audio-btn" onclick="playColorWithGender('grigio', 'masculino')"><i class="fas fa-volume-up"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td><div class="color-sample" style="background-color: #ffff00"></div></td>
+                        <td>giallo</td>
+                        <td>gialla</td>
+                        <td>gialli</td>
+                        <td>gialle</td>
+                        <td>amarillo/a</td>
+                        <td><button class="audio-btn" onclick="playColorWithGender('giallo', 'masculino')"><i class="fas fa-volume-up"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td><div class="color-sample" style="background-color: #ff0000"></div></td>
+                        <td>rosso</td>
+                        <td>rossa</td>
+                        <td>rossi</td>
+                        <td>rosse</td>
+                        <td>rojo/a</td>
+                        <td><button class="audio-btn" onclick="playColorWithGender('rosso', 'masculino')"><i class="fas fa-volume-up"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td><div class="color-sample" style="background-color: #1abc9c"></div></td>
+                        <td>turchino</td>
+                        <td>turchina</td>
+                        <td>turchini</td>
+                        <td>turchine</td>
+                        <td>turquesa</td>
+                        <td><button class="audio-btn" onclick="playColorWithGender('turchino', 'masculino')"><i class="fas fa-volume-up"></i></button></td>
+                    </tr>
+                </table>
+            </section>
+
+            <section>
+                <h2><i class="fas fa-equals"></i> Colores invariables</h2>
+                <p>Estos colores no cambian según el género.</p>
+                
+                <table>
+                    <tr>
+                        <th>Color</th>
+                        <th>Italiano</th>
+                        <th>Plural</th>
+                        <th>Significado</th>
+                        <th>Audio</th>
+                    </tr>
+                    <tr>
+                        <td><div class="color-sample" style="background-color: #008000"></div></td>
+                        <td>verde</td>
+                        <td>verdi</td>
+                        <td>verde</td>
+                        <td><button class="audio-btn" onclick="playSound('verde')"><i class="fas fa-volume-up"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td><div class="color-sample" style="background-color: #ff99cc"></div></td>
+                        <td>rosa</td>
+                        <td>rosa</td>
+                        <td>rosa</td>
+                        <td><button class="audio-btn" onclick="playSound('rosa')"><i class="fas fa-volume-up"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td><div class="color-sample" style="background-color: #800080"></div></td>
+                        <td>viola</td>
+                        <td>viola</td>
+                        <td>violeta</td>
+                        <td><button class="audio-btn" onclick="playSound('viola')"><i class="fas fa-volume-up"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td><div class="color-sample" style="background-color: #964b00"></div></td>
+                        <td>marrone</td>
+                        <td>marroni</td>
+                        <td>marrón</td>
+                        <td><button class="audio-btn" onclick="playSound('marrone')"><i class="fas fa-volume-up"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td><div class="color-sample" style="background-color: #87ceeb"></div></td>
+                        <td>celeste</td>
+                        <td>celesti</td>
+                        <td>celeste</td>
+                        <td><button class="audio-btn" onclick="playSound('celeste')"><i class="fas fa-volume-up"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td><div class="color-sample" style="background-color: #00ffff"></div></td>
+                        <td>ciano</td>
+                        <td>ciano</td>
+                        <td>cian</td>
+                        <td><button class="audio-btn" onclick="playSound('ciano')"><i class="fas fa-volume-up"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td><div class="color-sample" style="background-color: #c7b8ea"></div></td>
+                        <td>lavanda</td>
+                        <td>lavanda</td>
+                        <td>lavanda</td>
+                        <td><button class="audio-btn" onclick="playSound('lavanda')"><i class="fas fa-volume-up"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td><div class="color-sample" style="background-color: #fff599"></div></td>
+                        <td>color crema</td>
+                        <td>color crema</td>
+                        <td>color crema</td>
+                        <td><button class="audio-btn" onclick="playSound('color crema')"><i class="fas fa-volume-up"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td><div class="color-sample" style="background-color: #ffa07a"></div></td>
+                        <td>arancione</td>
+                        <td>arancioni</td>
+                        <td>naranja</td>
+                        <td><button class="audio-btn" onclick="playSound('arancione')"><i class="fas fa-volume-up"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td><div class="color-sample" style="background-color: #32cd32"></div></td>
+                        <td>verde lima</td>
+                        <td>verdi lima</td>
+                        <td>verde lima</td>
+                        <td><button class="audio-btn" onclick="playSound('verde lima')"><i class="fas fa-volume-up"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td><div class="color-sample" style="background-color: #ff0033"></div></td>
+                        <td>granata</td>
+                        <td>granata</td>
+                        <td>granate</td>
+                        <td><button class="audio-btn" onclick="playSound('granata')"><i class="fas fa-volume-up"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td><div class="color-sample" style="background-color: #f5f5dc"></div></td>
+                        <td>beige</td>
+                        <td>beige</td>
+                        <td>beige</td>
+                        <td><button class="audio-btn" onclick="playSound('beige')"><i class="fas fa-volume-up"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td><div class="color-sample" style="background-color: #4b0082"></div></td>
+                        <td>indaco</td>
+                        <td>indaco</td>
+                        <td>añil</td>
+                        <td><button class="audio-btn" onclick="playSound('indaco')"><i class="fas fa-volume-up"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td><div class="color-sample" style="background-color: #f0e4cc"></div></td>
+                        <td>cachi</td>
+                        <td>cachi</td>
+                        <td>caqui</td>
+                        <td><button class="audio-btn" onclick="playSound('cachi')"><i class="fas fa-volume-up"></i></button></td>
+                    </tr>
+                </table>
+            </section>
+
+            <section>
+                <h2><i class="fas fa-palette"></i> Características del color</h2>
+                <p>Adjetivos útiles para describir colores.</p>
+                
+                <table>
+                    <tr>
+                        <th>Italiano</th>
+                        <th>Significado</th>
+                        <th>Audio</th>
+                    </tr>
+                    <tr>
+                        <td>chiaro</td>
+                        <td>claro</td>
+                        <td><button class="audio-btn" onclick="playSound('chiaro')"><i class="fas fa-volume-up"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>scuro</td>
+                        <td>oscuro</td>
+                        <td><button class="audio-btn" onclick="playSound('scuro')"><i class="fas fa-volume-up"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>opaco</td>
+                        <td>mate</td>
+                        <td><button class="audio-btn" onclick="playSound('opaco')"><i class="fas fa-volume-up"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td>brillante</td>
+                        <td>brillante</td>
+                        <td><button class="audio-btn" onclick="playSound('brillante')"><i class="fas fa-volume-up"></i></button></td>
+                    </tr>
+                </table>
+            </section>
+        </div>
+    </div>
+
+    <style>
+        .color-sample {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-block;
+            border: 1px solid #ccc;
+        }
+
+        .audio-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 35px;
+            height: 35px;
+        }
+
+        .audio-btn:hover {
+            background-color: #006634;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f5f5f5;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        section {
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            color: var(--primary);
+            margin: 1.5rem 0 1rem;
+        }
+    </style>
+
+    <script>
+        function speak(text, rate = 0.8) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'it-IT';
+                utterance.rate = rate;
+                
+                // Obtener la voz italiana si está disponible
+                const voices = speechSynthesis.getVoices();
+                const italianVoice = voices.find(voice => voice.lang.includes('it-IT'));
+                if (italianVoice) {
+                    utterance.voice = italianVoice;
+                }
+
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        // Cargar voces cuando estén disponibles
+        speechSynthesis.onvoiceschanged = () => {
+            const voices = speechSynthesis.getVoices();
+            console.log('Voces disponibles:', voices);
+        };
+
+        // Función para reproducir el sonido con un pequeño retraso para mejor calidad
+        function playSound(text) {
+            setTimeout(() => speak(text), 100);
+        }
+
+        // Función para reproducir el color y su género
+        function playColorWithGender(color, gender) {
+            const text = `${color} - ${gender}`;
+            playSound(text);
+        }
+    </script>
+</body>
+</html>
