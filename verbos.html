@@ -6,46 +6,30 @@
     <title>Verbos Italianos</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        .verbs-container {
+        .verb-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            padding: 20px;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
         }
-        .verb-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-        .verb-item {
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
+        .verb-button {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            text-align: center;
-            border: 1px solid #dee2e6;
-            position: relative;
         }
-        .verb-item:hover {
-            background-color: #e9ecef;
+        .verb-button:hover {
+            background-color: #f8f9fa;
             transform: translateY(-2px);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        .audio-button {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: #3498db;
-            font-size: 1.2em;
-        }
-        .audio-button:hover {
-            color: #2980b9;
-        }
-        .conjugation-modal {
+        .modal {
             display: none;
             position: fixed;
             top: 0;
@@ -64,68 +48,68 @@
             border-radius: 8px;
             position: relative;
         }
-        .close-button {
+        .close {
             position: absolute;
             right: 20px;
             top: 10px;
             font-size: 24px;
             cursor: pointer;
         }
+        .verb-title {
+            color: #009688;
+            font-size: 24px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .verb-meaning {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .conjugation-section {
+            margin-top: 20px;
+        }
         .conjugation-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-top: 10px;
         }
         .conjugation-table th {
             background-color: #f8f9fa;
             padding: 10px;
             text-align: left;
+            color: #009688;
         }
         .conjugation-table td {
             padding: 10px;
-            border-bottom: 1px solid #dee2e6;
+            border-bottom: 1px solid #eee;
         }
-        .hero-section {
-            background-color: #3498db;
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-            margin-bottom: 30px;
+        .audio-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #009688;
+            font-size: 1.2em;
+            padding: 5px;
         }
-        .verb-section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+        .audio-button:hover {
+            color: #00796b;
         }
-        .verb-card {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .verb-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        .verb-meaning {
-            color: #666;
-            font-style: italic;
-            margin-bottom: 15px;
-        }
-        .verb-examples {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 4px;
-            margin: 15px 0;
-        }
-        .verb-example {
-            margin: 10px 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        @media (max-width: 768px) {
+            .modal-content {
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                border-radius: 0;
+            }
+            .conjugation-table {
+                font-size: 14px;
+            }
+            .verb-title {
+                font-size: 20px;
+            }
         }
     </style>
 </head>
@@ -143,19 +127,17 @@
         </nav>
     </header>
 
-    <div class="hero-section">
+    <div class="hero">
         <h1>Verbos en Italiano</h1>
-        <p>Aprende y practica los verbos más importantes del italiano</p>
+        <p>Aprende los verbos más importantes del italiano</p>
     </div>
 
-    <div class="verbs-container">
-        <div class="verb-list" id="verbList"></div>
-    </div>
+    <div class="verb-grid" id="verbGrid"></div>
 
-    <div class="conjugation-modal" id="conjugationModal">
+    <div class="modal" id="verbModal">
         <div class="modal-content">
-            <span class="close-button" onclick="closeModal()">&times;</span>
-            <div id="conjugationContent"></div>
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modalContent"></div>
         </div>
     </div>
 
@@ -170,81 +152,97 @@
             });
         }
 
-        function showConjugation(verb) {
-            const modal = document.getElementById('conjugationModal');
-            const content = document.getElementById('conjugationContent');
+        function showVerb(verb) {
+            const modal = document.getElementById('verbModal');
+            const content = document.getElementById('modalContent');
             
-            if (verb === 'abbaiare') {
-                content.innerHTML = `
-                    <h2>ABBAIARE [ladrar] <button onclick="playAudio('abbaiare')" class="audio-button">🔊</button></h2>
-                    <p><em>Verbo irregolare</em></p>
-                    
+            const conjugations = {
+                abbaiare: {
+                    meaning: 'ladrar',
+                    type: 'irregolare',
+                    presente: {
+                        'io': 'abbaio',
+                        'tu': 'abbai',
+                        'lui/lei': 'abbaia',
+                        'noi': 'abbaiamo',
+                        'voi': 'abbaiate',
+                        'loro': 'abbaiano'
+                    },
+                    passato: {
+                        'io': 'ho abbaiato',
+                        'tu': 'hai abbaiato',
+                        'lui/lei': 'ha abbaiato',
+                        'noi': 'abbiamo abbaiato',
+                        'voi': 'avete abbaiato',
+                        'loro': 'hanno abbaiato'
+                    }
+                }
+                // Agregar más verbos aquí
+            };
+
+            const verbInfo = conjugations[verb] || {
+                meaning: '(significado pendiente)',
+                type: 'regulare',
+                presente: {},
+                passato: {}
+            };
+
+            content.innerHTML = `
+                <div class="verb-title">
+                    ${verb.toUpperCase()} [${verbInfo.meaning}]
+                    <button onclick="playAudio('${verb}')" class="audio-button">🔊</button>
+                </div>
+                <div class="verb-meaning">
+                    Verbo ${verbInfo.type}
+                </div>
+                <div class="conjugation-section">
                     <h3>INDICATIVO</h3>
                     <table class="conjugation-table">
                         <tr>
                             <th>Presente</th>
+                            <th>Audio</th>
                             <th>Passato Prossimo</th>
+                            <th>Audio</th>
                         </tr>
-                        <tr>
-                            <td>io abbaio <button onclick="playAudio('io abbaio')" class="audio-button">🔊</button></td>
-                            <td>io ho abbaiato <button onclick="playAudio('io ho abbaiato')" class="audio-button">🔊</button></td>
-                        </tr>
-                        <tr>
-                            <td>tu abbai <button onclick="playAudio('tu abbai')" class="audio-button">🔊</button></td>
-                            <td>tu hai abbaiato <button onclick="playAudio('tu hai abbaiato')" class="audio-button">🔊</button></td>
-                        </tr>
-                        <tr>
-                            <td>lui/lei abbaia <button onclick="playAudio('lui abbaia')" class="audio-button">🔊</button></td>
-                            <td>lui/lei ha abbaiato <button onclick="playAudio('lui ha abbaiato')" class="audio-button">🔊</button></td>
-                        </tr>
-                        <tr>
-                            <td>noi abbaiamo <button onclick="playAudio('noi abbaiamo')" class="audio-button">🔊</button></td>
-                            <td>noi abbiamo abbaiato <button onclick="playAudio('noi abbiamo abbaiato')" class="audio-button">🔊</button></td>
-                        </tr>
-                        <tr>
-                            <td>voi abbaiate <button onclick="playAudio('voi abbaiate')" class="audio-button">🔊</button></td>
-                            <td>voi avete abbaiato <button onclick="playAudio('voi avete abbaiato')" class="audio-button">🔊</button></td>
-                        </tr>
-                        <tr>
-                            <td>loro abbaiano <button onclick="playAudio('loro abbaiano')" class="audio-button">🔊</button></td>
-                            <td>loro hanno abbaiato <button onclick="playAudio('loro hanno abbaiato')" class="audio-button">🔊</button></td>
-                        </tr>
+                        ${Object.entries(verbInfo.presente).map(([pronoun, form]) => `
+                            <tr>
+                                <td>${pronoun} ${form}</td>
+                                <td><button onclick="playAudio('${pronoun} ${form}')" class="audio-button">🔊</button></td>
+                                <td>${pronoun} ${verbInfo.passato[pronoun]}</td>
+                                <td><button onclick="playAudio('${pronoun} ${verbInfo.passato[pronoun]}')" class="audio-button">🔊</button></td>
+                            </tr>
+                        `).join('')}
                     </table>
-                `;
-            } else {
-                content.innerHTML = `
-                    <h2>${verb} <button onclick="playAudio('${verb}')" class="audio-button">🔊</button></h2>
-                    <p>Conjugación en desarrollo...</p>
-                `;
-            }
+                </div>
+            `;
             
             modal.style.display = 'block';
         }
 
         function closeModal() {
-            const modal = document.getElementById('conjugationModal');
+            const modal = document.getElementById('verbModal');
             modal.style.display = 'none';
         }
 
-        // Cerrar modal cuando se hace clic fuera de él
+        // Cerrar modal cuando se hace clic fuera
         window.onclick = function(event) {
-            const modal = document.getElementById('conjugationModal');
+            const modal = document.getElementById('verbModal');
             if (event.target == modal) {
                 modal.style.display = 'none';
             }
         }
 
-        // Crear lista de verbos
-        const verbList = document.getElementById('verbList');
+        // Crear grid de verbos
+        const grid = document.getElementById('verbGrid');
         verbs.forEach(verb => {
-            const verbDiv = document.createElement('div');
-            verbDiv.className = 'verb-item';
-            verbDiv.innerHTML = `
+            const button = document.createElement('div');
+            button.className = 'verb-button';
+            button.innerHTML = `
                 ${verb}
-                <button onclick="playAudio('${verb}')" class="audio-button">🔊</button>
+                <button onclick="event.stopPropagation(); playAudio('${verb}')" class="audio-button">🔊</button>
             `;
-            verbDiv.onclick = () => showConjugation(verb);
-            verbList.appendChild(verbDiv);
+            button.onclick = () => showVerb(verb);
+            grid.appendChild(button);
         });
     </script>
 </body>
