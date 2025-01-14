@@ -250,6 +250,71 @@ section {
     color: #3498db;
 }
 
+/* Estilos para la página de verbos */
+.verb-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    padding: 20px;
+}
+
+.verb-button {
+    padding: 10px 15px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: lowercase;
+    font-size: 0.9rem;
+}
+
+.verb-button:hover {
+    background-color: #3498db;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.conjugation-block {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.conjugation-block h4 {
+    color: #3498db;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 5px;
+}
+
+.conjugation-block ul {
+    list-style: none;
+    padding: 0;
+}
+
+.conjugation-block li {
+    padding: 8px 0;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.verb-type {
+    color: #666;
+    font-style: italic;
+    margin-bottom: 20px;
+}
+
+#conjugationSection {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
 @media (max-width: 768px) {
     .container {
         padding: 1rem;
