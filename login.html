@@ -99,8 +99,14 @@
 
             try {
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                // Login successful
-                window.location.href = 'admin/dashboard.html';
+                // Verificar si el usuario tiene el UID correcto
+                if (userCredential.user.uid === '9sLXtNr8EMfj34IUc9F2dbCGYuF2') {
+                    window.location.href = 'admin/dashboard.html';
+                } else {
+                    errorMessage.style.display = 'block';
+                    errorMessage.textContent = 'No tienes permisos para acceder al panel de administración';
+                    await auth.signOut();
+                }
             } catch (error) {
                 errorMessage.style.display = 'block';
                 errorMessage.textContent = 'Email o contraseña incorrectos';
