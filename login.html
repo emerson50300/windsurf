@@ -77,13 +77,13 @@
 
         // Your web app's Firebase configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyC9yLV_HJhqNyEhWO1_PHM2Ql9r1-3ZVgo",
-            authDomain: "windsurf-italiano.firebaseapp.com",
-            projectId: "windsurf-italiano",
-            storageBucket: "windsurf-italiano.appspot.com",
-            messagingSenderId: "451262672390",
-            appId: "1:451262672390:web:7a07e62acd11d4cd9d5c46",
-            measurementId: "G-B7MXSHEPP7"
+            apiKey: "AIzaSyDKGPWmwH0d_8IZLXpBqzAFeQTOv5-YmvE",
+            authDomain: "windsurf-italiano-8c0a5.firebaseapp.com",
+            projectId: "windsurf-italiano-8c0a5",
+            storageBucket: "windsurf-italiano-8c0a5.appspot.com",
+            messagingSenderId: "1031404838526",
+            appId: "1:1031404838526:web:c0c9c9b9c9c9b9c9c9c9c9",
+            measurementId: "G-XXXXXXXXXX"
         };
 
         // Initialize Firebase
@@ -98,18 +98,24 @@
             const errorMessage = document.getElementById('error-message');
 
             try {
+                console.log('Intentando iniciar sesión...');
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                console.log('Usuario autenticado:', userCredential.user);
+                
                 // Verificar si el usuario tiene el UID correcto
                 if (userCredential.user.uid === '9sLXtNr8EMfj34IUc9F2dbCGYuF2') {
+                    console.log('UID correcto, redirigiendo...');
                     window.location.href = 'admin/dashboard.html';
                 } else {
+                    console.log('UID incorrecto');
                     errorMessage.style.display = 'block';
                     errorMessage.textContent = 'No tienes permisos para acceder al panel de administración';
                     await auth.signOut();
                 }
             } catch (error) {
+                console.error('Error de autenticación:', error);
                 errorMessage.style.display = 'block';
-                errorMessage.textContent = 'Email o contraseña incorrectos';
+                errorMessage.textContent = 'Email o contraseña incorrectos: ' + error.message;
             }
         });
     </script>
