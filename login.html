@@ -93,7 +93,7 @@
 
         // Check if user is already signed in
         onAuthStateChanged(auth, (user) => {
-            if (user && user.uid === '9sLXtNr8EMfj34IUc9F2dbCGYuF2') {
+            if (user && user.uid === 'J4BwnOntCzVoTPNoaaYgH9w4axZ2') {
                 window.location.href = 'admin/dashboard.html';
             }
         });
@@ -110,7 +110,7 @@
                 console.log('Usuario autenticado:', userCredential.user);
                 
                 // Verificar si el usuario tiene el UID correcto
-                if (userCredential.user.uid === '9sLXtNr8EMfj34IUc9F2dbCGYuF2') {
+                if (userCredential.user.uid === 'J4BwnOntCzVoTPNoaaYgH9w4axZ2') {
                     console.log('UID correcto, redirigiendo...');
                     window.location.href = 'admin/dashboard.html';
                 } else {
