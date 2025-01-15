@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riparare la macchina - Diálogo en Italiano</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2196F3;
+            --hover-color: #1976D2;
+            --light-bg: #f5f5f5;
+            --shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: var(--light-bg);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            transition: background-color 0.2s;
+        }
+
+        .back-button:hover {
+            background-color: var(--hover-color);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .dialogue-container {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .dialogue-line {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border-radius: 8px;
+            background: #f8f9fa;
+            transition: background-color 0.2s;
+        }
+
+        .dialogue-line:hover {
+            background: #e9ecef;
+        }
+
+        .speaker {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .text {
+            margin-bottom: 0.5rem;
+        }
+
+        .play-button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .play-button:hover {
+            background: var(--hover-color);
+        }
+
+        .play-button i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../dialogos.html" class="back-button">← Volver a Diálogos</a>
+    
+    <div class="container">
+        <h1>Riparare la macchina</h1>
+        
+        <div class="dialogue-container">
+            aqui
+        </div>
+    </div>
+
+    <script>
+        const synth = window.speechSynthesis;
+
+        function speak(text) {
+            // Cancel any ongoing speech
+            synth.cancel();
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            
+            // Set Italian voice
+            let italianVoice = null;
+            const voices = synth.getVoices();
+            
+            for (const voice of voices) {
+                if (voice.lang.includes('it')) {
+                    italianVoice = voice;
+                    break;
+                }
+            }
+
+            if (italianVoice) {
+                utterance.voice = italianVoice;
+            }
+
+            utterance.lang = 'it-IT';
+            utterance.rate = 0.9; // Slightly slower
+            utterance.pitch = 1;
+
+            synth.speak(utterance);
+        }
+
+        // Load voices when they're available
+        speechSynthesis.onvoiceschanged = function() {
+            console.log('Voices loaded');
+        };
+    </script>
+</body>
+</html>
