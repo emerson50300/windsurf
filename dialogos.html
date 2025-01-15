@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diálogos en Italiano</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2196F3;
+            --hover-color: #1976D2;
+            --light-bg: #f5f5f5;
+            --shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: var(--light-bg);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .description {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .dialogues-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        .dialogue-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #eee;
+        }
+
+        .dialogue-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            border-color: var(--primary-color);
+        }
+
+        .category-header {
+            color: var(--primary-color);
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            transition: background-color 0.2s;
+        }
+
+        .back-button:hover {
+            background-color: var(--hover-color);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .dialogues-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-button">← Volver al inicio</a>
+    
+    <div class="container">
+        <h1>Diálogos en Italiano</h1>
+        <p class="description">Sesenta diálogos gratuitos en italiano (con transcripciones), que comienzan fáciles y gradualmente se vuelven más difíciles. ¡Escuche varias veces ANTES de mirar la transcripción!</p>
+
+        <div class="dialogues-grid">
+            <div class="dialogue-item">Cambiare i soldi</div>
+            <div class="dialogue-item">Riparare la macchina</div>
+            <div class="dialogue-item">Noleggio macchine bici</div>
+            <div class="dialogue-item">Al Bar</div>
+            <div class="dialogue-item">Pizza d'asporto</div>
+            <div class="dialogue-item">Prenotare un ristorante</div>
+            <div class="dialogue-item">Comida callejera</div>
+            <div class="dialogue-item">Al pub</div>
+            <div class="dialogue-item">La ricerca della scuola di lingua italiana</div>
+            <div class="dialogue-item">Prenotazione di una scuola di italiano</div>
+            <div class="dialogue-item">Scuola d'italiano: sistemazione</div>
+            <div class="dialogue-item">Scuola d'italiano: estancia en casa de familia</div>
+            <div class="dialogue-item">Scuola d'italiano: primo giorno in classe</div>
+            <div class="dialogue-item">Scuola d'italiano: chiedere aiuto</div>
+            <div class="dialogue-item">Internet Cafè</div>
+            <div class="dialogue-item">Ufficio postale (mandare/ricevere un pacco)</div>
+            <div class="dialogue-item">Problemi, Dottore</div>
+            <div class="dialogue-item">Problemi, Dentista</div>
+            <div class="dialogue-item">Problemi, Raccontare una crimine</div>
+            <div class="dialogue-item">Problemi, Chiedere aiuto</div>
+            <div class="dialogue-item">Problemi, Perdere il bagaglio</div>
+            <div class="dialogue-item">Problemi, Venire arrestato</div>
+            <div class="dialogue-item">Problemi, Avere un crollo</div>
+            <div class="dialogue-item">Problemi, Restare coinvolto in un incidente</div>
+            <div class="dialogue-item">Problemi, Reclami</div>
+            <div class="dialogue-item">Shopping, Comprare una SIM e uno smartphone</div>
+            <div class="dialogue-item">Compras, Supermercato</div>
+            <div class="dialogue-item">Compras, Vestiti</div>
+            <div class="dialogue-item">Compras, Macelleria</div>
+            <div class="dialogue-item">Compras, Pescheria</div>
+            <div class="dialogue-item">Compras, Enoteca</div>
+            <div class="dialogue-item">Compras, Fruttivendolo</div>
+            <div class="dialogue-item">Compras, Panetteria</div>
+            <div class="dialogue-item">Compras, Edicola</div>
+            <div class="dialogue-item">Compras, Tabaccheria</div>
+            <div class="dialogue-item">Compras, Parrucchieri</div>
+            <div class="dialogue-item">Compras, Studio di tatuaggi</div>
+            <div class="dialogue-item">Compras, Librería</div>
+            <div class="dialogue-item">Compras, Lavanderia</div>
+            <div class="dialogue-item">Compras, Gelateria</div>
+            <div class="dialogue-item">Compras, Contrattare (al mercato delle pulci)</div>
+            <div class="dialogue-item">Compras, Farmacia</div>
+            <div class="dialogue-item">Compras, Negozio di scarpe</div>
+            <div class="dialogue-item">Sport, Iscriversi en palestra</div>
+            <div class="dialogue-item">Deporte, Piscina</div>
+            <div class="dialogue-item">Deporte, Noleggio sci</div>
+            <div class="dialogue-item">Contesti sociali, Presentarsi</div>
+            <div class="dialogue-item">Contesti sociali, Esprimere la propria opinione</div>
+            <div class="dialogue-item">Contesti sociali, Invitare qualcuno</div>
+            <div class="dialogue-item">Contesti sociali, Rifiutare un invito</div>
+            <div class="dialogue-item">In viaggio, Chiedere informazioni stradali</div>
+            <div class="dialogue-item">In viaggio, Alla biglietteria della stazione</div>
+            <div class="dialogue-item">In viaggio, Prenotare un taxi</div>
+            <div class="dialogue-item">En viaggio, En taxi</div>
+            <div class="dialogue-item">En viaggio, Check-in/check-out del hotel</div>
+            <div class="dialogue-item">In viaggio, Fare il check-in all'aeroporto</div>
+            <div class="dialogue-item">In viaggio, Affittare una stanza</div>
+            <div class="dialogue-item">In viaggio, Ufficio informazioni turistiche</div>
+            <div class="dialogue-item">In viaggio, Un giro per la città</div>
+            <div class="dialogue-item">In viaggio, Cambiare casa</div>
+        </div>
+    </div>
+</body>
+</html>

@@ -90,6 +90,75 @@
                 font-size: 1rem;
             }
         }
+
+        .custom-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .custom-button:hover {
+            background-color: #45a049;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 800px;
+            border-radius: 10px;
+        }
+
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-button:hover {
+            color: black;
+        }
+
+        .dialogue-list {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .dialogue-item {
+            padding: 10px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .dialogue-item:hover {
+            background-color: #e0e0e0;
+        }
     </style>
 </head>
 <body>
@@ -111,6 +180,29 @@
             <h1>La Familia en Italiano</h1>
             <p>Aprende el vocabulario de la familia en italiano</p>
         </header>
+
+        <!-- Botón de diálogos -->
+        <button id="dialoButton" class="custom-button" onclick="toggleDialogues()">dialo</button>
+
+        <!-- Modal para los diálogos -->
+        <div id="dialogueModal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" onclick="toggleDialogues()">&times;</span>
+                <h2>Diálogos</h2>
+                <p>Sesenta diálogos gratuitos en italiano (con transcripciones), que comienzan fáciles y gradualmente se vuelven más difíciles. ¡Escuche varias veces ANTES de mirar la transcripción!</p>
+                <div class="dialogue-list">
+                    <div class="dialogue-item">Cambiare i soldi</div>
+                    <div class="dialogue-item">Riparare la macchina</div>
+                    <div class="dialogue-item">Noleggio macchine bici</div>
+                    <div class="dialogue-item">Al Bar</div>
+                    <div class="dialogue-item">Pizza d'asporto</div>
+                    <div class="dialogue-item">Prenotare un ristorante</div>
+                    <div class="dialogue-item">Comida callejera</div>
+                    <div class="dialogue-item">Al pub</div>
+                    <!-- ... resto de los diálogos ... -->
+                </div>
+            </div>
+        </div>
 
         <div class="family-grid">
             <div class="family-card">
@@ -269,6 +361,23 @@
             }
 
             synth.speak(utterance);
+        }
+
+        function toggleDialogues() {
+            const modal = document.getElementById('dialogueModal');
+            if (modal.style.display === "block") {
+                modal.style.display = "none";
+            } else {
+                modal.style.display = "block";
+            }
+        }
+
+        // Cerrar el modal cuando se hace clic fuera de él
+        window.onclick = function(event) {
+            const modal = document.getElementById('dialogueModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
         }
     </script>
 </body>
