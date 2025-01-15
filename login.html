@@ -4,68 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Panel de Administración</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f5f5f5;
+            background-color: #f8f9fa;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
         }
         .login-container {
-            background: white;
-            padding: 40px;
+            background-color: white;
+            padding: 2rem;
             border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
             width: 100%;
             max-width: 400px;
         }
-        .login-title {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #333;
-        }
-        .form-floating {
-            margin-bottom: 20px;
-        }
-        .btn-login {
-            width: 100%;
-            padding: 12px;
-            font-size: 16px;
-            background-color: #007bff;
-            border: none;
-        }
-        .btn-login:hover {
-            background-color: #0056b3;
-        }
-        #error-message {
-            color: red;
-            text-align: center;
-            margin-top: 10px;
+        .error-message {
             display: none;
+            color: red;
+            margin-top: 1rem;
         }
     </style>
 </head>
 <body>
     <div class="login-container">
-        <h2 class="login-title">Panel de Administración</h2>
-        <div class="alert alert-info" role="alert">
-            Credenciales de acceso:<br>
-            Email: novara5030@gmail.com<br>
-            Contraseña: nejapa503
-        </div>
+        <h2 class="text-center mb-4">Panel de Administración</h2>
         <form id="loginForm">
-            <div class="form-floating">
-                <input type="email" class="form-control" id="email" placeholder="name@example.com" value="novara5030@gmail.com" required>
-                <label for="email">Email</label>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" required>
             </div>
-            <div class="form-floating">
-                <input type="password" class="form-control" id="password" placeholder="Password" value="nejapa503" required>
-                <label for="password">Contraseña</label>
+            <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="password" required>
             </div>
-            <button type="submit" class="btn btn-primary btn-login">Iniciar Sesión</button>
-            <div id="error-message"></div>
+            <div id="error-message" class="error-message"></div>
+            <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
         </form>
     </div>
 
@@ -127,6 +103,6 @@
         });
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
