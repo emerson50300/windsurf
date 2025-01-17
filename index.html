@@ -3,24 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Italiano Básico - Aprende italiano de forma interactiva</title>
+    <title>Italiano Básico</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            padding: 10px;
+            margin: 0;
+            padding: 0;
             background-color: #f8f9fa;
+        }
+        .container {
+            padding: 10px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
         .header {
             text-align: center;
-            padding: 10px 0;
-            margin-bottom: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 10px;
+            margin-bottom: 15px;
+            background-color: #4CAF50;
+            color: white;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        .header p {
+            margin: 5px 0 0 0;
+            font-size: 0.9rem;
+            opacity: 0.9;
         }
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 15px;
             padding: 0;
         }
@@ -32,6 +46,7 @@
             transition: transform 0.2s;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             border: none;
+            margin: 0;
         }
         .card:hover {
             transform: translateY(-3px);
@@ -39,29 +54,37 @@
         }
         .btn-explore {
             width: 100%;
-            padding: 10px;
+            padding: 8px;
             border: none;
             border-radius: 6px;
-            background-color: #0d6efd;
+            background-color: #4CAF50;
             color: white;
             font-weight: 500;
             transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
         }
         .btn-explore:hover {
-            background-color: #0b5ed7;
+            background-color: #45a049;
+            color: white;
         }
         .card-title {
-            font-size: 1.1rem;
-            margin-bottom: 10px;
+            font-size: 1rem;
+            margin: 0 0 10px 0;
             color: #333;
+        }
+        .card p {
+            font-size: 0.9rem;
+            color: #666;
+            margin: 0 0 10px 0;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1 class="h3 mb-0">Italiano Básico</h1>
-            <p class="text-muted mb-0">Aprende italiano de forma interactiva</p>
+            <h1>Italiano Básico</h1>
+            <p>Aprende italiano de forma interactiva</p>
         </div>
 
         <div class="grid">
@@ -69,56 +92,56 @@
                 <div class="card-icon">📚</div>
                 <h2 class="card-title">El Alfabeto</h2>
                 <p>Aprende la pronunciación correcta de cada letra del alfabeto italiano.</p>
-                <a href="alfabeto.html" class="btn btn-explore">Explorar</a>
+                <a href="alfabeto.html" class="btn-explore">Explorar</a>
             </div>
 
             <div class="card">
                 <div class="card-icon">📅</div>
                 <h2 class="card-title">La Fecha</h2>
                 <p>Domina los días de la semana, meses y expresiones temporales.</p>
-                <a href="fecha.html" class="btn btn-explore">Explorar</a>
+                <a href="fecha.html" class="btn-explore">Explorar</a>
             </div>
 
             <div class="card">
                 <div class="card-icon">⏰</div>
                 <h2 class="card-title">La Hora</h2>
                 <p>Practica cómo decir la hora en italiano.</p>
-                <a href="hora.html" class="btn btn-explore">Explorar</a>
+                <a href="hora.html" class="btn-explore">Explorar</a>
             </div>
 
             <div class="card">
                 <div class="card-icon">💭</div>
                 <h2 class="card-title">Diálogos</h2>
                 <p>60 diálogos gratuitos en italiano con transcripciones.</p>
-                <a href="dialogos.html" class="btn btn-explore">Explorar</a>
+                <a href="dialogos.html" class="btn-explore">Explorar</a>
             </div>
 
             <div class="card">
                 <div class="card-icon">👨‍👩‍👧‍👦</div>
                 <h2 class="card-title">La Familia</h2>
                 <p>Aprende el vocabulario de la familia en italiano.</p>
-                <a href="familia.html" class="btn btn-explore">Explorar</a>
+                <a href="familia.html" class="btn-explore">Explorar</a>
             </div>
 
             <div class="card">
                 <div class="card-icon">🎨</div>
                 <h2 class="card-title">Los Colores</h2>
                 <p>Aprende los colores en italiano.</p>
-                <a href="colores.html" class="btn btn-explore">Explorar</a>
+                <a href="colores.html" class="btn-explore">Explorar</a>
             </div>
 
             <div class="card">
                 <div class="card-icon">💬</div>
                 <h2 class="card-title">Chat Italiano</h2>
                 <p>Practica italiano de forma interactiva con nuestro chat.</p>
-                <a href="chat.html" class="btn btn-explore">Explorar</a>
+                <a href="chat.html" class="btn-explore">Explorar</a>
             </div>
 
             <div class="card">
                 <div class="card-icon">📖</div>
                 <h2 class="card-title">Verbos</h2>
                 <p>Practica los verbos más importantes del italiano.</p>
-                <a href="verbos.html" class="btn btn-explore">Explorar</a>
+                <a href="verbos.html" class="btn-explore">Explorar</a>
             </div>
         </div>
     </div>
