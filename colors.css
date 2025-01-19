@@ -1,0 +1,36 @@
+/* Variables de colores globales */
+:root {
+    /* Colores principales */
+    --background-main: #E3F2FD;    /* Fondo principal (azul claro) */
+    --text-main: #0D47A1;          /* Texto principal (azul oscuro) */
+    --accent-color: #42A5F5;       /* Color de acento (azul medio) */
+    --button-color: #1E88E5;       /* Botones (azul fuerte) */
+    --hover-color: #90CAF9;        /* Enlaces al pasar el ratón (azul celeste) */
+    
+    /* Colores secundarios y variantes */
+    --background-white: #ffffff;
+    --border-light: #BBDEFB;       /* Azul muy claro para bordes */
+    --shadow-color: rgba(13, 71, 161, 0.1);  /* Sombra basada en el azul oscuro */
+    --overlay-color: rgba(13, 71, 161, 0.5); /* Overlay basado en el azul oscuro */
+    --text-secondary: #1976D2;     /* Azul medio para texto secundario */
+    --success-color: #4CAF50;      /* Verde para éxito */
+    --error-color: #f44336;        /* Rojo para errores */
+    --warning-color: #ff9800;      /* Naranja para advertencias */
+    --info-color: #42A5F5;         /* Azul medio para información */
+}
+
+/* Modo oscuro */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-main: #0A1929;         /* Azul oscuro para fondo */
+        --text-main: #90CAF9;              /* Azul celeste para texto */
+        --accent-color: #42A5F5;           /* Mantener azul medio */
+        --button-color: #1E88E5;           /* Mantener azul fuerte */
+        --hover-color: #64B5F6;            /* Azul más claro para hover */
+        --background-white: #132F4C;        /* Azul oscuro para fondos secundarios */
+        --border-light: #1E88E5;           /* Azul fuerte para bordes */
+        --shadow-color: rgba(144, 202, 249, 0.1);
+        --overlay-color: rgba(10, 25, 41, 0.7);
+        --text-secondary: #64B5F6;          /* Azul claro para texto secundario */
+    }
+}

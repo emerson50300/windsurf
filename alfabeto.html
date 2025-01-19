@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alfabeto Italiano</title>
+    <link rel="stylesheet" href="colors.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="gemini-tts.js"></script>
@@ -22,10 +23,10 @@
         }
 
         .card {
-            background: white;
+            background: var(--background-white);
             border-radius: 8px;
             padding: 1rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px var(--shadow-color);
             text-align: center;
             transition: transform 0.2s;
             cursor: pointer;
@@ -33,29 +34,31 @@
 
         .card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 4px 8px var(--shadow-color);
         }
 
         .letter {
             font-size: 2.5rem;
             font-weight: bold;
-            color: var(--primary);
+            color: var(--accent-color);
             margin-bottom: 0.5rem;
         }
 
         .pronunciation {
-            color: #666;
+            color: var(--text-secondary);
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
         }
 
         .example {
             font-style: italic;
+            color: var(--text-main);
             margin-bottom: 1rem;
         }
 
         .play-button {
-            background-color: var(--primary);
-            color: white;
+            background-color: var(--button-color);
+            color: rgb(12, 247, 90);
             border: none;
             padding: 0.5rem 1rem;
             border-radius: 4px;
@@ -65,15 +68,21 @@
             justify-content: center;
             gap: 0.5rem;
             width: 100%;
+            transition: background-color 0.3s ease;
         }
 
         .play-button:hover {
-            background-color: #006634;
+            background-color: var(--hover-color);
         }
 
         @media (max-width: 600px) {
             .letter {
                 font-size: 2rem;
+            }
+            
+            .grid {
+                gap: 0.5rem;
+                padding: 0.5rem;
             }
         }
     </style>
@@ -90,12 +99,14 @@
     <div class="container">
         <header>
             <h1>El Alfabeto Italiano</h1>
-            <p>El alfabeto italiano tiene 21 letras. Las letras J, K, W, X e Y solo se usan en palabras extranjeras como:
-J: "jazz"
-K: "karate"
-W: "web"
-X: "xilofono"
-Y: "yogurt"</p>
+            <p>El alfabeto italiano tiene 21 letras. Las letras J, K, W, X e Y solo se usan en palabras extranjeras como:</p>
+            <ul>
+                <li>J: "jazz"</li>
+                <li>K: "karate"</li>
+                <li>W: "web"</li>
+                <li>X: "xilofono"</li>
+                <li>Y: "yogurt"</li>
+            </ul>
         </header>
 
         <div class="grid" id="alphabetGrid"></div>
