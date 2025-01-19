@@ -36,51 +36,114 @@
             flex-direction: column;
             gap: 1rem;
             margin-bottom: 2rem;
+            padding: 1rem;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 10px;
         }
 
         .message {
             display: flex;
-            align-items: flex-start;
-            gap: 1rem;
+            flex-direction: column;
+            gap: 0.5rem;
             padding: 1rem;
-            border-radius: 8px;
+            border-radius: 12px;
             background: var(--background-light);
             transition: transform 0.3s ease;
+            max-width: 80%;
+            margin: 0.5rem 0;
         }
 
-        .message:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 2px 4px var(--shadow-color);
+        .message.user-message {
+            align-self: flex-end;
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .message.bot-message {
+            align-self: flex-start;
+            background: white;
+            border: 1px solid var(--border-light);
+        }
+
+        .message-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
         }
 
         .message-italian {
             color: var(--accent-color);
             font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
+            font-weight: 500;
+            line-height: 1.4;
+            padding: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
         }
 
         .message-spanish {
             color: var(--text-secondary);
             font-size: 1rem;
+            line-height: 1.4;
+            padding: 0.5rem;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+        }
+
+        .message.user-message .message-italian,
+        .message.user-message .message-spanish {
+            color: white;
+        }
+
+        .message-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
         }
 
         .play-button {
             background-color: var(--button-color);
-            color: rgb(12, 247, 90);
+            color: white;
             border: none;
             padding: 0.5rem 1rem;
-            border-radius: 4px;
+            border-radius: 20px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
         }
 
         .play-button:hover {
             background-color: var(--hover-color);
+            transform: translateY(-2px);
+        }
+
+        .message-time {
+            font-size: 0.8rem;
+            color: rgba(0, 0, 0, 0.5);
+            align-self: flex-end;
+            margin-top: 0.3rem;
+        }
+
+        .user-message .message-time {
+            color: rgba(255, 255, 255, 0.8);
         }
 
         .section-title {
@@ -169,12 +232,6 @@
 
         .send-button:hover {
             background-color: var(--hover-color);
-        }
-
-        .message-time {
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin: 2px 5px;
         }
 
         @media (max-width: 768px) {
@@ -358,19 +415,18 @@
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
             
-            let messageContent = text;
-            if (!isUser) {
-                messageContent += ` <button class="audio-button" onclick="speak('${text.replace(/'/g, "\\'")}')">🔊</button>`;
-            }
+            let messageContent = `
+                <div class="message-content">
+                    <div class="message-italian">${text}</div>
+                    ${translation ? `<div class="message-spanish">${translation}</div>` : ''}
+                </div>
+                <div class="message-actions">
+                    <button class="play-button" onclick="speak('${text.replace(/'/g, "\\'")}')">🔊</button>
+                </div>
+                <div class="message-time">${new Date().toLocaleTimeString()}</div>
+            `;
             
             messageDiv.innerHTML = messageContent;
-
-            if (translation) {
-                const translationDiv = document.createElement('div');
-                translationDiv.className = 'translation';
-                translationDiv.textContent = translation;
-                messageDiv.appendChild(translationDiv);
-            }
 
             messagesDiv.appendChild(messageDiv);
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
