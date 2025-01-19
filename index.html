@@ -84,6 +84,34 @@
             margin: 0 auto;
             line-height: 1.6;
         }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            padding: 1rem;
+            border-top: 1px solid #ddd;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .nav-item {
+            text-align: center;
+            color: #666;
+            text-decoration: none;
+        }
+
+        .nav-item i {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-item.active {
+            color: #4CAF50;
+        }
     </style>
 </head>
 <body>
@@ -144,6 +172,25 @@
             </div>
         </div>
     </div>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item active">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+        </a>
+        <a href="alfabeto.html" class="nav-item">
+            <i class="fas fa-font"></i>
+            <span>Alfabeto</span>
+        </a>
+        <a href="verbos-basicos.html" class="nav-item">
+            <i class="fas fa-star"></i>
+            <span>Verbos</span>
+        </a>
+        <a href="descripciones.html" class="nav-item">
+            <i class="fas fa-user"></i>
+            <span>Descripciones</span>
+        </a>
+    </nav>
 
     <script type="module">
         // Import the functions you need from the SDKs you need
