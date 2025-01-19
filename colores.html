@@ -2,100 +2,94 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Los Colores en Italiano</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colores en Italiano</title>
+    <link rel="stylesheet" href="colors.css">
     <link rel="stylesheet" href="styles.css">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1951834226818406"
-     crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        .colors-grid {
+        :root {
+            --background-white: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --accent-color: #4CAF50;
+            --text-secondary: #666;
+            --button-color: #4CAF50;
+            --hover-color: #388E3C;
+        }
+
+        .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
             padding: 1rem;
-            max-width: 1200px;
-            margin: 0 auto;
         }
 
         .color-card {
-            background: white;
-            border-radius: 10px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background: var(--background-white);
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 4px var(--shadow-color);
             text-align: center;
             transition: transform 0.2s;
-            position: relative;
-            overflow: hidden;
+            cursor: pointer;
         }
 
         .color-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 4px 8px var(--shadow-color);
         }
 
         .color-sample {
             width: 100%;
             height: 100px;
-            border-radius: 8px;
+            border-radius: 4px;
             margin-bottom: 1rem;
-            transition: all 0.3s;
         }
 
-        .color-sample:hover {
-            transform: scale(1.05);
-        }
-
-        .italian-word {
-            color: #4CAF50;
+        .color-name {
             font-size: 1.5rem;
             font-weight: bold;
-            margin: 0.5rem 0;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
         }
 
-        .spanish-word {
-            color: #666;
+        .color-translation {
+            color: var(--text-secondary);
             font-size: 1.1rem;
+            margin-bottom: 1rem;
         }
 
-        .pronunciation {
-            color: #888;
-            font-style: italic;
-            margin: 0.5rem 0;
-        }
-
-        .audio-button {
-            background: #4CAF50;
-            color: white;
+        .play-button {
+            background-color: var(--button-color);
+            color: rgb(12, 247, 90);
             border: none;
             padding: 0.5rem 1rem;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
-            margin-top: 1rem;
-            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            transition: background-color 0.3s ease;
         }
 
-        .audio-button:hover {
-            background: #388E3C;
+        .play-button:hover {
+            background-color: var(--hover-color);
         }
 
         @media (max-width: 768px) {
-            .colors-grid {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                padding: 0.8rem;
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 0.5rem;
+                padding: 0.5rem;
             }
 
-            .color-card {
-                padding: 1.2rem;
+            .color-name {
+                font-size: 1.2rem;
             }
 
-            .color-sample {
-                height: 80px;
-            }
-
-            .italian-word {
-                font-size: 1.3rem;
-            }
-
-            .spanish-word {
+            .color-translation {
                 font-size: 1rem;
             }
         }
@@ -117,57 +111,57 @@
         </div>
 
         <header>
-            <h1>Los Colores en Italiano</h1>
+            <h1>Colores en Italiano</h1>
             <p>Aprende los colores en italiano</p>
         </header>
 
-        <div class="colors-grid">
+        <div class="grid">
             <div class="color-card">
                 <div class="color-sample" style="background-color: #FF0000;"></div>
-                <div class="italian-word">Rosso</div>
-                <div class="spanish-word">Rojo</div>
+                <div class="color-name">Rosso</div>
+                <div class="color-translation">Rojo</div>
                 <div class="pronunciation">[RO-sso]</div>
-                <button class="audio-button" onclick="speak('rosso')">🔊 Escuchar</button>
+                <button class="play-button" onclick="speak('rosso')"><i class="fas fa-play"></i> Escuchar</button>
             </div>
 
             <div class="color-card">
                 <div class="color-sample" style="background-color: #0000FF;"></div>
-                <div class="italian-word">Blu</div>
-                <div class="spanish-word">Azul</div>
+                <div class="color-name">Blu</div>
+                <div class="color-translation">Azul</div>
                 <div class="pronunciation">[BLU]</div>
-                <button class="audio-button" onclick="speak('blu')">🔊 Escuchar</button>
+                <button class="play-button" onclick="speak('blu')"><i class="fas fa-play"></i> Escuchar</button>
             </div>
 
             <div class="color-card">
                 <div class="color-sample" style="background-color: #FFFF00;"></div>
-                <div class="italian-word">Giallo</div>
-                <div class="spanish-word">Amarillo</div>
+                <div class="color-name">Giallo</div>
+                <div class="color-translation">Amarillo</div>
                 <div class="pronunciation">[JA-llo]</div>
-                <button class="audio-button" onclick="speak('giallo')">🔊 Escuchar</button>
+                <button class="play-button" onclick="speak('giallo')"><i class="fas fa-play"></i> Escuchar</button>
             </div>
 
             <div class="color-card">
                 <div class="color-sample" style="background-color: #008000;"></div>
-                <div class="italian-word">Verde</div>
-                <div class="spanish-word">Verde</div>
+                <div class="color-name">Verde</div>
+                <div class="color-translation">Verde</div>
                 <div class="pronunciation">[VER-de]</div>
-                <button class="audio-button" onclick="speak('verde')">🔊 Escuchar</button>
+                <button class="play-button" onclick="speak('verde')"><i class="fas fa-play"></i> Escuchar</button>
             </div>
 
             <div class="color-card">
                 <div class="color-sample" style="background-color: #FFA500;"></div>
-                <div class="italian-word">Arancione</div>
-                <div class="spanish-word">Naranja</div>
+                <div class="color-name">Arancione</div>
+                <div class="color-translation">Naranja</div>
                 <div class="pronunciation">[a-ran-CHO-ne]</div>
-                <button class="audio-button" onclick="speak('arancione')">🔊 Escuchar</button>
+                <button class="play-button" onclick="speak('arancione')"><i class="fas fa-play"></i> Escuchar</button>
             </div>
 
             <div class="color-card">
                 <div class="color-sample" style="background-color: #800080;"></div>
-                <div class="italian-word">Viola</div>
-                <div class="spanish-word">Morado</div>
+                <div class="color-name">Viola</div>
+                <div class="color-translation">Morado</div>
                 <div class="pronunciation">[VIO-la]</div>
-                <button class="audio-button" onclick="speak('viola')">🔊 Escuchar</button>
+                <button class="play-button" onclick="speak('viola')"><i class="fas fa-play"></i> Escuchar</button>
             </div>
         </div>
 
@@ -184,53 +178,53 @@
             </script>
         </div>
 
-        <div class="colors-grid">
+        <div class="grid">
             <div class="color-card">
                 <div class="color-sample" style="background-color: #000000;"></div>
-                <div class="italian-word">Nero</div>
-                <div class="spanish-word">Negro</div>
+                <div class="color-name">Nero</div>
+                <div class="color-translation">Negro</div>
                 <div class="pronunciation">[NE-ro]</div>
-                <button class="audio-button" onclick="speak('nero')">🔊 Escuchar</button>
+                <button class="play-button" onclick="speak('nero')"><i class="fas fa-play"></i> Escuchar</button>
             </div>
 
             <div class="color-card">
                 <div class="color-sample" style="background-color: #FFFFFF; border: 1px solid #ddd;"></div>
-                <div class="italian-word">Bianco</div>
-                <div class="spanish-word">Blanco</div>
+                <div class="color-name">Bianco</div>
+                <div class="color-translation">Blanco</div>
                 <div class="pronunciation">[BIAN-co]</div>
-                <button class="audio-button" onclick="speak('bianco')">🔊 Escuchar</button>
+                <button class="play-button" onclick="speak('bianco')"><i class="fas fa-play"></i> Escuchar</button>
             </div>
 
             <div class="color-card">
                 <div class="color-sample" style="background-color: #808080;"></div>
-                <div class="italian-word">Grigio</div>
-                <div class="spanish-word">Gris</div>
+                <div class="color-name">Grigio</div>
+                <div class="color-translation">Gris</div>
                 <div class="pronunciation">[GRI-jo]</div>
-                <button class="audio-button" onclick="speak('grigio')">🔊 Escuchar</button>
+                <button class="play-button" onclick="speak('grigio')"><i class="fas fa-play"></i> Escuchar</button>
             </div>
 
             <div class="color-card">
                 <div class="color-sample" style="background-color: #964B00;"></div>
-                <div class="italian-word">Marrone</div>
-                <div class="spanish-word">Marrón</div>
+                <div class="color-name">Marrone</div>
+                <div class="color-translation">Marrón</div>
                 <div class="pronunciation">[ma-RRO-ne]</div>
-                <button class="audio-button" onclick="speak('marrone')">🔊 Escuchar</button>
+                <button class="play-button" onclick="speak('marrone')"><i class="fas fa-play"></i> Escuchar</button>
             </div>
 
             <div class="color-card">
                 <div class="color-sample" style="background-color: #FFC0CB;"></div>
-                <div class="italian-word">Rosa</div>
-                <div class="spanish-word">Rosa</div>
+                <div class="color-name">Rosa</div>
+                <div class="color-translation">Rosa</div>
                 <div class="pronunciation">[RO-sa]</div>
-                <button class="audio-button" onclick="speak('rosa')">🔊 Escuchar</button>
+                <button class="play-button" onclick="speak('rosa')"><i class="fas fa-play"></i> Escuchar</button>
             </div>
 
             <div class="color-card">
                 <div class="color-sample" style="background: linear-gradient(45deg, #FF0000, #FF7F00, #FFFF00, #00FF00, #0000FF, #4B0082, #8F00FF);"></div>
-                <div class="italian-word">Arcobaleno</div>
-                <div class="spanish-word">Arcoíris</div>
+                <div class="color-name">Arcobaleno</div>
+                <div class="color-translation">Arcoíris</div>
                 <div class="pronunciation">[ar-co-ba-LE-no]</div>
-                <button class="audio-button" onclick="speak('arcobaleno')">🔊 Escuchar</button>
+                <button class="play-button" onclick="speak('arcobaleno')"><i class="fas fa-play"></i> Escuchar</button>
             </div>
         </div>
 

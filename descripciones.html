@@ -3,126 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Descrizioni - Italiano Básico</title>
+    <title>Descripciones en Italiano</title>
+    <link rel="stylesheet" href="colors.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script src="gemini-tts.js"></script>
     <style>
+        :root {
+            --background-white: #ffffff;
+            --background-main: #f8f9fa;
+            --shadow-color: rgba(0,0,0,0.1);
+            --accent-color: #4CAF50;
+            --text-secondary: #666;
+            --button-color: #4CAF50;
+            --hover-color: #3e8e41;
+            --border-light: #4CAF50;
+        }
+
         .description-section {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .description-section h2 {
-            color: #4CAF50;
-            margin-bottom: 1.5rem;
-            border-bottom: 2px solid #4CAF50;
-            padding-bottom: 0.5rem;
-        }
-
-        .vocabulary-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin: 1rem 0;
-        }
-
-        .vocab-card {
-            background: #f8f9fa;
-            padding: 1rem;
+            background: var(--background-white);
             border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px var(--shadow-color);
+        }
+
+        .example-box {
+            background: var(--background-main);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .word-item {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            transition: all 0.3s ease;
-        }
-
-        .vocab-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .vocab-text {
-            flex-grow: 1;
-        }
-
-        .italian {
-            color: #4CAF50;
-            font-weight: 500;
-            margin-bottom: 0.25rem;
-        }
-
-        .spanish {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .audio-btn {
-            background: none;
-            border: none;
-            color: #4CAF50;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-        }
-
-        .audio-btn:hover {
-            background: rgba(76, 175, 80, 0.1);
-        }
-
-        .example-section {
-            background: #f0f7f0;
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-top: 1rem;
-        }
-
-        .example-item {
-            margin: 0.5rem 0;
-            padding: 0.5rem;
-            border-left: 3px solid #4CAF50;
-        }
-
-        .possessive-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1rem 0;
-            background: #f8f9fa;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .possessive-table th, .possessive-table td {
-            padding: 1rem;
-            text-align: left;
-            border: 1px solid #dee2e6;
-        }
-
-        .possessive-table th {
-            background: #4CAF50;
-            color: white;
-        }
-
-        .possessive-table tr:nth-child(even) {
-            background: #ffffff;
-        }
-
-        .note {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 1rem;
-            margin: 1rem 0;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: var(--background-white);
             border-radius: 4px;
+            box-shadow: 0 1px 3px var(--shadow-color);
+        }
+
+        .italian-word {
+            font-weight: bold;
+            color: var(--accent-color);
+            font-size: 1.2em;
+            margin-right: 15px;
+        }
+
+        .spanish-translation {
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .play-button {
+            background-color: var(--button-color);
+            color: rgb(12, 247, 90);
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: auto;
+            transition: background-color 0.3s ease;
+        }
+
+        .play-button:hover {
+            background-color: var(--hover-color);
         }
 
         .category-title {
-            color: #4CAF50;
-            margin: 1.5rem 0 1rem;
-            font-size: 1.2rem;
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--border-light);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .description-section {
+                padding: 15px;
+            }
+
+            .word-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .play-button {
+                margin: 10px auto 0;
+            }
         }
     </style>
 </head>

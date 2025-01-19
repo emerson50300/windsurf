@@ -2,162 +2,148 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>La Familia en Italiano</title>
+    <link rel="stylesheet" href="colors.css">
     <link rel="stylesheet" href="styles.css">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1951834226818406"
-     crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
+        :root {
+            --background-white: #f9f9f9;
+            --background-main: #f2f2f2;
+            --text-main: #333;
+            --text-secondary: #666;
+            --accent-color: #4CAF50;
+            --button-color: #4CAF50;
+            --hover-color: #388E3C;
+            --hover-color-light: #e0e0e0;
+            --shadow-color: rgba(0,0,0,0.1);
+        }
+
         .family-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 1.5rem;
-            padding: 1rem;
-            max-width: 1200px;
-            margin: 0 auto;
+            padding: 1.5rem;
         }
 
         .family-card {
-            background: white;
-            border-radius: 10px;
+            background: var(--background-white);
+            border-radius: 8px;
             padding: 1.5rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            text-align: center;
-            transition: transform 0.2s;
+            box-shadow: 0 2px 4px var(--shadow-color);
+            transition: transform 0.3s ease;
         }
 
         .family-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 4px 8px var(--shadow-color);
         }
 
-        .family-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .italian-word {
-            color: #4CAF50;
+        .family-title {
+            color: var(--accent-color);
             font-size: 1.5rem;
             font-weight: bold;
-            margin: 0.5rem 0;
+            margin-bottom: 1rem;
+            text-align: center;
         }
 
-        .spanish-word {
-            color: #666;
+        .family-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .family-member {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            background: var(--background-main);
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+
+        .family-member:hover {
+            background: var(--hover-color-light);
+        }
+
+        .member-info {
+            flex-grow: 1;
+        }
+
+        .italian-term {
+            color: var(--text-main);
+            font-weight: bold;
             font-size: 1.1rem;
+            margin-bottom: 0.3rem;
         }
 
-        .pronunciation {
-            color: #888;
-            font-style: italic;
-            margin: 0.5rem 0;
+        .spanish-term {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
         }
 
-        .audio-button {
-            background: #4CAF50;
-            color: white;
+        .play-button {
+            background-color: var(--button-color);
+            color: rgb(12, 247, 90);
             border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
+            padding: 0.5rem;
+            border-radius: 4px;
             cursor: pointer;
-            margin-top: 1rem;
-            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
         }
 
-        .audio-button:hover {
-            background: #388E3C;
+        .play-button:hover {
+            background-color: var(--hover-color);
+        }
+
+        .family-section {
+            background: var(--background-white);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 1.5rem;
+            box-shadow: 0 2px 4px var(--shadow-color);
+        }
+
+        .section-title {
+            color: var(--accent-color);
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
         }
 
         @media (max-width: 768px) {
             .family-grid {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                padding: 0.8rem;
+                grid-template-columns: 1fr;
+                padding: 1rem;
+                gap: 1rem;
             }
 
             .family-card {
-                padding: 1.2rem;
+                padding: 1rem;
             }
 
-            .family-icon {
-                font-size: 2rem;
-            }
-
-            .italian-word {
+            .family-title {
                 font-size: 1.3rem;
             }
 
-            .spanish-word {
+            .italian-term {
                 font-size: 1rem;
             }
-        }
 
-        .custom-button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin: 10px;
-            transition: background-color 0.3s;
-        }
+            .family-section {
+                margin: 1rem;
+                padding: 1rem;
+            }
 
-        .custom-button:hover {
-            background-color: #45a049;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 800px;
-            border-radius: 10px;
-        }
-
-        .close-button {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .close-button:hover {
-            color: black;
-        }
-
-        .dialogue-list {
-            margin-top: 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 10px;
-        }
-
-        .dialogue-item {
-            padding: 10px;
-            background-color: #f5f5f5;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .dialogue-item:hover {
-            background-color: #e0e0e0;
+            .section-title {
+                font-size: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
         }
     </style>
 </head>

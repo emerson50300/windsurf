@@ -4,142 +4,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Animales en Italiano</title>
+    <link rel="stylesheet" href="colors.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        .animal-grid {
+        :root {
+            --background-white: #f9f9f9;
+            --primary-color: #3498db;
+            --primary-dark: #2e6da4;
+            --primary-light: #66b3d9;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --shadow-soft: 0 2px 4px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.2);
+            --button-color: #4CAF50;
+            --hover-color: #3e8e41;
+            --accent-color: #03A9F4;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            padding: 1rem 0;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
         }
 
-        .animal-card {
+        .card {
             background: var(--background-white);
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 4px var(--shadow-color);
             text-align: center;
-            box-shadow: var(--shadow-soft);
-            transition: transform 0.3s ease;
+            transition: transform 0.2s;
         }
 
-        .animal-card:hover {
+        .card:hover {
             transform: translateY(-5px);
-            box-shadow: var(--shadow-medium);
+            box-shadow: 0 4px 8px var(--shadow-color);
         }
 
-        .animal-icon {
-            font-size: 2.5rem;
+        .animal-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 4px;
             margin-bottom: 1rem;
-            color: var(--primary-color);
         }
 
         .animal-name {
             font-size: 1.5rem;
-            color: var(--text-primary);
+            font-weight: bold;
+            color: var(--accent-color);
             margin-bottom: 0.5rem;
         }
 
-        .animal-translation {
+        .translation {
             color: var(--text-secondary);
-            font-style: italic;
+            font-size: 1.1rem;
             margin-bottom: 1rem;
         }
 
         .play-button {
-            background: var(--primary-color);
-            color: white;
+            background-color: var(--button-color);
+            color: rgb(12, 247, 90);
             border: none;
             padding: 0.5rem 1rem;
-            border-radius: 25px;
+            border-radius: 4px;
             cursor: pointer;
-            transition: background 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-            margin: 0 auto;
+            width: 100%;
+            transition: background-color 0.3s ease;
         }
 
         .play-button:hover {
-            background: var(--primary-dark);
+            background-color: var(--hover-color);
         }
 
-        .category-section {
-            margin-bottom: 2rem;
-        }
-
-        .category-title {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary-light);
-        }
-
-        @media (max-width: 768px) {
-            .animal-grid {
-                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-                gap: 1rem;
+        @media (max-width: 600px) {
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             }
-
-            .animal-card {
-                padding: 1rem;
-            }
-
-            .animal-icon {
-                font-size: 2rem;
-            }
-
-            .animal-name {
-                font-size: 1.2rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .animal-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .category-title {
-                font-size: 1.5rem;
-                text-align: center;
-            }
-        }
-
-        .search-container {
-            margin-bottom: 2rem;
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .search-input {
-            flex: 1;
-            min-width: 200px;
-            padding: 0.8rem;
-            border: 1px solid var(--primary-light);
-            border-radius: 25px;
-            font-size: 1rem;
-        }
-
-        .filter-button {
-            background: var(--background-white);
-            color: var(--primary-color);
-            border: 1px solid var(--primary-color);
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .filter-button.active {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        .filter-button:hover {
-            background: var(--primary-light);
-            color: white;
         }
     </style>
 </head>

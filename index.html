@@ -3,114 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Italiano Básico - Aprende Italiano</title>
+    <title>Italiano Básico</title>
+    <link rel="stylesheet" href="colors.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
+        :root {
+            --background-main: #f8f9fa;
+            --background-white: #ffffff;
+            --background-light: #f2f2f2;
+            --text-main: #333;
+            --text-secondary: #666;
+            --accent-color: #4CAF50;
+            --button-color: #4CAF50;
+            --hover-color: #388E3C;
+            --shadow-color: rgba(0,0,0,0.1);
         }
 
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            padding: 2rem 0;
-        }
-
-        .card {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
+        .hero-section {
+            background: var(--background-main);
+            padding: 4rem 2rem;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+            margin-bottom: 3rem;
         }
 
-        .card:hover {
-            transform: translateY(-10px);
-        }
-
-        .card-icon {
-            font-size: 2.5rem;
+        .hero-title {
+            color: var(--accent-color);
+            font-size: 3rem;
             margin-bottom: 1rem;
-            color: #4CAF50;
         }
 
-        .card-title {
-            color: #333;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
-
-        .card p {
-            color: #666;
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-
-        .btn-explore {
-            display: inline-block;
-            background: #4CAF50;
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
-            text-decoration: none;
-            transition: background 0.3s ease;
-        }
-
-        .btn-explore:hover {
-            background: #388E3C;
-        }
-
-        .header {
-            text-align: center;
-            padding: 3rem 0;
-            background: #f8f9fa;
-            border-radius: 15px;
+        .hero-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
             margin-bottom: 2rem;
         }
 
-        .header h1 {
-            color: #4CAF50;
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .lesson-card {
+            background: var(--background-white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px var(--shadow-color);
+            transition: transform 0.3s ease;
+            text-decoration: none;
+            color: var(--text-main);
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px var(--shadow-color);
+        }
+
+        .lesson-icon {
+            font-size: 2rem;
+            color: var(--accent-color);
             margin-bottom: 1rem;
         }
 
-        .header p {
-            color: #666;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #fff;
-            padding: 1rem;
-            border-top: 1px solid #ddd;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-        }
-
-        .nav-item {
-            text-align: center;
-            color: #666;
-            text-decoration: none;
-        }
-
-        .nav-item i {
+        .lesson-title {
             font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
             margin-bottom: 0.5rem;
         }
 
-        .nav-item.active {
-            color: #4CAF50;
+        .lesson-description {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .start-button {
+            display: inline-block;
+            background-color: var(--button-color);
+            color: rgb(12, 247, 90);
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 2rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .start-button:hover {
+            background-color: var(--hover-color);
+        }
+
+        .features-section {
+            padding: 4rem 2rem;
+            background: var(--background-light);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 2rem 1rem;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .lessons-grid {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .lesson-card {
+                padding: 1rem;
+            }
+
+            .lesson-icon {
+                font-size: 1.5rem;
+            }
+
+            .lesson-title {
+                font-size: 1.2rem;
+            }
+
+            .start-button {
+                padding: 0.8rem 1.6rem;
+                font-size: 0.9rem;
+            }
+
+            .features-section {
+                padding: 2rem 1rem;
+            }
+
+            .feature-icon {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>

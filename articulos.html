@@ -7,6 +7,72 @@
     <link rel="stylesheet" href="colors.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .lesson-section {
+            background: var(--background-white);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px var(--shadow-color);
+        }
+
+        .explanation-box {
+            background: var(--background-white);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .example-text {
+            color: var(--text-main);
+            font-size: 1.1em;
+            margin-right: 10px;
+        }
+
+        .audio-button {
+            background-color: var(--button-color);
+            color: rgb(12, 247, 90);
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .audio-button:hover {
+            background-color: var(--hover-color);
+        }
+
+        h2, h3 {
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        strong {
+            color: var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+            .lesson-section {
+                padding: 15px;
+            }
+
+            .example-text {
+                font-size: 1em;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">

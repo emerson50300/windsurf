@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>L'ora - Italiano Básico</title>
+    <title>La Hora en Italiano</title>
+    <link rel="stylesheet" href="colors.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
@@ -16,92 +17,193 @@
         }
 
         .time-section {
-            background: white;
-            padding: 20px;
+            background: var(--background-white);
             border-radius: 8px;
-            margin: 20px 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin: 1.5rem;
+            box-shadow: 0 2px 4px var(--shadow-color);
         }
 
-        h1 {
-            color: #4CAF50;
+        .time-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .time-card {
+            background: var(--background-main);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px var(--shadow-color);
+            transition: transform 0.3s ease;
+        }
+
+        .time-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px var(--shadow-color);
+        }
+
+        .time-title {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
             text-align: center;
         }
 
-        h2 {
-            color: #2196F3;
-            margin-top: 20px;
+        .time-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            background: var(--background-white);
+            border-radius: 6px;
+            margin-bottom: 0.8rem;
+            transition: background-color 0.3s ease;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
+        .time-item:hover {
+            background: var(--hover-color-light);
         }
 
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
+        .time-info {
+            flex-grow: 1;
         }
 
-        th {
-            background-color: #4CAF50;
-            color: white;
+        .italian-time {
+            color: var(--text-main);
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
         }
 
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
+        .spanish-time {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
         }
 
-        .example {
-            font-style: italic;
-            color: #666;
-            margin: 10px 0;
-        }
-
-        .tip {
-            background-color: #e7f3fe;
-            border-left: 6px solid #2196F3;
-            padding: 10px;
-            margin: 10px 0;
-        }
-
-        .fas {
-            margin-right: 10px;
-            color: #2196F3;
-        }
-
-        .speak-btn {
-            background: #4CAF50;
+        .play-button {
+            background-color: var(--button-color);
+            color: rgb(12, 247, 90);
             border: none;
-            color: white;
-            padding: 5px 10px;
+            padding: 0.5rem;
             border-radius: 4px;
             cursor: pointer;
-            margin-left: 10px;
-        }
-
-        .speak-btn:hover {
-            background: #45a049;
-        }
-
-        .flex-cell {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
+            transition: background-color 0.3s ease;
         }
 
-        .time-example {
-            background: #f8f9fa;
-            padding: 10px;
+        .play-button:hover {
+            background-color: var(--hover-color);
+        }
+
+        .section-title {
+            color: var(--accent-color);
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .example-box {
+            background: var(--background-main);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .clock-display {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            color: var(--text-main);
+            margin: 2rem 0;
+        }
+
+        .time-practice {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .practice-input {
+            padding: 0.8rem;
+            font-size: 1.2rem;
+            border: 2px solid var(--border-light);
             border-radius: 4px;
-            margin: 5px 0;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .check-button {
+            background-color: var(--button-color);
+            color: rgb(12, 247, 90);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .check-button:hover {
+            background-color: var(--hover-color);
+        }
+
+        .tip-box {
+            background: var(--background-light);
+            border-left: 4px solid var(--accent-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        @media (max-width: 768px) {
+            .time-section {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            .time-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .time-card {
+                padding: 1rem;
+            }
+
+            .time-title {
+                font-size: 1.3rem;
+            }
+
+            .italian-time {
+                font-size: 1rem;
+            }
+
+            .clock-display {
+                font-size: 2rem;
+            }
+
+            .practice-input {
+                font-size: 1rem;
+                padding: 0.6rem;
+            }
+
+            .check-button {
+                padding: 0.8rem 1.6rem;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>L'ora - Italiano Básico</h1>
+    <h1>La Hora en Italiano</h1>
 
     <div class="time-section">
         <h2><i class="fas fa-clock"></i>Construcciones de la Hora</h2>

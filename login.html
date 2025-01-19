@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Administración</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Login - Italiano Básico</title>
+    <link rel="stylesheet" href="colors.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
             background: transparent;
@@ -23,15 +25,110 @@
             width: 100%;
             max-width: 400px;
             margin: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: var(--background-main);
+            padding: 1rem;
+        }
+        .login-card {
+            background: var(--background-white);
+            border-radius: 8px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 2px 4px var(--shadow-color);
+        }
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .login-title {
+            color: var(--accent-color);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .login-subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .form-label {
+            color: var(--text-main);
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        .form-input {
+            padding: 0.8rem;
+            border: 2px solid var(--border-light);
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        .form-input:focus {
+            border-color: var(--accent-color);
+            outline: none;
+        }
+        .login-button {
+            background-color: var(--button-color);
+            color: rgb(12, 247, 90);
+            border: none;
+            padding: 1rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .login-button:hover {
+            background-color: var(--hover-color);
+        }
+        .login-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        .register-link {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        .register-link:hover {
+            color: var(--hover-color);
         }
         .error-message {
-            display: none;
-            color: #dc3545;
-            margin-top: 1rem;
-            padding: 0.5rem;
-            border-radius: 4px;
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
+            color: var(--error-color);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        @media (max-width: 768px) {
+            .login-card {
+                padding: 1.5rem;
+            }
+
+            .login-title {
+                font-size: 1.5rem;
+            }
+
+            .form-input {
+                padding: 0.6rem;
+                font-size: 0.9rem;
+            }
+
+            .login-button {
+                padding: 0.8rem;
+                font-size: 0.9rem;
+            }
         }
         .btn-primary {
             background-color: #0d6efd;
@@ -53,19 +150,21 @@
 </head>
 <body>
     <div class="login-container">
-        <h2 class="text-center mb-4">Panel de Administración</h2>
-        <form id="loginForm">
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" required>
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="password" required>
-            </div>
-            <div id="error-message" class="error-message"></div>
-            <button type="submit" class="btn btn-primary w-100 mt-3">Iniciar Sesión</button>
-        </form>
+        <div class="login-card">
+            <h2 class="login-title text-center mb-4">Panel de Administración</h2>
+            <form id="loginForm">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control form-input" id="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control form-input" id="password" required>
+                </div>
+                <div id="error-message" class="error-message"></div>
+                <button type="submit" class="btn btn-primary login-button w-100 mt-3">Iniciar Sesión</button>
+            </form>
+        </div>
     </div>
 
     <script type="module">
