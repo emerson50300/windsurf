@@ -6,6 +6,7 @@
     --text-primary: #212121;
     --text-secondary: #757575;
     --divider: #BDBDBD;
+    --container-padding: 1rem;
 }
 
 * {
@@ -13,31 +14,71 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Inter', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
 }
 
 body {
     background-color: #f5f5f5;
     color: var(--text-primary);
     line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
 }
 
 .container {
+    width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 2rem;
+    padding: var(--container-padding);
 }
 
+/* Navegación responsive */
+nav {
+    background: white;
+    padding: 1rem var(--container-padding);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+nav a {
+    color: var(--text-primary);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+nav a.active {
+    background: var(--primary);
+    color: white;
+}
+
+/* Grid responsive */
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    padding: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    padding: 0.5rem;
 }
 
+/* Cards responsivas */
 .card {
     background: white;
-    border-radius: 15px;
-    padding: 2rem;
+    border-radius: 12px;
+    padding: 1.5rem;
     text-align: center;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     transition: transform 0.2s;
@@ -46,16 +87,12 @@ body {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    min-height: 300px;
-}
-
-.card:hover {
-    transform: translateY(-5px);
+    min-height: 250px;
 }
 
 .card-icon {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     margin-bottom: 1rem;
     color: var(--primary);
 }
@@ -63,7 +100,7 @@ body {
 .explore-button {
     background: var(--primary);
     color: white;
-    padding: 0.8rem 2rem;
+    padding: 0.8rem 1.5rem;
     border-radius: 25px;
     text-decoration: none;
     font-weight: 500;
@@ -73,95 +110,144 @@ body {
     display: inline-block;
     margin-top: auto;
     width: 100%;
+    max-width: 200px;
+    font-size: 0.9rem;
 }
 
-.explore-button:hover {
-    background: var(--primary-dark);
-    transform: translateY(-2px);
-}
-
-/* Contenedores de anuncios */
-.ad-container {
-    width: 100%;
-    max-width: 970px;
-    margin: 2rem auto;
+/* Tipografía responsive */
+h1 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
     text-align: center;
-    min-height: 90px;
-    background: #f5f5f5;
-    border-radius: 10px;
-    padding: 1rem;
-    overflow: hidden;
 }
 
-.ad-top {
-    margin-top: 0;
+h2 {
+    font-size: 1.4rem;
+    margin-bottom: 0.8rem;
 }
 
-.ad-middle {
-    margin: 3rem auto;
+p {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
 }
 
-.ad-bottom {
-    margin-bottom: 0;
-}
-
+/* Media Queries */
 @media (max-width: 768px) {
+    :root {
+        --container-padding: 0.8rem;
+    }
+
     .container {
-        padding: 1rem;
+        padding: var(--container-padding);
     }
 
     .grid {
         grid-template-columns: 1fr;
-        gap: 1rem;
+        gap: 0.8rem;
     }
 
     .card {
-        padding: 1.5rem;
-        min-height: auto;
+        padding: 1.2rem;
+        min-height: 200px;
     }
 
-    .card h2 {
-        font-size: 1.3rem;
-        margin: 0.5rem 0;
+    h1 {
+        font-size: 1.5rem;
     }
 
-    .card p {
-        font-size: 0.9rem;
-        margin-bottom: 1rem;
+    h2 {
+        font-size: 1.2rem;
     }
 
-    .explore-button {
-        padding: 0.6rem 1.5rem;
+    p {
         font-size: 0.9rem;
     }
 
-    .ad-container {
-        margin: 1.5rem auto;
-        min-height: 60px;
-        padding: 0.5rem;
+    nav {
+        padding: 0.8rem var(--container-padding);
     }
 
-    .ad-middle {
-        margin: 2rem auto;
+    nav a {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
     }
 }
 
 @media (max-width: 480px) {
-    .grid {
-        padding: 0.5rem;
+    :root {
+        --container-padding: 0.6rem;
+    }
+
+    .container {
+        padding: var(--container-padding);
     }
 
     .card {
         padding: 1rem;
-        border-radius: 10px;
+        min-height: 180px;
     }
 
     .explore-button {
-        padding: 0.5rem 1.2rem;
+        padding: 0.6rem 1.2rem;
+        font-size: 0.85rem;
     }
 
+    h1 {
+        font-size: 1.3rem;
+    }
+
+    nav {
+        padding: 0.6rem var(--container-padding);
+    }
+
+    nav a {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* Mejoras de accesibilidad táctil */
+@media (hover: none) {
+    .card:hover {
+        transform: none;
+    }
+
+    .explore-button:hover {
+        transform: none;
+    }
+
+    .card, .explore-button {
+        transition: none;
+    }
+}
+
+/* Contenedores de anuncios responsivos */
+.ad-container {
+    width: 100%;
+    max-width: 970px;
+    margin: 1.5rem auto;
+    text-align: center;
+    min-height: 90px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    padding: 0.8rem;
+    overflow: hidden;
+}
+
+@media (max-width: 768px) {
     .ad-container {
         margin: 1rem auto;
-        min-height: 50px;
+        min-height: 60px;
+        padding: 0.6rem;
     }
+}
+
+/* Mejoras de rendimiento */
+* {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.card, .explore-button {
+    will-change: transform;
 }

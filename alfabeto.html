@@ -101,27 +101,27 @@ Y: "yogurt"</p>
 
     <script>
         const alphabet = [
-            { letter: 'A', pronunciation: 'a', example: 'amore' },
-            { letter: 'B', pronunciation: 'bi', example: 'bello' },
-            { letter: 'C', pronunciation: 'ci', example: 'ciao' },
-            { letter: 'D', pronunciation: 'di', example: 'dolce' },
-            { letter: 'E', pronunciation: 'e', example: 'estate' },
-            { letter: 'F', pronunciation: 'effe', example: 'festa' },
-            { letter: 'G', pronunciation: 'gi', example: 'gatto' },
-            { letter: 'H', pronunciation: 'acca', example: 'hotel' },
-            { letter: 'I', pronunciation: 'i', example: 'italiano' },
-            { letter: 'L', pronunciation: 'elle', example: 'luna' },
-            { letter: 'M', pronunciation: 'emme', example: 'mare' },
-            { letter: 'N', pronunciation: 'enne', example: 'notte' },
-            { letter: 'O', pronunciation: 'o', example: 'oro' },
-            { letter: 'P', pronunciation: 'pi', example: 'pasta' },
-            { letter: 'Q', pronunciation: 'cu', example: 'quanto' },
-            { letter: 'R', pronunciation: 'erre', example: 'rosa' },
-            { letter: 'S', pronunciation: 'esse', example: 'sole' },
-            { letter: 'T', pronunciation: 'ti', example: 'tempo' },
-            { letter: 'U', pronunciation: 'u', example: 'uva' },
-            { letter: 'V', pronunciation: 'vu', example: 'vita' },
-            { letter: 'Z', pronunciation: 'zeta', example: 'zero' }
+            { letter: 'A', pronunciation: 'ah', example: 'amore (amor)', audioText: 'A come amore' },
+            { letter: 'B', pronunciation: 'bi', example: 'bambino (niño)', audioText: 'B come bambino' },
+            { letter: 'C', pronunciation: 'chi', example: 'casa (casa)', audioText: 'C come casa' },
+            { letter: 'D', pronunciation: 'di', example: 'donna (mujer)', audioText: 'D come donna' },
+            { letter: 'E', pronunciation: 'eh', example: 'elefante (elefante)', audioText: 'E come elefante' },
+            { letter: 'F', pronunciation: 'effe', example: 'famiglia (familia)', audioText: 'F come famiglia' },
+            { letter: 'G', pronunciation: 'gi', example: 'giorno (día)', audioText: 'G come giorno' },
+            { letter: 'H', pronunciation: 'acca', example: 'ho (tengo)', audioText: 'H come ho' },
+            { letter: 'I', pronunciation: 'i', example: 'isola (isla)', audioText: 'I come isola' },
+            { letter: 'L', pronunciation: 'elle', example: 'luna (luna)', audioText: 'L come luna' },
+            { letter: 'M', pronunciation: 'emme', example: 'mamma (mamá)', audioText: 'M come mamma' },
+            { letter: 'N', pronunciation: 'enne', example: 'nonna (abuela)', audioText: 'N come nonna' },
+            { letter: 'O', pronunciation: 'o', example: 'occhio (ojo)', audioText: 'O come occhio' },
+            { letter: 'P', pronunciation: 'pi', example: 'padre (padre)', audioText: 'P come padre' },
+            { letter: 'Q', pronunciation: 'cu', example: 'questo (este)', audioText: 'Q come questo' },
+            { letter: 'R', pronunciation: 'erre', example: 'roma (Roma)', audioText: 'R come roma' },
+            { letter: 'S', pronunciation: 'esse', example: 'sole (sol)', audioText: 'S come sole' },
+            { letter: 'T', pronunciation: 'ti', example: 'tavolo (mesa)', audioText: 'T come tavolo' },
+            { letter: 'U', pronunciation: 'u', example: 'uomo (hombre)', audioText: 'U come uomo' },
+            { letter: 'V', pronunciation: 'vu', example: 'vino (vino)', audioText: 'V come vino' },
+            { letter: 'Z', pronunciation: 'zeta', example: 'zucchero (azúcar)', audioText: 'Z come zucchero' }
         ];
 
         function createLetterCard(data) {
@@ -132,7 +132,7 @@ Y: "yogurt"</p>
                 <div class="letter">${data.letter}</div>
                 <div class="pronunciation">${data.pronunciation}</div>
                 <div class="example">${data.example}</div>
-                <button class="play-button" onclick="playSound('${data.pronunciation}')">
+                <button class="play-button" onclick="playSound('${data.audioText}')">
                     <i class="fas fa-volume-up"></i>
                     Escuchar
                 </button>
@@ -141,32 +141,34 @@ Y: "yogurt"</p>
             return card;
         }
 
-        function speak(text, rate = 0.8) {
+        // Función para reproducir el sonido con un pequeño retraso para mejor calidad
+        function playSound(text) {
             if ('speechSynthesis' in window) {
+                // Cancelar cualquier pronunciación anterior
+                window.speechSynthesis.cancel();
+
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'it-IT';
-                utterance.rate = rate;
+                utterance.rate = 0.9;
+                utterance.pitch = 1.0;
                 
-                // Obtener la voz italiana si está disponible
-                const voices = speechSynthesis.getVoices();
-                const italianVoice = voices.find(voice => voice.lang.includes('it-IT'));
+                // Obtener la voz italiana
+                const voices = window.speechSynthesis.getVoices();
+                const italianVoice = voices.find(voice => 
+                    voice.lang === 'it-IT' && voice.name.includes('Google')
+                ) || voices.find(voice => 
+                    voice.lang === 'it-IT'
+                );
+
                 if (italianVoice) {
                     utterance.voice = italianVoice;
                 }
 
-                window.speechSynthesis.speak(utterance);
+                // Añadir una pequeña pausa antes de la pronunciación
+                setTimeout(() => {
+                    window.speechSynthesis.speak(utterance);
+                }, 100);
             }
-        }
-
-        // Cargar voces cuando estén disponibles
-        speechSynthesis.onvoiceschanged = () => {
-            const voices = speechSynthesis.getVoices();
-            console.log('Voces disponibles:', voices);
-        };
-
-        // Función para reproducir el sonido con un pequeño retraso para mejor calidad
-        function playSound(text) {
-            setTimeout(() => speak(text), 100);
         }
 
         function initialize() {
@@ -174,6 +176,14 @@ Y: "yogurt"</p>
             alphabet.forEach(letter => {
                 grid.appendChild(createLetterCard(letter));
             });
+        }
+
+        // Cargar voces cuando estén disponibles
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.onvoiceschanged = () => {
+                const voices = window.speechSynthesis.getVoices();
+                console.log('Voces disponibles:', voices);
+            };
         }
 
         document.addEventListener('DOMContentLoaded', initialize);

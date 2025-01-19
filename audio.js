@@ -9,15 +9,17 @@ function speak(text, options = {}) {
         
         const utterance = new SpeechSynthesisUtterance(cleanText);
         utterance.lang = 'it-IT';
-        utterance.rate = options.rate || 0.8;
-        utterance.pitch = options.pitch || 1.0;
-        utterance.volume = options.volume || 1.0;
+        utterance.rate = 0.9;  // Velocidad consistente con hora.html
+        utterance.pitch = 1.0;  // Tono natural como en hora.html
+        utterance.volume = 1.0;
 
         // Configurar la voz
         setItalianVoice(utterance);
 
-        // Pronunciar
-        window.speechSynthesis.speak(utterance);
+        // Añadir una pequeña pausa antes de la pronunciación para mejor calidad
+        setTimeout(() => {
+            window.speechSynthesis.speak(utterance);
+        }, 100);
     }
 }
 
@@ -81,18 +83,29 @@ function numberToItalianWords(num) {
 
 // Función para configurar la voz italiana
 function setItalianVoice(utterance) {
-    const voices = speechSynthesis.getVoices();
-    // Intentar encontrar la mejor voz italiana disponible
-    const italianVoice = voices.find(voice => 
+    const voices = window.speechSynthesis.getVoices();
+    
+    // Buscar la voz italiana más adecuada
+    let selectedVoice = null;
+
+    // Primero buscar voces de Google en italiano
+    selectedVoice = voices.find(voice => 
         voice.lang === 'it-IT' && voice.name.includes('Google')
-    ) || voices.find(voice => 
-        voice.lang === 'it-IT'
-    ) || voices.find(voice => 
-        voice.lang.startsWith('it')
     );
 
-    if (italianVoice) {
-        utterance.voice = italianVoice;
+    // Si no hay voz de Google, buscar cualquier voz italiana
+    if (!selectedVoice) {
+        selectedVoice = voices.find(voice => voice.lang === 'it-IT');
+    }
+
+    // Si aún no hay voz, buscar cualquier voz que incluya 'it'
+    if (!selectedVoice) {
+        selectedVoice = voices.find(voice => voice.lang.includes('it'));
+    }
+
+    // Usar la voz seleccionada
+    if (selectedVoice) {
+        utterance.voice = selectedVoice;
     }
 }
 
