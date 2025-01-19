@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compras y Restaurantes en Italiano</title>
+    <link rel="stylesheet" href="colors.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --background-white: #f9f9f9;
+            --background-main: #f2f2f2;
+            --text-main: #333;
+            --text-secondary: #666;
+            --accent-color: #4CAF50;
+            --button-color: #4CAF50;
+            --hover-color: #388E3C;
+            --hover-color-light: #e0e0e0;
+            --shadow-color: rgba(0,0,0,0.1);
+        }
+
+        .phrases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 1.5rem;
+        }
+
+        .category-card {
+            background: var(--background-white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px var(--shadow-color);
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px var(--shadow-color);
+        }
+
+        .category-title {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .phrase-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            background: var(--background-main);
+            border-radius: 6px;
+            margin-bottom: 0.8rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .phrase-item:hover {
+            background: var(--hover-color-light);
+        }
+
+        .phrase-text {
+            flex-grow: 1;
+        }
+
+        .italian-phrase {
+            color: var(--text-main);
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .spanish-phrase {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .play-button {
+            background-color: var(--button-color);
+            color: rgb(12, 247, 90);
+            border: none;
+            padding: 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .play-button:hover {
+            background-color: var(--hover-color);
+        }
+
+        .practice-section {
+            background: var(--background-white);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 1.5rem;
+            box-shadow: 0 2px 4px var(--shadow-color);
+        }
+
+        .dialog-container {
+            margin-top: 2rem;
+        }
+
+        .dialog-card {
+            background: var(--background-main);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .dialog-title {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .dialog-line {
+            margin-bottom: 0.8rem;
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+
+        .dialog-line:nth-child(odd) {
+            background: var(--background-white);
+        }
+
+        @media (max-width: 768px) {
+            .phrases-grid {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .category-card {
+                padding: 1rem;
+            }
+
+            .category-title {
+                font-size: 1.3rem;
+            }
+
+            .italian-phrase {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Anuncio Superior -->
+        <div class="ad-container ad-top">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1951834226818406"
+                 data-ad-slot="TUSLOT1"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <header>
+            <h1>Compras y Restaurantes en Italiano</h1>
+            <p>Frases esenciales para hacer compras y pedir comida</p>
+        </header>
+
+        <div class="phrases-grid">
+            <!-- Tiendas -->
+            <div class="category-card">
+                <h2 class="category-title">En la Tienda</h2>
+                <div class="phrase-item">
+                    <div class="phrase-text">
+                        <div class="italian-phrase">Quanto costa?</div>
+                        <div class="spanish-phrase">¿Cuánto cuesta?</div>
+                    </div>
+                    <button class="play-button" onclick="speak('Quanto costa?')">🔊</button>
+                </div>
+                <div class="phrase-item">
+                    <div class="phrase-text">
+                        <div class="italian-phrase">Vorrei questo, per favore.</div>
+                        <div class="spanish-phrase">Quisiera esto, por favor.</div>
+                    </div>
+                    <button class="play-button" onclick="speak('Vorrei questo, per favore.')">🔊</button>
+                </div>
+                <div class="phrase-item">
+                    <div class="phrase-text">
+                        <div class="italian-phrase">Accettate carte di credito?</div>
+                        <div class="spanish-phrase">¿Aceptan tarjetas de crédito?</div>
+                    </div>
+                    <button class="play-button" onclick="speak('Accettate carte di credito?')">🔊</button>
+                </div>
+            </div>
+
+            <!-- Restaurante -->
+            <div class="category-card">
+                <h2 class="category-title">En el Restaurante</h2>
+                <div class="phrase-item">
+                    <div class="phrase-text">
+                        <div class="italian-phrase">Un tavolo per due, per favore.</div>
+                        <div class="spanish-phrase">Una mesa para dos, por favor.</div>
+                    </div>
+                    <button class="play-button" onclick="speak('Un tavolo per due, per favore.')">🔊</button>
+                </div>
+                <div class="phrase-item">
+                    <div class="phrase-text">
+                        <div class="italian-phrase">Il menu, per favore.</div>
+                        <div class="spanish-phrase">El menú, por favor.</div>
+                    </div>
+                    <button class="play-button" onclick="speak('Il menu, per favore.')">🔊</button>
+                </div>
+                <div class="phrase-item">
+                    <div class="phrase-text">
+                        <div class="italian-phrase">Il conto, per favore.</div>
+                        <div class="spanish-phrase">La cuenta, por favor.</div>
+                    </div>
+                    <button class="play-button" onclick="speak('Il conto, per favore.')">🔊</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de Práctica -->
+        <div class="practice-section">
+            <h2>Diálogos de Práctica</h2>
+            <div class="dialog-container">
+                <!-- Diálogo en la Tienda -->
+                <div class="dialog-card">
+                    <h3 class="dialog-title">En una Tienda de Ropa</h3>
+                    <div class="dialog-line">
+                        <strong>Cliente:</strong> Buongiorno, cerco una camicia blu.
+                        <button class="play-button" onclick="speak('Buongiorno, cerco una camicia blu.')">🔊</button>
+                    </div>
+                    <div class="dialog-line">
+                        <strong>Vendedor:</strong> Certo, che taglia porta?
+                        <button class="play-button" onclick="speak('Certo, che taglia porta?')">🔊</button>
+                    </div>
+                    <div class="dialog-line">
+                        <strong>Cliente:</strong> La taglia media.
+                        <button class="play-button" onclick="speak('La taglia media.')">🔊</button>
+                    </div>
+                </div>
+
+                <!-- Diálogo en el Restaurante -->
+                <div class="dialog-card">
+                    <h3 class="dialog-title">En un Restaurante</h3>
+                    <div class="dialog-line">
+                        <strong>Cliente:</strong> Buonasera, vorrei prenotare un tavolo.
+                        <button class="play-button" onclick="speak('Buonasera, vorrei prenotare un tavolo.')">🔊</button>
+                    </div>
+                    <div class="dialog-line">
+                        <strong>Camarero:</strong> Per quante persone?
+                        <button class="play-button" onclick="speak('Per quante persone?')">🔊</button>
+                    </div>
+                    <div class="dialog-line">
+                        <strong>Cliente:</strong> Per quattro persone, alle otto.
+                        <button class="play-button" onclick="speak('Per quattro persone, alle otto.')">🔊</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+        </a>
+        <a href="chat.html" class="nav-item">
+            <i class="fas fa-comments"></i>
+            <span>Chat</span>
+        </a>
+        <a href="verbos.html" class="nav-item">
+            <i class="fas fa-book"></i>
+            <span>Verbos</span>
+        </a>
+    </nav>
+
+    <script>
+        const synth = window.speechSynthesis;
+        let voices = [];
+
+        function loadVoices() {
+            voices = synth.getVoices();
+        }
+
+        loadVoices();
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = loadVoices;
+        }
+
+        function speak(text) {
+            if (synth.speaking) {
+                console.error('speechSynthesis.speaking');
+                return;
+            }
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'it-IT';
+            utterance.pitch = 1;
+            utterance.rate = 0.8;
+            utterance.volume = 1;
+
+            const italianVoice = voices.find(voice => voice.lang === 'it-IT');
+            if (italianVoice) {
+                utterance.voice = italianVoice;
+            }
+
+            synth.speak(utterance);
+        }
+    </script>
+</body>
+</html>
