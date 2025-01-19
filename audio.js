@@ -84,35 +84,70 @@ function numberToItalianWords(num) {
 // Función para configurar la voz italiana
 function setItalianVoice(utterance) {
     const voices = window.speechSynthesis.getVoices();
-    
-    // Buscar la voz italiana más adecuada
     let selectedVoice = null;
 
-    // Primero buscar voces de Google en italiano
-    selectedVoice = voices.find(voice => 
-        voice.lang === 'it-IT' && voice.name.includes('Google')
-    );
+    // Lista de voces preferidas en orden de prioridad
+    const preferredVoices = [
+        'Google italiano',
+        'Microsoft Elsa',
+        'Microsoft Cosimo',
+        'Italian',
+        'Italiano'
+    ];
 
-    // Si no hay voz de Google, buscar cualquier voz italiana
+    // 1. Primero intentar encontrar una voz preferida específica
+    for (const preferredVoice of preferredVoices) {
+        selectedVoice = voices.find(voice => 
+            voice.lang === 'it-IT' && 
+            voice.name.toLowerCase().includes(preferredVoice.toLowerCase())
+        );
+        if (selectedVoice) break;
+    }
+
+    // 2. Si no se encuentra una voz preferida, buscar cualquier voz italiana nativa
+    if (!selectedVoice) {
+        selectedVoice = voices.find(voice => 
+            voice.lang === 'it-IT' && 
+            voice.localService === true
+        );
+    }
+
+    // 3. Si aún no hay voz, buscar cualquier voz italiana
     if (!selectedVoice) {
         selectedVoice = voices.find(voice => voice.lang === 'it-IT');
     }
 
-    // Si aún no hay voz, buscar cualquier voz que incluya 'it'
+    // 4. Como último recurso, buscar cualquier voz que incluya 'it'
     if (!selectedVoice) {
         selectedVoice = voices.find(voice => voice.lang.includes('it'));
     }
 
-    // Usar la voz seleccionada
+    // Usar la voz seleccionada y configurar parámetros óptimos
     if (selectedVoice) {
         utterance.voice = selectedVoice;
+        // Ajustar parámetros para una mejor calidad
+        utterance.rate = 0.85;     // Velocidad ligeramente más lenta para mayor claridad
+        utterance.pitch = 1.0;     // Tono natural
+        utterance.volume = 1.0;    // Volumen máximo
     }
+
+    // Registrar la voz seleccionada para debugging
+    console.log('Voz seleccionada:', selectedVoice ? `${selectedVoice.name} (${selectedVoice.lang})` : 'No se encontró voz italiana');
 }
 
-// Evento para cargar las voces
+// Evento para cargar las voces y mostrar información útil
 if ('speechSynthesis' in window) {
+    let voicesLoaded = false;
+    
     speechSynthesis.onvoiceschanged = () => {
+        if (voicesLoaded) return; // Evitar múltiples cargas
+        voicesLoaded = true;
+        
         const voices = speechSynthesis.getVoices();
-        console.log('Voces disponibles:', voices.map(v => `${v.name} (${v.lang})`));
+        const italianVoices = voices.filter(voice => voice.lang === 'it-IT');
+        
+        console.log('Voces italianas disponibles:', 
+            italianVoices.map(v => `${v.name} (${v.lang}${v.localService ? ', local' : ', red'})`)
+        );
     };
 }
