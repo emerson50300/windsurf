@@ -3,235 +3,261 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Articoli - Italiano Básico</title>
+    <title>Artículos en Italiano</title>
     <link rel="stylesheet" href="colors.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        .lesson-section {
+        .article-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .article-card {
             background: var(--background-white);
             border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
+            padding: 1.5rem;
             box-shadow: 0 2px 4px var(--shadow-color);
+            transition: transform 0.3s ease;
+            text-align: center;
         }
 
-        .explanation-box {
-            background: var(--background-white);
-            border-radius: 8px;
-            padding: 15px;
-            margin: 10px 0;
-            border-left: 4px solid var(--accent-color);
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px var(--shadow-color);
         }
 
-        .example-text {
-            color: var(--text-main);
-            font-size: 1.1em;
-            margin-right: 10px;
+        .article-type {
+            color: var(--accent-color);
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
         }
 
-        .audio-button {
+        .article-example {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .play-button {
             background-color: var(--button-color);
             color: rgb(12, 247, 90);
             border: none;
-            padding: 5px 10px;
+            padding: 0.5rem 1rem;
             border-radius: 4px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
             transition: background-color 0.3s ease;
         }
 
-        .audio-button:hover {
+        .play-button:hover {
             background-color: var(--hover-color);
         }
 
-        h2, h3 {
+        .section-title {
             color: var(--accent-color);
-            margin-bottom: 15px;
+            text-align: center;
+            margin: 2rem 0;
+            font-size: 2rem;
         }
 
-        ul {
-            list-style-type: none;
-            padding-left: 0;
+        .section-description {
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 1rem;
         }
 
-        li {
-            margin-bottom: 10px;
-            color: var(--text-main);
-        }
-
-        strong {
-            color: var(--accent-color);
+        .article-section {
+            background: var(--background-white);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 1rem;
+            box-shadow: 0 2px 4px var(--shadow-color);
         }
 
         @media (max-width: 768px) {
-            .lesson-section {
-                padding: 15px;
+            .article-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 0.8rem;
             }
 
-            .example-text {
-                font-size: 1em;
+            .article-card {
+                padding: 1rem;
+            }
+
+            .article-type {
+                font-size: 1.5rem;
+            }
+
+            .article-example {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+                margin: 1.5rem 0;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Artículos en Italiano</h1>
+        <h1 class="section-title">Artículos en Italiano</h1>
+        <p class="section-description">Aprende los artículos determinados e indeterminados en italiano</p>
 
-        <section class="lesson-section">
-            <h2>Artículos Definidos (il, lo, la, i, gli, le)</h2>
-            
-            <div class="explanation-box">
-                <h3>Masculino Singular</h3>
-                <ul>
-                    <li><strong>il</strong> - Se usa antes de consonantes (excepto s + consonante, z, ps, gn, y):
-                        <br>
-                        <span class="example-text"><em>il libro</em> (el libro)</span>
-                        <button class="audio-button" onclick="speak('il libro')">🔊</button>
-                        <br>
-                        <span class="example-text"><em>il cane</em> (el perro)</span>
-                        <button class="audio-button" onclick="speak('il cane')">🔊</button>
-                    </li>
-                    <li><strong>lo</strong> - Se usa antes de:
-                        <ul>
-                            <li>s + consonante: 
-                                <span class="example-text"><em>lo studente</em> (el estudiante)</span>
-                                <button class="audio-button" onclick="speak('lo studente')">🔊</button>
-                            </li>
-                            <li>z: 
-                                <span class="example-text"><em>lo zaino</em> (la mochila)</span>
-                                <button class="audio-button" onclick="speak('lo zaino')">🔊</button>
-                            </li>
-                            <li>ps: 
-                                <span class="example-text"><em>lo psicologo</em> (el psicólogo)</span>
-                                <button class="audio-button" onclick="speak('lo psicologo')">🔊</button>
-                            </li>
-                            <li>gn: 
-                                <span class="example-text"><em>lo gnomo</em> (el gnomo)</span>
-                                <button class="audio-button" onclick="speak('lo gnomo')">🔊</button>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+        <div class="article-section">
+            <h2 class="section-title">Artículos Definidos</h2>
+            <div class="article-grid">
+                <div class="article-card">
+                    <div class="article-type">il</div>
+                    <div class="article-example">Masculino singular (consonante)</div>
+                    <button class="play-button" onclick="speak('il')">
+                        <i class="fas fa-play"></i> Escuchar
+                    </button>
+                </div>
 
-                <h3>Femenino Singular</h3>
-                <ul>
-                    <li><strong>la</strong> - Se usa para todos los sustantivos femeninos:
-                        <br>
-                        <span class="example-text"><em>la casa</em> (la casa)</span>
-                        <button class="audio-button" onclick="speak('la casa')">🔊</button>
-                        <br>
-                        <span class="example-text"><em>la strada</em> (la calle)</span>
-                        <button class="audio-button" onclick="speak('la strada')">🔊</button>
-                    </li>
-                </ul>
+                <div class="article-card">
+                    <div class="article-type">lo</div>
+                    <div class="article-example">Masculino singular (s+consonante, z)</div>
+                    <button class="play-button" onclick="speak('lo')">
+                        <i class="fas fa-play"></i> Escuchar
+                    </button>
+                </div>
 
-                <h3>Masculino Plural</h3>
-                <ul>
-                    <li><strong>i</strong> - Plural de "il":
-                        <br>
-                        <span class="example-text"><em>i libri</em> (los libros)</span>
-                        <button class="audio-button" onclick="speak('i libri')">🔊</button>
-                    </li>
-                    <li><strong>gli</strong> - Plural de "lo":
-                        <br>
-                        <span class="example-text"><em>gli studenti</em> (los estudiantes)</span>
-                        <button class="audio-button" onclick="speak('gli studenti')">🔊</button>
-                    </li>
-                </ul>
+                <div class="article-card">
+                    <div class="article-type">la</div>
+                    <div class="article-example">Femenino singular</div>
+                    <button class="play-button" onclick="speak('la')">
+                        <i class="fas fa-play"></i> Escuchar
+                    </button>
+                </div>
 
-                <h3>Femenino Plural</h3>
-                <ul>
-                    <li><strong>le</strong> - Plural de "la":
-                        <br>
-                        <span class="example-text"><em>le case</em> (las casas)</span>
-                        <button class="audio-button" onclick="speak('le case')">🔊</button>
-                    </li>
-                </ul>
+                <div class="article-card">
+                    <div class="article-type">i</div>
+                    <div class="article-example">Masculino plural (consonante)</div>
+                    <button class="play-button" onclick="speak('i')">
+                        <i class="fas fa-play"></i> Escuchar
+                    </button>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-type">gli</div>
+                    <div class="article-example">Masculino plural (s+consonante, z)</div>
+                    <button class="play-button" onclick="speak('gli')">
+                        <i class="fas fa-play"></i> Escuchar
+                    </button>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-type">le</div>
+                    <div class="article-example">Femenino plural</div>
+                    <button class="play-button" onclick="speak('le')">
+                        <i class="fas fa-play"></i> Escuchar
+                    </button>
+                </div>
             </div>
+        </div>
 
-            <div class="explanation-box">
-                <h2>Artículos Indefinidos (un, uno, una)</h2>
-                
-                <h3>Masculino</h3>
-                <ul>
-                    <li><strong>un</strong> - Se usa antes de consonantes:
-                        <br>
-                        <span class="example-text"><em>un libro</em> (un libro)</span>
-                        <button class="audio-button" onclick="speak('un libro')">🔊</button>
-                    </li>
-                    <li><strong>uno</strong> - Se usa antes de:
-                        <ul>
-                            <li>s + consonante: 
-                                <span class="example-text"><em>uno studente</em> (un estudiante)</span>
-                                <button class="audio-button" onclick="speak('uno studente')">🔊</button>
-                            </li>
-                            <li>z: 
-                                <span class="example-text"><em>uno zaino</em> (una mochila)</span>
-                                <button class="audio-button" onclick="speak('uno zaino')">🔊</button>
-                            </li>
-                            <li>ps: 
-                                <span class="example-text"><em>uno psicologo</em> (un psicólogo)</span>
-                                <button class="audio-button" onclick="speak('uno psicologo')">🔊</button>
-                            </li>
-                            <li>gn: 
-                                <span class="example-text"><em>uno gnomo</em> (un gnomo)</span>
-                                <button class="audio-button" onclick="speak('uno gnomo')">🔊</button>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+        <div class="article-section">
+            <h2 class="section-title">Artículos Indeterminados</h2>
+            <div class="article-grid">
+                <div class="article-card">
+                    <div class="article-type">un</div>
+                    <div class="article-example">Masculino singular (consonante)</div>
+                    <button class="play-button" onclick="speak('un')">
+                        <i class="fas fa-play"></i> Escuchar
+                    </button>
+                </div>
 
-                <h3>Femenino</h3>
-                <ul>
-                    <li><strong>una</strong> - Se usa para todos los sustantivos femeninos:
-                        <br>
-                        <span class="example-text"><em>una casa</em> (una casa)</span>
-                        <button class="audio-button" onclick="speak('una casa')">🔊</button>
-                    </li>
-                </ul>
+                <div class="article-card">
+                    <div class="article-type">uno</div>
+                    <div class="article-example">Masculino singular (s+consonante, z)</div>
+                    <button class="play-button" onclick="speak('uno')">
+                        <i class="fas fa-play"></i> Escuchar
+                    </button>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-type">una</div>
+                    <div class="article-example">Femenino singular</div>
+                    <button class="play-button" onclick="speak('una')">
+                        <i class="fas fa-play"></i> Escuchar
+                    </button>
+                </div>
             </div>
+        </div>
 
-            <div class="practice-box">
-                <h3>Ejemplos Prácticos</h3>
-                <ul>
-                    <li>
-                        <span class="example-text">Il ragazzo → I ragazzi (El chico → Los chicos)</span>
-                        <button class="audio-button" onclick="speak('Il ragazzo, I ragazzi')">🔊</button>
-                    </li>
-                    <li>
-                        <span class="example-text">Lo specchio → Gli specchi (El espejo → Los espejos)</span>
-                        <button class="audio-button" onclick="speak('Lo specchio, Gli specchi')">🔊</button>
-                    </li>
-                    <li>
-                        <span class="example-text">La ragazza → Le ragazze (La chica → Las chicas)</span>
-                        <button class="audio-button" onclick="speak('La ragazza, Le ragazze')">🔊</button>
-                    </li>
-                    <li>
-                        <span class="example-text">Un amico (Un amigo)</span>
-                        <button class="audio-button" onclick="speak('Un amico')">🔊</button>
-                    </li>
-                    <li>
-                        <span class="example-text">Uno spazio (Un espacio)</span>
-                        <button class="audio-button" onclick="speak('Uno spazio')">🔊</button>
-                    </li>
-                    <li>
-                        <span class="example-text">Una amica (Una amiga)</span>
-                        <button class="audio-button" onclick="speak('Una amica')">🔊</button>
-                    </li>
-                </ul>
+        <div class="article-section">
+            <h2 class="section-title">Ejemplos</h2>
+            <div class="article-grid">
+                <div class="article-card">
+                    <div class="article-type">il libro</div>
+                    <div class="article-example">El libro</div>
+                    <button class="play-button" onclick="speak('il libro')">
+                        <i class="fas fa-play"></i> Escuchar
+                    </button>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-type">lo zaino</div>
+                    <div class="article-example">La mochila</div>
+                    <button class="play-button" onclick="speak('lo zaino')">
+                        <i class="fas fa-play"></i> Escuchar
+                    </button>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-type">la casa</div>
+                    <div class="article-example">La casa</div>
+                    <button class="play-button" onclick="speak('la casa')">
+                        <i class="fas fa-play"></i> Escuchar
+                    </button>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-type">i libri</div>
+                    <div class="article-example">Los libros</div>
+                    <button class="play-button" onclick="speak('i libri')">
+                        <i class="fas fa-play"></i> Escuchar
+                    </button>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-type">gli zaini</div>
+                    <div class="article-example">Las mochilas</div>
+                    <button class="play-button" onclick="speak('gli zaini')">
+                        <i class="fas fa-play"></i> Escuchar
+                    </button>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-type">le case</div>
+                    <div class="article-example">Las casas</div>
+                    <button class="play-button" onclick="speak('le case')">
+                        <i class="fas fa-play"></i> Escuchar
+                    </button>
+                </div>
             </div>
-        </section>
+        </div>
 
         <div class="navigation-buttons">
             <a href="index.html" class="button">Volver al Inicio</a>
         </div>
     </div>
 
-    <script type="module">
-        import config from './config.js';
-        window.GOOGLE_CLOUD_API_KEY = config.GOOGLE_CLOUD_API_KEY;
-    </script>
     <script src="gemini-tts.js"></script>
 </body>
 </html>

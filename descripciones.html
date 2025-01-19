@@ -19,52 +19,75 @@
             --border-light: #4CAF50;
         }
 
-        .description-section {
+        .description-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .description-card {
             background: var(--background-white);
             border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px var(--shadow-color);
+            transition: transform 0.3s ease;
+        }
+
+        .description-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px var(--shadow-color);
+        }
+
+        .description-category {
+            color: var(--accent-color);
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .description-item {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: var(--background-light);
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .description-item:hover {
+            transform: translateX(5px);
             box-shadow: 0 2px 4px var(--shadow-color);
         }
 
-        .example-box {
-            background: var(--background-main);
-            border-radius: 8px;
-            padding: 15px;
-            margin: 10px 0;
-            border-left: 4px solid var(--accent-color);
-        }
-
-        .word-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-            padding: 10px;
-            background: var(--background-white);
-            border-radius: 4px;
-            box-shadow: 0 1px 3px var(--shadow-color);
-        }
-
-        .italian-word {
-            font-weight: bold;
+        .description-italian {
             color: var(--accent-color);
-            font-size: 1.2em;
-            margin-right: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
         }
 
-        .spanish-translation {
+        .description-spanish {
             color: var(--text-secondary);
-            font-style: italic;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
         }
 
         .play-button {
             background-color: var(--button-color);
             color: rgb(12, 247, 90);
             border: none;
-            padding: 5px 10px;
+            padding: 0.5rem 1rem;
             border-radius: 4px;
             cursor: pointer;
-            margin-left: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
             transition: background-color 0.3s ease;
         }
 
@@ -72,25 +95,54 @@
             background-color: var(--hover-color);
         }
 
-        .category-title {
+        .section-title {
             color: var(--accent-color);
-            border-bottom: 2px solid var(--border-light);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
+            text-align: center;
+            margin: 2rem 0;
+            font-size: 2rem;
+        }
+
+        .section-description {
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 1rem;
         }
 
         @media (max-width: 768px) {
-            .description-section {
-                padding: 15px;
+            .description-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                padding: 0.8rem;
             }
 
-            .word-item {
-                flex-direction: column;
-                text-align: center;
+            .description-card {
+                padding: 1rem;
             }
 
-            .play-button {
-                margin: 10px auto 0;
+            .description-category {
+                font-size: 1.2rem;
+            }
+
+            .description-item {
+                padding: 0.8rem;
+                margin-bottom: 1rem;
+            }
+
+            .description-italian {
+                font-size: 1.1rem;
+            }
+
+            .description-spanish {
+                font-size: 0.9rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+                margin: 1.5rem 0;
             }
         }
     </style>
@@ -107,217 +159,119 @@
     </nav>
 
     <div class="container">
-        <h1>Descripciones y Posesivos</h1>
+        <h1 class="section-title">Descripciones en Italiano</h1>
+        <p class="section-description">Aprende a describir personas, lugares y cosas en italiano</p>
 
-        <div class="description-section">
-            <h2><i class="fas fa-user-circle"></i> Descripción de Personas</h2>
+        <div class="description-grid">
+            <div class="description-card">
+                <div class="description-category">Personas</div>
+                
+                <div class="description-item">
+                    <div class="description-italian">È alto/alta</div>
+                    <div class="description-spanish">Es alto/alta</div>
+                    <button class="play-button" onclick="speak('È alto')">
+                        <i class="fas fa-play"></i> Escuchar
+                    </button>
+                </div>
 
-            <div class="category-title">Apariencia Física</div>
-            <div class="vocabulary-grid">
-                <div class="vocab-card">
-                    <div class="vocab-text">
-                        <div class="italian">alto/alta</div>
-                        <div class="spanish">alto/alta</div>
-                    </div>
-                    <button class="audio-btn" onclick="speak('alto, alta')"><i class="fas fa-volume-up"></i></button>
+                <div class="description-item">
+                    <div class="description-italian">È basso/bassa</div>
+                    <div class="description-spanish">Es bajo/baja</div>
+                    <button class="play-button" onclick="speak('È basso')">
+                        <i class="fas fa-play"></i> Escuchar
+                    </button>
                 </div>
-                <div class="vocab-card">
-                    <div class="vocab-text">
-                        <div class="italian">basso/bassa</div>
-                        <div class="spanish">bajo/baja</div>
-                    </div>
-                    <button class="audio-btn" onclick="speak('basso, bassa')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="vocab-card">
-                    <div class="vocab-text">
-                        <div class="italian">magro/magra</div>
-                        <div class="spanish">delgado/delgada</div>
-                    </div>
-                    <button class="audio-btn" onclick="speak('magro, magra')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="vocab-card">
-                    <div class="vocab-text">
-                        <div class="italian">grasso/grassa</div>
-                        <div class="spanish">gordo/gorda</div>
-                    </div>
-                    <button class="audio-btn" onclick="speak('grasso, grassa')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="vocab-card">
-                    <div class="vocab-text">
-                        <div class="italian">giovane</div>
-                        <div class="spanish">joven</div>
-                    </div>
-                    <button class="audio-btn" onclick="speak('giovane')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="vocab-card">
-                    <div class="vocab-text">
-                        <div class="italian">vecchio/vecchia</div>
-                        <div class="spanish">viejo/vieja</div>
-                    </div>
-                    <button class="audio-btn" onclick="speak('vecchio, vecchia')"><i class="fas fa-volume-up"></i></button>
+
+                <div class="description-item">
+                    <div class="description-italian">È giovane</div>
+                    <div class="description-spanish">Es joven</div>
+                    <button class="play-button" onclick="speak('È giovane')">
+                        <i class="fas fa-play"></i> Escuchar
+                    </button>
                 </div>
             </div>
 
-            <div class="category-title">Rasgos Físicos</div>
-            <div class="vocabulary-grid">
-                <div class="vocab-card">
-                    <div class="vocab-text">
-                        <div class="italian">biondo/bionda</div>
-                        <div class="spanish">rubio/rubia</div>
-                    </div>
-                    <button class="audio-btn" onclick="speak('biondo, bionda')"><i class="fas fa-volume-up"></i></button>
+            <div class="description-card">
+                <div class="description-category">Lugares</div>
+                
+                <div class="description-item">
+                    <div class="description-italian">È grande</div>
+                    <div class="description-spanish">Es grande</div>
+                    <button class="play-button" onclick="speak('È grande')">
+                        <i class="fas fa-play"></i> Escuchar
+                    </button>
                 </div>
-                <div class="vocab-card">
-                    <div class="vocab-text">
-                        <div class="italian">bruno/bruna</div>
-                        <div class="spanish">moreno/morena</div>
-                    </div>
-                    <button class="audio-btn" onclick="speak('bruno, bruna')"><i class="fas fa-volume-up"></i></button>
+
+                <div class="description-item">
+                    <div class="description-italian">È piccolo</div>
+                    <div class="description-spanish">Es pequeño</div>
+                    <button class="play-button" onclick="speak('È piccolo')">
+                        <i class="fas fa-play"></i> Escuchar
+                    </button>
                 </div>
-                <div class="vocab-card">
-                    <div class="vocab-text">
-                        <div class="italian">rosso/rossa</div>
-                        <div class="spanish">pelirrojo/pelirroja</div>
-                    </div>
-                    <button class="audio-btn" onclick="speak('rosso, rossa')"><i class="fas fa-volume-up"></i></button>
+
+                <div class="description-item">
+                    <div class="description-italian">È bello</div>
+                    <div class="description-spanish">Es bonito</div>
+                    <button class="play-button" onclick="speak('È bello')">
+                        <i class="fas fa-play"></i> Escuchar
+                    </button>
                 </div>
             </div>
 
-            <div class="category-title">Personalidad</div>
-            <div class="vocabulary-grid">
-                <div class="vocab-card">
-                    <div class="vocab-text">
-                        <div class="italian">simpatico/simpatica</div>
-                        <div class="spanish">simpático/simpática</div>
-                    </div>
-                    <button class="audio-btn" onclick="speak('simpatico, simpatica')"><i class="fas fa-volume-up"></i></button>
+            <div class="description-card">
+                <div class="description-category">Objetos</div>
+                
+                <div class="description-item">
+                    <div class="description-italian">È nuovo/nuova</div>
+                    <div class="description-spanish">Es nuevo/nueva</div>
+                    <button class="play-button" onclick="speak('È nuovo')">
+                        <i class="fas fa-play"></i> Escuchar
+                    </button>
                 </div>
-                <div class="vocab-card">
-                    <div class="vocab-text">
-                        <div class="italian">antipatico/antipatica</div>
-                        <div class="spanish">antipático/antipática</div>
-                    </div>
-                    <button class="audio-btn" onclick="speak('antipatico, antipatica')"><i class="fas fa-volume-up"></i></button>
+
+                <div class="description-item">
+                    <div class="description-italian">È vecchio/vecchia</div>
+                    <div class="description-spanish">Es viejo/vieja</div>
+                    <button class="play-button" onclick="speak('È vecchio')">
+                        <i class="fas fa-play"></i> Escuchar
+                    </button>
                 </div>
-                <div class="vocab-card">
-                    <div class="vocab-text">
-                        <div class="italian">intelligente</div>
-                        <div class="spanish">inteligente</div>
-                    </div>
-                    <button class="audio-btn" onclick="speak('intelligente')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="vocab-card">
-                    <div class="vocab-text">
-                        <div class="italian">stupido/stupida</div>
-                        <div class="spanish">estúpido/estúpida</div>
-                    </div>
-                    <button class="audio-btn" onclick="speak('stupido, stupida')"><i class="fas fa-volume-up"></i></button>
+
+                <div class="description-item">
+                    <div class="description-italian">È pesante</div>
+                    <div class="description-spanish">Es pesado</div>
+                    <button class="play-button" onclick="speak('È pesante')">
+                        <i class="fas fa-play"></i> Escuchar
+                    </button>
                 </div>
             </div>
 
-            <div class="example-section">
-                <h3>Ejemplos de Descripciones:</h3>
-                <div class="example-item">
-                    <div class="italian">Marco è alto e magro.</div>
-                    <div class="spanish">Marco es alto y delgado.</div>
-                    <button class="audio-btn" onclick="speak('Marco è alto e magro')"><i class="fas fa-volume-up"></i></button>
+            <div class="description-card">
+                <div class="description-category">Clima</div>
+                
+                <div class="description-item">
+                    <div class="description-italian">Fa caldo</div>
+                    <div class="description-spanish">Hace calor</div>
+                    <button class="play-button" onclick="speak('Fa caldo')">
+                        <i class="fas fa-play"></i> Escuchar
+                    </button>
                 </div>
-                <div class="example-item">
-                    <div class="italian">Maria è una ragazza simpatica e intelligente.</div>
-                    <div class="spanish">María es una chica simpática e inteligente.</div>
-                    <button class="audio-btn" onclick="speak('Maria è una ragazza simpatica e intelligente')"><i class="fas fa-volume-up"></i></button>
+
+                <div class="description-item">
+                    <div class="description-italian">Fa freddo</div>
+                    <div class="description-spanish">Hace frío</div>
+                    <button class="play-button" onclick="speak('Fa freddo')">
+                        <i class="fas fa-play"></i> Escuchar
+                    </button>
                 </div>
-            </div>
-        </div>
 
-        <div class="description-section">
-            <h2><i class="fas fa-hand-holding"></i> Adjetivos Posesivos</h2>
-
-            <table class="possessive-table">
-                <tr>
-                    <th>Pronombre</th>
-                    <th>Masculino Singular</th>
-                    <th>Femenino Singular</th>
-                    <th>Masculino Plural</th>
-                    <th>Femenino Plural</th>
-                    <th>Audio</th>
-                </tr>
-                <tr>
-                    <td>io (yo)</td>
-                    <td>mio</td>
-                    <td>mia</td>
-                    <td>miei</td>
-                    <td>mie</td>
-                    <td><button class="audio-btn" onclick="speak('mio, mia, miei, mie')"><i class="fas fa-volume-up"></i></button></td>
-                </tr>
-                <tr>
-                    <td>tu (tú)</td>
-                    <td>tuo</td>
-                    <td>tua</td>
-                    <td>tuoi</td>
-                    <td>tue</td>
-                    <td><button class="audio-btn" onclick="speak('tuo, tua, tuoi, tue')"><i class="fas fa-volume-up"></i></button></td>
-                </tr>
-                <tr>
-                    <td>lui/lei (él/ella)</td>
-                    <td>suo</td>
-                    <td>sua</td>
-                    <td>suoi</td>
-                    <td>sue</td>
-                    <td><button class="audio-btn" onclick="speak('suo, sua, suoi, sue')"><i class="fas fa-volume-up"></i></button></td>
-                </tr>
-                <tr>
-                    <td>noi (nosotros)</td>
-                    <td>nostro</td>
-                    <td>nostra</td>
-                    <td>nostri</td>
-                    <td>nostre</td>
-                    <td><button class="audio-btn" onclick="speak('nostro, nostra, nostri, nostre')"><i class="fas fa-volume-up"></i></button></td>
-                </tr>
-                <tr>
-                    <td>voi (vosotros)</td>
-                    <td>vostro</td>
-                    <td>vostra</td>
-                    <td>vostri</td>
-                    <td>vostre</td>
-                    <td><button class="audio-btn" onclick="speak('vostro, vostra, vostri, vostre')"><i class="fas fa-volume-up"></i></button></td>
-                </tr>
-                <tr>
-                    <td>loro (ellos/ellas)</td>
-                    <td>loro</td>
-                    <td>loro</td>
-                    <td>loro</td>
-                    <td>loro</td>
-                    <td><button class="audio-btn" onclick="speak('loro')"><i class="fas fa-volume-up"></i></button></td>
-                </tr>
-            </table>
-
-            <div class="note">
-                <strong>Nota:</strong> En italiano, los adjetivos posesivos generalmente van acompañados por el artículo definido:
-                <ul>
-                    <li>il mio libro (mi libro)</li>
-                    <li>la mia casa (mi casa)</li>
-                    <li>i miei amici (mis amigos)</li>
-                    <li>le mie scarpe (mis zapatos)</li>
-                </ul>
-            </div>
-
-            <div class="example-section">
-                <h3>Ejemplos de Uso:</h3>
-                <div class="example-item">
-                    <div class="italian">Il mio fratello è alto.</div>
-                    <div class="spanish">Mi hermano es alto.</div>
-                    <button class="audio-btn" onclick="speak('Il mio fratello è alto')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-item">
-                    <div class="italian">La tua amica è molto simpatica.</div>
-                    <div class="spanish">Tu amiga es muy simpática.</div>
-                    <button class="audio-btn" onclick="speak('La tua amica è molto simpatica')"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="example-item">
-                    <div class="italian">I suoi genitori sono italiani.</div>
-                    <div class="spanish">Sus padres son italianos.</div>
-                    <button class="audio-btn" onclick="speak('I suoi genitori sono italiani')"><i class="fas fa-volume-up"></i></button>
+                <div class="description-item">
+                    <div class="description-italian">È nuvoloso</div>
+                    <div class="description-spanish">Está nublado</div>
+                    <button class="play-button" onclick="speak('È nuvoloso')">
+                        <i class="fas fa-play"></i> Escuchar
+                    </button>
                 </div>
             </div>
         </div>
@@ -326,5 +280,7 @@
     <a href="index.html" class="back-btn" title="Volver al inicio">
         <i class="fas fa-home"></i>
     </a>
+
+    <script src="gemini-tts.js"></script>
 </body>
 </html>

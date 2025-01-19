@@ -1,135 +1,120 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Numeri - Italiano Básico</title>
+    <title>Números en Italiano</title>
+    <link rel="stylesheet" href="colors.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 1000px;
+        .number-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
-            background-color: #b67272;
         }
 
-        .number-section {
-            background: rgb(240, 108, 108);
-            padding: 20px;
+        .number-card {
+            background: var(--background-white);
             border-radius: 8px;
-            margin: 20px 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        h1 {
-            color: #4CAF50;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px var(--shadow-color);
+            transition: transform 0.3s ease;
             text-align: center;
         }
 
-        h2 {
-            color: #2196F3;
-            margin-top: 20px;
-            border-bottom: 2px solid #2196F3;
-            padding-bottom: 5px;
+        .number-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px var(--shadow-color);
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
+        .number {
+            color: var(--accent-color);
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
         }
 
-        th, td {
-            border: 1px solid #73be83;
-            padding: 12px;
-            text-align: left;
+        .translation {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
         }
 
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        .example {
-            font-style: italic;
-            color: #666;
-            margin: 10px 0;
-            padding: 10px;
-            background-color: #f8f9fa;
-            border-left: 4px solid #4CAF50;
-        }
-
-        .tip {
-            background-color: #e7f3fe;
-            border-left: 6px solid #2196F3;
-            padding: 10px;
-            margin: 10px 0;
-        }
-
-        .fas {
-            margin-right: 10px;
-            color: #2196F3;
-        }
-
-        .speak-btn {
-            background: #4CAF50;
+        .play-button {
+            background-color: var(--button-color);
+            color: rgb(12, 247, 90);
             border: none;
-            color: white;
-            padding: 5px 10px;
+            padding: 0.5rem 1rem;
             border-radius: 4px;
             cursor: pointer;
-            margin-left: 10px;
-        }
-
-        .speak-btn:hover {
-            background: #45a049;
-        }
-
-        .flex-cell {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            transition: background-color 0.3s ease;
         }
 
-        .section-nav {
-            position: sticky;
-            top: 0;
-            background: white;
-            padding: 10px;
+        .play-button:hover {
+            background-color: var(--hover-color);
+        }
+
+        .section-title {
+            color: var(--accent-color);
+            text-align: center;
+            margin: 2rem 0;
+            font-size: 2rem;
+        }
+
+        .section-description {
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 1rem;
+        }
+
+        .number-section {
+            background: var(--background-white);
             border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin: 1rem;
+            box-shadow: 0 2px 4px var(--shadow-color);
         }
 
-        .section-nav ul {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
+        @media (max-width: 768px) {
+            .number-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 0.8rem;
+            }
 
-        .section-nav a {
-            text-decoration: none;
-            color: #4CAF50;
-            padding: 5px 10px;
-            border-radius: 4px;
-            background: #f0f0f0;
-        }
+            .number-card {
+                padding: 1rem;
+            }
 
-        .section-nav a:hover {
-            background: #e0e0e0;
+            .number {
+                font-size: 1.5rem;
+            }
+
+            .translation {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+                margin: 1.5rem 0;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Numeri - Italiano Básico</h1>
+    <h1>Números en Italiano</h1>
 
     <nav class="section-nav">
         <ul>
@@ -142,373 +127,356 @@
     </nav>
 
     <div class="number-section" id="cardinales">
-        <h2><i class="fas fa-sort-numeric-up"></i>Números cardinales (1-20)</h2>
-        <table>
-            <tr>
-                <th>Número</th>
-                <th>Italiano</th>
-                <th>Español</th>
-            </tr>
-            <tr>
-                <td>0</td>
-                <td class="flex-cell">zero <button class="speak-btn" onclick="speak('zero')"><i class="fas fa-volume-up"></i></button></td>
-                <td>cero</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td class="flex-cell">uno <button class="speak-btn" onclick="speak('uno')"><i class="fas fa-volume-up"></i></button></td>
-                <td>uno</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td class="flex-cell">due <button class="speak-btn" onclick="speak('due')"><i class="fas fa-volume-up"></i></button></td>
-                <td>dos</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td class="flex-cell">tre <button class="speak-btn" onclick="speak('tre')"><i class="fas fa-volume-up"></i></button></td>
-                <td>tres</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td class="flex-cell">quattro <button class="speak-btn" onclick="speak('quattro')"><i class="fas fa-volume-up"></i></button></td>
-                <td>cuatro</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td class="flex-cell">cinque <button class="speak-btn" onclick="speak('cinque')"><i class="fas fa-volume-up"></i></button></td>
-                <td>cinco</td>
-            </tr>
-            <tr>
-                <td>6</td>
-                <td class="flex-cell">sei <button class="speak-btn" onclick="speak('sei')"><i class="fas fa-volume-up"></i></button></td>
-                <td>seis</td>
-            </tr>
-            <tr>
-                <td>7</td>
-                <td class="flex-cell">sette <button class="speak-btn" onclick="speak('sette')"><i class="fas fa-volume-up"></i></button></td>
-                <td>siete</td>
-            </tr>
-            <tr>
-                <td>8</td>
-                <td class="flex-cell">otto <button class="speak-btn" onclick="speak('otto')"><i class="fas fa-volume-up"></i></button></td>
-                <td>ocho</td>
-            </tr>
-            <tr>
-                <td>9</td>
-                <td class="flex-cell">nove <button class="speak-btn" onclick="speak('nove')"><i class="fas fa-volume-up"></i></button></td>
-                <td>nueve</td>
-            </tr>
-            <tr>
-                <td>10</td>
-                <td class="flex-cell">dieci <button class="speak-btn" onclick="speak('dieci')"><i class="fas fa-volume-up"></i></button></td>
-                <td>diez</td>
-            </tr>
-            <tr>
-                <td>11</td>
-                <td class="flex-cell">undici <button class="speak-btn" onclick="speak('undici')"><i class="fas fa-volume-up"></i></button></td>
-                <td>once</td>
-            </tr>
-            <tr>
-                <td>12</td>
-                <td class="flex-cell">dodici <button class="speak-btn" onclick="speak('dodici')"><i class="fas fa-volume-up"></i></button></td>
-                <td>doce</td>
-            </tr>
-            <tr>
-                <td>13</td>
-                <td class="flex-cell">tredici <button class="speak-btn" onclick="speak('tredici')"><i class="fas fa-volume-up"></i></button></td>
-                <td>trece</td>
-            </tr>
-            <tr>
-                <td>14</td>
-                <td class="flex-cell">quattordici <button class="speak-btn" onclick="speak('quattordici')"><i class="fas fa-volume-up"></i></button></td>
-                <td>catorce</td>
-            </tr>
-            <tr>
-                <td>15</td>
-                <td class="flex-cell">quindici <button class="speak-btn" onclick="speak('quindici')"><i class="fas fa-volume-up"></i></button></td>
-                <td>quince</td>
-            </tr>
-            <tr>
-                <td>16</td>
-                <td class="flex-cell">sedici <button class="speak-btn" onclick="speak('sedici')"><i class="fas fa-volume-up"></i></button></td>
-                <td>dieciséis</td>
-            </tr>
-            <tr>
-                <td>17</td>
-                <td class="flex-cell">diciassette <button class="speak-btn" onclick="speak('diciassette')"><i class="fas fa-volume-up"></i></button></td>
-                <td>diecisiete</td>
-            </tr>
-            <tr>
-                <td>18</td>
-                <td class="flex-cell">diciotto <button class="speak-btn" onclick="speak('diciotto')"><i class="fas fa-volume-up"></i></button></td>
-                <td>dieciocho</td>
-            </tr>
-            <tr>
-                <td>19</td>
-                <td class="flex-cell">diciannove <button class="speak-btn" onclick="speak('diciannove')"><i class="fas fa-volume-up"></i></button></td>
-                <td>diecinueve</td>
-            </tr>
-            <tr>
-                <td>20</td>
-                <td class="flex-cell">venti <button class="speak-btn" onclick="speak('venti')"><i class="fas fa-volume-up"></i></button></td>
-                <td>veinte</td>
-            </tr>
-        </table>
+        <h2 class="section-title"><i class="fas fa-sort-numeric-up"></i>Números cardinales (1-20)</h2>
+        <div class="number-grid">
+            <div class="number-card">
+                <div class="number">0</div>
+                <div class="translation">zero</div>
+                <button class="play-button" onclick="speak('zero')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">1</div>
+                <div class="translation">uno</div>
+                <button class="play-button" onclick="speak('uno')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">2</div>
+                <div class="translation">due</div>
+                <button class="play-button" onclick="speak('due')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">3</div>
+                <div class="translation">tre</div>
+                <button class="play-button" onclick="speak('tre')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">4</div>
+                <div class="translation">quattro</div>
+                <button class="play-button" onclick="speak('quattro')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">5</div>
+                <div class="translation">cinque</div>
+                <button class="play-button" onclick="speak('cinque')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">6</div>
+                <div class="translation">sei</div>
+                <button class="play-button" onclick="speak('sei')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">7</div>
+                <div class="translation">sette</div>
+                <button class="play-button" onclick="speak('sette')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">8</div>
+                <div class="translation">otto</div>
+                <button class="play-button" onclick="speak('otto')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">9</div>
+                <div class="translation">nove</div>
+                <button class="play-button" onclick="speak('nove')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">10</div>
+                <div class="translation">dieci</div>
+                <button class="play-button" onclick="speak('dieci')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">11</div>
+                <div class="translation">undici</div>
+                <button class="play-button" onclick="speak('undici')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">12</div>
+                <div class="translation">dodici</div>
+                <button class="play-button" onclick="speak('dodici')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">13</div>
+                <div class="translation">tredici</div>
+                <button class="play-button" onclick="speak('tredici')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">14</div>
+                <div class="translation">quattordici</div>
+                <button class="play-button" onclick="speak('quattordici')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">15</div>
+                <div class="translation">quindici</div>
+                <button class="play-button" onclick="speak('quindici')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">16</div>
+                <div class="translation">sedici</div>
+                <button class="play-button" onclick="speak('sedici')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">17</div>
+                <div class="translation">diciassette</div>
+                <button class="play-button" onclick="speak('diciassette')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">18</div>
+                <div class="translation">diciotto</div>
+                <button class="play-button" onclick="speak('diciotto')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">19</div>
+                <div class="translation">diciannove</div>
+                <button class="play-button" onclick="speak('diciannove')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">20</div>
+                <div class="translation">venti</div>
+                <button class="play-button" onclick="speak('venti')"><i class="fas fa-volume-up"></i></button>
+            </div>
+        </div>
 
-        <h2><i class="fas fa-sort-numeric-up"></i>Decenas</h2>
-        <table>
-            <tr>
-                <th>Número</th>
-                <th>Italiano</th>
-                <th>Español</th>
-            </tr>
-            <tr>
-                <td>10</td>
-                <td class="flex-cell">dieci <button class="speak-btn" onclick="speak('dieci')"><i class="fas fa-volume-up"></i></button></td>
-                <td>diez</td>
-            </tr>
-            <tr>
-                <td>20</td>
-                <td class="flex-cell">venti <button class="speak-btn" onclick="speak('venti')"><i class="fas fa-volume-up"></i></button></td>
-                <td>veinte</td>
-            </tr>
-            <tr>
-                <td>30</td>
-                <td class="flex-cell">trenta <button class="speak-btn" onclick="speak('trenta')"><i class="fas fa-volume-up"></i></button></td>
-                <td>treinta</td>
-            </tr>
-            <tr>
-                <td>40</td>
-                <td class="flex-cell">quaranta <button class="speak-btn" onclick="speak('quaranta')"><i class="fas fa-volume-up"></i></button></td>
-                <td>cuarenta</td>
-            </tr>
-            <tr>
-                <td>50</td>
-                <td class="flex-cell">cinquanta <button class="speak-btn" onclick="speak('cinquanta')"><i class="fas fa-volume-up"></i></button></td>
-                <td>cincuenta</td>
-            </tr>
-            <tr>
-                <td>60</td>
-                <td class="flex-cell">sessanta <button class="speak-btn" onclick="speak('sessanta')"><i class="fas fa-volume-up"></i></button></td>
-                <td>sesenta</td>
-            </tr>
-            <tr>
-                <td>70</td>
-                <td class="flex-cell">settanta <button class="speak-btn" onclick="speak('settanta')"><i class="fas fa-volume-up"></i></button></td>
-                <td>setenta</td>
-            </tr>
-            <tr>
-                <td>80</td>
-                <td class="flex-cell">ottanta <button class="speak-btn" onclick="speak('ottanta')"><i class="fas fa-volume-up"></i></button></td>
-                <td>ochenta</td>
-            </tr>
-            <tr>
-                <td>90</td>
-                <td class="flex-cell">novanta <button class="speak-btn" onclick="speak('novanta')"><i class="fas fa-volume-up"></i></button></td>
-                <td>noventa</td>
-            </tr>
-            <tr>
-                <td>100</td>
-                <td class="flex-cell">cento <button class="speak-btn" onclick="speak('cento')"><i class="fas fa-volume-up"></i></button></td>
-                <td>cien</td>
-            </tr>
-        </table>
+        <h2 class="section-title"><i class="fas fa-sort-numeric-up"></i>Decenas</h2>
+        <div class="number-grid">
+            <div class="number-card">
+                <div class="number">10</div>
+                <div class="translation">dieci</div>
+                <button class="play-button" onclick="speak('dieci')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">20</div>
+                <div class="translation">venti</div>
+                <button class="play-button" onclick="speak('venti')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">30</div>
+                <div class="translation">trenta</div>
+                <button class="play-button" onclick="speak('trenta')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">40</div>
+                <div class="translation">quaranta</div>
+                <button class="play-button" onclick="speak('quaranta')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">50</div>
+                <div class="translation">cinquanta</div>
+                <button class="play-button" onclick="speak('cinquanta')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">60</div>
+                <div class="translation">sessanta</div>
+                <button class="play-button" onclick="speak('sessanta')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">70</div>
+                <div class="translation">settanta</div>
+                <button class="play-button" onclick="speak('settanta')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">80</div>
+                <div class="translation">ottanta</div>
+                <button class="play-button" onclick="speak('ottanta')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">90</div>
+                <div class="translation">novanta</div>
+                <button class="play-button" onclick="speak('novanta')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">100</div>
+                <div class="translation">cento</div>
+                <button class="play-button" onclick="speak('cento')"><i class="fas fa-volume-up"></i></button>
+            </div>
+        </div>
 
-        <h2><i class="fas fa-sort-numeric-up"></i>Centenas</h2>
-        <table>
-            <tr>
-                <th>Número</th>
-                <th>Italiano</th>
-                <th>Español</th>
-            </tr>
-            <tr>
-                <td>100</td>
-                <td class="flex-cell">cento <button class="speak-btn" onclick="speak('cento')"><i class="fas fa-volume-up"></i></button></td>
-                <td>cien</td>
-            </tr>
-            <tr>
-                <td>200</td>
-                <td class="flex-cell">duecento <button class="speak-btn" onclick="speak('duecento')"><i class="fas fa-volume-up"></i></button></td>
-                <td>doscientos</td>
-            </tr>
-            <tr>
-                <td>300</td>
-                <td class="flex-cell">trecento <button class="speak-btn" onclick="speak('trecento')"><i class="fas fa-volume-up"></i></button></td>
-                <td>trescientos</td>
-            </tr>
-            <tr>
-                <td>400</td>
-                <td class="flex-cell">quattrocento <button class="speak-btn" onclick="speak('quattrocento')"><i class="fas fa-volume-up"></i></button></td>
-                <td>cuatrocientos</td>
-            </tr>
-            <tr>
-                <td>500</td>
-                <td class="flex-cell">cinquecento <button class="speak-btn" onclick="speak('cinquecento')"><i class="fas fa-volume-up"></i></button></td>
-                <td>quinientos</td>
-            </tr>
-            <tr>
-                <td>600</td>
-                <td class="flex-cell">seicento <button class="speak-btn" onclick="speak('seicento')"><i class="fas fa-volume-up"></i></button></td>
-                <td>seiscientos</td>
-            </tr>
-            <tr>
-                <td>700</td>
-                <td class="flex-cell">settecento <button class="speak-btn" onclick="speak('settecento')"><i class="fas fa-volume-up"></i></button></td>
-                <td>setecientos</td>
-            </tr>
-            <tr>
-                <td>800</td>
-                <td class="flex-cell">ottocento <button class="speak-btn" onclick="speak('ottocento')"><i class="fas fa-volume-up"></i></button></td>
-                <td>ochocientos</td>
-            </tr>
-            <tr>
-                <td>900</td>
-                <td class="flex-cell">novecento <button class="speak-btn" onclick="speak('novecento')"><i class="fas fa-volume-up"></i></button></td>
-                <td>novecientos</td>
-            </tr>
-            <tr>
-                <td>1000</td>
-                <td class="flex-cell">mille <button class="speak-btn" onclick="speak('mille')"><i class="fas fa-volume-up"></i></button></td>
-                <td>mil</td>
-            </tr>
-        </table>
+        <h2 class="section-title"><i class="fas fa-sort-numeric-up"></i>Centenas</h2>
+        <div class="number-grid">
+            <div class="number-card">
+                <div class="number">100</div>
+                <div class="translation">cento</div>
+                <button class="play-button" onclick="speak('cento')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">200</div>
+                <div class="translation">duecento</div>
+                <button class="play-button" onclick="speak('duecento')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">300</div>
+                <div class="translation">trecento</div>
+                <button class="play-button" onclick="speak('trecento')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">400</div>
+                <div class="translation">quattrocento</div>
+                <button class="play-button" onclick="speak('quattrocento')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">500</div>
+                <div class="translation">cinquecento</div>
+                <button class="play-button" onclick="speak('cinquecento')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">600</div>
+                <div class="translation">seicento</div>
+                <button class="play-button" onclick="speak('seicento')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">700</div>
+                <div class="translation">settecento</div>
+                <button class="play-button" onclick="speak('settecento')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">800</div>
+                <div class="translation">ottocento</div>
+                <button class="play-button" onclick="speak('ottocento')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">900</div>
+                <div class="translation">novecento</div>
+                <button class="play-button" onclick="speak('novecento')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">1000</div>
+                <div class="translation">mille</div>
+                <button class="play-button" onclick="speak('mille')"><i class="fas fa-volume-up"></i></button>
+            </div>
+        </div>
 
-        <h2><i class="fas fa-sort-numeric-up"></i>Millares</h2>
-        <table>
-            <tr>
-                <th>Número</th>
-                <th>Italiano</th>
-                <th>Español</th>
-            </tr>
-            <tr>
-                <td>1.000</td>
-                <td class="flex-cell">mille <button class="speak-btn" onclick="speak('mille')"><i class="fas fa-volume-up"></i></button></td>
-                <td>mil</td>
-            </tr>
-            <tr>
-                <td>2.000</td>
-                <td class="flex-cell">duemila <button class="speak-btn" onclick="speak('duemila')"><i class="fas fa-volume-up"></i></button></td>
-                <td>dos mil</td>
-            </tr>
-            <tr>
-                <td>3.000</td>
-                <td class="flex-cell">tremila <button class="speak-btn" onclick="speak('tremila')"><i class="fas fa-volume-up"></i></button></td>
-                <td>tres mil</td>
-            </tr>
-            <tr>
-                <td>4.000</td>
-                <td class="flex-cell">quattromila <button class="speak-btn" onclick="speak('quattromila')"><i class="fas fa-volume-up"></i></button></td>
-                <td>cuatro mil</td>
-            </tr>
-            <tr>
-                <td>5.000</td>
-                <td class="flex-cell">cinquemila <button class="speak-btn" onclick="speak('cinquemila')"><i class="fas fa-volume-up"></i></button></td>
-                <td>cinco mil</td>
-            </tr>
-            <tr>
-                <td>6.000</td>
-                <td class="flex-cell">seimila <button class="speak-btn" onclick="speak('seimila')"><i class="fas fa-volume-up"></i></button></td>
-                <td>seis mil</td>
-            </tr>
-            <tr>
-                <td>7.000</td>
-                <td class="flex-cell">settemila <button class="speak-btn" onclick="speak('settemila')"><i class="fas fa-volume-up"></i></button></td>
-                <td>siete mil</td>
-            </tr>
-            <tr>
-                <td>8.000</td>
-                <td class="flex-cell">ottomila <button class="speak-btn" onclick="speak('ottomila')"><i class="fas fa-volume-up"></i></button></td>
-                <td>ocho mil</td>
-            </tr>
-            <tr>
-                <td>9.000</td>
-                <td class="flex-cell">novemila <button class="speak-btn" onclick="speak('novemila')"><i class="fas fa-volume-up"></i></button></td>
-                <td>nueve mil</td>
-            </tr>
-            <tr>
-                <td>10.000</td>
-                <td class="flex-cell">diecimila <button class="speak-btn" onclick="speak('diecimila')"><i class="fas fa-volume-up"></i></button></td>
-                <td>diez mil</td>
-            </tr>
-        </table>
+        <h2 class="section-title"><i class="fas fa-sort-numeric-up"></i>Millares</h2>
+        <div class="number-grid">
+            <div class="number-card">
+                <div class="number">1.000</div>
+                <div class="translation">mille</div>
+                <button class="play-button" onclick="speak('mille')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">2.000</div>
+                <div class="translation">duemila</div>
+                <button class="play-button" onclick="speak('duemila')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">3.000</div>
+                <div class="translation">tremila</div>
+                <button class="play-button" onclick="speak('tremila')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">4.000</div>
+                <div class="translation">quattromila</div>
+                <button class="play-button" onclick="speak('quattromila')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">5.000</div>
+                <div class="translation">cinquemila</div>
+                <button class="play-button" onclick="speak('cinquemila')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">6.000</div>
+                <div class="translation">seimila</div>
+                <button class="play-button" onclick="speak('seimila')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">7.000</div>
+                <div class="translation">settemila</div>
+                <button class="play-button" onclick="speak('settemila')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">8.000</div>
+                <div class="translation">ottomila</div>
+                <button class="play-button" onclick="speak('ottomila')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">9.000</div>
+                <div class="translation">novemila</div>
+                <button class="play-button" onclick="speak('novemila')"><i class="fas fa-volume-up"></i></button>
+            </div>
+            <div class="number-card">
+                <div class="number">10.000</div>
+                <div class="translation">diecimila</div>
+                <button class="play-button" onclick="speak('diecimila')"><i class="fas fa-volume-up"></i></button>
+            </div>
+        </div>
     </div>
 
     <div class="number-section" id="ordinales">
-        <h2><i class="fas fa-list-ol"></i>Números ordinales</h2>
-        <div class="tip">
+        <h2 class="section-title"><i class="fas fa-list-ol"></i>Números ordinales</h2>
+        <div class="section-description">
             Del 1º al 10º cada número tiene un nombre propio.
             A partir del 11º se forma con el número cardinal quitando la última vocal y añadiendo "-esimo".
         </div>
-        <table>
-            <tr>
-                <th>Número</th>
-                <th>Italiano</th>
-                <th>Español</th>
-            </tr>
-            <tr>
-                <td>1º</td>
-                <td class="flex-cell">primo <button class="speak-btn" onclick="speak('primo')"><i class="fas fa-volume-up"></i></button></td>
-                <td>primero</td>
-            </tr>
+        <div class="number-grid">
+            <div class="number-card">
+                <div class="number">1º</div>
+                <div class="translation">primo</div>
+                <button class="play-button" onclick="speak('primo')"><i class="fas fa-volume-up"></i></button>
+            </div>
             <!-- Continuar con más números ordinales -->
-        </table>
+        </div>
     </div>
 
     <div class="number-section" id="fracciones">
-        <h2><i class="fas fa-divide"></i>Fracciones</h2>
-        <table>
-            <tr>
-                <th>Fracción</th>
-                <th>Italiano</th>
-                <th>Español</th>
-            </tr>
-            <tr>
-                <td>1/2</td>
-                <td class="flex-cell">mezzo <button class="speak-btn" onclick="speak('mezzo')"><i class="fas fa-volume-up"></i></button></td>
-                <td>medio</td>
-            </tr>
+        <h2 class="section-title"><i class="fas fa-divide"></i>Fracciones</h2>
+        <div class="number-grid">
+            <div class="number-card">
+                <div class="number">1/2</div>
+                <div class="translation">mezzo</div>
+                <button class="play-button" onclick="speak('mezzo')"><i class="fas fa-volume-up"></i></button>
+            </div>
             <!-- Continuar con más fracciones -->
-        </table>
+        </div>
     </div>
 
     <div class="number-section" id="decimales">
-        <h2><i class="fas fa-percentage"></i>Números decimales</h2>
-        <div class="tip">
+        <h2 class="section-title"><i class="fas fa-percentage"></i>Números decimales</h2>
+        <div class="section-description">
             En italiano se usa la coma para números decimales matemáticos.
             Para las frecuencias de radio se usa punto.
         </div>
-        <table>
-            <tr>
-                <th>Número</th>
-                <th>Italiano</th>
-                <th>Español</th>
-            </tr>
-            <tr>
-                <td>0,1</td>
-                <td class="flex-cell">zero virgola uno <button class="speak-btn" onclick="speak('zero virgola uno')"><i class="fas fa-volume-up"></i></button></td>
-                <td>cero coma uno</td>
-            </tr>
+        <div class="number-grid">
+            <div class="number-card">
+                <div class="number">0,1</div>
+                <div class="translation">zero virgola uno</div>
+                <button class="play-button" onclick="speak('zero virgola uno')"><i class="fas fa-volume-up"></i></button>
+            </div>
             <!-- Continuar con más ejemplos -->
-        </table>
+        </div>
     </div>
 
     <div class="number-section" id="precios">
-        <h2><i class="fas fa-euro-sign"></i>Los precios</h2>
-        <table>
-            <tr>
-                <th>Precio</th>
-                <th>Italiano</th>
-                <th>Español</th>
-            </tr>
-            <tr>
-                <td>0,05 €</td>
-                <td class="flex-cell">cinque centesimi <button class="speak-btn" onclick="speak('cinque centesimi')"><i class="fas fa-volume-up"></i></button></td>
-                <td>cinco céntimos</td>
-            </tr>
+        <h2 class="section-title"><i class="fas fa-euro-sign"></i>Los precios</h2>
+        <div class="number-grid">
+            <div class="number-card">
+                <div class="number">0,05 €</div>
+                <div class="translation">cinque centesimi</div>
+                <button class="play-button" onclick="speak('cinque centesimi')"><i class="fas fa-volume-up"></i></button>
+            </div>
             <!-- Continuar con más ejemplos -->
-        </table>
+        </div>
     </div>
+
+    <nav class="bottom-nav">
+        <a href="alfabeto.html" class="nav-item">
+            <i class="fas fa-font"></i>
+            <span>Alfabeto</span>
+        </a>
+        <a href="numeros.html" class="nav-item active">
+            <i class="fas fa-sort-numeric-up"></i>
+            <span>Números</span>
+        </a>
+        <a href="colores.html" class="nav-item">
+            <i class="fas fa-palette"></i>
+            <span>Colores</span>
+        </a>
+        <a href="animales.html" class="nav-item">
+            <i class="fas fa-paw"></i>
+            <span>Animales</span>
+        </a>
+        <a href="chat.html" class="nav-item">
+            <i class="fas fa-comments"></i>
+            <span>Chat</span>
+        </a>
+    </nav>
 
     <script src="gemini-tts.js"></script>
 </body>
