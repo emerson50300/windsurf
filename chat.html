@@ -8,262 +8,258 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
+        :root {
+            --whatsapp-green: #075E54;
+            --whatsapp-light-green: #128C7E;
+            --whatsapp-chat-bg: #E5DDD5;
+            --message-out: #DCF8C6;
+            --message-in: #FFFFFF;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background: #f0f2f5;
+            background: var(--whatsapp-chat-bg);
             height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
-        .chat-container {
-            max-width: 800px;
-            margin: 2rem auto;
-            background: var(--background-white);
-            border-radius: 8px;
-            box-shadow: 0 2px 4px var(--shadow-color);
-            padding: 2rem;
-        }
-
-        .chat-messages {
+        .chat-header {
+            background: var(--whatsapp-green);
+            color: white;
+            padding: 10px 16px;
             display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            padding: 1rem;
-            max-height: 600px;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .chat-header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .chat-header-info {
+            flex: 1;
+        }
+
+        .chat-header-info h2 {
+            font-size: 16px;
+            margin-bottom: 2px;
+        }
+
+        .chat-header-info p {
+            font-size: 13px;
+            opacity: 0.8;
+        }
+
+        .chat-container {
+            flex: 1;
             overflow-y: auto;
-        }
-
-        .chat-messages::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .chat-messages::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-
-        .chat-messages::-webkit-scrollbar-thumb {
-            background: var(--accent-color);
-            border-radius: 10px;
+            padding: 16px;
+            background-image: url('https://i.pinimg.com/originals/97/c0/07/97c00759d90d786d9b6096d274ad3e07.png');
+            background-size: contain;
         }
 
         .message {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            padding: 1rem;
-            border-radius: 12px;
-            background: var(--background-light);
-            transition: transform 0.3s ease;
-            max-width: 80%;
-            margin: 0.5rem 0;
+            max-width: 65%;
+            margin: 8px 0;
+            padding: 8px 12px;
+            border-radius: 7.5px;
+            position: relative;
+            box-shadow: 0 1px 0.5px rgba(0,0,0,0.13);
         }
 
         .message.user-message {
-            align-self: flex-end;
-            background: var(--accent-color);
-            color: white;
+            background: var(--message-out);
+            margin-left: auto;
+            border-top-right-radius: 0;
         }
 
         .message.bot-message {
-            align-self: flex-start;
-            background: white;
-            border: 1px solid var(--border-light);
+            background: var(--message-in);
+            margin-right: auto;
+            border-top-left-radius: 0;
         }
 
         .message-content {
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
+            margin-bottom: 5px;
         }
 
         .message-italian {
-            color: var(--accent-color);
-            font-size: 1.2rem;
-            font-weight: 500;
-            line-height: 1.4;
-            padding: 0.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 4px;
         }
 
         .message-spanish {
-            color: var(--text-secondary);
-            font-size: 1rem;
-            line-height: 1.4;
-            padding: 0.5rem;
-            background: rgba(0, 0, 0, 0.05);
-            border-radius: 8px;
+            font-size: 14px;
+            color: #666;
         }
 
-        .message.user-message .message-italian,
-        .message.user-message .message-spanish {
-            color: white;
+        .message-time {
+            font-size: 11px;
+            color: rgba(0,0,0,0.45);
+            float: right;
+            margin-top: 4px;
         }
 
         .message-actions {
             display: flex;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
+            gap: 8px;
+            margin-top: 4px;
         }
 
-        .play-button {
-            background-color: var(--button-color);
-            color: white;
+        .action-button {
+            background: none;
             border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
+            color: var(--whatsapp-light-green);
             cursor: pointer;
+            padding: 4px;
+            border-radius: 50%;
+            transition: background-color 0.2s;
+        }
+
+        .action-button:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+
+        .chat-footer {
+            background: #F0F0F0;
+            padding: 10px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
+            gap: 8px;
+            position: sticky;
+            bottom: 0;
         }
 
-        .play-button:hover {
-            background-color: var(--hover-color);
-            transform: translateY(-2px);
-        }
-
-        .message-time {
-            font-size: 0.8rem;
-            color: rgba(0, 0, 0, 0.5);
-            align-self: flex-end;
-            margin-top: 0.3rem;
-        }
-
-        .user-message .message-time {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .section-title {
-            color: var(--accent-color);
-            text-align: center;
-            margin: 2rem 0;
-            font-size: 2rem;
-        }
-
-        .section-description {
-            color: var(--text-secondary);
-            text-align: center;
-            margin-bottom: 2rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            padding: 0 1rem;
-        }
-
-        .chat-section {
-            margin-bottom: 3rem;
-        }
-
-        .chat-section-title {
-            color: var(--accent-color);
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--accent-color);
-        }
-
-        .suggestions {
+        .chat-input-container {
             display: flex;
-            gap: 0.5rem;
-            overflow-x: auto;
-            padding: 0.5rem;
-            margin-bottom: 1rem;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .suggestion {
-            padding: 0.5rem 1rem;
+            align-items: center;
             background: white;
-            border: 1px solid #ddd;
             border-radius: 20px;
-            white-space: nowrap;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .suggestion:hover {
-            background: #f5f5f5;
-        }
-
-        .ad-container {
-            width: 100%;
-            margin: 1rem 0;
-            text-align: center;
-        }
-
-        .chat-input {
-            display: flex;
-            padding: 15px;
-            background: var(--background-white);
-            border-top: 1px solid var(--border-light);
-        }
-
-        .message-input {
+            padding: 8px 16px;
             flex: 1;
-            padding: 10px;
-            border: 1px solid var(--border-light);
-            border-radius: 20px;
-            margin-right: 10px;
-            font-size: 14px;
         }
 
-        .send-button {
-            background-color: var(--button-color);
-            color: rgb(12, 247, 90);
+        #userInput {
             border: none;
-            padding: 10px 20px;
+            outline: none;
+            flex: 1;
+            padding: 6px;
+            font-size: 15px;
+            background: none;
+        }
+
+        .chat-footer-buttons {
+            display: flex;
+            gap: 16px;
+        }
+
+        .chat-footer-button {
+            background: none;
+            border: none;
+            color: var(--whatsapp-light-green);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: background-color 0.2s;
+        }
+
+        .chat-footer-button:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+
+        #camera-preview {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+        }
+
+        #camera-preview video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        #camera-preview .camera-buttons {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+        }
+
+        .camera-button {
+            background: white;
+            border: none;
+            padding: 12px 24px;
             border-radius: 20px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .send-button:hover {
-            background-color: var(--hover-color);
+            font-weight: bold;
         }
 
         @media (max-width: 768px) {
-            .chat-container {
-                margin: 1rem;
-                padding: 1rem;
-            }
-
             .message {
-                padding: 0.8rem;
-            }
-
-            .message-italian {
-                font-size: 1.1rem;
-            }
-
-            .message-spanish {
-                font-size: 0.9rem;
-            }
-
-            .section-title {
-                font-size: 1.5rem;
-                margin: 1.5rem 0;
-            }
-
-            .chat-section-title {
-                font-size: 1.3rem;
+                max-width: 85%;
             }
         }
     </style>
 </head>
 <body>
+    <div class="chat-header">
+        <img src="https://via.placeholder.com/40" alt="Chat Bot">
+        <div class="chat-header-info">
+            <h2>Asistente de Italiano</h2>
+            <p>En línea</p>
+        </div>
+    </div>
+
+    <div class="chat-container" id="chatMessages">
+        <!-- Los mensajes se agregarán aquí dinámicamente -->
+    </div>
+
+    <div class="chat-footer">
+        <div class="chat-input-container">
+            <input type="text" id="userInput" placeholder="Escribe un mensaje...">
+        </div>
+        <div class="chat-footer-buttons">
+            <button class="chat-footer-button" id="cameraButton" title="Tomar foto">
+                <i class="fas fa-camera"></i>
+            </button>
+            <button class="chat-footer-button" id="voiceButton" title="Mensaje de voz">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <button class="chat-footer-button" id="sendButton" title="Enviar">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <div id="camera-preview">
+        <video id="video" autoplay playsinline></video>
+        <div class="camera-buttons">
+            <button class="camera-button" id="captureButton">Capturar</button>
+            <button class="camera-button" id="closeCameraButton">Cerrar</button>
+        </div>
+    </div>
+
     <nav class="bottom-nav">
         <a href="index.html" class="nav-item">
             <i class="fas fa-home"></i>
@@ -278,50 +274,144 @@
             <span>Verbos</span>
         </a>
     </nav>
-    <div class="chat-container">
-        <!-- Anuncio Superior -->
-        <div class="ad-container">
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-1951834226818406"
-                 data-ad-slot="TUSLOT1"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
 
-        <div class="suggestions">
-            <div class="suggestion">¿Cómo se dice "hola"?</div>
-            <div class="suggestion">¿Cómo se conjuga "essere"?</div>
-            <div class="suggestion">¿Qué significa "ciao"?</div>
-            <div class="suggestion">Vocabulario básico</div>
-            <div class="suggestion">Frases comunes</div>
-        </div>
-
-        <div class="chat-messages" id="messages"></div>
-
-        <div class="chat-input">
-            <input type="text" id="userInput" placeholder="Escribe tu pregunta...">
-            <button class="send-button" onclick="sendMessage()">Enviar</button>
-        </div>
-
-        <!-- Anuncio Inferior -->
-        <div class="ad-container">
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-1951834226818406"
-                 data-ad-slot="TUSLOT2"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
-    </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
     <script>
+        let mediaRecorder;
+        let audioChunks = [];
+        let stream;
+        
+        // Funciones de voz
+        async function initVoiceRecording() {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+
+                mediaRecorder.ondataavailable = (event) => {
+                    audioChunks.push(event.data);
+                };
+
+                mediaRecorder.onstop = async () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                    audioChunks = [];
+                    
+                    // Aquí puedes enviar el audioBlob a un servicio de reconocimiento de voz
+                    // Por ahora solo mostraremos un mensaje
+                    addMessage("Mensaje de voz recibido", true);
+                };
+
+            } catch (error) {
+                console.error('Error accessing microphone:', error);
+            }
+        }
+
+        const voiceButton = document.getElementById('voiceButton');
+        let isRecording = false;
+
+        voiceButton.addEventListener('mousedown', () => {
+            if (!mediaRecorder) {
+                initVoiceRecording();
+            } else {
+                isRecording = true;
+                audioChunks = [];
+                mediaRecorder.start();
+                voiceButton.style.color = 'red';
+            }
+        });
+
+        voiceButton.addEventListener('mouseup', () => {
+            if (isRecording) {
+                mediaRecorder.stop();
+                isRecording = false;
+                voiceButton.style.color = '';
+            }
+        });
+
+        // Funciones de cámara
+        const cameraPreview = document.getElementById('camera-preview');
+        const video = document.getElementById('video');
+        const captureButton = document.getElementById('captureButton');
+        const closeCameraButton = document.getElementById('closeCameraButton');
+        let imageCapture;
+
+        document.getElementById('cameraButton').addEventListener('click', async () => {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+                cameraPreview.style.display = 'block';
+                
+                const track = stream.getVideoTracks()[0];
+                imageCapture = new ImageCapture(track);
+            } catch (error) {
+                console.error('Error accessing camera:', error);
+            }
+        });
+
+        captureButton.addEventListener('click', async () => {
+            try {
+                const canvas = document.createElement('canvas');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                canvas.getContext('2d').drawImage(video, 0, 0);
+                
+                // Convertir la imagen a base64
+                const imageData = canvas.toDataURL('image/jpeg');
+                
+                // Aquí puedes enviar imageData a un servicio de reconocimiento de imágenes
+                // Por ahora solo mostraremos un mensaje
+                addMessage("Imagen capturada y procesada", true);
+                
+                closeCameraPreview();
+            } catch (error) {
+                console.error('Error capturing image:', error);
+            }
+        });
+
+        closeCameraButton.addEventListener('click', closeCameraPreview);
+
+        function closeCameraPreview() {
+            const stream = video.srcObject;
+            const tracks = stream.getTracks();
+            tracks.forEach(track => track.stop());
+            video.srcObject = null;
+            cameraPreview.style.display = 'none';
+        }
+
+        // Función para agregar mensajes
+        function addMessage(text, isUser = false, translation = '') {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            
+            const time = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+            
+            messageDiv.innerHTML = `
+                <div class="message-content">
+                    <div class="message-italian">${text}</div>
+                    ${translation ? `<div class="message-spanish">${translation}</div>` : ''}
+                </div>
+                <div class="message-actions">
+                    ${!isUser ? `<button class="action-button" onclick="speak('${text.replace(/'/g, "\\'")}')">
+                        <i class="fas fa-volume-up"></i>
+                    </button>` : ''}
+                </div>
+                <div class="message-time">${time}</div>
+            `;
+
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        // Event listener para enviar mensaje
+        document.getElementById('sendButton').addEventListener('click', sendMessage);
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Resto del código JavaScript existente...
         const TRANSLATE_API_KEY = 'AIzaSyCEIicKmkzZQ7kOy0yBSVt4Dc3s80GwKYw';
         const GEMINI_API_KEY = 'AIzaSyCEIicKmkzZQ7kOy0yBSVt4Dc3s80GwKYw';
         const synth = window.speechSynthesis;
