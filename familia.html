@@ -167,29 +167,6 @@
             <p>Aprende el vocabulario de la familia en italiano</p>
         </header>
 
-        <!-- Botón de diálogos -->
-        <button id="dialoButton" class="custom-button" onclick="toggleDialogues()">dialo</button>
-
-        <!-- Modal para los diálogos -->
-        <div id="dialogueModal" class="modal">
-            <div class="modal-content">
-                <span class="close-button" onclick="toggleDialogues()">&times;</span>
-                <h2>Diálogos</h2>
-                <p>Sesenta diálogos gratuitos en italiano (con transcripciones), que comienzan fáciles y gradualmente se vuelven más difíciles. ¡Escuche varias veces ANTES de mirar la transcripción!</p>
-                <div class="dialogue-list">
-                    <div class="dialogue-item">Cambiare i soldi</div>
-                    <div class="dialogue-item">Riparare la macchina</div>
-                    <div class="dialogue-item">Noleggio macchine bici</div>
-                    <div class="dialogue-item">Al Bar</div>
-                    <div class="dialogue-item">Pizza d'asporto</div>
-                    <div class="dialogue-item">Prenotare un ristorante</div>
-                    <div class="dialogue-item">Comida callejera</div>
-                    <div class="dialogue-item">Al pub</div>
-                    <!-- ... resto de los diálogos ... -->
-                </div>
-            </div>
-        </div>
-
         <div class="family-grid">
             <div class="family-card">
                 <div class="family-icon">👨</div>
@@ -347,23 +324,6 @@
             }
 
             synth.speak(utterance);
-        }
-
-        function toggleDialogues() {
-            const modal = document.getElementById('dialogueModal');
-            if (modal.style.display === "block") {
-                modal.style.display = "none";
-            } else {
-                modal.style.display = "block";
-            }
-        }
-
-        // Cerrar el modal cuando se hace clic fuera de él
-        window.onclick = function(event) {
-            const modal = document.getElementById('dialogueModal');
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
         }
     </script>
 </body>
