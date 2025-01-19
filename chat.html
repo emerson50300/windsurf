@@ -62,6 +62,40 @@
             opacity: 0.8;
         }
 
+        .suggestions-container {
+            background: white;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .suggestions {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 5px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .suggestions::-webkit-scrollbar {
+            display: none;
+        }
+
+        .suggestion {
+            background: var(--whatsapp-light-green);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+
+        .suggestion:hover {
+            background: var(--whatsapp-green);
+        }
+
         .chat-container {
             flex: 1;
             overflow-y: auto;
@@ -160,12 +194,7 @@
             background: none;
         }
 
-        .chat-footer-buttons {
-            display: flex;
-            gap: 16px;
-        }
-
-        .chat-footer-button {
+        .send-button {
             background: none;
             border: none;
             color: var(--whatsapp-light-green);
@@ -176,43 +205,8 @@
             transition: background-color 0.2s;
         }
 
-        .chat-footer-button:hover {
+        .send-button:hover {
             background-color: rgba(0,0,0,0.05);
-        }
-
-        #camera-preview {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 1000;
-        }
-
-        #camera-preview video {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        #camera-preview .camera-buttons {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 20px;
-        }
-
-        .camera-button {
-            background: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: bold;
         }
 
         @media (max-width: 768px) {
@@ -231,6 +225,19 @@
         </div>
     </div>
 
+    <div class="suggestions-container">
+        <div class="suggestions">
+            <div class="suggestion">¿Cómo se dice "hola"?</div>
+            <div class="suggestion">¿Cómo se dice "gracias"?</div>
+            <div class="suggestion">¿Cómo se dice "por favor"?</div>
+            <div class="suggestion">¿Cómo se dice "buenos días"?</div>
+            <div class="suggestion">¿Cómo se dice "buenas noches"?</div>
+            <div class="suggestion">¿Cómo se dice "adiós"?</div>
+            <div class="suggestion">Vocabulario básico</div>
+            <div class="suggestion">Frases comunes</div>
+        </div>
+    </div>
+
     <div class="chat-container" id="chatMessages">
         <!-- Los mensajes se agregarán aquí dinámicamente -->
     </div>
@@ -239,25 +246,9 @@
         <div class="chat-input-container">
             <input type="text" id="userInput" placeholder="Escribe un mensaje...">
         </div>
-        <div class="chat-footer-buttons">
-            <button class="chat-footer-button" id="cameraButton" title="Tomar foto">
-                <i class="fas fa-camera"></i>
-            </button>
-            <button class="chat-footer-button" id="voiceButton" title="Mensaje de voz">
-                <i class="fas fa-microphone"></i>
-            </button>
-            <button class="chat-footer-button" id="sendButton" title="Enviar">
-                <i class="fas fa-paper-plane"></i>
-            </button>
-        </div>
-    </div>
-
-    <div id="camera-preview">
-        <video id="video" autoplay playsinline></video>
-        <div class="camera-buttons">
-            <button class="camera-button" id="captureButton">Capturar</button>
-            <button class="camera-button" id="closeCameraButton">Cerrar</button>
-        </div>
+        <button class="send-button" id="sendButton" title="Enviar">
+            <i class="fas fa-paper-plane"></i>
+        </button>
     </div>
 
     <nav class="bottom-nav">
@@ -278,106 +269,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
     <script>
-        let mediaRecorder;
-        let audioChunks = [];
-        let stream;
-        
-        // Funciones de voz
-        async function initVoiceRecording() {
-            try {
-                stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                mediaRecorder = new MediaRecorder(stream);
-
-                mediaRecorder.ondataavailable = (event) => {
-                    audioChunks.push(event.data);
-                };
-
-                mediaRecorder.onstop = async () => {
-                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-                    audioChunks = [];
-                    
-                    // Aquí puedes enviar el audioBlob a un servicio de reconocimiento de voz
-                    // Por ahora solo mostraremos un mensaje
-                    addMessage("Mensaje de voz recibido", true);
-                };
-
-            } catch (error) {
-                console.error('Error accessing microphone:', error);
-            }
-        }
-
-        const voiceButton = document.getElementById('voiceButton');
-        let isRecording = false;
-
-        voiceButton.addEventListener('mousedown', () => {
-            if (!mediaRecorder) {
-                initVoiceRecording();
-            } else {
-                isRecording = true;
-                audioChunks = [];
-                mediaRecorder.start();
-                voiceButton.style.color = 'red';
-            }
-        });
-
-        voiceButton.addEventListener('mouseup', () => {
-            if (isRecording) {
-                mediaRecorder.stop();
-                isRecording = false;
-                voiceButton.style.color = '';
-            }
-        });
-
-        // Funciones de cámara
-        const cameraPreview = document.getElementById('camera-preview');
-        const video = document.getElementById('video');
-        const captureButton = document.getElementById('captureButton');
-        const closeCameraButton = document.getElementById('closeCameraButton');
-        let imageCapture;
-
-        document.getElementById('cameraButton').addEventListener('click', async () => {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                video.srcObject = stream;
-                cameraPreview.style.display = 'block';
-                
-                const track = stream.getVideoTracks()[0];
-                imageCapture = new ImageCapture(track);
-            } catch (error) {
-                console.error('Error accessing camera:', error);
-            }
-        });
-
-        captureButton.addEventListener('click', async () => {
-            try {
-                const canvas = document.createElement('canvas');
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
-                canvas.getContext('2d').drawImage(video, 0, 0);
-                
-                // Convertir la imagen a base64
-                const imageData = canvas.toDataURL('image/jpeg');
-                
-                // Aquí puedes enviar imageData a un servicio de reconocimiento de imágenes
-                // Por ahora solo mostraremos un mensaje
-                addMessage("Imagen capturada y procesada", true);
-                
-                closeCameraPreview();
-            } catch (error) {
-                console.error('Error capturing image:', error);
-            }
-        });
-
-        closeCameraButton.addEventListener('click', closeCameraPreview);
-
-        function closeCameraPreview() {
-            const stream = video.srcObject;
-            const tracks = stream.getTracks();
-            tracks.forEach(track => track.stop());
-            video.srcObject = null;
-            cameraPreview.style.display = 'none';
-        }
-
         // Función para agregar mensajes
         function addMessage(text, isUser = false, translation = '') {
             const messagesDiv = document.getElementById('chatMessages');
@@ -403,7 +294,7 @@
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
 
-        // Event listener para enviar mensaje
+        // Event listeners para enviar mensaje
         document.getElementById('sendButton').addEventListener('click', sendMessage);
         document.getElementById('userInput').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
@@ -411,7 +302,35 @@
             }
         });
 
-        // Resto del código JavaScript existente...
+        // Event listener para sugerencias
+        document.querySelectorAll('.suggestion').forEach(suggestion => {
+            suggestion.addEventListener('click', function() {
+                document.getElementById('userInput').value = this.textContent;
+                sendMessage();
+            });
+        });
+
+        // Función para enviar mensaje
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            
+            if (message) {
+                addMessage(message, true);
+                input.value = '';
+
+                try {
+                    const response = await getGeminiResponse(message);
+                    const translation = await translateText(response, 'es');
+                    addMessage(response, false, translation);
+                } catch (error) {
+                    console.error('Error:', error);
+                    addMessage('Lo siento, ha ocurrido un error. Por favor, inténtalo de nuevo.', false);
+                }
+            }
+        }
+
+        // Resto del código JavaScript existente (speak, translateText, getGeminiResponse)...
         const TRANSLATE_API_KEY = 'AIzaSyCEIicKmkzZQ7kOy0yBSVt4Dc3s80GwKYw';
         const GEMINI_API_KEY = 'AIzaSyCEIicKmkzZQ7kOy0yBSVt4Dc3s80GwKYw';
         const synth = window.speechSynthesis;
@@ -499,107 +418,6 @@
                 return null;
             }
         }
-
-        function addMessage(text, isUser = false, translation = '') {
-            const messagesDiv = document.getElementById('messages');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
-            
-            let messageContent = `
-                <div class="message-content">
-                    <div class="message-italian">${text}</div>
-                    ${translation ? `<div class="message-spanish">${translation}</div>` : ''}
-                </div>
-                <div class="message-actions">
-                    <button class="play-button" onclick="speak('${text.replace(/'/g, "\\'")}')">🔊</button>
-                </div>
-                <div class="message-time">${new Date().toLocaleTimeString()}</div>
-            `;
-            
-            messageDiv.innerHTML = messageContent;
-
-            messagesDiv.appendChild(messageDiv);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        }
-
-        const responses = {
-            "hola": "Ciao! (Informal) o Buongiorno! (Formal)",
-            "gracias": "Grazie!",
-            "por favor": "Per favore!",
-            "buenos días": "Buongiorno!",
-            "buenas noches": "Buonanotte!",
-            "cómo estás": "Come stai? (Informal) o Come sta? (Formal)",
-            "adiós": "Arrivederci! (Formal) o Ciao! (Informal)",
-            "hasta luego": "A dopo!",
-            "me llamo": "Mi chiamo",
-            "mucho gusto": "Piacere!",
-            "no entiendo": "Non capisco",
-            "hablas español": "Parli spagnolo?",
-            "hablas italiano": "Parli italiano?",
-            "cómo te llamas": "Come ti chiami?",
-            "qué hora es": "Che ora è?",
-            "dónde está": "Dov'è?",
-            "cuánto cuesta": "Quanto costa?",
-            "perdón": "Scusi! (Formal) o Scusa! (Informal)",
-            "de nada": "Prego!",
-            "buen provecho": "Buon appetito!",
-            "salud": "Salute!",
-            "feliz cumpleaños": "Buon compleanno!",
-            "feliz navidad": "Buon Natale!",
-            "feliz año nuevo": "Felice Anno Nuovo!"
-        };
-
-        async function sendMessage() {
-            const input = document.getElementById('userInput');
-            const text = input.value.trim().toLowerCase();
-            
-            if (text) {
-                addMessage(text, true);
-                input.value = '';
-
-                let response;
-                // Primero intentamos encontrar una respuesta predefinida
-                for (const [key, value] of Object.entries(responses)) {
-                    if (text.includes(key)) {
-                        response = value;
-                        break;
-                    }
-                }
-
-                // Si no hay respuesta predefinida, usamos Gemini
-                if (!response) {
-                    response = await getGeminiResponse(text);
-                }
-
-                // Si Gemini falla, usamos traducción simple
-                if (!response) {
-                    response = await translateText(text, 'it');
-                }
-
-                if (response) {
-                    // Traducimos la respuesta al español para mostrarla como traducción
-                    const translation = await translateText(response, 'es');
-                    addMessage(response, false, translation);
-                } else {
-                    addMessage("Mi dispiace, non ho capito. (Lo siento, no entendí)", false);
-                }
-            }
-        }
-
-        // Manejar sugerencias
-        document.querySelectorAll('.suggestion').forEach(suggestion => {
-            suggestion.addEventListener('click', function() {
-                document.getElementById('userInput').value = this.textContent;
-                sendMessage();
-            });
-        });
-
-        // Manejar Enter en el input
-        document.getElementById('userInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
-        });
 
         // Mensaje de bienvenida
         addMessage("Ciao! Sono il tuo insegnante di italiano. Come posso aiutarti oggi?", false, "¡Hola! Soy tu profesor de italiano. ¿Cómo puedo ayudarte hoy?");
