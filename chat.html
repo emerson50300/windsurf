@@ -14,6 +14,9 @@
             --whatsapp-chat-bg: #E5DDD5;
             --message-out: #DCF8C6;
             --message-in: #FFFFFF;
+            --text-primary: #262626;
+            --text-secondary: #667781;
+            --text-white: #FFFFFF;
         }
 
         * {
@@ -107,22 +110,24 @@
         .message {
             max-width: 65%;
             margin: 8px 0;
-            padding: 8px 12px;
+            padding: 12px 16px;
             border-radius: 7.5px;
             position: relative;
             box-shadow: 0 1px 0.5px rgba(0,0,0,0.13);
         }
 
         .message.user-message {
-            background: var(--message-out);
+            background: var(--whatsapp-light-green);
             margin-left: auto;
             border-top-right-radius: 0;
+            color: var(--text-white);
         }
 
         .message.bot-message {
             background: var(--message-in);
             margin-right: auto;
             border-top-left-radius: 0;
+            color: var(--text-primary);
         }
 
         .message-content {
@@ -130,40 +135,70 @@
         }
 
         .message-italian {
-            font-size: 14px;
-            margin-bottom: 4px;
+            font-size: 15px;
+            margin-bottom: 6px;
+            font-weight: 500;
+            line-height: 1.4;
         }
 
         .message-spanish {
             font-size: 14px;
-            color: #666;
+            line-height: 1.4;
+            opacity: 0.9;
+        }
+
+        .user-message .message-italian,
+        .user-message .message-spanish {
+            color: var(--text-white);
+        }
+
+        .bot-message .message-italian {
+            color: var(--text-primary);
+        }
+
+        .bot-message .message-spanish {
+            color: var(--text-secondary);
         }
 
         .message-time {
             font-size: 11px;
-            color: rgba(0,0,0,0.45);
-            float: right;
             margin-top: 4px;
+            text-align: right;
+        }
+
+        .user-message .message-time {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .bot-message .message-time {
+            color: var(--text-secondary);
         }
 
         .message-actions {
             display: flex;
             gap: 8px;
-            margin-top: 4px;
+            margin-top: 8px;
+            justify-content: flex-end;
         }
 
         .action-button {
             background: none;
             border: none;
-            color: var(--whatsapp-light-green);
+            color: var(--text-white);
             cursor: pointer;
             padding: 4px;
             border-radius: 50%;
-            transition: background-color 0.2s;
+            transition: all 0.2s;
+            font-size: 16px;
+        }
+
+        .bot-message .action-button {
+            color: var(--whatsapp-light-green);
         }
 
         .action-button:hover {
-            background-color: rgba(0,0,0,0.05);
+            background-color: rgba(0,0,0,0.1);
+            transform: scale(1.1);
         }
 
         .chat-footer {
