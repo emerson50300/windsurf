@@ -1,6 +1,4 @@
-// Configuración de APIs
-const config = {
-    GOOGLE_CLOUD_API_KEY: 'YOUR_API_KEY_HERE' // Reemplazar con tu API key de Google Cloud
+// Configuración de Google Cloud Text-to-Speech
+export default {
+    GOOGLE_CLOUD_API_KEY: 'TU_API_KEY_DE_GOOGLE_CLOUD_AQUI'
 };
-
-export default config;

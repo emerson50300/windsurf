@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verbos Básicos - Italiano Básico</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="gemini-tts.js"></script>
+    <style>
+        .verb-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .verb-section h2 {
+            color: #4CAF50;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 0.5rem;
+        }
+
+        .conjugation-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .conjugation-table th, .conjugation-table td {
+            padding: 1rem;
+            text-align: left;
+            border: 1px solid #dee2e6;
+        }
+
+        .conjugation-table th {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .conjugation-table tr:nth-child(even) {
+            background: #ffffff;
+        }
+
+        .pronoun {
+            color: #4CAF50;
+            font-weight: 500;
+        }
+
+        .example-section {
+            background: #f0f7f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .example-item {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            border-left: 3px solid #4CAF50;
+        }
+
+        .italian {
+            color: #4CAF50;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .spanish {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .audio-btn {
+            background: none;
+            border: none;
+            color: #4CAF50;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .audio-btn:hover {
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="alfabeto.html">Alfabeto</a>
+        <a href="numeros.html">Números</a>
+        <a href="hora.html">Hora</a>
+        <a href="animales.html">Animales</a>
+        <a href="verbos-basicos.html" class="active">Verbos Básicos</a>
+    </nav>
+
+    <div class="container">
+        <h1>Verbos Básicos en Italiano</h1>
+        
+        <div class="verb-section">
+            <h2><i class="fas fa-star"></i> Verbo "essere" (ser/estar)</h2>
+            
+            <table class="conjugation-table">
+                <tr>
+                    <th>Pronombre</th>
+                    <th>Conjugación</th>
+                    <th>Significado</th>
+                    <th>Audio</th>
+                </tr>
+                <tr>
+                    <td class="pronoun">io</td>
+                    <td>sono</td>
+                    <td>yo soy/estoy</td>
+                    <td><button class="audio-btn" onclick="speak('io sono')"><i class="fas fa-volume-up"></i></button></td>
+                </tr>
+                <tr>
+                    <td class="pronoun">tu</td>
+                    <td>sei</td>
+                    <td>tú eres/estás</td>
+                    <td><button class="audio-btn" onclick="speak('tu sei')"><i class="fas fa-volume-up"></i></button></td>
+                </tr>
+                <tr>
+                    <td class="pronoun">lui/lei</td>
+                    <td>è</td>
+                    <td>él/ella es/está</td>
+                    <td><button class="audio-btn" onclick="speak('lui è, lei è')"><i class="fas fa-volume-up"></i></button></td>
+                </tr>
+                <tr>
+                    <td class="pronoun">noi</td>
+                    <td>siamo</td>
+                    <td>nosotros somos/estamos</td>
+                    <td><button class="audio-btn" onclick="speak('noi siamo')"><i class="fas fa-volume-up"></i></button></td>
+                </tr>
+                <tr>
+                    <td class="pronoun">voi</td>
+                    <td>siete</td>
+                    <td>vosotros sois/estáis</td>
+                    <td><button class="audio-btn" onclick="speak('voi siete')"><i class="fas fa-volume-up"></i></button></td>
+                </tr>
+                <tr>
+                    <td class="pronoun">loro</td>
+                    <td>sono</td>
+                    <td>ellos/ellas son/están</td>
+                    <td><button class="audio-btn" onclick="speak('loro sono')"><i class="fas fa-volume-up"></i></button></td>
+                </tr>
+            </table>
+
+            <div class="example-section">
+                <h3>Ejemplos con "essere":</h3>
+                <div class="example-item">
+                    <div class="italian">Io sono italiano.</div>
+                    <div class="spanish">Yo soy italiano.</div>
+                    <button class="audio-btn" onclick="speak('Io sono italiano')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                <div class="example-item">
+                    <div class="italian">Lei è una studentessa.</div>
+                    <div class="spanish">Ella es una estudiante.</div>
+                    <button class="audio-btn" onclick="speak('Lei è una studentessa')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                <div class="example-item">
+                    <div class="italian">Noi siamo a Roma.</div>
+                    <div class="spanish">Nosotros estamos en Roma.</div>
+                    <button class="audio-btn" onclick="speak('Noi siamo a Roma')"><i class="fas fa-volume-up"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="verb-section">
+            <h2><i class="fas fa-star"></i> Verbo "avere" (tener/haber)</h2>
+            
+            <table class="conjugation-table">
+                <tr>
+                    <th>Pronombre</th>
+                    <th>Conjugación</th>
+                    <th>Significado</th>
+                    <th>Audio</th>
+                </tr>
+                <tr>
+                    <td class="pronoun">io</td>
+                    <td>ho</td>
+                    <td>yo tengo</td>
+                    <td><button class="audio-btn" onclick="speak('io ho')"><i class="fas fa-volume-up"></i></button></td>
+                </tr>
+                <tr>
+                    <td class="pronoun">tu</td>
+                    <td>hai</td>
+                    <td>tú tienes</td>
+                    <td><button class="audio-btn" onclick="speak('tu hai')"><i class="fas fa-volume-up"></i></button></td>
+                </tr>
+                <tr>
+                    <td class="pronoun">lui/lei</td>
+                    <td>ha</td>
+                    <td>él/ella tiene</td>
+                    <td><button class="audio-btn" onclick="speak('lui ha, lei ha')"><i class="fas fa-volume-up"></i></button></td>
+                </tr>
+                <tr>
+                    <td class="pronoun">noi</td>
+                    <td>abbiamo</td>
+                    <td>nosotros tenemos</td>
+                    <td><button class="audio-btn" onclick="speak('noi abbiamo')"><i class="fas fa-volume-up"></i></button></td>
+                </tr>
+                <tr>
+                    <td class="pronoun">voi</td>
+                    <td>avete</td>
+                    <td>vosotros tenéis</td>
+                    <td><button class="audio-btn" onclick="speak('voi avete')"><i class="fas fa-volume-up"></i></button></td>
+                </tr>
+                <tr>
+                    <td class="pronoun">loro</td>
+                    <td>hanno</td>
+                    <td>ellos/ellas tienen</td>
+                    <td><button class="audio-btn" onclick="speak('loro hanno')"><i class="fas fa-volume-up"></i></button></td>
+                </tr>
+            </table>
+
+            <div class="example-section">
+                <h3>Ejemplos con "avere":</h3>
+                <div class="example-item">
+                    <div class="italian">Ho un gatto.</div>
+                    <div class="spanish">Tengo un gato.</div>
+                    <button class="audio-btn" onclick="speak('Ho un gatto')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                <div class="example-item">
+                    <div class="italian">Lei ha due fratelli.</div>
+                    <div class="spanish">Ella tiene dos hermanos.</div>
+                    <button class="audio-btn" onclick="speak('Lei ha due fratelli')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                <div class="example-item">
+                    <div class="italian">Loro hanno una casa bella.</div>
+                    <div class="spanish">Ellos tienen una casa bonita.</div>
+                    <button class="audio-btn" onclick="speak('Loro hanno una casa bella')"><i class="fas fa-volume-up"></i></button>
+                </div>
+            </div>
+
+            <div class="note">
+                <strong>Nota:</strong> El verbo "avere" también se usa como auxiliar para formar tiempos compuestos:
+                <div class="example-item">
+                    <div class="italian">Ho mangiato la pizza.</div>
+                    <div class="spanish">He comido la pizza.</div>
+                    <button class="audio-btn" onclick="speak('Ho mangiato la pizza')"><i class="fas fa-volume-up"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="index.html" class="back-btn" title="Volver al inicio">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

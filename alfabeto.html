@@ -6,6 +6,13 @@
     <title>Alfabeto Italiano</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="gemini-tts.js"></script>
+    
+    <!-- Configuración de Google Cloud TTS -->
+    <script>
+        window.GOOGLE_CLOUD_API_KEY = 'TU_API_KEY_AQUI'; // Reemplaza con tu API key de Google Cloud
+    </script>
+    
     <style>
         .grid {
             display: grid;
@@ -102,7 +109,7 @@ Y: "yogurt"</p>
         import config from './config.js';
         window.GOOGLE_CLOUD_API_KEY = config.GOOGLE_CLOUD_API_KEY;
     </script>
-    <script src="gemini-tts.js"></script>
+    
     <script>
         const alphabet = [
             { letter: 'A', pronunciation: 'ah', example: 'amore (amor)', audioText: 'A come amore' },
@@ -145,33 +152,16 @@ Y: "yogurt"</p>
             return card;
         }
 
-        // Función para reproducir el sonido con un pequeño retraso para mejor calidad
-        function playSound(text) {
-            if ('speechSynthesis' in window) {
-                // Cancelar cualquier pronunciación anterior
-                window.speechSynthesis.cancel();
-
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'it-IT';
-                utterance.rate = 0.9;
-                utterance.pitch = 1.0;
-                
-                // Obtener la voz italiana
-                const voices = window.speechSynthesis.getVoices();
-                const italianVoice = voices.find(voice => 
-                    voice.lang === 'it-IT' && voice.name.includes('Google')
-                ) || voices.find(voice => 
-                    voice.lang === 'it-IT'
-                );
-
-                if (italianVoice) {
-                    utterance.voice = italianVoice;
-                }
-
-                // Añadir una pequeña pausa antes de la pronunciación
-                setTimeout(() => {
-                    window.speechSynthesis.speak(utterance);
-                }, 100);
+        // Función para reproducir el sonido
+        async function playSound(text) {
+            try {
+                await speak(text, {
+                    rate: 0.85,    // Un poco más lento para el alfabeto
+                    pitch: 1.1,    // Ligeramente más alto para claridad
+                    volume: 1.0    // Volumen máximo
+                });
+            } catch (error) {
+                console.error('Error al reproducir el sonido:', error);
             }
         }
 
@@ -180,14 +170,6 @@ Y: "yogurt"</p>
             alphabet.forEach(letter => {
                 grid.appendChild(createLetterCard(letter));
             });
-        }
-
-        // Cargar voces cuando estén disponibles
-        if ('speechSynthesis' in window) {
-            window.speechSynthesis.onvoiceschanged = () => {
-                const voices = window.speechSynthesis.getVoices();
-                console.log('Voces disponibles:', voices);
-            };
         }
 
         document.addEventListener('DOMContentLoaded', initialize);
