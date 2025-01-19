@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gramática Italiana - Passato Prossimo e Imperativo</title>
+    <link rel="stylesheet" href="colors.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --background-white: #f9f9f9;
+            --background-main: #f2f2f2;
+            --text-main: #333;
+            --text-secondary: #666;
+            --accent-color: #4CAF50;
+            --button-color: #4CAF50;
+            --hover-color: #388E3C;
+            --hover-color-light: #e0e0e0;
+            --shadow-color: rgba(0,0,0,0.1);
+        }
+
+        .grammar-section {
+            background: var(--background-white);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 1.5rem;
+            box-shadow: 0 2px 4px var(--shadow-color);
+        }
+
+        .section-title {
+            color: var(--accent-color);
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .explanation {
+            background: var(--background-main);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .example-card {
+            background: var(--background-white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px var(--shadow-color);
+            transition: transform 0.3s ease;
+        }
+
+        .example-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px var(--shadow-color);
+        }
+
+        .example-title {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .example-text {
+            margin-bottom: 0.5rem;
+        }
+
+        .italian {
+            color: var(--text-main);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .spanish {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+        }
+
+        .note {
+            background: #fff3e0;
+            padding: 1rem;
+            border-left: 4px solid #ff9800;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .practice-section {
+            margin-top: 2rem;
+        }
+
+        .exercise {
+            background: var(--background-main);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .conjugation-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .conjugation-table th,
+        .conjugation-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid var(--background-main);
+        }
+
+        .conjugation-table th {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .grammar-section {
+                padding: 1rem;
+                margin: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .example-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Anuncio Superior -->
+        <div class="ad-container ad-top">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1951834226818406"
+                 data-ad-slot="TUSLOT1"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <header>
+            <h1>Gramática Italiana</h1>
+            <p>Passato Prossimo e Imperativo</p>
+        </header>
+
+        <!-- Passato Prossimo -->
+        <section class="grammar-section">
+            <h2 class="section-title">Passato Prossimo</h2>
+            
+            <div class="explanation">
+                <p>El "passato prossimo" es el tiempo verbal más común para hablar del pasado en italiano. Se forma con el presente del verbo auxiliar (essere o avere) + participio pasado del verbo principal.</p>
+                
+                <div class="note">
+                    <strong>Nota:</strong> La elección entre "essere" y "avere" depende del verbo principal.
+                </div>
+            </div>
+
+            <div class="example-grid">
+                <div class="example-card">
+                    <h3 class="example-title">Con "avere"</h3>
+                    <div class="example-text">
+                        <div class="italian">Ho mangiato una pizza</div>
+                        <div class="spanish">He comido una pizza</div>
+                        <button class="play-button" onclick="speak('Ho mangiato una pizza')">🔊</button>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <h3 class="example-title">Con "essere"</h3>
+                    <div class="example-text">
+                        <div class="italian">Sono andato al cinema</div>
+                        <div class="spanish">He ido al cine</div>
+                        <button class="play-button" onclick="speak('Sono andato al cinema')">🔊</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="conjugation-table">
+                <table>
+                    <tr>
+                        <th>Pronombre</th>
+                        <th>Avere</th>
+                        <th>Essere</th>
+                    </tr>
+                    <tr>
+                        <td>Io</td>
+                        <td>ho mangiato</td>
+                        <td>sono andato/a</td>
+                    </tr>
+                    <tr>
+                        <td>Tu</td>
+                        <td>hai mangiato</td>
+                        <td>sei andato/a</td>
+                    </tr>
+                    <tr>
+                        <td>Lui/Lei</td>
+                        <td>ha mangiato</td>
+                        <td>è andato/a</td>
+                    </tr>
+                    <tr>
+                        <td>Noi</td>
+                        <td>abbiamo mangiato</td>
+                        <td>siamo andati/e</td>
+                    </tr>
+                    <tr>
+                        <td>Voi</td>
+                        <td>avete mangiato</td>
+                        <td>siete andati/e</td>
+                    </tr>
+                    <tr>
+                        <td>Loro</td>
+                        <td>hanno mangiato</td>
+                        <td>sono andati/e</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <!-- Imperativo -->
+        <section class="grammar-section">
+            <h2 class="section-title">Imperativo</h2>
+            
+            <div class="explanation">
+                <p>El imperativo se usa para dar órdenes, instrucciones o consejos. En italiano, tiene formas diferentes para "tu" (informal) y "Lei" (formal).</p>
+            </div>
+
+            <div class="example-grid">
+                <div class="example-card">
+                    <h3 class="example-title">Forma informal (tu)</h3>
+                    <div class="example-text">
+                        <div class="italian">Mangia la pasta!</div>
+                        <div class="spanish">¡Come la pasta!</div>
+                        <button class="play-button" onclick="speak('Mangia la pasta!')">🔊</button>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <h3 class="example-title">Forma formal (Lei)</h3>
+                    <div class="example-text">
+                        <div class="italian">Mangi la pasta, per favore.</div>
+                        <div class="spanish">Coma la pasta, por favor.</div>
+                        <button class="play-button" onclick="speak('Mangi la pasta, per favore.')">🔊</button>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <h3 class="example-title">Forma negativa</h3>
+                    <div class="example-text">
+                        <div class="italian">Non mangiare la pasta!</div>
+                        <div class="spanish">¡No comas la pasta!</div>
+                        <button class="play-button" onclick="speak('Non mangiare la pasta!')">🔊</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="practice-section">
+                <h3>Ejercicios de Práctica</h3>
+                
+                <div class="exercise">
+                    <p>Transforma estas frases al imperativo:</p>
+                    <ol>
+                        <li>
+                            <div class="italian">Parlare italiano (tu) → Parla italiano!</div>
+                            <button class="play-button" onclick="speak('Parla italiano!')">🔊</button>
+                        </li>
+                        <li>
+                            <div class="italian">Ascoltare la musica (Lei) → Ascolti la musica!</div>
+                            <button class="play-button" onclick="speak('Ascolti la musica!')">🔊</button>
+                        </li>
+                        <li>
+                            <div class="italian">Leggere il libro (voi) → Leggete il libro!</div>
+                            <button class="play-button" onclick="speak('Leggete il libro!')">🔊</button>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+        </a>
+        <a href="chat.html" class="nav-item">
+            <i class="fas fa-comments"></i>
+            <span>Chat</span>
+        </a>
+        <a href="verbos.html" class="nav-item">
+            <i class="fas fa-book"></i>
+            <span>Verbos</span>
+        </a>
+    </nav>
+
+    <script>
+        const synth = window.speechSynthesis;
+        let voices = [];
+
+        function loadVoices() {
+            voices = synth.getVoices();
+        }
+
+        loadVoices();
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = loadVoices;
+        }
+
+        function speak(text) {
+            if (synth.speaking) {
+                console.error('speechSynthesis.speaking');
+                return;
+            }
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'it-IT';
+            utterance.pitch = 1;
+            utterance.rate = 0.8;
+            utterance.volume = 1;
+
+            const italianVoice = voices.find(voice => voice.lang === 'it-IT');
+            if (italianVoice) {
+                utterance.voice = italianVoice;
+            }
+
+            synth.speak(utterance);
+        }
+    </script>
+</body>
+</html>
