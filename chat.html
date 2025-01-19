@@ -203,45 +203,89 @@
 
         .chat-footer {
             background: #F0F0F0;
-            padding: 10px;
+            padding: 12px 16px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
             position: sticky;
             bottom: 0;
+            border-top: 1px solid rgba(0,0,0,0.1);
         }
 
         .chat-input-container {
             display: flex;
             align-items: center;
             background: white;
-            border-radius: 20px;
+            border-radius: 24px;
             padding: 8px 16px;
             flex: 1;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            min-height: 45px;
         }
 
         #userInput {
             border: none;
             outline: none;
             flex: 1;
-            padding: 6px;
-            font-size: 15px;
+            padding: 8px;
+            font-size: 16px;
             background: none;
+            color: var(--text-primary);
+            min-width: 200px;
+            max-width: 100%;
+        }
+
+        #userInput::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.8;
         }
 
         .send-button {
-            background: none;
+            background: var(--whatsapp-light-green);
             border: none;
-            color: var(--whatsapp-light-green);
-            font-size: 24px;
+            color: white;
+            font-size: 20px;
             cursor: pointer;
-            padding: 8px;
+            padding: 12px;
             border-radius: 50%;
-            transition: background-color 0.2s;
+            transition: all 0.2s;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
 
         .send-button:hover {
-            background-color: rgba(0,0,0,0.05);
+            background-color: var(--whatsapp-green);
+            transform: scale(1.05);
+        }
+
+        .send-button:active {
+            transform: scale(0.95);
+        }
+
+        @media (max-width: 768px) {
+            .chat-footer {
+                padding: 8px;
+            }
+
+            .chat-input-container {
+                padding: 6px 12px;
+            }
+
+            #userInput {
+                font-size: 15px;
+                padding: 6px;
+            }
+
+            .send-button {
+                padding: 10px;
+                font-size: 18px;
+                width: 40px;
+                height: 40px;
+            }
         }
 
         @media (max-width: 768px) {
