@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artículos en Italiano</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .audio-button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .example-text {
+            display: inline-block;
+            margin-right: 10px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -17,13 +36,31 @@
                 <h3>Masculino Singular</h3>
                 <ul>
                     <li><strong>il</strong> - Se usa antes de consonantes (excepto s + consonante, z, ps, gn, y):
-                        <br>Ejemplo: <em>il libro</em> (el libro), <em>il cane</em> (el perro)</li>
+                        <br>
+                        <span class="example-text"><em>il libro</em> (el libro)</span>
+                        <button class="audio-button" onclick="speak('il libro')">🔊</button>
+                        <br>
+                        <span class="example-text"><em>il cane</em> (el perro)</span>
+                        <button class="audio-button" onclick="speak('il cane')">🔊</button>
+                    </li>
                     <li><strong>lo</strong> - Se usa antes de:
                         <ul>
-                            <li>s + consonante: <em>lo studente</em> (el estudiante)</li>
-                            <li>z: <em>lo zaino</em> (la mochila)</li>
-                            <li>ps: <em>lo psicologo</em> (el psicólogo)</li>
-                            <li>gn: <em>lo gnomo</em> (el gnomo)</li>
+                            <li>s + consonante: 
+                                <span class="example-text"><em>lo studente</em> (el estudiante)</span>
+                                <button class="audio-button" onclick="speak('lo studente')">🔊</button>
+                            </li>
+                            <li>z: 
+                                <span class="example-text"><em>lo zaino</em> (la mochila)</span>
+                                <button class="audio-button" onclick="speak('lo zaino')">🔊</button>
+                            </li>
+                            <li>ps: 
+                                <span class="example-text"><em>lo psicologo</em> (el psicólogo)</span>
+                                <button class="audio-button" onclick="speak('lo psicologo')">🔊</button>
+                            </li>
+                            <li>gn: 
+                                <span class="example-text"><em>lo gnomo</em> (el gnomo)</span>
+                                <button class="audio-button" onclick="speak('lo gnomo')">🔊</button>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -31,21 +68,36 @@
                 <h3>Femenino Singular</h3>
                 <ul>
                     <li><strong>la</strong> - Se usa para todos los sustantivos femeninos:
-                        <br>Ejemplo: <em>la casa</em> (la casa), <em>la strada</em> (la calle)</li>
+                        <br>
+                        <span class="example-text"><em>la casa</em> (la casa)</span>
+                        <button class="audio-button" onclick="speak('la casa')">🔊</button>
+                        <br>
+                        <span class="example-text"><em>la strada</em> (la calle)</span>
+                        <button class="audio-button" onclick="speak('la strada')">🔊</button>
+                    </li>
                 </ul>
 
                 <h3>Masculino Plural</h3>
                 <ul>
                     <li><strong>i</strong> - Plural de "il":
-                        <br>Ejemplo: <em>i libri</em> (los libros)</li>
+                        <br>
+                        <span class="example-text"><em>i libri</em> (los libros)</span>
+                        <button class="audio-button" onclick="speak('i libri')">🔊</button>
+                    </li>
                     <li><strong>gli</strong> - Plural de "lo":
-                        <br>Ejemplo: <em>gli studenti</em> (los estudiantes)</li>
+                        <br>
+                        <span class="example-text"><em>gli studenti</em> (los estudiantes)</span>
+                        <button class="audio-button" onclick="speak('gli studenti')">🔊</button>
+                    </li>
                 </ul>
 
                 <h3>Femenino Plural</h3>
                 <ul>
                     <li><strong>le</strong> - Plural de "la":
-                        <br>Ejemplo: <em>le case</em> (las casas)</li>
+                        <br>
+                        <span class="example-text"><em>le case</em> (las casas)</span>
+                        <button class="audio-button" onclick="speak('le case')">🔊</button>
+                    </li>
                 </ul>
             </div>
 
@@ -55,13 +107,28 @@
                 <h3>Masculino</h3>
                 <ul>
                     <li><strong>un</strong> - Se usa antes de consonantes:
-                        <br>Ejemplo: <em>un libro</em> (un libro)</li>
+                        <br>
+                        <span class="example-text"><em>un libro</em> (un libro)</span>
+                        <button class="audio-button" onclick="speak('un libro')">🔊</button>
+                    </li>
                     <li><strong>uno</strong> - Se usa antes de:
                         <ul>
-                            <li>s + consonante: <em>uno studente</em> (un estudiante)</li>
-                            <li>z: <em>uno zaino</em> (una mochila)</li>
-                            <li>ps: <em>uno psicologo</em> (un psicólogo)</li>
-                            <li>gn: <em>uno gnomo</em> (un gnomo)</li>
+                            <li>s + consonante: 
+                                <span class="example-text"><em>uno studente</em> (un estudiante)</span>
+                                <button class="audio-button" onclick="speak('uno studente')">🔊</button>
+                            </li>
+                            <li>z: 
+                                <span class="example-text"><em>uno zaino</em> (una mochila)</span>
+                                <button class="audio-button" onclick="speak('uno zaino')">🔊</button>
+                            </li>
+                            <li>ps: 
+                                <span class="example-text"><em>uno psicologo</em> (un psicólogo)</span>
+                                <button class="audio-button" onclick="speak('uno psicologo')">🔊</button>
+                            </li>
+                            <li>gn: 
+                                <span class="example-text"><em>uno gnomo</em> (un gnomo)</span>
+                                <button class="audio-button" onclick="speak('uno gnomo')">🔊</button>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -69,19 +136,40 @@
                 <h3>Femenino</h3>
                 <ul>
                     <li><strong>una</strong> - Se usa para todos los sustantivos femeninos:
-                        <br>Ejemplo: <em>una casa</em> (una casa)</li>
+                        <br>
+                        <span class="example-text"><em>una casa</em> (una casa)</span>
+                        <button class="audio-button" onclick="speak('una casa')">🔊</button>
+                    </li>
                 </ul>
             </div>
 
             <div class="practice-box">
                 <h3>Ejemplos Prácticos</h3>
                 <ul>
-                    <li>Il ragazzo → I ragazzi (El chico → Los chicos)</li>
-                    <li>Lo specchio → Gli specchi (El espejo → Los espejos)</li>
-                    <li>La ragazza → Le ragazze (La chica → Las chicas)</li>
-                    <li>Un amico (Un amigo)</li>
-                    <li>Uno spazio (Un espacio)</li>
-                    <li>Una amica (Una amiga)</li>
+                    <li>
+                        <span class="example-text">Il ragazzo → I ragazzi (El chico → Los chicos)</span>
+                        <button class="audio-button" onclick="speak('Il ragazzo, I ragazzi')">🔊</button>
+                    </li>
+                    <li>
+                        <span class="example-text">Lo specchio → Gli specchi (El espejo → Los espejos)</span>
+                        <button class="audio-button" onclick="speak('Lo specchio, Gli specchi')">🔊</button>
+                    </li>
+                    <li>
+                        <span class="example-text">La ragazza → Le ragazze (La chica → Las chicas)</span>
+                        <button class="audio-button" onclick="speak('La ragazza, Le ragazze')">🔊</button>
+                    </li>
+                    <li>
+                        <span class="example-text">Un amico (Un amigo)</span>
+                        <button class="audio-button" onclick="speak('Un amico')">🔊</button>
+                    </li>
+                    <li>
+                        <span class="example-text">Uno spazio (Un espacio)</span>
+                        <button class="audio-button" onclick="speak('Uno spazio')">🔊</button>
+                    </li>
+                    <li>
+                        <span class="example-text">Una amica (Una amiga)</span>
+                        <button class="audio-button" onclick="speak('Una amica')">🔊</button>
+                    </li>
                 </ul>
             </div>
         </section>
@@ -91,6 +179,6 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="audio.js"></script>
 </body>
 </html>
