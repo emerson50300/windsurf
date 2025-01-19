@@ -250,27 +250,10 @@
     </table>
   </div>
 
-  <script>
-    function speak(text) {
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'it-IT';
-      speechSynthesis.speak(utterance);
-    }
-
-    // Añadir interactividad a las tablas
-    document.querySelectorAll('tr').forEach(row => {
-      row.addEventListener('mouseover', () => {
-        if (!row.querySelector('th')) { // Skip header rows
-          row.style.backgroundColor = '#e6ffe6';
-        }
-      });
-      
-      row.addEventListener('mouseout', () => {
-        if (!row.querySelector('th')) {
-          row.style.backgroundColor = row.rowIndex % 2 === 0 ? '#f9f9f9' : 'white';
-        }
-      });
-    });
+  <script type="module">
+    import config from './config.js';
+    window.GOOGLE_CLOUD_API_KEY = config.GOOGLE_CLOUD_API_KEY;
   </script>
+  <script src="gemini-tts.js"></script>
 </body>
 </html>

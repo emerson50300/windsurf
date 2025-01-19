@@ -6,7 +6,6 @@
     <title>Alfabeto Italiano</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script src="audio.js"></script>
     <style>
         .grid {
             display: grid;
@@ -99,6 +98,11 @@ Y: "yogurt"</p>
         </footer>
     </div>
 
+    <script type="module">
+        import config from './config.js';
+        window.GOOGLE_CLOUD_API_KEY = config.GOOGLE_CLOUD_API_KEY;
+    </script>
+    <script src="gemini-tts.js"></script>
     <script>
         const alphabet = [
             { letter: 'A', pronunciation: 'ah', example: 'amore (amor)', audioText: 'A come amore' },

@@ -248,37 +248,10 @@
         </div>
     </div>
 
-    <script>
-        const synth = window.speechSynthesis;
-        let voices = [];
-
-        function loadVoices() {
-            voices = synth.getVoices();
-        }
-
-        loadVoices();
-        if (speechSynthesis.onvoiceschanged !== undefined) {
-            speechSynthesis.onvoiceschanged = loadVoices;
-        }
-
-        function speak(text) {
-            if (synth.speaking) {
-                synth.cancel();
-            }
-
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'it-IT';
-            utterance.rate = 0.9;
-            utterance.pitch = 1.0;
-            utterance.volume = 1.0;
-
-            const italianVoice = voices.find(voice => voice.lang.includes('it-IT'));
-            if (italianVoice) {
-                utterance.voice = italianVoice;
-            }
-
-            synth.speak(utterance);
-        }
+    <script type="module">
+        import config from './config.js';
+        window.GOOGLE_CLOUD_API_KEY = config.GOOGLE_CLOUD_API_KEY;
     </script>
+    <script src="gemini-tts.js"></script>
 </body>
 </html>
