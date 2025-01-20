@@ -3,118 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Italiano</title>
+    <title>Chat Interactivo de Italiano</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #2C3E50;
-            --secondary-color: #E74C3C;
-            --accent-color: #3498DB;
-            --background-color: #ECF0F1;
-            --text-color: #2C3E50;
-        }
-
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: var(--background-color);
-            color: var(--text-color);
+            background-color: #f0f2f5;
         }
 
-        .level-selector {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            display: none;
-        }
-
-        .level-selector.active {
-            display: block;
-        }
-
-        .level-title {
-            font-size: 1.5em;
-            color: var(--primary-color);
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .level-buttons {
-            display: flex;
-            justify-content: space-around;
-            gap: 10px;
-        }
-
-        .level-btn {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 15px 25px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 30%;
-            text-align: center;
-        }
-
-        .level-btn:hover {
-            background: var(--accent-color);
-            transform: translateY(-2px);
-        }
-
-        .learning-plan {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            display: none;
-        }
-
-        .learning-plan.active {
-            display: block;
-        }
-
-        .topic-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .topic-card {
-            background: var(--background-color);
-            padding: 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .topic-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .topic-icon {
-            font-size: 24px;
-            margin-bottom: 10px;
-            color: var(--accent-color);
-        }
-
-        #chat-container {
+        .chat-container {
             max-width: 800px;
-            margin: 20px auto;
+            margin: 0 auto;
             background: white;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             overflow: hidden;
         }
 
-        #chat-messages {
-            height: 400px;
+        .chat-header {
+            background: #0084ff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+
+        .chat-messages {
+            height: 500px;
             overflow-y: auto;
             padding: 20px;
         }
@@ -122,865 +39,174 @@
         .message {
             margin-bottom: 15px;
             display: flex;
-            align-items: flex-start;
-        }
-
-        .message.user {
-            flex-direction: row-reverse;
+            flex-direction: column;
         }
 
         .message-content {
-            background: var(--background-color);
+            max-width: 80%;
             padding: 10px 15px;
             border-radius: 15px;
-            max-width: 70%;
-            margin: 0 10px;
+            margin: 5px 0;
         }
 
-        .message.user .message-content {
-            background: var(--accent-color);
+        .user {
+            align-items: flex-end;
+        }
+
+        .user .message-content {
+            background: #0084ff;
             color: white;
         }
 
-        .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--primary-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
+        .assistant {
+            align-items: flex-start;
         }
 
-        #input-container {
+        .assistant .message-content {
+            background: #e9ecef;
+            color: black;
+        }
+
+        .chat-input {
             display: flex;
             padding: 20px;
-            border-top: 1px solid #eee;
+            background: white;
+            border-top: 1px solid #ddd;
         }
 
         #message-input {
             flex: 1;
             padding: 10px;
             border: 1px solid #ddd;
-            border-radius: 5px;
+            border-radius: 20px;
             margin-right: 10px;
+            font-size: 1em;
         }
 
         #send-button {
-            background: var(--accent-color);
+            background: #0084ff;
             color: white;
             border: none;
             padding: 10px 20px;
-            border-radius: 5px;
+            border-radius: 20px;
             cursor: pointer;
+            font-size: 1em;
         }
 
         #send-button:hover {
-            background: var(--primary-color);
+            background: #0073e6;
         }
 
-        .language-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            gap: 10px;
+        .emoji {
+            font-size: 1.2em;
+            margin-right: 5px;
         }
 
-        .lang-btn {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .lang-btn.active {
-            background: var(--accent-color);
-        }
-
-        .progress-bar {
-            height: 5px;
-            background: #eee;
-            margin-top: 10px;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-
-        .progress {
-            height: 100%;
-            background: var(--accent-color);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-        .options-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
+        .level-selector, .topic-selector {
             margin: 10px 0;
-            padding: 10px;
-            background: white;
+            padding: 15px;
+            background: #f8f9fa;
             border-radius: 10px;
         }
 
-        .option-button {
-            background: var(--accent-color);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+        .option {
             cursor: pointer;
-            transition: all 0.3s ease;
-            flex: 1;
-            min-width: 150px;
-            text-align: center;
-        }
-
-        .option-button:hover {
-            background: var(--primary-color);
-            transform: translateY(-2px);
-        }
-
-        .message .options-container {
-            max-width: 70%;
-            margin-left: 60px;
-        }
-
-        .subtopic-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 10px;
-            margin: 10px 0;
-        }
-
-        .subtopic-button {
-            background: var(--background-color);
-            padding: 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .subtopic-button:hover {
-            background: var(--accent-color);
-            color: white;
-        }
-
-        .subtopic-icon {
-            font-size: 24px;
-            color: var(--accent-color);
-        }
-
-        .subtopic-button:hover .subtopic-icon {
-            color: white;
-        }
-
-        .topic-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin: 15px 0;
-        }
-
-        .topic-button {
-            background: var(--accent-color);
-            color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .topic-button i {
-            font-size: 20px;
-        }
-
-        .topic-button:hover {
-            background: var(--primary-color);
-            transform: translateY(-2px);
-        }
-
-        .exercise-container {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 10px 0;
-        }
-
-        .exercise-option {
-            display: block;
-            padding: 10px;
+            padding: 8px;
             margin: 5px 0;
-            border: 1px solid var(--accent-color);
             border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
         }
 
-        .exercise-option:hover {
-            background: var(--accent-color);
+        .option:hover {
+            background: #e9ecef;
+        }
+
+        .selected {
+            background: #0084ff;
             color: white;
         }
 
-        @media (max-width: 600px) {
-            .level-buttons {
-                flex-direction: column;
-            }
-            .level-btn {
-                width: 100%;
-                margin-bottom: 10px;
-            }
+        .translation {
+            font-style: italic;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .practice-button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-    <div id="chat-container">
-        <div id="chat-messages"></div>
-        <div id="input-container">
+    <div class="chat-container">
+        <div class="chat-header">
+            <i class="fas fa-comments"></i> Chat Interactivo de Italiano
+        </div>
+        <div class="chat-messages" id="chat-messages"></div>
+        <div class="chat-input">
             <input type="text" id="message-input" placeholder="Escribe tu mensaje...">
-            <button id="send-button">Enviar</button>
+            <button id="send-button">
+                <i class="fas fa-paper-plane"></i> Enviar
+            </button>
         </div>
     </div>
 
-    <div class="language-toggle">
-        <button class="lang-btn active" onclick="setLanguage('it')">🇮🇹 IT</button>
-        <button class="lang-btn" onclick="setLanguage('es')">🇪🇸 ES</button>
-    </div>
-
     <script>
-        let userLevel = '';
+        let userLevel = 'principiante';
         let currentTopic = '';
-        let currentLanguage = 'es';
-        let learningProgress = {};
-
-        const topics = {
-            1: {
-                name: 'Presentaciones personales',
-                icon: 'fa-user'
-            },
-            2: {
-                name: 'Vocabulario básico',
-                icon: 'fa-book'
-            },
-            3: {
-                name: 'Frases útiles para viajar',
-                icon: 'fa-plane'
-            },
-            4: {
-                name: 'Gramática esencial',
-                icon: 'fa-pencil-alt'
-            },
-            5: {
-                name: 'Conversaciones del día a día',
-                icon: 'fa-comments'
-            },
-            6: {
-                name: 'Cultura italiana',
-                icon: 'fa-landmark'
-            }
-        };
-
-        const learningContent = {
-            presentaciones: {
-                principiante: {
-                    frases: [
-                        {it: "Ciao, mi chiamo...", es: "Hola, me llamo..."},
-                        {it: "Piacere di conoscerti", es: "Encantado/a de conocerte"},
-                        {it: "Come ti chiami?", es: "¿Cómo te llamas?"},
-                        {it: "Di dove sei?", es: "¿De dónde eres?"},
-                        {it: "Quanti anni hai?", es: "¿Cuántos años tienes?"}
-                    ],
-                    ejercicios: [
-                        {
-                            tipo: "completar",
-                            pregunta: "Completa: Ciao, mi _____ Marco. (chiamo/chiami/chiama)",
-                            respuesta: "chiamo"
-                        },
-                        {
-                            tipo: "traducir",
-                            pregunta: "Traduce: '¿Cómo te llamas?'",
-                            respuesta: "Come ti chiami?"
-                        }
-                    ]
-                },
-                intermedio: {
-                    frases: [
-                        {it: "Mi occupo di marketing", es: "Me dedico al marketing"},
-                        {it: "Ho studiato all'università di Roma", es: "He estudiado en la universidad de Roma"},
-                        {it: "Mi piacerebbe conoscere meglio la cultura italiana", es: "Me gustaría conocer mejor la cultura italiana"}
-                    ]
-                },
-                avanzado: {
-                    frases: [
-                        {it: "Mi sono laureato in economia", es: "Me gradué en economía"},
-                        {it: "Attualmente sto facendo un master in...", es: "Actualmente estoy haciendo un máster en..."}
-                    ]
-                }
-            },
-            vocabulario: {
-                principiante: {
-                    comida: [
-                        {it: "pane", es: "pan"},
-                        {it: "acqua", es: "agua"},
-                        {it: "caffè", es: "café"},
-                        {it: "pasta", es: "pasta"},
-                        {it: "pizza", es: "pizza"}
-                    ],
-                    clima: [
-                        {it: "sole", es: "sol"},
-                        {it: "pioggia", es: "lluvia"},
-                        {it: "caldo", es: "calor"},
-                        {it: "freddo", es: "frío"}
-                    ],
-                    dias: [
-                        {it: "lunedì", es: "lunes"},
-                        {it: "martedì", es: "martes"},
-                        {it: "mercoledì", es: "miércoles"}
-                    ]
-                }
-            },
-            viajes: {
-                principiante: {
-                    frases: [
-                        {it: "Scusi, dov'è la stazione?", es: "Disculpe, ¿dónde está la estación?"},
-                        {it: "Un biglietto per Roma, per favore", es: "Un billete para Roma, por favor"},
-                        {it: "C'è un hotel qui vicino?", es: "¿Hay un hotel cerca de aquí?"}
-                    ],
-                    dialogos: [
-                        {
-                            titulo: "En la estación",
-                            contenido: [
-                                {it: "Scusi, a che ora parte il treno per Milano?", es: "Disculpe, ¿a qué hora sale el tren para Milán?"},
-                                {it: "Il prossimo treno parte alle 10:30", es: "El próximo tren sale a las 10:30"},
-                                {it: "Da quale binario?", es: "¿De qué andén?"},
-                                {it: "Dal binario 5", es: "Del andén 5"}
-                            ]
-                        }
-                    ]
-                }
-            },
-            gramatica: {
-                principiante: {
-                    verbos: {
-                        essere: {
-                            titulo: "El verbo 'essere' (ser/estar)",
-                            conjugacion: [
-                                {it: "io sono", es: "yo soy/estoy"},
-                                {it: "tu sei", es: "tú eres/estás"},
-                                {it: "lui/lei è", es: "él/ella es/está"},
-                                {it: "noi siamo", es: "nosotros somos/estamos"},
-                                {it: "voi siete", es: "vosotros sois/estáis"},
-                                {it: "loro sono", es: "ellos/ellas son/están"}
-                            ],
-                            ejemplos: [
-                                {it: "Io sono italiano", es: "Yo soy italiano"},
-                                {it: "Lei è a casa", es: "Ella está en casa"}
-                            ]
-                        }
-                    },
-                    articulos: {
-                        definidos: [
-                            {it: "il (masc. singular)", es: "el"},
-                            {it: "la (fem. singular)", es: "la"},
-                            {it: "i (masc. plural)", es: "los"},
-                            {it: "le (fem. plural)", es: "las"}
-                        ]
-                    }
-                }
-            },
-            cultura: {
-                costumbres: [
-                    {
-                        titulo: "El aperitivo",
-                        descripcion: "El aperitivo es una tradición italiana que consiste en tomar una bebida y algunos aperitivos antes de la cena, generalmente entre las 18:00 y las 20:00."
-                    },
-                    {
-                        titulo: "La sobremesa",
-                        descripcion: "Los italianos suelen pasar mucho tiempo en la mesa después de comer, charlando y disfrutando de un café."
-                    }
-                ],
-                ciudades: [
-                    {
-                        nombre: "Roma",
-                        descripcion: "La Ciudad Eterna, capital de Italia y hogar del Coliseo y el Vaticano.",
-                        frases_utiles: [
-                            {it: "Come arrivo al Colosseo?", es: "¿Cómo llego al Coliseo?"},
-                            {it: "Dov'è il Vaticano?", es: "¿Dónde está el Vaticano?"}
-                        ]
-                    }
-                ]
-            }
-        };
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const sendButton = document.getElementById('send-button');
-            const input = document.getElementById('message-input');
-
-            sendButton.addEventListener('click', sendMessage);
-            input.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    sendMessage();
-                }
-            });
-
-            showWelcomeMessage();
-        });
+        let hasInitialGreeting = false;
 
         function showWelcomeMessage() {
-            const welcomeMessage = `¡Bienvenido/a! 😊 ¿Listo para aprender italiano?
-
-Por favor, selecciona:
-
-1️⃣ Elige tu nivel de italiano:`;
-
-            addMessage('assistant', welcomeMessage);
-            showLevelOptions();
-        }
-
-        function showLevelOptions() {
-            const optionsHtml = `
-                <div class="options-container">
-                    <button class="option-button" onclick="selectLevel('principiante')">
-                        <i class="fas fa-star-half-alt"></i> Principiante (A1-A2)
-                    </button>
-                    <button class="option-button" onclick="selectLevel('intermedio')">
-                        <i class="fas fa-star"></i> Intermedio (B1-B2)
-                    </button>
-                    <button class="option-button" onclick="selectLevel('avanzado')">
-                        <i class="fas fa-stars"></i> Avanzado (C1-C2)
-                    </button>
-                </div>
-            `;
-
-            addOptionsToLastMessage(optionsHtml);
-        }
-
-        function showTopicOptions() {
-            let optionsHtml = '<div class="topic-container">';
+            const welcomeMessage = `¡Bienvenido/a! 😊 ¿Listo para aprender italiano?\n\n
+1️⃣ Elige tu nivel de italiano:\n
+• Principiante (A1-A2)\n
+• Intermedio (B1-B2)\n
+• Avanzado (C1-C2)\n\n
+2️⃣ Elige un tema para aprender:\n
+1: Presentaciones personales\n
+2: Vocabulario básico\n
+3: Frases útiles para viajar\n
+4: Gramática esencial\n
+5: Conversaciones del día a día\n
+6: Cultura italiana\n\n
+Puedes escribir por ejemplo: "Nivel A1, tema 3" o hacer preguntas directas como "Dame 10 frases sobre comida"`;
             
-            for (let i = 1; i <= 6; i++) {
-                const topic = topics[i];
-                optionsHtml += `
-                    <button class="topic-button" onclick="selectTopic(${i})">
-                        <i class="fas ${topic.icon}"></i>
-                        <span>${i}: ${topic.name}</span>
-                    </button>
-                `;
-            }
-            
-            optionsHtml += '</div>';
-
-            addMessage('assistant', '2️⃣ Elige un tema para aprender:');
-            addOptionsToLastMessage(optionsHtml);
-        }
-
-        async function processMessage(message) {
-            const lowerMessage = message.toLowerCase();
-
-            // Detectar nivel y tema
-            if (lowerMessage.includes('nivel')) {
-                const level = detectLevel(message);
-                const topic = detectTopic(message);
-                return handleLevelAndTopic(level, topic);
-            }
-
-            // Detectar solicitudes específicas
-            if (lowerMessage.includes('frases')) {
-                const topic = detectTopicFromRequest(lowerMessage);
-                const count = extractNumber(lowerMessage) || 5;
-                return generatePhrases(topic, count);
-            }
-
-            if (lowerMessage.includes('diálogo')) {
-                const context = detectContext(lowerMessage);
-                return generateDialogue(context);
-            }
-
-            if (lowerMessage.includes('ejercicio')) {
-                const type = detectExerciseType(lowerMessage);
-                return generateExercise(type);
-            }
-
-            if (lowerMessage.includes('explica') || lowerMessage.includes('cómo usar')) {
-                const grammar = detectGrammarTopic(lowerMessage);
-                return explainGrammar(grammar);
-            }
-
-            // Detectar si es italiano para corregir
-            if (containsItalianWords(lowerMessage)) {
-                return correctItalian(message);
-            }
-
-            return getDefaultResponse();
-        }
-
-        function handleLevelAndTopic(level, topic) {
-            userLevel = level || userLevel;
-            currentTopic = topic;
-
-            let response = "¡Perfecto! ";
-            if (level) {
-                response += `Has seleccionado el nivel ${level}. `;
-            }
-            if (topic) {
-                response += `\n\nVamos a trabajar en ${topics[topic].name}:\n\n`;
-                response += getTopicContent(topic);
-            }
-
-            return response;
-        }
-
-        function getTopicContent(topic) {
-            const content = learningContent[topics[topic].name.toLowerCase()];
-            if (!content || !content[userLevel]) {
-                return "Lo siento, aún no tengo contenido para este tema y nivel.";
-            }
-
-            let response = "";
-            if (content[userLevel].frases) {
-                response += "Frases útiles:\n\n";
-                content[userLevel].frases.forEach((frase, index) => {
-                    response += `${index + 1}. ${frase.it}\n   ${frase.es}\n\n`;
-                });
-            }
-
-            if (content[userLevel].ejercicios) {
-                response += "\nEjercicios para practicar:\n\n";
-                content[userLevel].ejercicios.forEach((ejercicio, index) => {
-                    response += `${index + 1}. ${ejercicio.pregunta}\n\n`;
-                });
-            }
-
-            return response;
-        }
-
-        function generatePhrases(topic, count = 5) {
-            const phrases = {
-                presentaciones: {
-                    principiante: [
-                        {it: "Ciao, come stai?", es: "Hola, ¿cómo estás?"},
-                        {it: "Mi chiamo Marco", es: "Me llamo Marco"},
-                        {it: "Piacere di conoscerti", es: "Encantado de conocerte"},
-                        {it: "Di dove sei?", es: "¿De dónde eres?"},
-                        {it: "Sono di Madrid", es: "Soy de Madrid"}
-                    ],
-                    intermedio: [
-                        {it: "Lavoro come insegnante", es: "Trabajo como profesor"},
-                        {it: "Mi sono trasferito qui da poco", es: "Me he mudado aquí hace poco"},
-                        {it: "Sto studiando italiano da due anni", es: "Estudio italiano desde hace dos años"}
-                    ]
-                },
-                viajes: {
-                    principiante: [
-                        {it: "Scusi, dov'è la stazione?", es: "Disculpe, ¿dónde está la estación?"},
-                        {it: "Quanto costa il biglietto?", es: "¿Cuánto cuesta el billete?"},
-                        {it: "A che ora parte il treno?", es: "¿A qué hora sale el tren?"},
-                        {it: "Vorrei prenotare una camera", es: "Quisiera reservar una habitación"},
-                        {it: "C'è un ristorante qui vicino?", es: "¿Hay un restaurante cerca de aquí?"}
-                    ]
-                },
-                restaurante: {
-                    principiante: [
-                        {it: "Il menu, per favore", es: "El menú, por favor"},
-                        {it: "Vorrei ordinare", es: "Quisiera ordenar"},
-                        {it: "Il conto, per favore", es: "La cuenta, por favor"},
-                        {it: "È molto buono", es: "Está muy bueno"},
-                        {it: "Cosa mi consiglia?", es: "¿Qué me recomienda?"}
-                    ]
-                }
-            };
-
-            const selectedPhrases = phrases[topic]?.[userLevel] || phrases.presentaciones.principiante;
-            const randomPhrases = selectedPhrases
-                .sort(() => 0.5 - Math.random())
-                .slice(0, Math.min(count, selectedPhrases.length));
-
-            let response = `🗣️ ${count} frases en italiano sobre ${topic}:\n\n`;
-            randomPhrases.forEach((phrase, index) => {
-                response += `${index + 1}. ${phrase.it}\n   ${phrase.es}\n\n`;
-            });
-
-            response += "\n💡 Consejo: Practica estas frases en voz alta para mejorar tu pronunciación.\n";
-            response += "¿Quieres practicar con ejercicios sobre estas frases?";
-
-            return response;
-        }
-
-        function generateDialogue(context = 'restaurante') {
-            const dialogues = {
-                restaurante: {
-                    principiante: {
-                        title: "En el restaurante",
-                        participants: ["Cliente", "Camarero"],
-                        lines: [
-                            {it: "Buongiorno! Un tavolo per due, per favore.", es: "¡Buenos días! Una mesa para dos, por favor."},
-                            {it: "Certo, da questa parte.", es: "Claro, por aquí."},
-                            {it: "Grazie. Il menu, per favore?", es: "Gracias. ¿El menú, por favor?"},
-                            {it: "Ecco il menu. Cosa desiderate bere?", es: "Aquí tiene el menú. ¿Qué desean beber?"},
-                            {it: "Una bottiglia d'acqua, per favore.", es: "Una botella de agua, por favor."}
-                        ]
-                    },
-                    intermedio: {
-                        title: "Pidiendo recomendaciones",
-                        lines: [
-                            {it: "Quali sono le specialità della casa?", es: "¿Cuáles son las especialidades de la casa?"},
-                            {it: "Le consiglio la pasta al pesto, è ottima.", es: "Le recomiendo la pasta al pesto, es excelente."}
-                        ]
-                    }
-                },
-                viajes: {
-                    principiante: {
-                        title: "En la estación de tren",
-                        participants: ["Viajero", "Empleado"],
-                        lines: [
-                            {it: "Scusi, a che ora parte il prossimo treno per Roma?", es: "Disculpe, ¿a qué hora sale el próximo tren a Roma?"},
-                            {it: "Il prossimo treno parte alle 14:30.", es: "El próximo tren sale a las 14:30."},
-                            {it: "Quanto costa il biglietto?", es: "¿Cuánto cuesta el billete?"},
-                            {it: "Sono 45 euro.", es: "Son 45 euros."},
-                            {it: "Perfetto, lo prendo.", es: "Perfecto, lo tomo."}
-                        ]
-                    }
-                }
-            };
-
-            const dialogue = dialogues[context]?.[userLevel] || dialogues.restaurante.principiante;
-            let response = `📝 Diálogo: ${dialogue.title}\n\n`;
-
-            dialogue.lines.forEach((line, index) => {
-                const speaker = dialogue.participants ? 
-                    dialogue.participants[index % dialogue.participants.length] + ": " :
-                    "";
-                response += `${speaker}${line.it}\n`;
-                response += `   ${line.es}\n\n`;
-            });
-
-            response += "\n💡 Sugerencia: Practica este diálogo con un amigo o repite las frases en voz alta.\n";
-            response += "¿Quieres practicar con ejercicios basados en este diálogo?";
-
-            return response;
-        }
-
-        function explainGrammar(topic) {
-            const grammar = {
-                verbos: {
-                    principiante: {
-                        essere: {
-                            title: "El verbo 'essere' (ser/estar)",
-                            explanation: "Este es uno de los verbos más importantes en italiano. Se usa para:",
-                            uses: [
-                                "Identificar personas y cosas",
-                                "Describir estados y situaciones",
-                                "Formar tiempos compuestos"
-                            ],
-                            conjugation: [
-                                {form: "io sono", translation: "yo soy/estoy"},
-                                {form: "tu sei", translation: "tú eres/estás"},
-                                {form: "lui/lei è", translation: "él/ella es/está"},
-                                {form: "noi siamo", translation: "nosotros somos/estamos"},
-                                {form: "voi siete", translation: "vosotros sois/estáis"},
-                                {form: "loro sono", translation: "ellos/ellas son/están"}
-                            ],
-                            examples: [
-                                {it: "Io sono italiano", es: "Yo soy italiano"},
-                                {it: "Lei è a casa", es: "Ella está en casa"}
-                            ]
-                        }
-                    },
-                    intermedio: {
-                        passato: {
-                            title: "El passato prossimo",
-                            explanation: "Es el tiempo pasado más común en italiano, similar al pretérito perfecto en español.",
-                            formation: "auxiliar (essere/avere) + participio pasado",
-                            examples: [
-                                {it: "Ho mangiato la pasta", es: "He comido la pasta"},
-                                {it: "Sono andato al cinema", es: "He ido al cine"}
-                            ]
-                        }
-                    }
-                }
-            };
-
-            const content = grammar[topic]?.principiante.essere;
-            if (!content) return "Lo siento, aún no tengo información sobre ese tema gramatical.";
-
-            let response = `📚 ${content.title}\n\n`;
-            response += `${content.explanation}\n\n`;
-            
-            response += "Usos principales:\n";
-            content.uses.forEach((use, index) => {
-                response += `${index + 1}. ${use}\n`;
-            });
-
-            response += "\nConjugación:\n";
-            content.conjugation.forEach(conj => {
-                response += `${conj.form} → ${conj.translation}\n`;
-            });
-
-            response += "\nEjemplos:\n";
-            content.examples.forEach((example, index) => {
-                response += `${index + 1}. ${example.it}\n   ${example.es}\n`;
-            });
-
-            response += "\n💡 ¿Quieres practicar con algunos ejercicios?";
-
-            return response;
-        }
-
-        function correctItalian(text) {
-            const commonErrors = {
-                "mi chiamo e": {
-                    correct: "mi chiamo",
-                    explanation: "Para decir 'me llamo', solo necesitas 'mi chiamo' seguido del nombre."
-                },
-                "io va": {
-                    correct: "io vado",
-                    explanation: "El verbo 'andare' en primera persona es 'vado'."
-                },
-                "tu è": {
-                    correct: "tu sei",
-                    explanation: "Con el pronombre 'tu', el verbo 'essere' se conjuga como 'sei'."
-                }
-            };
-
-            let response = "";
-            let hasErrors = false;
-
-            for (let error in commonErrors) {
-                if (text.toLowerCase().includes(error)) {
-                    hasErrors = true;
-                    const correction = commonErrors[error];
-                    response += `🔍 Corrección:\n`;
-                    response += `Original: ${text}\n`;
-                    response += `Correcto: ${text.replace(error, correction.correct)}\n\n`;
-                    response += `📝 Explicación: ${correction.explanation}\n`;
-                }
-            }
-
-            if (!hasErrors) {
-                response = "👏 ¡Muy bien! La frase está correcta.\n";
-                response += "¿Quieres intentar con una frase más compleja?";
-            }
-
-            return response;
-        }
-
-        function addMessage(author, text) {
-            const chatContainer = document.getElementById('chat-messages');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${author === 'assistant' ? 'assistant' : 'user'}`;
-            
-            const avatar = document.createElement('div');
-            avatar.className = 'avatar';
-            avatar.innerText = author === 'assistant' ? 'AI' : 'TU';
-            
-            const content = document.createElement('div');
-            content.className = 'message-content';
-            content.innerText = text;
-            
-            messageDiv.appendChild(avatar);
-            messageDiv.appendChild(content);
-            chatContainer.appendChild(messageDiv);
-            
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }
-
-        function addOptionsToLastMessage(optionsHtml) {
-            const chatMessages = document.getElementById('chat-messages');
-            const lastMessage = chatMessages.lastElementChild;
-            if (lastMessage) {
-                lastMessage.innerHTML += optionsHtml;
-            }
-        }
-
-        function selectLevel(level) {
-            userLevel = level;
-            showTopicOptions();
-        }
-
-        function selectTopic(topic) {
-            currentTopic = topic;
-            addMessage('assistant', `¡Excelente elección! Ahora puedes:\n1. Pedir frases sobre el tema\n2. Solicitar explicaciones gramaticales\n3. Practicar con ejercicios\n4. Crear diálogos\n5. Traducir frases`);
-        }
-
-        function detectLevel(message) {
-            if (message.includes('principiante')) return 'principiante';
-            if (message.includes('intermedio')) return 'intermedio';
-            if (message.includes('avanzado')) return 'avanzado';
-            return '';
-        }
-
-        function detectTopic(message) {
-            for (let i = 1; i <= 6; i++) {
-                if (message.includes(topics[i].name)) return i;
-            }
-            return '';
-        }
-
-        function detectTopicFromRequest(message) {
-            for (let i = 1; i <= 6; i++) {
-                if (message.includes(topics[i].name)) return i;
-            }
-            return 1; // Default topic
-        }
-
-        function extractNumber(message) {
-            const numbers = message.match(/\d+/g);
-            return numbers ? parseInt(numbers[0]) : null;
-        }
-
-        function detectContext(message) {
-            // Simulación de detección de contexto
-            return 'restaurante';
-        }
-
-        function detectExerciseType(message) {
-            if (message.includes('completar')) return 'completar';
-            if (message.includes('traducir')) return 'traducir';
-            if (message.includes('multiple')) return 'multiple';
-            return 'completar'; // Default exercise type
-        }
-
-        function detectGrammarTopic(message) {
-            // Simulación de detección de tema gramatical
-            return 'verbos';
-        }
-
-        function containsItalianWords(text) {
-            const italianWords = ['ciao', 'grazie', 'prego', 'sono', 'sei', 'è'];
-            return italianWords.some(word => text.includes(word));
-        }
-
-        function getDefaultResponse() {
-            return "¿Cómo puedo ayudarte? Puedes:\n" +
-                   "1. Pedir frases sobre un tema\n" +
-                   "2. Solicitar explicaciones gramaticales\n" +
-                   "3. Practicar con ejercicios\n" +
-                   "4. Crear diálogos\n" +
-                   "5. Traducir frases";
-        }
-
-        function setLanguage(lang) {
-            currentLanguage = lang;
-            document.querySelectorAll('.language-toggle .lang-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.innerText.toLowerCase().includes(lang));
-            });
+            addMessage(welcomeMessage, 'assistant');
         }
 
         function processUserRequest(text) {
-            // Convertir texto a minúsculas para facilitar la comparación
+            // Procesar selección de nivel y tema
+            if (text.toLowerCase().includes('nivel')) {
+                const levelMatch = text.match(/[abc][12]/i);
+                if (levelMatch) {
+                    const level = levelMatch[0].toLowerCase();
+                    userLevel = level.startsWith('a') ? 'principiante' :
+                              level.startsWith('b') ? 'intermedio' : 'avanzado';
+                }
+
+                const topicMatch = text.match(/tema\s*(\d)/i);
+                if (topicMatch) {
+                    const topicNum = parseInt(topicMatch[1]);
+                    const topics = {
+                        1: 'presentaciones',
+                        2: 'vocabulario',
+                        3: 'viajes',
+                        4: 'gramatica',
+                        5: 'conversaciones',
+                        6: 'cultura'
+                    };
+                    currentTopic = topics[topicNum] || 'presentaciones';
+                }
+
+                return generateContentForTopic(currentTopic);
+            }
+
+            // Procesar solicitudes específicas
             const lowerText = text.toLowerCase();
 
             // Solicitud de frases
@@ -990,11 +216,11 @@ Por favor, selecciona:
                     'viaje': 'viajes',
                     'presentacion': 'presentaciones',
                     'restaurante': 'restaurante',
-                    'saludos': 'presentaciones'
+                    'saludos': 'presentaciones',
+                    'familia': 'familia'
                 };
 
-                // Detectar tema
-                let topic = 'presentaciones'; // tema por defecto
+                let topic = 'presentaciones';
                 for (let key in topics) {
                     if (lowerText.includes(key)) {
                         topic = topics[key];
@@ -1002,7 +228,6 @@ Por favor, selecciona:
                     }
                 }
 
-                // Detectar cantidad
                 const numberMatch = text.match(/\d+/);
                 const count = numberMatch ? parseInt(numberMatch[0]) : 5;
 
@@ -1016,100 +241,176 @@ Por favor, selecciona:
             }
 
             // Solicitud de explicación gramatical
-            if (lowerText.includes('explica') || lowerText.includes('explicar') || lowerText.includes('explicame')) {
-                if (lowerText.includes('essere') || lowerText.includes('ser') || lowerText.includes('estar')) {
-                    return explainGrammar('verbos');
-                }
+            if (lowerText.includes('explica') || lowerText.includes('explicar')) {
+                let topic = 'verbos';
+                if (lowerText.includes('essere') || lowerText.includes('ser')) topic = 'essere';
+                if (lowerText.includes('condicional')) topic = 'condicional';
+                return explainGrammar(topic);
             }
 
             // Solicitud de diálogo
             if (lowerText.includes('dialogo') || lowerText.includes('conversacion')) {
                 let context = 'restaurante';
-                if (lowerText.includes('viaje') || lowerText.includes('tren') || lowerText.includes('estacion')) {
-                    context = 'viajes';
-                }
+                if (lowerText.includes('viaje') || lowerText.includes('tren')) context = 'viajes';
+                if (lowerText.includes('direcciones') || lowerText.includes('ciudad')) context = 'direcciones';
                 return generateDialogue(context);
             }
 
-            // Solicitud de corrección
-            if (lowerText.includes('corrige') || lowerText.includes('correcto') || lowerText.includes('bien')) {
-                return correctItalian(text.replace(/corrige|correcto|bien/i, '').trim());
+            // Solicitud de ejercicios
+            if (lowerText.includes('ejercicio') || lowerText.includes('practica')) {
+                return generateExercise(currentTopic || 'general');
             }
 
-            // Si no se detecta ninguna solicitud específica
-            return "¿Cómo puedo ayudarte? Puedes:\n" +
-                   "- Frases sobre un tema (ej: '5 frases sobre comida')\n" +
-                   "- Traducir texto (ej: 'traduce: buenos días')\n" +
-                   "- Explicar gramática (ej: 'explica el verbo essere')\n" +
-                   "- Mostrar diálogos (ej: 'diálogo en restaurante')\n" +
-                   "- Corregir frases (ej: 'corrige: io va a casa')";
+            // Solicitud de corrección
+            if (lowerText.includes('corrige') || lowerText.includes('revisa')) {
+                return correctItalian(text.replace(/corrige|revisa/i, '').trim());
+            }
+
+            // Mensaje de ayuda por defecto
+            return `¿Cómo puedo ayudarte? Puedes:\n
+• Pedir frases sobre un tema (ej: "5 frases sobre comida")\n
+• Solicitar traducciones (ej: "traduce: buenos días")\n
+• Pedir explicaciones gramaticales (ej: "explica el verbo essere")\n
+• Generar diálogos (ej: "diálogo en un restaurante")\n
+• Hacer ejercicios (ej: "ejercicio de vocabulario")\n
+• Corregir frases (ej: "corrige: io va a casa")\n\n
+También puedes cambiar tu nivel o tema en cualquier momento.`;
         }
 
-        function translateText(text) {
-            const commonPhrases = {
-                // Saludos
-                'hola': 'Ciao',
-                'buenos días': 'Buongiorno',
-                'buenas tardes': 'Buonasera',
-                'buenas noches': 'Buonanotte',
-                'adiós': 'Arrivederci',
-                'hasta luego': 'A più tardi',
-                
-                // Cortesía
-                'gracias': 'Grazie',
-                'por favor': 'Per favore',
-                'de nada': 'Prego',
-                'perdón': 'Scusi',
-                'lo siento': 'Mi dispiace',
-                
-                // Preguntas comunes
-                'cómo estás': 'Come stai',
-                'qué tal': 'Come va',
-                'cómo te llamas': 'Come ti chiami',
-                'dónde está': "Dov'è",
-                'cuánto cuesta': 'Quanto costa',
-                
-                // Respuestas
-                'bien': 'Bene',
-                'muy bien': 'Molto bene',
-                'más o menos': 'Così così',
-                'me llamo': 'Mi chiamo',
-                'encantado': 'Piacere',
-                
-                // Números básicos
-                'uno': 'uno',
-                'dos': 'due',
-                'tres': 'tre',
-                'cuatro': 'quattro',
-                'cinco': 'cinque'
+        function generateContentForTopic(topic) {
+            const content = {
+                presentaciones: {
+                    principiante: {
+                        title: "Presentaciones Personales Básicas",
+                        phrases: [
+                            {it: "Ciao, come ti chiami?", es: "Hola, ¿cómo te llamas?"},
+                            {it: "Mi chiamo Marco", es: "Me llamo Marco"},
+                            {it: "Piacere di conoscerti", es: "Encantado de conocerte"},
+                            {it: "Di dove sei?", es: "¿De dónde eres?"},
+                            {it: "Sono di Madrid", es: "Soy de Madrid"}
+                        ]
+                    },
+                    intermedio: {
+                        title: "Presentaciones Profesionales",
+                        phrases: [
+                            {it: "Mi occupo di marketing", es: "Me dedico al marketing"},
+                            {it: "Lavoro nel settore tecnologico", es: "Trabajo en el sector tecnológico"},
+                            {it: "Ho studiato all'università di Roma", es: "Estudié en la universidad de Roma"}
+                        ]
+                    }
+                },
+                viajes: {
+                    principiante: {
+                        title: "Frases Esenciales para Viajar",
+                        phrases: [
+                            {it: "Scusi, dov'è la stazione?", es: "Disculpe, ¿dónde está la estación?"},
+                            {it: "Quanto costa il biglietto?", es: "¿Cuánto cuesta el billete?"},
+                            {it: "Vorrei prenotare una camera", es: "Quisiera reservar una habitación"}
+                        ]
+                    }
+                }
             };
 
-            // Buscar coincidencias exactas
-            const lowerText = text.toLowerCase().trim();
-            if (commonPhrases[lowerText]) {
-                return `🔤 Traducción:\n${text} → ${commonPhrases[lowerText]}\n\n💡 ¿Quieres practicar la pronunciación?`;
-            }
+            const levelContent = content[topic]?.[userLevel] || content.presentaciones.principiante;
+            let response = `📚 ${levelContent.title}\n\n`;
+            
+            levelContent.phrases.forEach((phrase, index) => {
+                response += `${index + 1}. ${phrase.it}\n   ${phrase.es}\n\n`;
+            });
 
-            // Buscar coincidencias parciales
-            for (let spanish in commonPhrases) {
-                if (lowerText.includes(spanish)) {
-                    const italian = commonPhrases[spanish];
-                    return `🔤 Traducción encontrada:\n"${spanish}" → "${italian}"\n\n💡 Esta es una traducción parcial. ¿Quieres más ayuda con el resto de la frase?`;
-                }
-            }
+            response += "💡 ¿Quieres practicar estas frases con ejercicios?\n";
+            response += "También puedes pedir más ejemplos o cambiar de tema.";
 
-            return "Lo siento, no tengo una traducción exacta para ese texto. ¿Podrías intentar con una frase más simple o preguntarme por palabras específicas?";
+            return response;
         }
 
-        // Actualizar el evento de envío de mensaje para usar el procesador de solicitudes
-        document.getElementById('send-button').onclick = function() {
-            const userInput = document.getElementById('message-input').value;
-            if (userInput.trim() !== '') {
-                addMessage(userInput, 'user');
-                const response = processUserRequest(userInput);
-                addMessage(response, 'assistant');
-                document.getElementById('message-input').value = '';
+        function generateExercise(topic = 'general') {
+            const exercises = {
+                completar: [
+                    {
+                        question: "Completa la frase: Io _____ italiano. (sono/sei/è)",
+                        answer: "sono",
+                        explanation: "Con el pronombre 'io' usamos 'sono'"
+                    },
+                    {
+                        question: "Completa: Mi _____ Paolo. (chiamo/chiami/chiama)",
+                        answer: "chiamo",
+                        explanation: "Para decir 'me llamo' usamos 'mi chiamo'"
+                    }
+                ],
+                traducir: [
+                    {
+                        question: "Traduce al italiano: 'Hola, ¿cómo estás?'",
+                        answer: "Ciao, come stai?",
+                        hint: "Recuerda que 'stai' es informal"
+                    }
+                ],
+                multiple: [
+                    {
+                        question: "¿Cómo se dice 'gracias' en italiano?",
+                        options: ["gracie", "grazia", "grazie", "gratia"],
+                        answer: "grazie",
+                        explanation: "Grazie es la forma correcta de decir gracias"
+                    }
+                ]
+            };
+
+            const types = ['completar', 'traducir', 'multiple'];
+            const type = types[Math.floor(Math.random() * types.length)];
+            const exercise = exercises[type][Math.floor(Math.random() * exercises[type].length)];
+
+            let response = "🎯 Ejercicio de práctica:\n\n";
+            response += exercise.question + "\n\n";
+
+            if (type === 'multiple') {
+                response += "Opciones:\n";
+                exercise.options.forEach((option, index) => {
+                    response += `${index + 1}. ${option}\n`;
+                });
             }
+
+            response += "\nEscribe tu respuesta y te ayudaré a corregirla.";
+            return response;
+        }
+
+        function addMessage(text, sender) {
+            const messagesDiv = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.innerText = text;
+            
+            messageDiv.appendChild(contentDiv);
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        // Inicializar el chat
+        window.onload = function() {
+            if (!hasInitialGreeting) {
+                showWelcomeMessage();
+                hasInitialGreeting = true;
+            }
+
+            document.getElementById('send-button').onclick = function() {
+                const input = document.getElementById('message-input');
+                const message = input.value.trim();
+                
+                if (message) {
+                    addMessage(message, 'user');
+                    const response = processUserRequest(message);
+                    addMessage(response, 'assistant');
+                    input.value = '';
+                }
+            };
+
+            document.getElementById('message-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    document.getElementById('send-button').click();
+                }
+            });
         };
     </script>
 </body>
