@@ -1,54 +1,107 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>La Hora en Italiano</title>
+    <title>L'Ora in Italiano</title>
     <link rel="stylesheet" href="colors.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
+        :root {
+            --background-white: #ffffff;
+            --primary-color: #4CAF50;
+            --secondary-color: #81C784;
+            --background-color: #F7F9FC;
+            --text-main: #1a1a1a;
+            --text-secondary: #404040;
+            --button-color: #4CAF50;
+            --hover-color: #388E3C;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --border-radius: 15px;
+            --border-light: #e0e0e0;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
+            background-color: var(--background-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.7;
+            padding-bottom: 70px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            margin: 0;
             padding: 20px;
-            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--background-white);
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 4px var(--shadow-color);
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            color: var(--text-main);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        h2 {
+            color: var(--text-main);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        h2 i {
+            color: var(--primary-color);
         }
 
         .time-section {
-            background: var(--background-white);
-            border-radius: 8px;
+            background-color: var(--background-white);
+            border-radius: var(--border-radius);
             padding: 2rem;
-            margin: 1.5rem;
+            margin-bottom: 2rem;
             box-shadow: 0 2px 4px var(--shadow-color);
         }
 
         .time-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
             margin-top: 2rem;
         }
 
         .time-card {
-            background: var(--background-main);
-            border-radius: 8px;
-            padding: 1.5rem;
+            background-color: var(--background-white);
+            border-radius: var(--border-radius);
+            padding: 2rem;
             box-shadow: 0 2px 4px var(--shadow-color);
             transition: transform 0.3s ease;
         }
 
         .time-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 4px 8px var(--shadow-color);
+            box-shadow: 0 8px 16px var(--shadow-color);
         }
 
         .time-title {
-            color: var(--accent-color);
-            font-size: 1.5rem;
+            color: var(--text-main);
+            font-size: 1.8rem;
             font-weight: bold;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             text-align: center;
         }
 
@@ -56,335 +109,327 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.8rem;
-            background: var(--background-white);
-            border-radius: 6px;
-            margin-bottom: 0.8rem;
-            transition: background-color 0.3s ease;
+            padding: 1.2rem;
+            background-color: var(--background-color);
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
         }
 
         .time-item:hover {
-            background: var(--hover-color-light);
+            transform: translateX(5px);
+            box-shadow: 0 2px 4px var(--shadow-color);
         }
 
         .time-info {
             flex-grow: 1;
+            padding-right: 1rem;
         }
 
         .italian-time {
             color: var(--text-main);
             font-weight: bold;
-            font-size: 1.1rem;
-            margin-bottom: 0.3rem;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
         }
 
         .spanish-time {
             color: var(--text-secondary);
-            font-size: 0.9rem;
+            font-size: 1rem;
         }
 
-        .play-button {
+        .audio-button {
             background-color: var(--button-color);
-            color: rgb(12, 247, 90);
+            color: white;
             border: none;
-            padding: 0.5rem;
-            border-radius: 4px;
+            padding: 1rem;
+            border-radius: var(--border-radius);
             cursor: pointer;
             display: flex;
             align-items: center;
-            justify-content: center;
-            transition: background-color 0.3s ease;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
         }
 
-        .play-button:hover {
+        .audio-button:hover {
             background-color: var(--hover-color);
+            transform: scale(1.05);
         }
 
-        .section-title {
-            color: var(--accent-color);
-            font-size: 2rem;
-            text-align: center;
-            margin-bottom: 2rem;
+        .audio-button i {
+            font-size: 1.2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background-color: var(--background-white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 1.2rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: var(--background-color);
+        }
+
+        td button {
+            margin: 0;
         }
 
         .example-box {
-            background: var(--background-main);
-            border-radius: 8px;
+            background-color: var(--background-color);
+            border-radius: var(--border-radius);
             padding: 1.5rem;
-            margin: 1rem 0;
-            border-left: 4px solid var(--accent-color);
-        }
-
-        .clock-display {
-            font-size: 2.5rem;
-            font-weight: bold;
-            text-align: center;
-            color: var(--text-main);
-            margin: 2rem 0;
-        }
-
-        .time-practice {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-
-        .practice-input {
-            padding: 0.8rem;
-            font-size: 1.2rem;
-            border: 2px solid var(--border-light);
-            border-radius: 4px;
-            width: 100%;
-            max-width: 300px;
-        }
-
-        .check-button {
-            background-color: var(--button-color);
-            color: rgb(12, 247, 90);
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 4px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .check-button:hover {
-            background-color: var(--hover-color);
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--primary-color);
         }
 
         .tip-box {
-            background: var(--background-light);
-            border-left: 4px solid var(--accent-color);
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 0 4px 4px 0;
+            background-color: var(--background-color);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--secondary-color);
         }
 
         @media (max-width: 768px) {
-            .time-section {
-                margin: 1rem;
+            body {
                 padding: 1rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .time-section {
+                padding: 1.5rem;
             }
 
             .time-grid {
                 grid-template-columns: 1fr;
-                gap: 1rem;
+                gap: 1.5rem;
             }
 
             .time-card {
-                padding: 1rem;
+                padding: 1.5rem;
             }
 
             .time-title {
-                font-size: 1.3rem;
+                font-size: 1.5rem;
+            }
+
+            .time-item {
+                padding: 1rem;
             }
 
             .italian-time {
-                font-size: 1rem;
+                font-size: 1.1rem;
             }
 
-            .clock-display {
-                font-size: 2rem;
+            .spanish-time {
+                font-size: 0.9rem;
             }
 
-            .practice-input {
-                font-size: 1rem;
-                padding: 0.6rem;
+            table {
+                display: block;
+                overflow-x: auto;
             }
 
-            .check-button {
-                padding: 0.8rem 1.6rem;
-                font-size: 1rem;
+            th, td {
+                padding: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <h1>La Hora en Italiano</h1>
+    <div class="container">
+        <header>
+            <h1>L'Ora in Italiano</h1>
+            <p class="section-description">Impara a dire l'ora in italiano</p>
+        </header>
 
-    <div class="time-section">
-        <h2><i class="fas fa-clock"></i>Construcciones de la Hora</h2>
-        <p>Existen 2 tipos de construcciones para expresar la hora en italiano:</p>
+        <div class="time-section">
+            <h2><i class="fas fa-clock"></i>Come si dice l'ora</h2>
+            <div class="time-grid">
+                <div class="time-card">
+                    <div class="time-title">Ore esatte</div>
+                    <div class="time-item">
+                        <div class="time-info">
+                            <div class="italian-time">Sono le due</div>
+                            <div class="spanish-time">Son las dos</div>
+                        </div>
+                        <button class="audio-button" onclick="speak('Sono le due')">
+                            <i class="fas fa-volume-up"></i>
+                            Ascolta
+                        </button>
+                    </div>
+                    <div class="time-item">
+                        <div class="time-info">
+                            <div class="italian-time">È l'una</div>
+                            <div class="spanish-time">Es la una</div>
+                        </div>
+                        <button class="audio-button" onclick="speak('È l\'una')">
+                            <i class="fas fa-volume-up"></i>
+                            Ascolta
+                        </button>
+                    </div>
+                </div>
 
-        <div class="tip">
-            <h3 class="flex-cell">Modo hablado (reloj de 12 horas)
-                <button class="speak-btn" onclick="speak('Che ore sono?')">
-                    <i class="fas fa-volume-up"></i>
-                </button>
-            </h3>
-            <div class="time-example flex-cell">
-                Che ore sono?
-                <button class="speak-btn" onclick="speak('Che ore sono?')">
-                    <i class="fas fa-volume-up"></i>
-                </button>
-            </div>
-            <div class="time-example flex-cell">
-                Sono le quattro e mezza
-                <button class="speak-btn" onclick="speak('Sono le quattro e mezza')">
-                    <i class="fas fa-volume-up"></i>
-                </button>
-            </div>
-        </div>
-
-        <div class="tip">
-            <h3 class="flex-cell">Modo oficial (reloj de 24 horas)
-                <button class="speak-btn" onclick="speak('Il volo Roma-Madrid parte alle ventitré e dieci minuti')">
-                    <i class="fas fa-volume-up"></i>
-                </button>
-            </h3>
-            <div class="time-example flex-cell">
-                Il volo Roma-Madrid parte alle ventitré e dieci minuti
-                <button class="speak-btn" onclick="speak('Il volo Roma-Madrid parte alle ventitré e dieci minuti')">
-                    <i class="fas fa-volume-up"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="time-section">
-        <h2><i class="fas fa-clock"></i>Construcción de la hora en modo hablado</h2>
-        <table>
-            <tr>
-                <th>Hora</th>
-                <th>Italiano</th>
-                <th>Español</th>
-            </tr>
-            <tr>
-                <td>13:00</td>
-                <td class="flex-cell">È l'una
-                    <button class="speak-btn" onclick="speak('È l\'una')">
-                        <i class="fas fa-volume-up"></i>
-                    </button>
-                </td>
-                <td>Es la una</td>
-            </tr>
-            <tr>
-                <td>16:00</td>
-                <td class="flex-cell">Sono le quattro
-                    <button class="speak-btn" onclick="speak('Sono le quattro')">
-                        <i class="fas fa-volume-up"></i>
-                    </button>
-                </td>
-                <td>Son las cuatro</td>
-            </tr>
-            <tr>
-                <td>16:15</td>
-                <td class="flex-cell">quattro e quindici
-                    <button class="speak-btn" onclick="speak('quattro e quindici')">
-                        <i class="fas fa-volume-up"></i>
-                    </button>
-                </td>
-                <td>las cuatro y cuarto</td>
-            </tr>
-            <tr>
-                <td>16:30</td>
-                <td class="flex-cell">quattro e mezza
-                    <button class="speak-btn" onclick="speak('quattro e mezza')">
-                        <i class="fas fa-volume-up"></i>
-                    </button>
-                </td>
-                <td>las cuatro y media</td>
-            </tr>
-            <tr>
-                <td>16:45</td>
-                <td class="flex-cell">quattro e tre quarti
-                    <button class="speak-btn" onclick="speak('quattro e tre quarti')">
-                        <i class="fas fa-volume-up"></i>
-                    </button>
-                </td>
-                <td>las cuatro y tres cuartos</td>
-            </tr>
-        </table>
-    </div>
-
-    <div class="time-section">
-        <h2><i class="fas fa-sun"></i>Momentos del día</h2>
-        <table>
-            <tr>
-                <th>Italiano</th>
-                <th>Español</th>
-                <th>Ejemplo</th>
-            </tr>
-            <tr>
-                <td class="flex-cell">mattina
-                    <button class="speak-btn" onclick="speak('mattina')">
-                        <i class="fas fa-volume-up"></i>
-                    </button>
-                </td>
-                <td>mañana</td>
-                <td class="flex-cell">Ci vediamo domattina, alle dieci
-                    <button class="speak-btn" onclick="speak('Ci vediamo domattina, alle dieci')">
-                        <i class="fas fa-volume-up"></i>
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <td class="flex-cell">pomeriggio
-                    <button class="speak-btn" onclick="speak('pomeriggio')">
-                        <i class="fas fa-volume-up"></i>
-                    </button>
-                </td>
-                <td>tarde</td>
-                <td class="flex-cell">Ci vediamo oggi pomeriggio, alle sei
-                    <button class="speak-btn" onclick="speak('Ci vediamo oggi pomeriggio, alle sei')">
-                        <i class="fas fa-volume-up"></i>
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <td class="flex-cell">sera
-                    <button class="speak-btn" onclick="speak('sera')">
-                        <i class="fas fa-volume-up"></i>
-                    </button>
-                </td>
-                <td>tarde-noche</td>
-                <td class="flex-cell">Ci vediamo stasera, alle sette e mezzo
-                    <button class="speak-btn" onclick="speak('Ci vediamo stasera, alle sette e mezzo')">
-                        <i class="fas fa-volume-up"></i>
-                    </button>
-                </td>
-            </tr>
-        </table>
-    </div>
-
-    <div class="time-section">
-        <h2><i class="fas fa-question-circle"></i>¿Qué hora es?</h2>
-        <div class="tip">
-            <h3>Formal:</h3>
-            <div class="time-example flex-cell">
-                Scusi, sa dirmi che ore sono?
-                <button class="speak-btn" onclick="speak('Scusi, sa dirmi che ore sono?')">
-                    <i class="fas fa-volume-up"></i>
-                </button>
-            </div>
-            <div class="time-example flex-cell">
-                Scusi, sa dirmi l'ora?
-                <button class="speak-btn" onclick="speak('Scusi, sa dirmi l\'ora?')">
-                    <i class="fas fa-volume-up"></i>
-                </button>
+                <div class="time-card">
+                    <div class="time-title">Minuti</div>
+                    <div class="time-item">
+                        <div class="time-info">
+                            <div class="italian-time">Sono le tre e quindici</div>
+                            <div class="spanish-time">Son las tres y cuarto</div>
+                        </div>
+                        <button class="audio-button" onclick="speak('Sono le tre e quindici')">
+                            <i class="fas fa-volume-up"></i>
+                            Ascolta
+                        </button>
+                    </div>
+                    <div class="time-item">
+                        <div class="time-info">
+                            <div class="italian-time">Sono le quattro e trenta</div>
+                            <div class="spanish-time">Son las cuatro y media</div>
+                        </div>
+                        <button class="audio-button" onclick="speak('Sono le quattro e trenta')">
+                            <i class="fas fa-volume-up"></i>
+                            Ascolta
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="tip">
-            <h3>Informal:</h3>
-            <div class="time-example flex-cell">
-                Che ore sono?
-                <button class="speak-btn" onclick="speak('Che ore sono?')">
-                    <i class="fas fa-volume-up"></i>
-                </button>
-            </div>
-            <div class="time-example flex-cell">
-                Sai che ore sono?
-                <button class="speak-btn" onclick="speak('Sai che ore sono?')">
-                    <i class="fas fa-volume-up"></i>
-                </button>
+        <div class="time-section">
+            <h2><i class="fas fa-sun"></i>Momenti della giornata</h2>
+            <table>
+                <tr>
+                    <th>Italiano</th>
+                    <th>Español</th>
+                    <th>Audio</th>
+                </tr>
+                <tr>
+                    <td>Mattina</td>
+                    <td>Mañana</td>
+                    <td>
+                        <button class="audio-button" onclick="speak('mattina')">
+                            <i class="fas fa-volume-up"></i>
+                            Ascolta
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Mezzogiorno</td>
+                    <td>Mediodía</td>
+                    <td>
+                        <button class="audio-button" onclick="speak('mezzogiorno')">
+                            <i class="fas fa-volume-up"></i>
+                            Ascolta
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Pomeriggio</td>
+                    <td>Tarde</td>
+                    <td>
+                        <button class="audio-button" onclick="speak('pomeriggio')">
+                            <i class="fas fa-volume-up"></i>
+                            Ascolta
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Sera</td>
+                    <td>Noche (temprana)</td>
+                    <td>
+                        <button class="audio-button" onclick="speak('sera')">
+                            <i class="fas fa-volume-up"></i>
+                            Ascolta
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Notte</td>
+                    <td>Noche</td>
+                    <td>
+                        <button class="audio-button" onclick="speak('notte')">
+                            <i class="fas fa-volume-up"></i>
+                            Ascolta
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="time-section">
+            <h2><i class="fas fa-info-circle"></i>Espressioni utili</h2>
+            <div class="example-box">
+                <div class="time-item">
+                    <div class="time-info">
+                        <div class="italian-time">Che ora è?</div>
+                        <div class="spanish-time">¿Qué hora es?</div>
+                    </div>
+                    <button class="audio-button" onclick="speak('Che ora è?')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                </div>
+                <div class="time-item">
+                    <div class="time-info">
+                        <div class="italian-time">A che ora?</div>
+                        <div class="spanish-time">¿A qué hora?</div>
+                    </div>
+                    <button class="audio-button" onclick="speak('A che ora?')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
-    <script src="gemini-tts.js"></script>
+    <script>
+        const synth = window.speechSynthesis;
+        let voices = [];
+
+        function loadVoices() {
+            voices = synth.getVoices();
+        }
+
+        loadVoices();
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = loadVoices;
+        }
+
+        function speak(text) {
+            if (synth.speaking) {
+                console.error('speechSynthesis.speaking');
+                return;
+            }
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'it-IT';
+            utterance.pitch = 1;
+            utterance.rate = 0.9;
+            utterance.volume = 1;
+
+            synth.speak(utterance);
+        }
+    </script>
 </body>
 </html>

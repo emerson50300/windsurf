@@ -1,26 +1,76 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Artículos en Italiano</title>
+    <title>Articoli in Italiano</title>
     <link rel="stylesheet" href="colors.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
+        :root {
+            --background-white: #ffffff;
+            --primary-color: #4CAF50;
+            --secondary-color: #81C784;
+            --background-color: #F7F9FC;
+            --text-main: #1a1a1a;
+            --text-secondary: #404040;
+            --button-color: #4CAF50;
+            --hover-color: #388E3C;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --border-radius: 15px;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.7;
+            padding-bottom: 70px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--background-white);
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 4px var(--shadow-color);
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            color: var(--text-main);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section-description {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
         .article-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1rem;
+            gap: 2rem;
             padding: 1rem;
-            max-width: 1200px;
-            margin: 0 auto;
         }
 
         .article-card {
-            background: var(--background-white);
-            border-radius: 8px;
-            padding: 1.5rem;
+            background-color: var(--background-white);
+            border-radius: var(--border-radius);
+            padding: 2rem;
             box-shadow: 0 2px 4px var(--shadow-color);
             transition: transform 0.3s ease;
             text-align: center;
@@ -28,74 +78,75 @@
 
         .article-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 4px 8px var(--shadow-color);
+            box-shadow: 0 8px 16px var(--shadow-color);
         }
 
         .article-type {
-            color: var(--accent-color);
-            font-size: 1.8rem;
+            color: var(--text-main);
+            font-size: 2rem;
             font-weight: bold;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
         }
 
         .article-example {
             color: var(--text-secondary);
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
         }
 
-        .play-button {
+        .audio-button {
             background-color: var(--button-color);
-            color: rgb(12, 247, 90);
+            color: white;
             border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius);
             cursor: pointer;
+            font-size: 1.1rem;
             display: flex;
             align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+            width: 80%;
+            margin: 0 auto;
             justify-content: center;
-            gap: 0.5rem;
-            width: 100%;
-            transition: background-color 0.3s ease;
         }
 
-        .play-button:hover {
+        .audio-button:hover {
             background-color: var(--hover-color);
+            transform: scale(1.05);
         }
 
-        .section-title {
-            color: var(--accent-color);
-            text-align: center;
-            margin: 2rem 0;
-            font-size: 2rem;
-        }
-
-        .section-description {
-            color: var(--text-secondary);
-            text-align: center;
-            margin-bottom: 2rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            padding: 0 1rem;
+        .audio-button i {
+            font-size: 1.2rem;
         }
 
         .article-section {
-            background: var(--background-white);
-            border-radius: 8px;
+            background-color: var(--background-white);
+            border-radius: var(--border-radius);
             padding: 2rem;
-            margin: 1rem;
+            margin-bottom: 2rem;
             box-shadow: 0 2px 4px var(--shadow-color);
         }
 
+        .section-title {
+            color: var(--text-main);
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
         @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
             .article-grid {
                 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                gap: 0.8rem;
+                gap: 1rem;
             }
 
             .article-card {
-                padding: 1rem;
+                padding: 1.5rem;
             }
 
             .article-type {
@@ -103,161 +154,201 @@
             }
 
             .article-example {
-                font-size: 1rem;
+                font-size: 1.1rem;
             }
 
-            .section-title {
-                font-size: 1.5rem;
-                margin: 1.5rem 0;
+            .audio-button {
+                width: 100%;
+                padding: 0.8rem 1.5rem;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="section-title">Artículos en Italiano</h1>
-        <p class="section-description">Aprende los artículos determinados e indeterminados en italiano</p>
+        <header>
+            <h1>Articoli in Italiano</h1>
+            <p class="section-description">Impara gli articoli determinativi e indeterminativi in italiano</p>
+        </header>
 
         <div class="article-section">
-            <h2 class="section-title">Artículos Definidos</h2>
+            <h2 class="section-title">Articoli Determinativi</h2>
             <div class="article-grid">
                 <div class="article-card">
                     <div class="article-type">il</div>
-                    <div class="article-example">Masculino singular (consonante)</div>
-                    <button class="play-button" onclick="speak('il')">
-                        <i class="fas fa-play"></i> Escuchar
+                    <div class="article-example">Maschile singolare (consonante)</div>
+                    <button class="audio-button" onclick="speak('il')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
                     </button>
                 </div>
 
                 <div class="article-card">
                     <div class="article-type">lo</div>
-                    <div class="article-example">Masculino singular (s+consonante, z)</div>
-                    <button class="play-button" onclick="speak('lo')">
-                        <i class="fas fa-play"></i> Escuchar
+                    <div class="article-example">Maschile singolare (s+consonante, z)</div>
+                    <button class="audio-button" onclick="speak('lo')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
                     </button>
                 </div>
 
                 <div class="article-card">
                     <div class="article-type">la</div>
-                    <div class="article-example">Femenino singular</div>
-                    <button class="play-button" onclick="speak('la')">
-                        <i class="fas fa-play"></i> Escuchar
+                    <div class="article-example">Femminile singolare</div>
+                    <button class="audio-button" onclick="speak('la')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
                     </button>
                 </div>
 
                 <div class="article-card">
                     <div class="article-type">i</div>
-                    <div class="article-example">Masculino plural (consonante)</div>
-                    <button class="play-button" onclick="speak('i')">
-                        <i class="fas fa-play"></i> Escuchar
+                    <div class="article-example">Maschile plurale (consonante)</div>
+                    <button class="audio-button" onclick="speak('i')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
                     </button>
                 </div>
 
                 <div class="article-card">
                     <div class="article-type">gli</div>
-                    <div class="article-example">Masculino plural (s+consonante, z)</div>
-                    <button class="play-button" onclick="speak('gli')">
-                        <i class="fas fa-play"></i> Escuchar
+                    <div class="article-example">Maschile plurale (s+consonante, z)</div>
+                    <button class="audio-button" onclick="speak('gli')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
                     </button>
                 </div>
 
                 <div class="article-card">
                     <div class="article-type">le</div>
-                    <div class="article-example">Femenino plural</div>
-                    <button class="play-button" onclick="speak('le')">
-                        <i class="fas fa-play"></i> Escuchar
+                    <div class="article-example">Femminile plurale</div>
+                    <button class="audio-button" onclick="speak('le')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
                     </button>
                 </div>
             </div>
         </div>
 
         <div class="article-section">
-            <h2 class="section-title">Artículos Indeterminados</h2>
+            <h2 class="section-title">Articoli Indeterminativi</h2>
             <div class="article-grid">
                 <div class="article-card">
                     <div class="article-type">un</div>
-                    <div class="article-example">Masculino singular (consonante)</div>
-                    <button class="play-button" onclick="speak('un')">
-                        <i class="fas fa-play"></i> Escuchar
+                    <div class="article-example">Maschile singolare (consonante)</div>
+                    <button class="audio-button" onclick="speak('un')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
                     </button>
                 </div>
 
                 <div class="article-card">
                     <div class="article-type">uno</div>
-                    <div class="article-example">Masculino singular (s+consonante, z)</div>
-                    <button class="play-button" onclick="speak('uno')">
-                        <i class="fas fa-play"></i> Escuchar
+                    <div class="article-example">Maschile singolare (s+consonante, z)</div>
+                    <button class="audio-button" onclick="speak('uno')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
                     </button>
                 </div>
 
                 <div class="article-card">
                     <div class="article-type">una</div>
-                    <div class="article-example">Femenino singular</div>
-                    <button class="play-button" onclick="speak('una')">
-                        <i class="fas fa-play"></i> Escuchar
+                    <div class="article-example">Femminile singolare</div>
+                    <button class="audio-button" onclick="speak('una')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
                     </button>
                 </div>
             </div>
         </div>
 
         <div class="article-section">
-            <h2 class="section-title">Ejemplos</h2>
+            <h2 class="section-title">Esempi</h2>
             <div class="article-grid">
                 <div class="article-card">
                     <div class="article-type">il libro</div>
                     <div class="article-example">El libro</div>
-                    <button class="play-button" onclick="speak('il libro')">
-                        <i class="fas fa-play"></i> Escuchar
+                    <button class="audio-button" onclick="speak('il libro')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
                     </button>
                 </div>
 
                 <div class="article-card">
                     <div class="article-type">lo zaino</div>
                     <div class="article-example">La mochila</div>
-                    <button class="play-button" onclick="speak('lo zaino')">
-                        <i class="fas fa-play"></i> Escuchar
+                    <button class="audio-button" onclick="speak('lo zaino')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
                     </button>
                 </div>
 
                 <div class="article-card">
                     <div class="article-type">la casa</div>
                     <div class="article-example">La casa</div>
-                    <button class="play-button" onclick="speak('la casa')">
-                        <i class="fas fa-play"></i> Escuchar
+                    <button class="audio-button" onclick="speak('la casa')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
                     </button>
                 </div>
 
                 <div class="article-card">
-                    <div class="article-type">i libri</div>
-                    <div class="article-example">Los libros</div>
-                    <button class="play-button" onclick="speak('i libri')">
-                        <i class="fas fa-play"></i> Escuchar
+                    <div class="article-type">un cane</div>
+                    <div class="article-example">Un perro</div>
+                    <button class="audio-button" onclick="speak('un cane')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
                     </button>
                 </div>
 
                 <div class="article-card">
-                    <div class="article-type">gli zaini</div>
-                    <div class="article-example">Las mochilas</div>
-                    <button class="play-button" onclick="speak('gli zaini')">
-                        <i class="fas fa-play"></i> Escuchar
+                    <div class="article-type">uno studente</div>
+                    <div class="article-example">Un estudiante</div>
+                    <button class="audio-button" onclick="speak('uno studente')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
                     </button>
                 </div>
 
                 <div class="article-card">
-                    <div class="article-type">le case</div>
-                    <div class="article-example">Las casas</div>
-                    <button class="play-button" onclick="speak('le case')">
-                        <i class="fas fa-play"></i> Escuchar
+                    <div class="article-type">una ragazza</div>
+                    <div class="article-example">Una chica</div>
+                    <button class="audio-button" onclick="speak('una ragazza')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
                     </button>
                 </div>
             </div>
         </div>
-
-        <div class="navigation-buttons">
-            <a href="index.html" class="button">Volver al Inicio</a>
-        </div>
     </div>
 
-    <script src="gemini-tts.js"></script>
+    <script>
+        const synth = window.speechSynthesis;
+        let voices = [];
+
+        function loadVoices() {
+            voices = synth.getVoices();
+        }
+
+        loadVoices();
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = loadVoices;
+        }
+
+        function speak(text) {
+            if (synth.speaking) {
+                console.error('speechSynthesis.speaking');
+                return;
+            }
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'it-IT';
+            utterance.pitch = 1;
+            utterance.rate = 0.9;
+            utterance.volume = 1;
+
+            synth.speak(utterance);
+        }
+    </script>
 </body>
 </html>

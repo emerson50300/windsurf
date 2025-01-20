@@ -1,371 +1,416 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fechas en Italiano</title>
+    <title>Date in Italiano</title>
     <link rel="stylesheet" href="colors.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         :root {
-            --background-white: #f9f9f9;
-            --background-main: #ffffff;
-            --text-main: #333333;
-            --text-secondary: #666666;
-            --accent-color: #4CAF50;
+            --background-white: #ffffff;
+            --primary-color: #4CAF50;
+            --secondary-color: #81C784;
+            --background-color: #F7F9FC;
+            --text-main: #1a1a1a;
+            --text-secondary: #404040;
+            --button-color: #4CAF50;
             --hover-color: #388E3C;
-            --card-background: #ffffff;
-            --border-color: #e0e0e0;
             --shadow-color: rgba(0, 0, 0, 0.1);
+            --border-radius: 15px;
+            --border-light: #e0e0e0;
         }
 
         body {
-            background-color: var(--background-white);
+            background-color: var(--background-color);
             color: var(--text-main);
-            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-            line-height: 1.6;
-            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.7;
             padding-bottom: 70px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             margin: 0;
+            padding: 20px;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--background-white);
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 4px var(--shadow-color);
+            margin-bottom: 2rem;
         }
 
         h1 {
             color: var(--text-main);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section-description {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
             text-align: center;
             margin-bottom: 2rem;
-            font-size: 2rem;
         }
 
         .date-section {
-            margin-bottom: 3rem;
-            background-color: var(--card-background);
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px var(--shadow-color);
-        }
-
-        .date-item {
-            margin-bottom: 2rem;
-            padding: 1rem;
-            border-bottom: 1px solid var(--border-color);
             background-color: var(--background-white);
-            border-radius: 8px;
-            transition: transform 0.3s ease;
-        }
-
-        .date-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px var(--shadow-color);
-        }
-
-        .date-item:last-child {
-            border-bottom: none;
-        }
-
-        .italian {
-            color: var(--accent-color);
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .spanish {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-        }
-
-        button {
-            background-color: var(--accent-color);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-            font-weight: 500;
-            margin: 5px;
-            min-width: 120px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        button:hover {
-            background-color: var(--hover-color);
-            transform: translateY(-2px);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
             box-shadow: 0 2px 4px var(--shadow-color);
         }
 
         .section-title {
             color: var(--text-main);
-            font-size: 1.8rem;
-            margin: 2rem 0 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 3px solid var(--accent-color);
-        }
-
-        /* Menú inferior */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 60px;
-            background-color: var(--background-main);
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--primary-color);
             display: flex;
-            justify-content: space-around;
             align-items: center;
-            box-shadow: 0 -2px 10px var(--shadow-color);
-            z-index: 1000;
+            gap: 1rem;
         }
 
-        .nav-item {
-            color: var(--text-secondary);
-            text-decoration: none;
+        .section-title i {
+            color: var(--primary-color);
+        }
+
+        .date-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .date-item {
+            background-color: var(--background-white);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: 0 2px 4px var(--shadow-color);
+            transition: transform 0.3s ease;
             display: flex;
             flex-direction: column;
+            gap: 1rem;
+        }
+
+        .date-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px var(--shadow-color);
+        }
+
+        .italian {
+            color: var(--text-main);
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .spanish {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .audio-button {
+            background-color: var(--button-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: flex;
             align-items: center;
-            padding: 5px 15px;
-            transition: color 0.3s;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+            width: 100%;
+            justify-content: center;
         }
 
-        .nav-item:hover,
-        .nav-item.active {
-            color: var(--accent-color);
+        .audio-button:hover {
+            background-color: var(--hover-color);
+            transform: scale(1.05);
         }
 
-        .nav-item i {
-            font-size: 1.5rem;
-            margin-bottom: 4px;
-        }
-
-        .nav-item span {
-            font-size: 0.8rem;
+        .audio-button i {
+            font-size: 1.2rem;
         }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-
-            .date-section {
+            body {
                 padding: 1rem;
             }
 
+            .container {
+                padding: 1rem;
+            }
+
+            .date-section {
+                padding: 1.5rem;
+            }
+
+            .date-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .date-item {
+                padding: 1.5rem;
+            }
+
             .italian {
-                font-size: 1.2rem;
+                font-size: 1.5rem;
             }
 
             .spanish {
-                font-size: 1rem;
+                font-size: 1.1rem;
             }
 
-            button {
-                min-width: 100px;
-                padding: 8px 16px;
+            .audio-button {
+                padding: 0.8rem 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Fechas en Italiano</h1>
+        <header>
+            <h1>Date in Italiano</h1>
+            <p class="section-description">Impara i giorni della settimana e i mesi dell'anno in italiano</p>
+        </header>
 
         <section class="date-section">
-            <h2 class="section-title">Días de la Semana</h2>
+            <h2 class="section-title">
+                <i class="fas fa-calendar-day"></i>
+                Giorni della Settimana
+            </h2>
             
-            <div class="date-item">
-                <div class="italian">Lunedì</div>
-                <div class="spanish">Lunes</div>
-                <button onclick="speak('Lunedì')">
-                    <i class="fas fa-volume-up"></i> Escuchar
-                </button>
-            </div>
+            <div class="date-grid">
+                <div class="date-item">
+                    <div class="italian">Lunedì</div>
+                    <div class="spanish">Lunes</div>
+                    <button class="audio-button" onclick="speak('Lunedì')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                </div>
 
-            <div class="date-item">
-                <div class="italian">Martedì</div>
-                <div class="spanish">Martes</div>
-                <button onclick="speak('Martedì')">
-                    <i class="fas fa-volume-up"></i> Escuchar
-                </button>
-            </div>
+                <div class="date-item">
+                    <div class="italian">Martedì</div>
+                    <div class="spanish">Martes</div>
+                    <button class="audio-button" onclick="speak('Martedì')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                </div>
 
-            <div class="date-item">
-                <div class="italian">Mercoledì</div>
-                <div class="spanish">Miércoles</div>
-                <button onclick="speak('Mercoledì')">
-                    <i class="fas fa-volume-up"></i> Escuchar
-                </button>
-            </div>
+                <div class="date-item">
+                    <div class="italian">Mercoledì</div>
+                    <div class="spanish">Miércoles</div>
+                    <button class="audio-button" onclick="speak('Mercoledì')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                </div>
 
-            <div class="date-item">
-                <div class="italian">Giovedì</div>
-                <div class="spanish">Jueves</div>
-                <button onclick="speak('Giovedì')">
-                    <i class="fas fa-volume-up"></i> Escuchar
-                </button>
-            </div>
+                <div class="date-item">
+                    <div class="italian">Giovedì</div>
+                    <div class="spanish">Jueves</div>
+                    <button class="audio-button" onclick="speak('Giovedì')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                </div>
 
-            <div class="date-item">
-                <div class="italian">Venerdì</div>
-                <div class="spanish">Viernes</div>
-                <button onclick="speak('Venerdì')">
-                    <i class="fas fa-volume-up"></i> Escuchar
-                </button>
-            </div>
+                <div class="date-item">
+                    <div class="italian">Venerdì</div>
+                    <div class="spanish">Viernes</div>
+                    <button class="audio-button" onclick="speak('Venerdì')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                </div>
 
-            <div class="date-item">
-                <div class="italian">Sabato</div>
-                <div class="spanish">Sábado</div>
-                <button onclick="speak('Sabato')">
-                    <i class="fas fa-volume-up"></i> Escuchar
-                </button>
-            </div>
+                <div class="date-item">
+                    <div class="italian">Sabato</div>
+                    <div class="spanish">Sábado</div>
+                    <button class="audio-button" onclick="speak('Sabato')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                </div>
 
-            <div class="date-item">
-                <div class="italian">Domenica</div>
-                <div class="spanish">Domingo</div>
-                <button onclick="speak('Domenica')">
-                    <i class="fas fa-volume-up"></i> Escuchar
-                </button>
+                <div class="date-item">
+                    <div class="italian">Domenica</div>
+                    <div class="spanish">Domingo</div>
+                    <button class="audio-button" onclick="speak('Domenica')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                </div>
             </div>
         </section>
 
         <section class="date-section">
-            <h2 class="section-title">Meses del Año</h2>
+            <h2 class="section-title">
+                <i class="fas fa-calendar-alt"></i>
+                Mesi dell'Anno
+            </h2>
             
-            <div class="date-item">
-                <div class="italian">Gennaio</div>
-                <div class="spanish">Enero</div>
-                <button onclick="speak('Gennaio')">
-                    <i class="fas fa-volume-up"></i> Escuchar
-                </button>
-            </div>
+            <div class="date-grid">
+                <div class="date-item">
+                    <div class="italian">Gennaio</div>
+                    <div class="spanish">Enero</div>
+                    <button class="audio-button" onclick="speak('Gennaio')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                </div>
 
-            <div class="date-item">
-                <div class="italian">Febbraio</div>
-                <div class="spanish">Febrero</div>
-                <button onclick="speak('Febbraio')">
-                    <i class="fas fa-volume-up"></i> Escuchar
-                </button>
-            </div>
+                <div class="date-item">
+                    <div class="italian">Febbraio</div>
+                    <div class="spanish">Febrero</div>
+                    <button class="audio-button" onclick="speak('Febbraio')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                </div>
 
-            <div class="date-item">
-                <div class="italian">Marzo</div>
-                <div class="spanish">Marzo</div>
-                <button onclick="speak('Marzo')">
-                    <i class="fas fa-volume-up"></i> Escuchar
-                </button>
-            </div>
+                <div class="date-item">
+                    <div class="italian">Marzo</div>
+                    <div class="spanish">Marzo</div>
+                    <button class="audio-button" onclick="speak('Marzo')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                </div>
 
-            <div class="date-item">
-                <div class="italian">Aprile</div>
-                <div class="spanish">Abril</div>
-                <button onclick="speak('Aprile')">
-                    <i class="fas fa-volume-up"></i> Escuchar
-                </button>
-            </div>
+                <div class="date-item">
+                    <div class="italian">Aprile</div>
+                    <div class="spanish">Abril</div>
+                    <button class="audio-button" onclick="speak('Aprile')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                </div>
 
-            <div class="date-item">
-                <div class="italian">Maggio</div>
-                <div class="spanish">Mayo</div>
-                <button onclick="speak('Maggio')">
-                    <i class="fas fa-volume-up"></i> Escuchar
-                </button>
-            </div>
+                <div class="date-item">
+                    <div class="italian">Maggio</div>
+                    <div class="spanish">Mayo</div>
+                    <button class="audio-button" onclick="speak('Maggio')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                </div>
 
-            <div class="date-item">
-                <div class="italian">Giugno</div>
-                <div class="spanish">Junio</div>
-                <button onclick="speak('Giugno')">
-                    <i class="fas fa-volume-up"></i> Escuchar
-                </button>
-            </div>
+                <div class="date-item">
+                    <div class="italian">Giugno</div>
+                    <div class="spanish">Junio</div>
+                    <button class="audio-button" onclick="speak('Giugno')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                </div>
 
-            <div class="date-item">
-                <div class="italian">Luglio</div>
-                <div class="spanish">Julio</div>
-                <button onclick="speak('Luglio')">
-                    <i class="fas fa-volume-up"></i> Escuchar
-                </button>
-            </div>
+                <div class="date-item">
+                    <div class="italian">Luglio</div>
+                    <div class="spanish">Julio</div>
+                    <button class="audio-button" onclick="speak('Luglio')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                </div>
 
-            <div class="date-item">
-                <div class="italian">Agosto</div>
-                <div class="spanish">Agosto</div>
-                <button onclick="speak('Agosto')">
-                    <i class="fas fa-volume-up"></i> Escuchar
-                </button>
-            </div>
+                <div class="date-item">
+                    <div class="italian">Agosto</div>
+                    <div class="spanish">Agosto</div>
+                    <button class="audio-button" onclick="speak('Agosto')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                </div>
 
-            <div class="date-item">
-                <div class="italian">Settembre</div>
-                <div class="spanish">Septiembre</div>
-                <button onclick="speak('Settembre')">
-                    <i class="fas fa-volume-up"></i> Escuchar
-                </button>
-            </div>
+                <div class="date-item">
+                    <div class="italian">Settembre</div>
+                    <div class="spanish">Septiembre</div>
+                    <button class="audio-button" onclick="speak('Settembre')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                </div>
 
-            <div class="date-item">
-                <div class="italian">Ottobre</div>
-                <div class="spanish">Octubre</div>
-                <button onclick="speak('Ottobre')">
-                    <i class="fas fa-volume-up"></i> Escuchar
-                </button>
-            </div>
+                <div class="date-item">
+                    <div class="italian">Ottobre</div>
+                    <div class="spanish">Octubre</div>
+                    <button class="audio-button" onclick="speak('Ottobre')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                </div>
 
-            <div class="date-item">
-                <div class="italian">Novembre</div>
-                <div class="spanish">Noviembre</div>
-                <button onclick="speak('Novembre')">
-                    <i class="fas fa-volume-up"></i> Escuchar
-                </button>
-            </div>
+                <div class="date-item">
+                    <div class="italian">Novembre</div>
+                    <div class="spanish">Noviembre</div>
+                    <button class="audio-button" onclick="speak('Novembre')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                </div>
 
-            <div class="date-item">
-                <div class="italian">Dicembre</div>
-                <div class="spanish">Diciembre</div>
-                <button onclick="speak('Dicembre')">
-                    <i class="fas fa-volume-up"></i> Escuchar
-                </button>
+                <div class="date-item">
+                    <div class="italian">Dicembre</div>
+                    <div class="spanish">Diciembre</div>
+                    <button class="audio-button" onclick="speak('Dicembre')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                </div>
             </div>
         </section>
     </div>
 
-    <!-- Menú inferior -->
-    <div class="bottom-nav">
-        <a href="index.html" class="nav-item">
-            <i class="fas fa-home"></i>
-            <span>Inicio</span>
-        </a>
-        <a href="alfabeto.html" class="nav-item">
-            <i class="fas fa-font"></i>
-            <span>Alfabeto</span>
-        </a>
-        <a href="numeros.html" class="nav-item">
-            <i class="fas fa-sort-numeric-down"></i>
-            <span>Números</span>
-        </a>
-        <a href="colores.html" class="nav-item">
-            <i class="fas fa-palette"></i>
-            <span>Colores</span>
-        </a>
-    </div>
+    <script>
+        const synth = window.speechSynthesis;
+        let voices = [];
 
-    <script type="module">
-        import config from './config.js';
-        window.GOOGLE_CLOUD_API_KEY = config.GOOGLE_CLOUD_API_KEY;
+        function loadVoices() {
+            voices = synth.getVoices();
+        }
+
+        loadVoices();
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = loadVoices;
+        }
+
+        function speak(text) {
+            if (synth.speaking) {
+                console.error('speechSynthesis.speaking');
+                return;
+            }
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'it-IT';
+            utterance.pitch = 1;
+            utterance.rate = 0.9;
+            utterance.volume = 1;
+
+            synth.speak(utterance);
+        }
     </script>
-    <script src="gemini-tts.js"></script>
 </body>
 </html>

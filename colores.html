@@ -1,35 +1,76 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Colores en Italiano</title>
+    <title>Colori in Italiano</title>
     <link rel="stylesheet" href="colors.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         :root {
             --background-white: #ffffff;
-            --shadow-color: rgba(0, 0, 0, 0.1);
-            --accent-color: #4CAF50;
-            --text-secondary: #666;
+            --primary-color: #4CAF50;
+            --secondary-color: #81C784;
+            --background-color: #F7F9FC;
+            --text-main: #1a1a1a;
+            --text-secondary: #404040;
             --button-color: #4CAF50;
             --hover-color: #388E3C;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --border-radius: 15px;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.7;
+            padding-bottom: 70px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--background-white);
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 4px var(--shadow-color);
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            color: var(--text-main);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section-description {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            text-align: center;
+            margin-bottom: 2rem;
         }
 
         .color-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1rem;
+            gap: 2rem;
             padding: 1rem;
-            max-width: 1200px;
-            margin: 0 auto;
         }
 
         .color-card {
-            background: var(--background-white);
-            border-radius: 8px;
-            padding: 1.5rem;
+            background-color: var(--background-white);
+            border-radius: var(--border-radius);
+            padding: 2rem;
             box-shadow: 0 2px 4px var(--shadow-color);
             transition: transform 0.3s ease;
             text-align: center;
@@ -37,20 +78,20 @@
 
         .color-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 4px 8px var(--shadow-color);
+            box-shadow: 0 8px 16px var(--shadow-color);
         }
 
         .color-sample {
-            width: 100px;
-            height: 100px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            margin: 0 auto 1rem;
+            margin: 0 auto 1.5rem;
             border: 3px solid var(--background-white);
-            box-shadow: 0 2px 4px var(--shadow-color);
+            box-shadow: 0 4px 8px var(--shadow-color);
         }
 
         .color-name {
-            color: var(--accent-color);
+            color: var(--text-main);
             font-size: 1.8rem;
             font-weight: bold;
             margin-bottom: 0.5rem;
@@ -58,67 +99,68 @@
 
         .color-translation {
             color: var(--text-secondary);
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
         }
 
-        .play-button {
+        .audio-button {
             background-color: var(--button-color);
-            color: rgb(12, 247, 90);
+            color: white;
             border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius);
             cursor: pointer;
+            font-size: 1.1rem;
             display: flex;
             align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+            width: 80%;
+            margin: 0 auto;
             justify-content: center;
-            gap: 0.5rem;
-            width: 100%;
-            transition: background-color 0.3s ease;
         }
 
-        .play-button:hover {
+        .audio-button:hover {
             background-color: var(--hover-color);
+            transform: scale(1.05);
         }
 
-        .section-title {
-            color: var(--accent-color);
-            text-align: center;
-            margin: 2rem 0;
-            font-size: 2rem;
-        }
-
-        .section-description {
-            color: var(--text-secondary);
-            text-align: center;
-            margin-bottom: 2rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            padding: 0 1rem;
+        .audio-button i {
+            font-size: 1.2rem;
         }
 
         .color-section {
-            background: var(--background-white);
-            border-radius: 8px;
+            background-color: var(--background-white);
+            border-radius: var(--border-radius);
             padding: 2rem;
-            margin: 1rem;
+            margin-bottom: 2rem;
             box-shadow: 0 2px 4px var(--shadow-color);
         }
 
-        @media (max-width: 768px) {
-            .color-grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                gap: 0.8rem;
-            }
+        .section-title {
+            color: var(--text-main);
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
 
-            .color-card {
+        @media (max-width: 768px) {
+            .container {
                 padding: 1rem;
             }
 
+            .color-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 1rem;
+            }
+
+            .color-card {
+                padding: 1.5rem;
+            }
+
             .color-sample {
-                width: 80px;
-                height: 80px;
+                width: 100px;
+                height: 100px;
             }
 
             .color-name {
@@ -126,57 +168,33 @@
             }
 
             .color-translation {
-                font-size: 1rem;
+                font-size: 1.1rem;
             }
 
-            .section-title {
-                font-size: 1.5rem;
-                margin: 1.5rem 0;
+            .audio-button {
+                width: 100%;
+                padding: 0.8rem 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <nav class="bottom-nav">
-        <a href="index.html" class="nav-item">
-            <i class="fas fa-home"></i>
-            <span>Inicio</span>
-        </a>
-        <a href="chat.html" class="nav-item">
-            <i class="fas fa-comments"></i>
-            <span>Chat</span>
-        </a>
-        <a href="verbos.html" class="nav-item">
-            <i class="fas fa-book"></i>
-            <span>Verbos</span>
-        </a>
-    </nav>
     <div class="container">
-        <!-- Anuncio Superior -->
-        <div class="ad-container ad-top">
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-1951834226818406"
-                 data-ad-slot="TUSLOT1"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
-
-        <h1 class="section-title">Colores en Italiano</h1>
-        <p class="section-description">Aprende los colores en italiano de una manera divertida</p>
+        <header>
+            <h1>Colori in Italiano</h1>
+            <p class="section-description">Impara i colori in italiano in modo divertente!</p>
+        </header>
 
         <div class="color-section">
-            <h2 class="section-title">Colores Básicos</h2>
+            <h2 class="section-title">Colori Base</h2>
             <div class="color-grid">
                 <div class="color-card">
                     <div class="color-sample" style="background-color: #FF0000;"></div>
                     <div class="color-name">Rosso</div>
                     <div class="color-translation">Rojo</div>
-                    <button class="play-button" onclick="speak('rosso')">
-                        <i class="fas fa-play"></i> Escuchar
+                    <button class="audio-button" onclick="speak('rosso')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
                     </button>
                 </div>
 
@@ -184,8 +202,9 @@
                     <div class="color-sample" style="background-color: #0000FF;"></div>
                     <div class="color-name">Blu</div>
                     <div class="color-translation">Azul</div>
-                    <button class="play-button" onclick="speak('blu')">
-                        <i class="fas fa-play"></i> Escuchar
+                    <button class="audio-button" onclick="speak('blu')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
                     </button>
                 </div>
 
@@ -193,8 +212,9 @@
                     <div class="color-sample" style="background-color: #FFFF00;"></div>
                     <div class="color-name">Giallo</div>
                     <div class="color-translation">Amarillo</div>
-                    <button class="play-button" onclick="speak('giallo')">
-                        <i class="fas fa-play"></i> Escuchar
+                    <button class="audio-button" onclick="speak('giallo')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
                     </button>
                 </div>
 
@@ -202,8 +222,9 @@
                     <div class="color-sample" style="background-color: #008000;"></div>
                     <div class="color-name">Verde</div>
                     <div class="color-translation">Verde</div>
-                    <button class="play-button" onclick="speak('verde')">
-                        <i class="fas fa-play"></i> Escuchar
+                    <button class="audio-button" onclick="speak('verde')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
                     </button>
                 </div>
 
@@ -211,8 +232,9 @@
                     <div class="color-sample" style="background-color: #FFA500;"></div>
                     <div class="color-name">Arancione</div>
                     <div class="color-translation">Naranja</div>
-                    <button class="play-button" onclick="speak('arancione')">
-                        <i class="fas fa-play"></i> Escuchar
+                    <button class="audio-button" onclick="speak('arancione')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
                     </button>
                 </div>
 
@@ -220,22 +242,24 @@
                     <div class="color-sample" style="background-color: #800080;"></div>
                     <div class="color-name">Viola</div>
                     <div class="color-translation">Morado</div>
-                    <button class="play-button" onclick="speak('viola')">
-                        <i class="fas fa-play"></i> Escuchar
+                    <button class="audio-button" onclick="speak('viola')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
                     </button>
                 </div>
             </div>
         </div>
 
         <div class="color-section">
-            <h2 class="section-title">Otros Colores</h2>
+            <h2 class="section-title">Altri Colori</h2>
             <div class="color-grid">
                 <div class="color-card">
                     <div class="color-sample" style="background-color: #000000;"></div>
                     <div class="color-name">Nero</div>
                     <div class="color-translation">Negro</div>
-                    <button class="play-button" onclick="speak('nero')">
-                        <i class="fas fa-play"></i> Escuchar
+                    <button class="audio-button" onclick="speak('nero')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
                     </button>
                 </div>
 
@@ -243,8 +267,9 @@
                     <div class="color-sample" style="background-color: #FFFFFF; border: 1px solid #ddd;"></div>
                     <div class="color-name">Bianco</div>
                     <div class="color-translation">Blanco</div>
-                    <button class="play-button" onclick="speak('bianco')">
-                        <i class="fas fa-play"></i> Escuchar
+                    <button class="audio-button" onclick="speak('bianco')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
                     </button>
                 </div>
 
@@ -252,8 +277,9 @@
                     <div class="color-sample" style="background-color: #808080;"></div>
                     <div class="color-name">Grigio</div>
                     <div class="color-translation">Gris</div>
-                    <button class="play-button" onclick="speak('grigio')">
-                        <i class="fas fa-play"></i> Escuchar
+                    <button class="audio-button" onclick="speak('grigio')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
                     </button>
                 </div>
 
@@ -261,8 +287,9 @@
                     <div class="color-sample" style="background-color: #964B00;"></div>
                     <div class="color-name">Marrone</div>
                     <div class="color-translation">Marrón</div>
-                    <button class="play-button" onclick="speak('marrone')">
-                        <i class="fas fa-play"></i> Escuchar
+                    <button class="audio-button" onclick="speak('marrone')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
                     </button>
                 </div>
 
@@ -270,40 +297,42 @@
                     <div class="color-sample" style="background-color: #FFC0CB;"></div>
                     <div class="color-name">Rosa</div>
                     <div class="color-translation">Rosa</div>
-                    <button class="play-button" onclick="speak('rosa')">
-                        <i class="fas fa-play"></i> Escuchar
-                    </button>
-                </div>
-
-                <div class="color-card">
-                    <div class="color-sample" style="background: linear-gradient(45deg, #FF0000, #FF7F00, #FFFF00, #00FF00, #0000FF, #4B0082, #8F00FF);"></div>
-                    <div class="color-name">Arcobaleno</div>
-                    <div class="color-translation">Arcoíris</div>
-                    <button class="play-button" onclick="speak('arcobaleno')">
-                        <i class="fas fa-play"></i> Escuchar
+                    <button class="audio-button" onclick="speak('rosa')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
                     </button>
                 </div>
             </div>
         </div>
-
-        <!-- Anuncio Inferior -->
-        <div class="ad-container ad-bottom">
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-1951834226818406"
-                 data-ad-slot="TUSLOT3"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
     </div>
 
-    <script type="module">
-        import config from './config.js';
-        window.GOOGLE_CLOUD_API_KEY = config.GOOGLE_CLOUD_API_KEY;
+    <script>
+        const synth = window.speechSynthesis;
+        let voices = [];
+
+        function loadVoices() {
+            voices = synth.getVoices();
+        }
+
+        loadVoices();
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = loadVoices;
+        }
+
+        function speak(text) {
+            if (synth.speaking) {
+                console.error('speechSynthesis.speaking');
+                return;
+            }
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'it-IT';
+            utterance.pitch = 1;
+            utterance.rate = 0.9;
+            utterance.volume = 1;
+
+            synth.speak(utterance);
+        }
     </script>
-    <script src="gemini-tts.js"></script>
 </body>
 </html>
