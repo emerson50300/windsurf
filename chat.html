@@ -3,286 +3,288 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Italiano</title>
-    <link rel="stylesheet" href="colors.css">
-    <link rel="stylesheet" href="styles.css">
+    <title>Dialoghi in Italiano</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         :root {
-            --background-white: #ffffff;
-            --primary-color: #4CAF50;
-            --primary-dark: #388E3C;
-            --primary-light: #81C784;
-            --text-main: #1a1a1a;
-            --text-secondary: #404040;
-            --chat-bg: #F7F9FC;
-            --message-out: #E8F5E9;
-            --message-in: #ffffff;
-            --button-color: #4CAF50;
-            --hover-color: #388E3C;
-            --shadow-soft: 0 2px 4px rgba(0,0,0,0.1);
-            --border-radius: 15px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, sans-serif;
+            --primary-color: #5C6BC0;
+            --secondary-color: #7986CB;
+            --accent-color: #3F51B5;
+            --background-color: #F5F7FF;
+            --surface-color: #FFFFFF;
+            --text-primary: #1A237E;
+            --text-secondary: #283593;
+            --success-color: #4CAF50;
+            --error-color: #F44336;
+            --border-radius: 12px;
+            --shadow-elevation-1: 0 2px 4px rgba(0,0,0,0.1);
+            --shadow-elevation-2: 0 4px 8px rgba(0,0,0,0.15);
         }
 
         body {
-            background: var(--chat-bg);
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            color: var(--text-main);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
         }
 
-        .chat-header {
-            background: var(--primary-color);
-            color: white;
-            padding: 1rem 1.5rem;
-            display: flex;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
         }
 
-        .chat-header img {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            margin-right: 1rem;
+        h1 {
+            color: var(--accent-color);
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
-        .chat-header-info {
-            flex: 1;
-        }
-
-        .chat-header-info h2 {
-            font-size: 1.2rem;
-            margin-bottom: 0.3rem;
-            color: white;
-        }
-
-        .chat-header-info p {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-
-        .suggestions-container {
-            background: var(--background-white);
-            padding: 1rem;
-            border-bottom: 1px solid var(--primary-light);
-        }
-
-        .suggestions {
-            display: flex;
-            gap: 0.8rem;
-            overflow-x: auto;
-            padding: 0.5rem;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-
-        .suggestion {
-            background: var(--primary-color);
-            color: white;
-            padding: 0.8rem 1.2rem;
-            border-radius: 20px;
-            white-space: nowrap;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s ease;
-        }
-
-        .suggestion:hover {
-            background: var(--primary-dark);
-        }
-
-        .chat-messages {
-            flex: 1;
-            padding: 1.5rem;
-            overflow-y: auto;
-        }
-
-        .message {
-            max-width: 80%;
-            margin-bottom: 1rem;
-            padding: 1rem;
+        .dialog-section {
+            background: var(--surface-color);
             border-radius: var(--border-radius);
-            line-height: 1.7;
-            font-size: 1.05rem;
-            box-shadow: var(--shadow-soft);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-elevation-2);
+            transition: transform 0.3s ease;
         }
 
-        .message.user {
-            background: var(--message-out);
-            margin-left: auto;
-            color: var(--text-main);
+        .dialog-section:hover {
+            transform: translateY(-4px);
         }
 
-        .message.bot {
-            background: var(--message-in);
-            margin-right: auto;
-            color: var(--text-main);
-        }
-
-        .translation {
-            margin-top: 0.5rem;
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            font-style: italic;
-        }
-
-        .chat-footer {
-            background: var(--background-white);
-            padding: 1rem;
+        .dialog-title {
+            color: var(--accent-color);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-color);
             display: flex;
             align-items: center;
             gap: 1rem;
-            border-top: 1px solid var(--primary-light);
         }
 
-        .chat-footer input {
-            flex: 1;
-            padding: 0.8rem;
-            border: 1px solid var(--primary-light);
+        .dialog-title i {
+            color: var(--accent-color);
+        }
+
+        .dialog-card {
+            background: var(--surface-color);
             border-radius: var(--border-radius);
-            font-size: 1rem;
-            color: var(--text-main);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-elevation-1);
+            border-left: 4px solid var(--accent-color);
+            transition: all 0.3s ease;
         }
 
-        .chat-footer button {
-            background: var(--button-color);
-            color: white;
+        .dialog-card:hover {
+            transform: translateX(8px);
+            box-shadow: var(--shadow-elevation-2);
+        }
+
+        .dialog-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--secondary-color);
+        }
+
+        .dialog-type {
+            color: var(--accent-color);
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .audio-icon {
+            background: none;
             border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: var(--border-radius);
+            color: var(--accent-color);
             cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s ease;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .chat-footer button:hover {
-            background: var(--hover-color);
+        .audio-icon:hover {
+            background: rgba(63, 81, 181, 0.1);
+            transform: scale(1.1);
+        }
+
+        .audio-icon i {
+            font-size: 1.2rem;
+        }
+
+        .italian {
+            color: var(--text-primary);
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .spanish {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            font-style: italic;
+        }
+
+        .context {
+            margin-top: 1rem;
+            padding-top: 0.5rem;
+            border-top: 1px dashed var(--secondary-color);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .dialog-section {
+                padding: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="chat-header">
-        <img src="https://via.placeholder.com/40" alt="Chat Bot">
-        <div class="chat-header-info">
-            <h2>Asistente de Italiano</h2>
-            <p>En línea</p>
-        </div>
-    </div>
+    <div class="container">
+        <h1>Dialoghi in Italiano</h1>
 
-    <div class="suggestions-container">
-        <div class="suggestions">
-            <div class="suggestion">¿Cómo se dice "hola"?</div>
-            <div class="suggestion">¿Cómo se dice "gracias"?</div>
-            <div class="suggestion">¿Cómo se dice "por favor"?</div>
-            <div class="suggestion">¿Cómo se dice "buenos días"?</div>
-            <div class="suggestion">¿Cómo se dice "buenas noches"?</div>
-            <div class="suggestion">¿Cómo se dice "adiós"?</div>
-            <div class="suggestion">Vocabulario básico</div>
-            <div class="suggestion">Frases comunes</div>
-        </div>
-    </div>
-
-    <div class="chat-messages" id="chatMessages">
-        <!-- Los mensajes se agregarán aquí dinámicamente -->
-    </div>
-
-    <div class="chat-footer">
-        <div class="chat-input-container">
-            <input type="text" id="userInput" placeholder="Escribe un mensaje...">
-        </div>
-        <button class="send-button" id="sendButton" title="Enviar">
-            <i class="fas fa-paper-plane"></i>
-        </button>
-    </div>
-
-    <nav class="bottom-nav">
-        <a href="index.html" class="nav-item">
-            <i class="fas fa-home"></i>
-            <span>Inicio</span>
-        </a>
-        <a href="chat.html" class="nav-item active">
-            <i class="fas fa-comments"></i>
-            <span>Chat</span>
-        </a>
-        <a href="verbos.html" class="nav-item">
-            <i class="fas fa-book"></i>
-            <span>Verbos</span>
-        </a>
-    </nav>
-
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
-    <script>
-        // Función para agregar mensajes
-        function addMessage(text, isUser = false, translation = '') {
-            const messagesDiv = document.getElementById('chatMessages');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+        <div class="dialog-section">
+            <div class="dialog-title">
+                <i class="fas fa-coffee"></i>
+                Al Bar
+            </div>
             
-            const time = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
-            
-            messageDiv.innerHTML = `
-                <div class="message-content">
-                    <div class="message-italian">${text}</div>
-                    ${translation ? `<div class="translation">${translation}</div>` : ''}
+            <div class="dialog-card">
+                <div class="dialog-header">
+                    <div class="dialog-type">Ordinare</div>
+                    <button class="audio-icon" onclick="speak('Buongiorno, vorrei un caffè, per favore')">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
                 </div>
-                <div class="message-time">${time}</div>
-            `;
+                <div class="italian">- Buongiorno, vorrei un caffè, per favore.</div>
+                <div class="spanish">- Buenos días, quisiera un café, por favor.</div>
+                <div class="context">Situación: Pidiendo un café en un bar italiano</div>
+            </div>
 
-            messagesDiv.appendChild(messageDiv);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        }
+            <div class="dialog-card">
+                <div class="dialog-header">
+                    <div class="dialog-type">Pagare</div>
+                    <button class="audio-icon" onclick="speak('Quanto costa il caffè?')">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </div>
+                <div class="italian">- Quanto costa il caffè?</div>
+                <div class="spanish">- ¿Cuánto cuesta el café?</div>
+                <div class="context">Situación: Preguntando el precio del café</div>
+            </div>
+        </div>
 
-        // Event listeners para enviar mensaje
-        document.getElementById('sendButton').addEventListener('click', sendMessage);
-        document.getElementById('userInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
-        });
-
-        // Event listener para sugerencias
-        document.querySelectorAll('.suggestion').forEach(suggestion => {
-            suggestion.addEventListener('click', function() {
-                document.getElementById('userInput').value = this.textContent;
-                sendMessage();
-            });
-        });
-
-        // Función para enviar mensaje
-        async function sendMessage() {
-            const input = document.getElementById('userInput');
-            const message = input.value.trim();
+        <div class="dialog-section">
+            <div class="dialog-title">
+                <i class="fas fa-store"></i>
+                Al Negozio
+            </div>
             
-            if (message) {
-                addMessage(message, true);
-                input.value = '';
+            <div class="dialog-card">
+                <div class="dialog-header">
+                    <div class="dialog-type">Chiedere Informazioni</div>
+                    <button class="audio-icon" onclick="speak('Scusi, dove posso trovare il pane?')">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </div>
+                <div class="italian">- Scusi, dove posso trovare il pane?</div>
+                <div class="spanish">- Disculpe, ¿dónde puedo encontrar el pan?</div>
+                <div class="context">Situación: Preguntando por un producto en la tienda</div>
+            </div>
 
-                try {
-                    const response = await getGeminiResponse(message);
-                    const translation = await translateText(response, 'es');
-                    addMessage(response, false, translation);
-                } catch (error) {
-                    console.error('Error:', error);
-                    addMessage('Lo siento, ha ocurrido un error. Por favor, inténtalo de nuevo.', false);
-                }
-            }
-        }
+            <div class="dialog-card">
+                <div class="dialog-header">
+                    <div class="dialog-type">Comprare</div>
+                    <button class="audio-icon" onclick="speak('Vorrei due chili di mele, per favore')">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </div>
+                <div class="italian">- Vorrei due chili di mele, per favore.</div>
+                <div class="spanish">- Quisiera dos kilos de manzanas, por favor.</div>
+                <div class="context">Situación: Comprando fruta en la tienda</div>
+            </div>
+        </div>
 
-        // Resto del código JavaScript existente (speak, translateText, getGeminiResponse)...
-        const TRANSLATE_API_KEY = 'AIzaSyCEIicKmkzZQ7kOy0yBSVt4Dc3s80GwKYw';
-        const GEMINI_API_KEY = 'AIzaSyCEIicKmkzZQ7kOy0yBSVt4Dc3s80GwKYw';
+        <div class="dialog-section">
+            <div class="dialog-title">
+                <i class="fas fa-utensils"></i>
+                Al Ristorante
+            </div>
+            
+            <div class="dialog-card">
+                <div class="dialog-header">
+                    <div class="dialog-type">Prenotare</div>
+                    <button class="audio-icon" onclick="speak('Vorrei prenotare un tavolo per due persone, per stasera')">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </div>
+                <div class="italian">- Vorrei prenotare un tavolo per due persone, per stasera.</div>
+                <div class="spanish">- Quisiera reservar una mesa para dos personas, para esta noche.</div>
+                <div class="context">Situación: Haciendo una reserva en un restaurante</div>
+            </div>
+
+            <div class="dialog-card">
+                <div class="dialog-header">
+                    <div class="dialog-type">Ordinare</div>
+                    <button class="audio-icon" onclick="speak('Per me la pasta alla carbonara, per favore')">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </div>
+                <div class="italian">- Per me la pasta alla carbonara, per favore.</div>
+                <div class="spanish">- Para mí la pasta a la carbonara, por favor.</div>
+                <div class="context">Situación: Pidiendo el plato principal</div>
+            </div>
+        </div>
+
+        <div class="dialog-section">
+            <div class="dialog-title">
+                <i class="fas fa-hotel"></i>
+                All'Hotel
+            </div>
+            
+            <div class="dialog-card">
+                <div class="dialog-header">
+                    <div class="dialog-type">Check-in</div>
+                    <button class="audio-icon" onclick="speak('Ho una prenotazione a nome di Marco Rossi')">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </div>
+                <div class="italian">- Ho una prenotazione a nome di Marco Rossi.</div>
+                <div class="spanish">- Tengo una reserva a nombre de Marco Rossi.</div>
+                <div class="context">Situación: Llegando al hotel con una reserva</div>
+            </div>
+
+            <div class="dialog-card">
+                <div class="dialog-header">
+                    <div class="dialog-type">Servizio in Camera</div>
+                    <button class="audio-icon" onclick="speak('Vorrei ordinare la colazione in camera, per domani mattina')">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </div>
+                <div class="italian">- Vorrei ordinare la colazione in camera, per domani mattina.</div>
+                <div class="spanish">- Quisiera pedir el desayuno a la habitación, para mañana por la mañana.</div>
+                <div class="context">Situación: Solicitando servicio a la habitación</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
         const synth = window.speechSynthesis;
         let voices = [];
 
@@ -298,79 +300,16 @@
         function speak(text) {
             if (synth.speaking) {
                 synth.cancel();
+                return;
             }
 
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = 'it-IT';
             utterance.rate = 0.9;
-            utterance.pitch = 1.0;
-            utterance.volume = 1.0;
-
-            const italianVoice = voices.find(voice => voice.lang.includes('it-IT'));
-            if (italianVoice) {
-                utterance.voice = italianVoice;
-            }
-
+            utterance.pitch = 1;
+            
             synth.speak(utterance);
         }
-
-        async function translateText(text, targetLang) {
-            const url = `https://translation.googleapis.com/language/translate/v2?key=${TRANSLATE_API_KEY}`;
-            
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        q: text,
-                        target: targetLang
-                    })
-                });
-
-                const data = await response.json();
-                if (data.data && data.data.translations) {
-                    return data.data.translations[0].translatedText;
-                }
-                return null;
-            } catch (error) {
-                console.error('Error en la traducción:', error);
-                return null;
-            }
-        }
-
-        async function getGeminiResponse(prompt) {
-            const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
-            
-            try {
-                const response = await fetch(`${url}?key=${GEMINI_API_KEY}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        contents: [{
-                            parts: [{
-                                text: `Actúa como un profesor de italiano amigable y paciente. Responde en italiano y mantén las respuestas cortas y fáciles de entender. Si la pregunta es en español, responde en italiano. Pregunta: ${prompt}`
-                            }]
-                        }]
-                    })
-                });
-
-                const data = await response.json();
-                if (data.candidates && data.candidates[0].content.parts[0].text) {
-                    return data.candidates[0].content.parts[0].text;
-                }
-                return null;
-            } catch (error) {
-                console.error('Error con Gemini:', error);
-                return null;
-            }
-        }
-
-        // Mensaje de bienvenida
-        addMessage("Ciao! Sono il tuo insegnante di italiano. Come posso aiutarti oggi?", false, "¡Hola! Soy tu profesor de italiano. ¿Cómo puedo ayudarte hoy?");
     </script>
 </body>
 </html>
