@@ -7,276 +7,257 @@
     <link rel="stylesheet" href="colors.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script src="gemini-tts.js"></script>
-    
-    <!-- Configuración de Google Cloud TTS -->
-    <script>
-        window.GOOGLE_CLOUD_API_KEY = 'TU_API_KEY_AQUI'; // Reemplaza con tu API key de Google Cloud
-    </script>
-    
     <style>
         :root {
-            --background-dark: #121212;
-            --surface-dark: #1e1e1e;
-            --primary-color: #bb86fc;
-            --secondary-color: #03dac6;
-            --text-primary: #ffffff;
-            --text-secondary: rgba(255, 255, 255, 0.7);
-            --shadow-color: rgba(0, 0, 0, 0.3);
+            --background-white: #f9f9f9;
+            --background-main: #f2f2f2;
+            --text-main: #333;
+            --text-secondary: #666;
+            --accent-color: #4CAF50;
+            --button-color: #4CAF50;
+            --hover-color: #388E3C;
+            --hover-color-light: #e0e0e0;
+            --shadow-color: rgba(0,0,0,0.1);
         }
 
-        body {
-            background-color: var(--background-dark);
-            color: var(--text-primary);
-            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-            line-height: 1.6;
-            padding-bottom: 70px;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: var(--surface-dark);
-            box-shadow: 0 2px 4px var(--shadow-color);
-            border-radius: 8px;
-        }
-
-        h1 {
-            color: var(--primary-color);
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: 15px;
-            margin-bottom: 2rem;
-        }
-
-        .card {
-            background-color: var(--surface-dark);
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px var(--shadow-color);
-            text-align: center;
-            transition: transform 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px var(--shadow-color);
-            border-color: var(--primary-color);
-        }
-
-        .letter {
-            font-size: 2rem;
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-        }
-
-        .pronunciation {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .play-button {
-            background-color: var(--primary-color);
-            color: var(--background-dark);
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            width: 100%;
-            font-weight: bold;
-        }
-
-        .play-button:hover {
-            background-color: #9b6bd3;
-        }
-
-        /* Menú inferior */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 60px;
-            background: var(--surface-dark);
-            box-shadow: 0 -2px 8px var(--shadow-color);
+        .alphabet-container {
             display: flex;
-            justify-content: space-around;
-            align-items: center;
-            z-index: 9999;
-            padding: 5px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
         }
 
-        .nav-item {
-            flex: 1;
+        .letter-item {
             display: flex;
             flex-direction: column;
             align-items: center;
+            background: var(--background-white);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-soft);
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+
+        .listen-button {
+            display: flex;
+            align-items: center;
             justify-content: center;
-            text-decoration: none;
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-            padding: 5px;
-            transition: color 0.3s;
+            gap: 0.5rem;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            transition: all 0.3s ease;
+            width: 100%;
         }
 
-        .nav-item i {
-            font-size: 1.5rem;
-            margin-bottom: 4px;
+        .listen-button:hover {
+            background-color: var(--hover-color);
+            transform: translateY(-2px);
         }
 
-        .nav-item:hover {
-            color: var(--primary-color);
+        .listen-button i {
+            font-size: 1.1rem;
         }
 
-        .nav-item.active {
-            color: var(--primary-color);
-        }
-
-        .nav-item span {
-            font-weight: 500;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
+        @media (min-width: 769px) {
+            .letter-item {
+                width: calc(20% - 1rem);
+                margin-bottom: 1rem;
             }
-
-            .grid {
-                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-                gap: 10px;
-            }
-
-            .letter {
-                font-size: 1.8rem;
-            }
-
-            .pronunciation {
-                font-size: 0.8rem;
+            
+            .listen-button {
+                width: auto;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>El Alfabeto Italiano</h1>
-            <p>El alfabeto italiano tiene 21 letras. Las letras J, K, W, X e Y solo se usan en palabras extranjeras como:</p>
-            <ul>
-                <li>J: "jazz"</li>
-                <li>K: "karate"</li>
-                <li>W: "web"</li>
-                <li>X: "xilofono"</li>
-                <li>Y: "yogurt"</li>
-            </ul>
-        </header>
-
-        <div class="grid" id="alphabetGrid"></div>
-
-        <footer>
-            <p>Haga clic en cualquier tarjeta para escuchar la pronunciación.</p>
-        </footer>
+        <section class="grammar-section">
+            <h2 class="section-title">Alfabeto Italiano</h2>
+            <div class="alphabet-container">
+                <div class="letter-item">
+                    <span class="italian">A</span>
+                    <button class="listen-button" onclick="speak('a')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">B</span>
+                    <button class="listen-button" onclick="speak('bi')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">C</span>
+                    <button class="listen-button" onclick="speak('ci')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">D</span>
+                    <button class="listen-button" onclick="speak('di')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">E</span>
+                    <button class="listen-button" onclick="speak('e')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">F</span>
+                    <button class="listen-button" onclick="speak('effe')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">G</span>
+                    <button class="listen-button" onclick="speak('gi')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">H</span>
+                    <button class="listen-button" onclick="speak('acca')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">I</span>
+                    <button class="listen-button" onclick="speak('i')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">L</span>
+                    <button class="listen-button" onclick="speak('elle')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">M</span>
+                    <button class="listen-button" onclick="speak('emme')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">N</span>
+                    <button class="listen-button" onclick="speak('enne')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">O</span>
+                    <button class="listen-button" onclick="speak('o')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">P</span>
+                    <button class="listen-button" onclick="speak('pi')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">Q</span>
+                    <button class="listen-button" onclick="speak('cu')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">R</span>
+                    <button class="listen-button" onclick="speak('erre')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">S</span>
+                    <button class="listen-button" onclick="speak('esse')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">T</span>
+                    <button class="listen-button" onclick="speak('ti')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">U</span>
+                    <button class="listen-button" onclick="speak('u')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">V</span>
+                    <button class="listen-button" onclick="speak('vi')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">Z</span>
+                    <button class="listen-button" onclick="speak('zeta')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+            </div>
+        </section>
     </div>
 
-    <!-- Menú inferior -->
-    <div class="bottom-nav">
+    <nav class="bottom-nav">
         <a href="index.html" class="nav-item">
             <i class="fas fa-home"></i>
             <span>Inicio</span>
         </a>
-        <a href="alfabeto.html" class="nav-item active">
-            <i class="fas fa-font"></i>
-            <span>Alfabeto</span>
+        <a href="verbos.html" class="nav-item">
+            <i class="fas fa-book"></i>
+            <span>Verbos</span>
         </a>
-        <a href="numeros.html" class="nav-item">
-            <i class="fas fa-sort-numeric-down"></i>
-            <span>Números</span>
+        <a href="gramatica.html" class="nav-item">
+            <i class="fas fa-graduation-cap"></i>
+            <span>Gramática</span>
         </a>
-        <a href="colores.html" class="nav-item">
-            <i class="fas fa-palette"></i>
-            <span>Colores</span>
+        <a href="dialogos.html" class="nav-item">
+            <i class="fas fa-comments"></i>
+            <span>Diálogos</span>
         </a>
-    </div>
+    </nav>
 
-    <script type="module">
-        import config from './config.js';
-        window.GOOGLE_CLOUD_API_KEY = config.GOOGLE_CLOUD_API_KEY;
-    </script>
-    
     <script>
-        const alphabet = [
-            { letter: 'A', pronunciation: 'ah', example: 'amore (amor)', audioText: 'A come amore' },
-            { letter: 'B', pronunciation: 'bi', example: 'bambino (niño)', audioText: 'B come bambino' },
-            { letter: 'C', pronunciation: 'chi', example: 'casa (casa)', audioText: 'C come casa' },
-            { letter: 'D', pronunciation: 'di', example: 'donna (mujer)', audioText: 'D come donna' },
-            { letter: 'E', pronunciation: 'eh', example: 'elefante (elefante)', audioText: 'E come elefante' },
-            { letter: 'F', pronunciation: 'effe', example: 'famiglia (familia)', audioText: 'F come famiglia' },
-            { letter: 'G', pronunciation: 'gi', example: 'giorno (día)', audioText: 'G come giorno' },
-            { letter: 'H', pronunciation: 'acca', example: 'ho (tengo)', audioText: 'H come ho' },
-            { letter: 'I', pronunciation: 'i', example: 'isola (isla)', audioText: 'I come isola' },
-            { letter: 'L', pronunciation: 'elle', example: 'luna (luna)', audioText: 'L come luna' },
-            { letter: 'M', pronunciation: 'emme', example: 'mamma (mamá)', audioText: 'M come mamma' },
-            { letter: 'N', pronunciation: 'enne', example: 'nonna (abuela)', audioText: 'N come nonna' },
-            { letter: 'O', pronunciation: 'o', example: 'occhio (ojo)', audioText: 'O come occhio' },
-            { letter: 'P', pronunciation: 'pi', example: 'padre (padre)', audioText: 'P come padre' },
-            { letter: 'Q', pronunciation: 'cu', example: 'questo (este)', audioText: 'Q come questo' },
-            { letter: 'R', pronunciation: 'erre', example: 'roma (Roma)', audioText: 'R come roma' },
-            { letter: 'S', pronunciation: 'esse', example: 'sole (sol)', audioText: 'S come sole' },
-            { letter: 'T', pronunciation: 'ti', example: 'tavolo (mesa)', audioText: 'T come tavolo' },
-            { letter: 'U', pronunciation: 'u', example: 'uomo (hombre)', audioText: 'U come uomo' },
-            { letter: 'V', pronunciation: 'vu', example: 'vino (vino)', audioText: 'V come vino' },
-            { letter: 'Z', pronunciation: 'zeta', example: 'zucchero (azúcar)', audioText: 'Z come zucchero' }
-        ];
-
-        function createLetterCard(data) {
-            const card = document.createElement('div');
-            card.className = 'card';
-            
-            card.innerHTML = `
-                <div class="letter">${data.letter}</div>
-                <div class="pronunciation">${data.pronunciation}</div>
-                <div class="example">${data.example}</div>
-                <button class="play-button" onclick="playSound('${data.audioText}')">
-                    <i class="fas fa-volume-up"></i>
-                    Escuchar
-                </button>
-            `;
-            
-            return card;
+        function speak(text) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'it-IT';
+            speechSynthesis.speak(utterance);
         }
-
-        // Función para reproducir el sonido
-        async function playSound(text) {
-            try {
-                await speak(text, {
-                    rate: 0.85,    // Un poco más lento para el alfabeto
-                    pitch: 1.1,    // Ligeramente más alto para claridad
-                    volume: 1.0    // Volumen máximo
-                });
-            } catch (error) {
-                console.error('Error al reproducir el sonido:', error);
-            }
-        }
-
-        function initialize() {
-            const grid = document.getElementById('alphabetGrid');
-            alphabet.forEach(letter => {
-                grid.appendChild(createLetterCard(letter));
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', initialize);
     </script>
-    <script src="script.js"></script>
 </body>
 </html>
