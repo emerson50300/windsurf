@@ -1,244 +1,374 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Italiano - Pratica la conversazione</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Chat Italiano</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #10a37f;
-            --secondary-color: #f7f7f8;
-            --text-color: #2d333a;
-            --light-text: #6e7681;
-            --border-color: #e5e5e5;
-            --chat-bg: #ffffff;
-            --user-msg-bg: #f7f7f8;
-            --bot-msg-bg: #ffffff;
-            --hover-color: #0e916f;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            --primary-color: #2C3E50;
+            --secondary-color: #E74C3C;
+            --accent-color: #3498DB;
+            --background-color: #ECF0F1;
+            --text-color: #2C3E50;
         }
 
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            line-height: 1.5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--background-color);
             color: var(--text-color);
-            background-color: var(--secondary-color);
         }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-            height: 100vh;
+        .level-selector {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .level-selector.active {
+            display: block;
+        }
+
+        .level-title {
+            font-size: 1.5em;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .level-buttons {
             display: flex;
-            flex-direction: column;
+            justify-content: space-around;
+            gap: 10px;
         }
 
-        .chat-container {
-            flex-grow: 1;
+        .level-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 30%;
+            text-align: center;
+        }
+
+        .level-btn:hover {
+            background: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .learning-plan {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .learning-plan.active {
+            display: block;
+        }
+
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .topic-card {
+            background: var(--background-color);
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .topic-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+
+        #chat-container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        #chat-messages {
+            height: 400px;
             overflow-y: auto;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            background: var(--chat-bg);
-            border-radius: 0.5rem;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
         }
 
         .message {
+            margin-bottom: 15px;
             display: flex;
-            margin-bottom: 1.5rem;
-            animation: fadeIn 0.3s ease-in;
+            align-items: flex-start;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-content {
+            background: var(--background-color);
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 70%;
+            margin: 0 10px;
+        }
+
+        .message.user .message-content {
+            background: var(--accent-color);
+            color: white;
         }
 
         .avatar {
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            margin-right: 1rem;
+            background: var(--primary-color);
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--primary-color);
             color: white;
-            font-weight: bold;
         }
 
-        .user-avatar {
-            background: var(--light-text);
+        #input-container {
+            display: flex;
+            padding: 20px;
+            border-top: 1px solid #eee;
         }
 
-        .message-content {
-            flex-grow: 1;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            max-width: calc(100% - 60px);
+        #message-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
         }
 
-        .user-message .message-content {
-            background: var(--user-msg-bg);
-        }
-
-        .bot-message .message-content {
-            background: var(--bot-msg-bg);
-            border: 1px solid var(--border-color);
-        }
-
-        .input-container {
-            position: relative;
-            margin-top: auto;
-        }
-
-        .message-input {
-            width: 100%;
-            padding: 1rem 3rem 1rem 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: 0.5rem;
-            font-size: 1rem;
-            resize: none;
-            height: 60px;
-            background: white;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-        }
-
-        .message-input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 2px rgba(16, 163, 127, 0.2);
-        }
-
-        .send-button {
-            position: absolute;
-            right: 1rem;
-            bottom: 1rem;
-            background: var(--primary-color);
+        #send-button {
+            background: var(--accent-color);
             color: white;
             border: none;
-            border-radius: 0.3rem;
-            padding: 0.5rem;
+            padding: 10px 20px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.2s;
         }
 
-        .send-button:hover {
-            background: var(--hover-color);
-        }
-
-        .send-button:disabled {
-            background: var(--light-text);
-            cursor: not-allowed;
+        #send-button:hover {
+            background: var(--primary-color);
         }
 
         .language-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
             display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-            justify-content: center;
+            gap: 10px;
         }
 
-        .language-button {
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: 0.3rem;
-            background: white;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .language-button.active {
+        .lang-btn {
             background: var(--primary-color);
             color: white;
-            border-color: var(--primary-color);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
         }
 
-        .typing-indicator {
-            display: flex;
-            gap: 0.3rem;
-            padding: 0.5rem;
-            margin-top: 0.5rem;
+        .lang-btn.active {
+            background: var(--accent-color);
         }
 
-        .dot {
-            width: 8px;
-            height: 8px;
-            background: var(--light-text);
-            border-radius: 50%;
-            animation: bounce 1.4s infinite;
+        .progress-bar {
+            height: 5px;
+            background: #eee;
+            margin-top: 10px;
+            border-radius: 5px;
+            overflow: hidden;
         }
 
-        .dot:nth-child(2) { animation-delay: 0.2s; }
-        .dot:nth-child(3) { animation-delay: 0.4s; }
+        .progress {
+            height: 100%;
+            background: var(--accent-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-4px); }
+        @media (max-width: 600px) {
+            .level-buttons {
+                flex-direction: column;
+            }
+            .level-btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="language-toggle">
-            <button class="language-button active" onclick="setLanguage('it')">Italiano</button>
-            <button class="language-button" onclick="setLanguage('es')">Español</button>
-        </div>
-        
-        <div class="chat-container" id="chatContainer">
-            <div class="message bot-message">
-                <div class="avatar">AI</div>
-                <div class="message-content">
-                    Ciao! Sono il tuo assistente per praticare l'italiano. Come posso aiutarti oggi?
-                </div>
-            </div>
-        </div>
-
-        <div class="input-container">
-            <textarea 
-                class="message-input" 
-                id="messageInput" 
-                placeholder="Scrivi un messaggio..."
-                rows="1"
-                onkeydown="if(event.keyCode == 13 && !event.shiftKey) { event.preventDefault(); sendMessage(); }">
-            </textarea>
-            <button class="send-button" onclick="sendMessage()">
-                <i class="fas fa-paper-plane"></i>
+    <div class="level-selector active" id="level-selector">
+        <div class="level-title">Elige tu nivel de italiano</div>
+        <div class="level-buttons">
+            <button class="level-btn" onclick="selectLevel('principiante')">
+                Principiante<br>(A1-A2)
+            </button>
+            <button class="level-btn" onclick="selectLevel('intermedio')">
+                Intermedio<br>(B1-B2)
+            </button>
+            <button class="level-btn" onclick="selectLevel('avanzado')">
+                Avanzado<br>(C1-C2)
             </button>
         </div>
     </div>
 
+    <div class="learning-plan" id="learning-plan">
+        <div class="level-title">Plan de Aprendizaje</div>
+        <div class="topic-grid">
+            <div class="topic-card" onclick="selectTopic('vocabulario')">
+                <div class="topic-icon"><i class="fas fa-book"></i></div>
+                <h3>Vocabulario</h3>
+                <p>Palabras y frases por categorías</p>
+            </div>
+            <div class="topic-card" onclick="selectTopic('gramatica')">
+                <div class="topic-icon"><i class="fas fa-pencil-alt"></i></div>
+                <h3>Gramática</h3>
+                <p>Reglas y ejercicios prácticos</p>
+            </div>
+            <div class="topic-card" onclick="selectTopic('expresiones')">
+                <div class="topic-icon"><i class="fas fa-comments"></i></div>
+                <h3>Expresiones</h3>
+                <p>Frases útiles por contexto</p>
+            </div>
+            <div class="topic-card" onclick="selectTopic('pronunciacion')">
+                <div class="topic-icon"><i class="fas fa-microphone"></i></div>
+                <h3>Pronunciación</h3>
+                <p>Práctica con audio</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="chat-container">
+        <div id="chat-messages"></div>
+        <div id="input-container">
+            <input type="text" id="message-input" placeholder="Escribe tu mensaje...">
+            <button id="send-button">Enviar</button>
+        </div>
+    </div>
+
+    <div class="language-toggle">
+        <button class="lang-btn active" onclick="setLanguage('it')">🇮🇹 IT</button>
+        <button class="lang-btn" onclick="setLanguage('es')">🇪🇸 ES</button>
+    </div>
+
     <script>
-        let currentLanguage = 'it';
         let userLevel = 'none'; // Nivel del usuario: none, principiante, intermedio, avanzado
         let currentTopic = ''; // Tema actual que se está practicando
+        let userProgress = {
+            vocabulario: 0,
+            gramatica: 0,
+            expresiones: 0,
+            pronunciacion: 0
+        };
+
+        function selectLevel(level) {
+            userLevel = level;
+            document.getElementById('level-selector').classList.remove('active');
+            document.getElementById('learning-plan').classList.add('active');
+            
+            // Mensaje de bienvenida según el nivel
+            const welcomeMessages = {
+                principiante: {
+                    it: "Benvenuto al corso di italiano per principianti! Iniziamo con le basi. Scegli un argomento per cominciare.",
+                    es: "¡Bienvenido al curso de italiano para principiantes! Empezaremos con lo básico. Elige un tema para comenzar."
+                },
+                intermedio: {
+                    it: "Benvenuto al livello intermedio! Qui approfondiremo la tua conoscenza dell'italiano. Scegli un argomento.",
+                    es: "¡Bienvenido al nivel intermedio! Aquí profundizaremos tu conocimiento del italiano. Elige un tema."
+                },
+                avanzado: {
+                    it: "Benvenuto al livello avanzato! Perfezioneremo il tuo italiano. Scegli un argomento per iniziare.",
+                    es: "¡Bienvenido al nivel avanzado! Perfeccionaremos tu italiano. Elige un tema para empezar."
+                }
+            };
+
+            addMessage('assistant', welcomeMessages[level][currentLanguage]);
+        }
+
+        function selectTopic(topic) {
+            currentTopic = topic;
+            const topicIntros = {
+                vocabulario: {
+                    it: "Iniziamo con il vocabolario! Scegli una categoria:\n1. Cibo e bevande\n2. Viaggi\n3. Tempo libero",
+                    es: "¡Empecemos con el vocabulario! Elige una categoría:\n1. Comida y bebidas\n2. Viajes\n3. Tiempo libre"
+                },
+                gramatica: {
+                    it: "Studiamo la grammatica! Cosa vuoi ripassare?\n1. Verbi\n2. Articoli\n3. Preposizioni",
+                    es: "¡Estudiemos gramática! ¿Qué quieres repasar?\n1. Verbos\n2. Artículos\n3. Preposiciones"
+                },
+                expresiones: {
+                    it: "Impariamo le espressioni utili! Scegli un contesto:\n1. Al ristorante\n2. In viaggio\n3. Vita quotidiana",
+                    es: "¡Aprendamos expresiones útiles! Elige un contexto:\n1. En el restaurante\n2. De viaje\n3. Vida cotidiana"
+                },
+                pronunciacion: {
+                    it: "Pratichiamo la pronuncia! Scegli:\n1. Vocali\n2. Consonanti\n3. Accenti",
+                    es: "¡Practiquemos la pronunciación! Elige:\n1. Vocales\n2. Consonantes\n3. Acentos"
+                }
+            };
+
+            addMessage('assistant', topicIntros[topic][currentLanguage]);
+        }
+
+        function updateProgress(topic, amount) {
+            userProgress[topic] += amount;
+            if (userProgress[topic] > 100) userProgress[topic] = 100;
+            
+            // Actualizar barra de progreso visual si existe
+            const progressBar = document.querySelector(`#${topic}-progress .progress`);
+            if (progressBar) {
+                progressBar.style.width = `${userProgress[topic]}%`;
+            }
+        }
+
+        let currentLanguage = 'es';
         const synth = window.speechSynthesis;
 
         function setLanguage(lang) {
             currentLanguage = lang;
-            document.querySelectorAll('.language-button').forEach(btn => {
+            document.querySelectorAll('.language-toggle .lang-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.innerText.toLowerCase().includes(lang));
             });
-            
-            const placeholder = lang === 'it' ? 'Scrivi un messaggio...' : 'Escribe un mensaje...';
-            document.getElementById('messageInput').placeholder = placeholder;
         }
 
-        function addMessage(text, isUser = false) {
-            const chatContainer = document.getElementById('chatContainer');
+        function addMessage(author, text) {
+            const chatContainer = document.getElementById('chat-messages');
             const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            messageDiv.className = `message ${author === 'assistant' ? 'assistant' : 'user'}`;
             
             const avatar = document.createElement('div');
-            avatar.className = `avatar ${isUser ? 'user-avatar' : ''}`;
-            avatar.innerText = isUser ? 'TU' : 'AI';
+            avatar.className = 'avatar';
+            avatar.innerText = author === 'assistant' ? 'AI' : 'TU';
             
             const content = document.createElement('div');
             content.className = 'message-content';
@@ -249,27 +379,6 @@
             chatContainer.appendChild(messageDiv);
             
             chatContainer.scrollTop = chatContainer.scrollHeight;
-        }
-
-        function addTypingIndicator() {
-            const indicator = document.createElement('div');
-            indicator.className = 'message bot-message typing-indicator';
-            indicator.innerHTML = `
-                <div class="avatar">AI</div>
-                <div class="message-content">
-                    <div class="dots">
-                        <div class="dot"></div>
-                        <div class="dot"></div>
-                        <div class="dot"></div>
-                    </div>
-                </div>
-            `;
-            document.getElementById('chatContainer').appendChild(indicator);
-            return indicator;
-        }
-
-        function removeTypingIndicator(indicator) {
-            indicator.remove();
         }
 
         function speak(text) {
@@ -287,21 +396,18 @@
         }
 
         async function sendMessage() {
-            const input = document.getElementById('messageInput');
+            const input = document.getElementById('message-input');
             const message = input.value.trim();
             
             if (!message) return;
             
-            addMessage(message, true);
+            addMessage('user', message);
             input.value = '';
-            
-            const indicator = addTypingIndicator();
             
             // Simular respuesta del bot después de un breve delay
             setTimeout(() => {
-                removeTypingIndicator(indicator);
                 const response = getResponse(message);
-                addMessage(response);
+                addMessage('assistant', response);
                 speak(response);
             }, 1500);
         }
@@ -370,10 +476,10 @@
                 // Agregar más traducciones
             };
 
-            let response = currentLanguage === 'it' ?
+            let response = currentLanguage === 'it' ? 
                 "Ecco alcune traduzioni comuni:\n\n" :
                 "Aquí tienes algunas traducciones comunes:\n\n";
-
+            
             for (const [es, it] of Object.entries(commonTranslations)) {
                 response += `${es} → ${it}\n`;
             }
