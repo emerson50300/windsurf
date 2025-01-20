@@ -3,7 +3,7 @@
     --primary-color: #4CAF50;
     --primary-dark: #388E3C;
     --primary-light: #81C784;
-    --text-main: #2E3A59;
+    --text-main: #1a1a1a;
     --background-main: #F7F9FC;
     --background-white: #ffffff;
     --shadow-soft: 0 2px 4px rgba(0,0,0,0.1);
@@ -13,7 +13,7 @@
     --header-height: 60px;
     --bottom-nav-height: 60px;
     --accent-color: #FF5722;
-    --text-secondary: #666666;
+    --text-secondary: #404040;
     --button-color: #388E3C;
     --hover-color: #81C784;
     --overlay-color: rgba(0,0,0,0.5);
@@ -40,7 +40,8 @@ html {
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, sans-serif;
-    line-height: 1.6;
+    line-height: 1.7;
+    font-size: 1.05rem;
     color: var(--text-main);
     background-color: var(--background-main);
     overflow-x: hidden;
@@ -281,9 +282,9 @@ input, select, textarea {
 
 /* Estilos para verbos y conjugaciones */
 .italian {
-    color: var(--verb-color);
-    font-weight: 600;
+    color: var(--text-main);
     font-size: 1.2rem;
+    font-weight: 500;
     background-color: var(--verb-background);
     padding: 0.3rem 0.6rem;
     border-radius: 4px;
@@ -331,11 +332,12 @@ input, select, textarea {
     flex-direction: column;
     align-items: center;
     background: var(--background-white);
-    padding: 1rem;
+    padding: 1.5rem;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-soft);
     width: 100%;
     margin-bottom: 0.5rem;
+    font-size: 1.3rem;
 }
 
 .listen-button {
@@ -499,4 +501,15 @@ img, video {
         height: 28px;
         font-size: 1em;
     }
+}
+
+/* Mejoras de legibilidad */
+.dialogue-container {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    padding: 1.5rem;
+    background-color: var(--background-white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-soft);
+    margin: 1rem 0;
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,140 +9,137 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         :root {
-            --background-white: #f9f9f9;
-            --background-main: #f2f2f2;
-            --text-main: #333;
-            --text-secondary: #666;
+            --background-white: #ffffff;
+            --background-main: #F7F9FC;
+            --text-main: #1a1a1a;
+            --text-secondary: #404040;
             --accent-color: #4CAF50;
             --button-color: #4CAF50;
             --hover-color: #388E3C;
-            --hover-color-light: #e0e0e0;
+            --hover-color-light: #E8F5E9;
             --shadow-color: rgba(0,0,0,0.1);
+            --border-radius: 15px;
         }
 
         .family-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.5rem;
-            padding: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .family-card {
             background: var(--background-white);
-            border-radius: 8px;
-            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            padding: 2rem;
             box-shadow: 0 2px 4px var(--shadow-color);
             transition: transform 0.3s ease;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
         }
 
         .family-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 4px 8px var(--shadow-color);
+            box-shadow: 0 8px 16px var(--shadow-color);
         }
 
-        .family-title {
-            color: var(--accent-color);
-            font-size: 1.5rem;
-            font-weight: bold;
+        .family-icon {
+            font-size: 3rem;
             margin-bottom: 1rem;
-            text-align: center;
         }
 
-        .family-content {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .family-member {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.8rem;
-            background: var(--background-main);
-            border-radius: 6px;
-            transition: background-color 0.3s ease;
-        }
-
-        .family-member:hover {
-            background: var(--hover-color-light);
-        }
-
-        .member-info {
-            flex-grow: 1;
-        }
-
-        .italian-term {
+        .italian-word {
             color: var(--text-main);
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-bottom: 0.3rem;
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
         }
 
-        .spanish-term {
+        .spanish-word {
             color: var(--text-secondary);
-            font-size: 0.9rem;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
         }
 
-        .play-button {
+        .pronunciation {
+            color: var(--text-secondary);
+            font-style: italic;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .audio-button {
             background-color: var(--button-color);
-            color: rgb(12, 247, 90);
+            color: white;
             border: none;
-            padding: 0.5rem;
-            border-radius: 4px;
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius);
             cursor: pointer;
+            font-size: 1.1rem;
             display: flex;
             align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+            width: 80%;
             justify-content: center;
-            transition: background-color 0.3s ease;
         }
 
-        .play-button:hover {
+        .audio-button:hover {
             background-color: var(--hover-color);
+            transform: scale(1.05);
         }
 
-        .family-section {
-            background: var(--background-white);
-            border-radius: 8px;
+        .audio-button i {
+            font-size: 1.2rem;
+        }
+
+        header {
+            text-align: center;
             padding: 2rem;
-            margin: 1.5rem;
+            background: var(--background-white);
+            margin-bottom: 2rem;
+            border-radius: var(--border-radius);
             box-shadow: 0 2px 4px var(--shadow-color);
         }
 
-        .section-title {
-            color: var(--accent-color);
-            font-size: 2rem;
-            text-align: center;
-            margin-bottom: 2rem;
+        header h1 {
+            color: var(--text-main);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
         }
 
         @media (max-width: 768px) {
             .family-grid {
                 grid-template-columns: 1fr;
                 padding: 1rem;
-                gap: 1rem;
+                gap: 1.5rem;
             }
 
             .family-card {
-                padding: 1rem;
+                padding: 1.5rem;
             }
 
-            .family-title {
+            .italian-word {
                 font-size: 1.3rem;
             }
 
-            .italian-term {
-                font-size: 1rem;
+            header h1 {
+                font-size: 2rem;
             }
 
-            .family-section {
-                margin: 1rem;
-                padding: 1rem;
-            }
-
-            .section-title {
-                font-size: 1.5rem;
-                margin-bottom: 1.5rem;
+            .audio-button {
+                width: 100%;
+                padding: 0.8rem 1.5rem;
             }
         }
     </style>
@@ -173,7 +170,10 @@
                 <div class="italian-word">Il padre</div>
                 <div class="spanish-word">El padre</div>
                 <div class="pronunciation">[il PA-dre]</div>
-                <button class="audio-button" onclick="speak('il padre')">🔊 Escuchar</button>
+                <button class="audio-button" onclick="speak('il padre')">
+                    <i class="fas fa-volume-up"></i>
+                    Ascolta
+                </button>
             </div>
 
             <div class="family-card">
@@ -181,7 +181,10 @@
                 <div class="italian-word">La madre</div>
                 <div class="spanish-word">La madre</div>
                 <div class="pronunciation">[la MA-dre]</div>
-                <button class="audio-button" onclick="speak('la madre')">🔊 Escuchar</button>
+                <button class="audio-button" onclick="speak('la madre')">
+                    <i class="fas fa-volume-up"></i>
+                    Ascolta
+                </button>
             </div>
 
             <div class="family-card">
@@ -189,7 +192,10 @@
                 <div class="italian-word">Il figlio</div>
                 <div class="spanish-word">El hijo</div>
                 <div class="pronunciation">[il FI-lyo]</div>
-                <button class="audio-button" onclick="speak('il figlio')">🔊 Escuchar</button>
+                <button class="audio-button" onclick="speak('il figlio')">
+                    <i class="fas fa-volume-up"></i>
+                    Ascolta
+                </button>
             </div>
 
             <div class="family-card">
@@ -197,7 +203,10 @@
                 <div class="italian-word">La figlia</div>
                 <div class="spanish-word">La hija</div>
                 <div class="pronunciation">[la FI-lya]</div>
-                <button class="audio-button" onclick="speak('la figlia')">🔊 Escuchar</button>
+                <button class="audio-button" onclick="speak('la figlia')">
+                    <i class="fas fa-volume-up"></i>
+                    Ascolta
+                </button>
             </div>
 
             <div class="family-card">
@@ -205,7 +214,10 @@
                 <div class="italian-word">Il nonno</div>
                 <div class="spanish-word">El abuelo</div>
                 <div class="pronunciation">[il NON-no]</div>
-                <button class="audio-button" onclick="speak('il nonno')">🔊 Escuchar</button>
+                <button class="audio-button" onclick="speak('il nonno')">
+                    <i class="fas fa-volume-up"></i>
+                    Ascolta
+                </button>
             </div>
 
             <div class="family-card">
@@ -213,7 +225,10 @@
                 <div class="italian-word">La nonna</div>
                 <div class="spanish-word">La abuela</div>
                 <div class="pronunciation">[la NON-na]</div>
-                <button class="audio-button" onclick="speak('la nonna')">🔊 Escuchar</button>
+                <button class="audio-button" onclick="speak('la nonna')">
+                    <i class="fas fa-volume-up"></i>
+                    Ascolta
+                </button>
             </div>
         </div>
 
@@ -236,7 +251,10 @@
                 <div class="italian-word">La famiglia</div>
                 <div class="spanish-word">La familia</div>
                 <div class="pronunciation">[la fa-MI-lya]</div>
-                <button class="audio-button" onclick="speak('la famiglia')">🔊 Escuchar</button>
+                <button class="audio-button" onclick="speak('la famiglia')">
+                    <i class="fas fa-volume-up"></i>
+                    Ascolta
+                </button>
             </div>
 
             <div class="family-card">
@@ -244,7 +262,10 @@
                 <div class="italian-word">I genitori</div>
                 <div class="spanish-word">Los padres</div>
                 <div class="pronunciation">[i je-ni-TO-ri]</div>
-                <button class="audio-button" onclick="speak('i genitori')">🔊 Escuchar</button>
+                <button class="audio-button" onclick="speak('i genitori')">
+                    <i class="fas fa-volume-up"></i>
+                    Ascolta
+                </button>
             </div>
 
             <div class="family-card">
@@ -252,7 +273,10 @@
                 <div class="italian-word">Il fratello</div>
                 <div class="spanish-word">El hermano</div>
                 <div class="pronunciation">[il fra-TE-lo]</div>
-                <button class="audio-button" onclick="speak('il fratello')">🔊 Escuchar</button>
+                <button class="audio-button" onclick="speak('il fratello')">
+                    <i class="fas fa-volume-up"></i>
+                    Ascolta
+                </button>
             </div>
 
             <div class="family-card">
@@ -260,7 +284,10 @@
                 <div class="italian-word">La sorella</div>
                 <div class="spanish-word">La hermana</div>
                 <div class="pronunciation">[la so-RE-la]</div>
-                <button class="audio-button" onclick="speak('la sorella')">🔊 Escuchar</button>
+                <button class="audio-button" onclick="speak('la sorella')">
+                    <i class="fas fa-volume-up"></i>
+                    Ascolta
+                </button>
             </div>
 
             <div class="family-card">
@@ -268,7 +295,10 @@
                 <div class="italian-word">I figli</div>
                 <div class="spanish-word">Los hijos</div>
                 <div class="pronunciation">[i FI-lyi]</div>
-                <button class="audio-button" onclick="speak('i figli')">🔊 Escuchar</button>
+                <button class="audio-button" onclick="speak('i figli')">
+                    <i class="fas fa-volume-up"></i>
+                    Ascolta
+                </button>
             </div>
 
             <div class="family-card">
@@ -276,7 +306,10 @@
                 <div class="italian-word">Le figlie</div>
                 <div class="spanish-word">Las hijas</div>
                 <div class="pronunciation">[le FI-lye]</div>
-                <button class="audio-button" onclick="speak('le figlie')">🔊 Escuchar</button>
+                <button class="audio-button" onclick="speak('le figlie')">
+                    <i class="fas fa-volume-up"></i>
+                    Ascolta
+                </button>
             </div>
         </div>
 

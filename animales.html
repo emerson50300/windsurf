@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,74 +9,77 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         :root {
-            --background-white: #f9f9f9;
-            --primary-color: #3498db;
-            --primary-dark: #2e6da4;
-            --primary-light: #66b3d9;
-            --text-primary: #333;
-            --text-secondary: #666;
-            --shadow-soft: 0 2px 4px rgba(0, 0, 0, 0.1);
-            --shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.2);
+            --background-white: #ffffff;
+            --primary-color: #4CAF50;
+            --primary-dark: #388E3C;
+            --primary-light: #81C784;
+            --text-main: #1a1a1a;
+            --text-secondary: #404040;
+            --shadow-soft: 0 2px 4px rgba(0,0,0,0.1);
+            --shadow-medium: 0 4px 8px rgba(0,0,0,0.2);
             --button-color: #4CAF50;
-            --hover-color: #3e8e41;
-            --accent-color: #03A9F4;
-            --shadow-color: rgba(0, 0, 0, 0.1);
+            --hover-color: #388E3C;
+            --accent-color: #4CAF50;
+            --shadow-color: rgba(0,0,0,0.1);
+            --border-radius: 8px;
         }
 
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1rem;
-            padding: 1rem;
+            gap: 1.5rem;
+            padding: 1.5rem;
         }
 
         .card {
             background: var(--background-white);
-            border-radius: 8px;
-            padding: 1rem;
-            box-shadow: 0 2px 4px var(--shadow-color);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-soft);
             text-align: center;
-            transition: transform 0.2s;
+            transition: transform 0.3s ease;
         }
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 4px 8px var(--shadow-color);
+            box-shadow: var(--shadow-medium);
         }
 
         .animal-image {
             width: 100%;
             height: 200px;
             object-fit: cover;
-            border-radius: 4px;
-            margin-bottom: 1rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
         }
 
         .animal-name {
             font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--accent-color);
-            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-main);
+            margin-bottom: 0.8rem;
         }
 
         .translation {
             color: var(--text-secondary);
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
         }
 
         .play-button {
             background-color: var(--button-color);
-            color: rgb(12, 247, 90);
+            color: white;
             border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--border-radius);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
+            gap: 0.8rem;
             width: 100%;
+            font-size: 1.1rem;
             transition: background-color 0.3s ease;
         }
 
@@ -87,24 +90,23 @@
         .animal-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1rem;
-            padding: 1rem;
+            gap: 1.5rem;
+            padding: 1.5rem;
             max-width: 1200px;
             margin: 0 auto;
         }
 
         .animal-card {
             background: var(--background-white);
-            border-radius: 8px;
+            border-radius: var(--border-radius);
             padding: 1.5rem;
-            box-shadow: 0 2px 4px var(--shadow-color);
+            box-shadow: var(--shadow-soft);
             transition: transform 0.3s ease;
-            text-align: center;
         }
 
         .animal-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 4px 8px var(--shadow-color);
+            box-shadow: var(--shadow-medium);
         }
 
         .animal-name {
@@ -139,10 +141,10 @@
 
         .animal-section {
             background: var(--background-white);
-            border-radius: 8px;
+            border-radius: var(--border-radius);
             padding: 2rem;
             margin: 1rem;
-            box-shadow: 0 2px 4px var(--shadow-color);
+            box-shadow: var(--shadow-soft);
         }
 
         @media (max-width: 768px) {
