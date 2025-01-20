@@ -90,9 +90,12 @@
         .conjugation-card {
             background: var(--surface-color);
             border-radius: var(--border-radius);
-            padding: 1.5rem;
+            padding: 2rem;
             box-shadow: var(--shadow-elevation-1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
 
         .conjugation-card:hover {
@@ -100,47 +103,80 @@
             box-shadow: var(--shadow-elevation-2);
         }
 
+        .pronoun-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
         .pronoun {
             color: var(--primary-color);
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             font-weight: 600;
-            margin-bottom: 0.5rem;
+        }
+
+        .audio-icon {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .audio-icon:hover {
+            background: rgba(76, 175, 80, 0.1);
+            transform: scale(1.1);
+        }
+
+        .audio-icon i {
+            font-size: 1.2rem;
         }
 
         .conjugation {
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--text-primary);
+            text-align: center;
+            margin: 1rem 0;
         }
 
         .meaning {
             color: var(--text-secondary);
-            font-size: 1rem;
-            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            text-align: center;
+            font-style: italic;
         }
 
-        .audio-button {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
+        .example-card {
+            background: var(--surface-color);
             border-radius: var(--border-radius);
-            cursor: pointer;
-            font-size: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow-elevation-1);
+            transition: transform 0.3s ease;
+        }
+
+        .example-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-elevation-2);
+        }
+
+        .example-card .italian {
+            color: var(--primary-color);
+            font-size: 1.4rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            transition: all 0.3s ease;
-            width: 100%;
-            justify-content: center;
-        }
-
-        .audio-button:hover {
-            background-color: var(--secondary-color);
-            transform: scale(1.02);
-        }
-
-        .audio-button i {
-            font-size: 1.2rem;
+            justify-content: space-between;
         }
 
         .examples-section {
@@ -154,26 +190,6 @@
             color: var(--primary-color);
             margin-bottom: 1.5rem;
             font-size: 1.4rem;
-        }
-
-        .example-card {
-            background: var(--surface-color);
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            box-shadow: var(--shadow-elevation-1);
-        }
-
-        .example-card .italian {
-            color: var(--primary-color);
-            font-size: 1.2rem;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-        }
-
-        .example-card .spanish {
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
         }
 
         .note {
@@ -227,91 +243,100 @@
             
             <div class="conjugation-grid">
                 <div class="conjugation-card">
-                    <div class="pronoun">io</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">io</div>
+                        <button class="audio-icon" onclick="speak('io sono')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">sono</div>
                     <div class="meaning">yo soy/estoy</div>
-                    <button class="audio-button" onclick="speak('io sono')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
 
                 <div class="conjugation-card">
-                    <div class="pronoun">tu</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">tu</div>
+                        <button class="audio-icon" onclick="speak('tu sei')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">sei</div>
                     <div class="meaning">tú eres/estás</div>
-                    <button class="audio-button" onclick="speak('tu sei')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
 
                 <div class="conjugation-card">
-                    <div class="pronoun">lui/lei</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">lui/lei</div>
+                        <button class="audio-icon" onclick="speak('lui è, lei è')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">è</div>
                     <div class="meaning">él/ella es/está</div>
-                    <button class="audio-button" onclick="speak('lui è, lei è')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
 
                 <div class="conjugation-card">
-                    <div class="pronoun">noi</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">noi</div>
+                        <button class="audio-icon" onclick="speak('noi siamo')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">siamo</div>
                     <div class="meaning">nosotros somos/estamos</div>
-                    <button class="audio-button" onclick="speak('noi siamo')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
 
                 <div class="conjugation-card">
-                    <div class="pronoun">voi</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">voi</div>
+                        <button class="audio-icon" onclick="speak('voi siete')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">siete</div>
                     <div class="meaning">vosotros sois/estáis</div>
-                    <button class="audio-button" onclick="speak('voi siete')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
 
                 <div class="conjugation-card">
-                    <div class="pronoun">loro</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">loro</div>
+                        <button class="audio-icon" onclick="speak('loro sono')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">sono</div>
                     <div class="meaning">ellos/ellas son/están</div>
-                    <button class="audio-button" onclick="speak('loro sono')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
             </div>
 
             <div class="examples-section">
                 <h3>Esempi con "essere":</h3>
                 <div class="example-card">
-                    <div class="italian">Io sono italiano.</div>
-                    <div class="spanish">Yo soy italiano.</div>
-                    <button class="audio-button" onclick="speak('Io sono italiano')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
+                    <div class="italian">
+                        Io sono italiano
+                        <button class="audio-icon" onclick="speak('Io sono italiano')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
+                    <div class="spanish">Yo soy italiano</div>
                 </div>
                 <div class="example-card">
-                    <div class="italian">Lei è una studentessa.</div>
-                    <div class="spanish">Ella es una estudiante.</div>
-                    <button class="audio-button" onclick="speak('Lei è una studentessa')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
+                    <div class="italian">
+                        Lei è una studentessa
+                        <button class="audio-icon" onclick="speak('Lei è una studentessa')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
+                    <div class="spanish">Ella es una estudiante</div>
                 </div>
                 <div class="example-card">
-                    <div class="italian">Noi siamo a Roma.</div>
-                    <div class="spanish">Nosotros estamos en Roma.</div>
-                    <button class="audio-button" onclick="speak('Noi siamo a Roma')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
+                    <div class="italian">
+                        Noi siamo a Roma
+                        <button class="audio-icon" onclick="speak('Noi siamo a Roma')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
+                    <div class="spanish">Nosotros estamos en Roma</div>
                 </div>
             </div>
         </div>
@@ -324,91 +349,100 @@
             
             <div class="conjugation-grid">
                 <div class="conjugation-card">
-                    <div class="pronoun">io</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">io</div>
+                        <button class="audio-icon" onclick="speak('io ho')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">ho</div>
                     <div class="meaning">yo tengo</div>
-                    <button class="audio-button" onclick="speak('io ho')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
 
                 <div class="conjugation-card">
-                    <div class="pronoun">tu</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">tu</div>
+                        <button class="audio-icon" onclick="speak('tu hai')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">hai</div>
                     <div class="meaning">tú tienes</div>
-                    <button class="audio-button" onclick="speak('tu hai')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
 
                 <div class="conjugation-card">
-                    <div class="pronoun">lui/lei</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">lui/lei</div>
+                        <button class="audio-icon" onclick="speak('lui ha, lei ha')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">ha</div>
                     <div class="meaning">él/ella tiene</div>
-                    <button class="audio-button" onclick="speak('lui ha, lei ha')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
 
                 <div class="conjugation-card">
-                    <div class="pronoun">noi</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">noi</div>
+                        <button class="audio-icon" onclick="speak('noi abbiamo')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">abbiamo</div>
                     <div class="meaning">nosotros tenemos</div>
-                    <button class="audio-button" onclick="speak('noi abbiamo')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
 
                 <div class="conjugation-card">
-                    <div class="pronoun">voi</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">voi</div>
+                        <button class="audio-icon" onclick="speak('voi avete')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">avete</div>
                     <div class="meaning">vosotros tenéis</div>
-                    <button class="audio-button" onclick="speak('voi avete')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
 
                 <div class="conjugation-card">
-                    <div class="pronoun">loro</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">loro</div>
+                        <button class="audio-icon" onclick="speak('loro hanno')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">hanno</div>
                     <div class="meaning">ellos/ellas tienen</div>
-                    <button class="audio-button" onclick="speak('loro hanno')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
             </div>
 
             <div class="examples-section">
                 <h3>Esempi con "avere":</h3>
                 <div class="example-card">
-                    <div class="italian">Ho un libro.</div>
-                    <div class="spanish">Tengo un libro.</div>
-                    <button class="audio-button" onclick="speak('Ho un libro')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
+                    <div class="italian">
+                        Ho un libro
+                        <button class="audio-icon" onclick="speak('Ho un libro')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
+                    <div class="spanish">Tengo un libro</div>
                 </div>
                 <div class="example-card">
-                    <div class="italian">Lei ha una casa bella.</div>
-                    <div class="spanish">Ella tiene una casa bonita.</div>
-                    <button class="audio-button" onclick="speak('Lei ha una casa bella')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
+                    <div class="italian">
+                        Lei ha una casa bella
+                        <button class="audio-icon" onclick="speak('Lei ha una casa bella')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
+                    <div class="spanish">Ella tiene una casa bonita</div>
                 </div>
                 <div class="example-card">
-                    <div class="italian">Noi abbiamo due gatti.</div>
-                    <div class="spanish">Nosotros tenemos dos gatos.</div>
-                    <button class="audio-button" onclick="speak('Noi abbiamo due gatti')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
+                    <div class="italian">
+                        Noi abbiamo due gatti
+                        <button class="audio-icon" onclick="speak('Noi abbiamo due gatti')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
+                    <div class="spanish">Nosotros tenemos dos gatos</div>
                 </div>
             </div>
 
@@ -426,83 +460,91 @@
             
             <div class="conjugation-grid">
                 <div class="conjugation-card">
-                    <div class="pronoun">io</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">io</div>
+                        <button class="audio-icon" onclick="speak('io vado')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">vado</div>
                     <div class="meaning">yo voy</div>
-                    <button class="audio-button" onclick="speak('io vado')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
 
                 <div class="conjugation-card">
-                    <div class="pronoun">tu</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">tu</div>
+                        <button class="audio-icon" onclick="speak('tu vai')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">vai</div>
                     <div class="meaning">tú vas</div>
-                    <button class="audio-button" onclick="speak('tu vai')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
 
                 <div class="conjugation-card">
-                    <div class="pronoun">lui/lei</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">lui/lei</div>
+                        <button class="audio-icon" onclick="speak('lui va, lei va')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">va</div>
                     <div class="meaning">él/ella va</div>
-                    <button class="audio-button" onclick="speak('lui va, lei va')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
 
                 <div class="conjugation-card">
-                    <div class="pronoun">noi</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">noi</div>
+                        <button class="audio-icon" onclick="speak('noi andiamo')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">andiamo</div>
                     <div class="meaning">nosotros vamos</div>
-                    <button class="audio-button" onclick="speak('noi andiamo')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
 
                 <div class="conjugation-card">
-                    <div class="pronoun">voi</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">voi</div>
+                        <button class="audio-icon" onclick="speak('voi andate')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">andate</div>
                     <div class="meaning">vosotros vais</div>
-                    <button class="audio-button" onclick="speak('voi andate')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
 
                 <div class="conjugation-card">
-                    <div class="pronoun">loro</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">loro</div>
+                        <button class="audio-icon" onclick="speak('loro vanno')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">vanno</div>
                     <div class="meaning">ellos/ellas van</div>
-                    <button class="audio-button" onclick="speak('loro vanno')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
             </div>
 
             <div class="examples-section">
                 <h3>Esempi con "andare":</h3>
                 <div class="example-card">
-                    <div class="italian">Vado al supermercato.</div>
-                    <div class="spanish">Voy al supermercado.</div>
-                    <button class="audio-button" onclick="speak('Vado al supermercato')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
+                    <div class="italian">
+                        Vado al supermercato
+                        <button class="audio-icon" onclick="speak('Vado al supermercato')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
+                    <div class="spanish">Voy al supermercado</div>
                 </div>
                 <div class="example-card">
-                    <div class="italian">Andiamo al cinema.</div>
-                    <div class="spanish">Vamos al cine.</div>
-                    <button class="audio-button" onclick="speak('Andiamo al cinema')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
+                    <div class="italian">
+                        Andiamo al cinema
+                        <button class="audio-icon" onclick="speak('Andiamo al cinema')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
+                    <div class="spanish">Vamos al cine</div>
                 </div>
             </div>
         </div>
@@ -515,83 +557,91 @@
             
             <div class="conjugation-grid">
                 <div class="conjugation-card">
-                    <div class="pronoun">io</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">io</div>
+                        <button class="audio-icon" onclick="speak('io mangio')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">mangio</div>
                     <div class="meaning">yo como</div>
-                    <button class="audio-button" onclick="speak('io mangio')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
 
                 <div class="conjugation-card">
-                    <div class="pronoun">tu</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">tu</div>
+                        <button class="audio-icon" onclick="speak('tu mangi')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">mangi</div>
                     <div class="meaning">tú comes</div>
-                    <button class="audio-button" onclick="speak('tu mangi')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
 
                 <div class="conjugation-card">
-                    <div class="pronoun">lui/lei</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">lui/lei</div>
+                        <button class="audio-icon" onclick="speak('lui mangia, lei mangia')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">mangia</div>
                     <div class="meaning">él/ella come</div>
-                    <button class="audio-button" onclick="speak('lui mangia, lei mangia')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
 
                 <div class="conjugation-card">
-                    <div class="pronoun">noi</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">noi</div>
+                        <button class="audio-icon" onclick="speak('noi mangiamo')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">mangiamo</div>
                     <div class="meaning">nosotros comemos</div>
-                    <button class="audio-button" onclick="speak('noi mangiamo')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
 
                 <div class="conjugation-card">
-                    <div class="pronoun">voi</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">voi</div>
+                        <button class="audio-icon" onclick="speak('voi mangiate')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">mangiate</div>
                     <div class="meaning">vosotros coméis</div>
-                    <button class="audio-button" onclick="speak('voi mangiate')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
 
                 <div class="conjugation-card">
-                    <div class="pronoun">loro</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">loro</div>
+                        <button class="audio-icon" onclick="speak('loro mangiano')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">mangiano</div>
                     <div class="meaning">ellos/ellas comen</div>
-                    <button class="audio-button" onclick="speak('loro mangiano')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
             </div>
 
             <div class="examples-section">
                 <h3>Esempi con "mangiare":</h3>
                 <div class="example-card">
-                    <div class="italian">Mangio una pizza.</div>
-                    <div class="spanish">Como una pizza.</div>
-                    <button class="audio-button" onclick="speak('Mangio una pizza')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
+                    <div class="italian">
+                        Mangio una pizza
+                        <button class="audio-icon" onclick="speak('Mangio una pizza')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
+                    <div class="spanish">Como una pizza</div>
                 </div>
                 <div class="example-card">
-                    <div class="italian">Loro mangiano al ristorante.</div>
-                    <div class="spanish">Ellos comen en el restaurante.</div>
-                    <button class="audio-button" onclick="speak('Loro mangiano al ristorante')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
+                    <div class="italian">
+                        Loro mangiano al ristorante
+                        <button class="audio-icon" onclick="speak('Loro mangiano al ristorante')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
+                    <div class="spanish">Ellos comen en el restaurante</div>
                 </div>
             </div>
         </div>
@@ -604,83 +654,91 @@
             
             <div class="conjugation-grid">
                 <div class="conjugation-card">
-                    <div class="pronoun">io</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">io</div>
+                        <button class="audio-icon" onclick="speak('io dormo')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">dormo</div>
                     <div class="meaning">yo duermo</div>
-                    <button class="audio-button" onclick="speak('io dormo')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
 
                 <div class="conjugation-card">
-                    <div class="pronoun">tu</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">tu</div>
+                        <button class="audio-icon" onclick="speak('tu dormi')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">dormi</div>
                     <div class="meaning">tú duermes</div>
-                    <button class="audio-button" onclick="speak('tu dormi')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
 
                 <div class="conjugation-card">
-                    <div class="pronoun">lui/lei</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">lui/lei</div>
+                        <button class="audio-icon" onclick="speak('lui dorme, lei dorme')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">dorme</div>
                     <div class="meaning">él/ella duerme</div>
-                    <button class="audio-button" onclick="speak('lui dorme, lei dorme')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
 
                 <div class="conjugation-card">
-                    <div class="pronoun">noi</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">noi</div>
+                        <button class="audio-icon" onclick="speak('noi dormiamo')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">dormiamo</div>
                     <div class="meaning">nosotros dormimos</div>
-                    <button class="audio-button" onclick="speak('noi dormiamo')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
 
                 <div class="conjugation-card">
-                    <div class="pronoun">voi</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">voi</div>
+                        <button class="audio-icon" onclick="speak('voi dormite')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">dormite</div>
                     <div class="meaning">vosotros dormís</div>
-                    <button class="audio-button" onclick="speak('voi dormite')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
 
                 <div class="conjugation-card">
-                    <div class="pronoun">loro</div>
+                    <div class="pronoun-section">
+                        <div class="pronoun">loro</div>
+                        <button class="audio-icon" onclick="speak('loro dormono')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
                     <div class="conjugation">dormono</div>
                     <div class="meaning">ellos/ellas duermen</div>
-                    <button class="audio-button" onclick="speak('loro dormono')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
                 </div>
             </div>
 
             <div class="examples-section">
                 <h3>Esempi con "dormire":</h3>
                 <div class="example-card">
-                    <div class="italian">Dormo otto ore.</div>
-                    <div class="spanish">Duermo ocho horas.</div>
-                    <button class="audio-button" onclick="speak('Dormo otto ore')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
+                    <div class="italian">
+                        Dormo otto ore
+                        <button class="audio-icon" onclick="speak('Dormo otto ore')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
+                    <div class="spanish">Duermo ocho horas</div>
                 </div>
                 <div class="example-card">
-                    <div class="italian">Il bambino dorme.</div>
-                    <div class="spanish">El niño duerme.</div>
-                    <button class="audio-button" onclick="speak('Il bambino dorme')">
-                        <i class="fas fa-volume-up"></i>
-                        Ascolta
-                    </button>
+                    <div class="italian">
+                        Il bambino dorme
+                        <button class="audio-icon" onclick="speak('Il bambino dorme')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
+                    <div class="spanish">El niño duerme</div>
                 </div>
             </div>
         </div>
