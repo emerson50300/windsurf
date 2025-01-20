@@ -305,27 +305,149 @@
         }
 
         function getResponse(message) {
-            // Aquí puedes implementar la lógica para generar respuestas
-            // Por ahora, usaremos respuestas simples
+            // Detectar si el usuario está pidiendo frases en italiano
+            const lowerMessage = message.toLowerCase();
+            if (lowerMessage.includes('frases') || lowerMessage.includes('ejemplos') || lowerMessage.includes('frasi')) {
+                // Extraer el número de frases solicitadas
+                const numMatch = message.match(/\d+/);
+                const numFrases = numMatch ? parseInt(numMatch[0]) : 5; // Por defecto 5 frases si no se especifica número
+                
+                return generatePhrases(numFrases);
+            }
+
+            // Respuestas normales del chat
             const responses = {
                 it: [
                     "Capisco quello che vuoi dire. Continua pure!",
                     "Interessante! Vuoi elaborare questo concetto?",
                     "Ottimo! Stai facendo progressi con l'italiano.",
                     "Hai una buona pronuncia! Continuiamo a praticare.",
-                    "Questa è una bella frase! Vuoi provare a dire qualcos'altro?"
+                    "Questa è una bella frase! Vuoi provare a dire qualcos'altro?",
+                    "Vuoi che ti dia alcuni esempi di frasi in italiano?",
+                    "Posso aiutarti con la pronuncia se vuoi.",
+                    "Dimmi se vuoi praticare un tema specifico!"
                 ],
                 es: [
                     "Entiendo lo que quieres decir. ¡Continúa!",
                     "¡Interesante! ¿Quieres elaborar este concepto?",
                     "¡Excelente! Estás progresando con el italiano.",
                     "¡Tienes buena pronunciación! Sigamos practicando.",
-                    "¡Esta es una buena frase! ¿Quieres intentar decir algo más?"
+                    "¡Esta es una buena frase! ¿Quieres intentar decir algo más?",
+                    "¿Quieres que te dé algunos ejemplos de frases en italiano?",
+                    "Puedo ayudarte con la pronunciación si quieres.",
+                    "¡Dime si quieres practicar algún tema específico!"
                 ]
             };
 
             const randomIndex = Math.floor(Math.random() * responses[currentLanguage].length);
             return responses[currentLanguage][randomIndex];
+        }
+
+        function generatePhrases(num) {
+            const phrases = [
+                {
+                    it: "Ciao, come stai?",
+                    es: "Hola, ¿cómo estás?"
+                },
+                {
+                    it: "Mi chiamo Marco e tu?",
+                    es: "Me llamo Marco, ¿y tú?"
+                },
+                {
+                    it: "Dove si trova la stazione?",
+                    es: "¿Dónde está la estación?"
+                },
+                {
+                    it: "Vorrei un caffè, per favore.",
+                    es: "Quisiera un café, por favor."
+                },
+                {
+                    it: "Quanto costa questo?",
+                    es: "¿Cuánto cuesta esto?"
+                },
+                {
+                    it: "Oggi è una bellissima giornata!",
+                    es: "¡Hoy es un día hermoso!"
+                },
+                {
+                    it: "Puoi aiutarmi, per favore?",
+                    es: "¿Puedes ayudarme, por favor?"
+                },
+                {
+                    it: "Parlo un po' di italiano.",
+                    es: "Hablo un poco de italiano."
+                },
+                {
+                    it: "A che ora parte il treno?",
+                    es: "¿A qué hora sale el tren?"
+                },
+                {
+                    it: "Grazie mille per tutto!",
+                    es: "¡Muchas gracias por todo!"
+                },
+                {
+                    it: "Scusi, non ho capito.",
+                    es: "Disculpe, no he entendido."
+                },
+                {
+                    it: "Che bello vederti!",
+                    es: "¡Qué bueno verte!"
+                },
+                {
+                    it: "Mi piace molto l'Italia.",
+                    es: "Me gusta mucho Italia."
+                },
+                {
+                    it: "Posso avere il menu?",
+                    es: "¿Puedo tener el menú?"
+                },
+                {
+                    it: "Che tempo fa oggi?",
+                    es: "¿Qué tiempo hace hoy?"
+                },
+                {
+                    it: "Buon appetito!",
+                    es: "¡Buen provecho!"
+                },
+                {
+                    it: "Come si dice ... in italiano?",
+                    es: "¿Cómo se dice ... en italiano?"
+                },
+                {
+                    it: "Non parlo molto bene l'italiano.",
+                    es: "No hablo muy bien el italiano."
+                },
+                {
+                    it: "Dov'è il bagno?",
+                    es: "¿Dónde está el baño?"
+                },
+                {
+                    it: "Mi sono perso/a.",
+                    es: "Me he perdido."
+                }
+            ];
+
+            // Mezclar el array de frases aleatoriamente
+            const shuffled = [...phrases].sort(() => 0.5 - Math.random());
+            
+            // Tomar el número de frases solicitado
+            const selected = shuffled.slice(0, Math.min(num, phrases.length));
+            
+            // Formatear la respuesta
+            let response = currentLanguage === 'it' ? 
+                "Ecco " + num + " frasi in italiano con la traduzione:\n\n" :
+                "Aquí tienes " + num + " frases en italiano con su traducción:\n\n";
+            
+            selected.forEach((phrase, index) => {
+                response += `${index + 1}. ${phrase.it}\n`;
+                response += `   (${phrase.es})\n\n`;
+            });
+            
+            response += currentLanguage === 'it' ?
+                "\nVuoi praticare queste frasi? Posso aiutarti con la pronuncia!" :
+                "\n¿Quieres practicar estas frases? ¡Puedo ayudarte con la pronunciación!";
+            
+            return response;
         }
     </script>
 </body>
