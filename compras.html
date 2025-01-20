@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,168 +9,147 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         :root {
-            --primary-color: #1a73e8;
-            --secondary-color: #34a853;
-            --background-color: #f8f9fa;
-            --text-dark: #202124;
-            --text-medium: #5f6368;
-            --text-light: #ffffff;
+            --background-white: #ffffff;
+            --primary-color: #4CAF50;
+            --secondary-color: #81C784;
+            --background-color: #F7F9FC;
+            --text-main: #1a1a1a;
+            --text-secondary: #404040;
+            --button-color: #4CAF50;
+            --hover-color: #388E3C;
             --shadow-color: rgba(0, 0, 0, 0.1);
+            --border-radius: 15px;
         }
 
         body {
             background-color: var(--background-color);
-            color: var(--text-dark);
-            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-            line-height: 1.6;
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.7;
             padding-bottom: 70px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
-            background-color: white;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--background-white);
+            border-radius: var(--border-radius);
             box-shadow: 0 2px 4px var(--shadow-color);
-            border-radius: 8px;
+            margin-bottom: 2rem;
         }
 
         h1 {
-            color: var(--primary-color);
-            text-align: center;
-            margin-bottom: 1.5rem;
+            color: var(--text-main);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
         }
 
         .phrases-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
             margin-bottom: 2rem;
         }
 
         .category-card {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
+            background-color: var(--background-white);
+            padding: 2rem;
+            border-radius: var(--border-radius);
             box-shadow: 0 2px 4px var(--shadow-color);
-            transition: transform 0.3s;
+            transition: transform 0.3s ease;
         }
 
         .category-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px var(--shadow-color);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px var(--shadow-color);
         }
 
         .category-title {
-            font-size: 1.2rem;
-            color: var(--primary-color);
+            font-size: 1.5rem;
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .phrase-item {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .italian-phrase {
+            font-size: 1.3rem;
+            color: var(--text-main);
             margin-bottom: 0.5rem;
             font-weight: 500;
         }
 
-        .phrase-text {
-            color: var(--text-medium);
-            font-size: 1rem;
+        .spanish-phrase {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
             margin-bottom: 1rem;
         }
 
-        .italian-phrase {
-            font-size: 1.1rem;
-            color: var(--primary-color);
-            margin-bottom: 0.3rem;
-            font-weight: 500;
-        }
-
-        .spanish-phrase {
-            color: var(--text-medium);
-            font-size: 0.9rem;
-        }
-
-        .play-button {
-            background-color: var(--primary-color);
-            color: var(--text-light);
+        .audio-button {
+            background-color: var(--button-color);
+            color: white;
             border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius);
             cursor: pointer;
-            transition: background-color 0.3s;
-            width: 100%;
+            font-size: 1.1rem;
             display: flex;
             align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+            width: 80%;
+            margin: 0 auto;
             justify-content: center;
-            gap: 8px;
         }
 
-        .play-button:hover {
-            background-color: #1557b0;
+        .audio-button:hover {
+            background-color: var(--hover-color);
+            transform: scale(1.05);
         }
 
-        .play-button i {
+        .audio-button i {
             font-size: 1.2rem;
-        }
-
-        /* Menú inferior mejorado */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 60px;
-            background: var(--text-light);
-            box-shadow: 0 -2px 8px var(--shadow-color);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            z-index: 9999;
-            padding: 5px 0;
-        }
-
-        .nav-item {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            color: var(--text-medium);
-            font-size: 0.8rem;
-            padding: 5px;
-            transition: color 0.3s;
-        }
-
-        .nav-item i {
-            font-size: 1.5rem;
-            margin-bottom: 4px;
-        }
-
-        .nav-item:hover {
-            color: var(--primary-color);
-        }
-
-        .nav-item.active {
-            color: var(--primary-color);
-        }
-
-        .nav-item span {
-            font-weight: 500;
         }
 
         @media (max-width: 768px) {
             .container {
-                padding: 15px;
+                padding: 1rem;
             }
 
             .phrases-grid {
                 grid-template-columns: 1fr;
-                gap: 15px;
+                gap: 1.5rem;
             }
 
             .category-card {
-                padding: 15px;
+                padding: 1.5rem;
             }
 
             .category-title {
-                font-size: 1.1rem;
+                font-size: 1.3rem;
+            }
+
+            .audio-button {
+                width: 100%;
+                padding: 0.8rem 1.5rem;
             }
         }
     </style>
@@ -198,53 +177,97 @@
         <div class="phrases-grid">
             <!-- Tiendas -->
             <div class="category-card">
-                <h2 class="category-title">En la Tienda</h2>
+                <h2 class="category-title">Nel Negozio</h2>
+                
                 <div class="phrase-item">
-                    <div class="phrase-text">
-                        <div class="italian-phrase">Quanto costa?</div>
-                        <div class="spanish-phrase">¿Cuánto cuesta?</div>
-                    </div>
-                    <button class="play-button" onclick="speak('Quanto costa?')">🔊</button>
+                    <div class="italian-phrase">Buongiorno, posso aiutarla?</div>
+                    <div class="spanish-phrase">Buenos días, ¿puedo ayudarle?</div>
+                    <button class="audio-button" onclick="speak('Buongiorno, posso aiutarla?')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
                 </div>
+
                 <div class="phrase-item">
-                    <div class="phrase-text">
-                        <div class="italian-phrase">Vorrei questo, per favore.</div>
-                        <div class="spanish-phrase">Quisiera esto, por favor.</div>
-                    </div>
-                    <button class="play-button" onclick="speak('Vorrei questo, per favore.')">🔊</button>
+                    <div class="italian-phrase">Quanto costa questo?</div>
+                    <div class="spanish-phrase">¿Cuánto cuesta esto?</div>
+                    <button class="audio-button" onclick="speak('Quanto costa questo?')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
                 </div>
+
                 <div class="phrase-item">
-                    <div class="phrase-text">
-                        <div class="italian-phrase">Accettate carte di credito?</div>
-                        <div class="spanish-phrase">¿Aceptan tarjetas de crédito?</div>
-                    </div>
-                    <button class="play-button" onclick="speak('Accettate carte di credito?')">🔊</button>
+                    <div class="italian-phrase">Vorrei provarlo</div>
+                    <div class="spanish-phrase">Me gustaría probarlo</div>
+                    <button class="audio-button" onclick="speak('Vorrei provarlo')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
                 </div>
             </div>
 
             <!-- Restaurante -->
             <div class="category-card">
-                <h2 class="category-title">En el Restaurante</h2>
+                <h2 class="category-title">Al Ristorante</h2>
+                
                 <div class="phrase-item">
-                    <div class="phrase-text">
-                        <div class="italian-phrase">Un tavolo per due, per favore.</div>
-                        <div class="spanish-phrase">Una mesa para dos, por favor.</div>
-                    </div>
-                    <button class="play-button" onclick="speak('Un tavolo per due, per favore.')">🔊</button>
+                    <div class="italian-phrase">Un tavolo per due, per favore</div>
+                    <div class="spanish-phrase">Una mesa para dos, por favor</div>
+                    <button class="audio-button" onclick="speak('Un tavolo per due, per favore')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
                 </div>
+
                 <div class="phrase-item">
-                    <div class="phrase-text">
-                        <div class="italian-phrase">Il menu, per favore.</div>
-                        <div class="spanish-phrase">El menú, por favor.</div>
-                    </div>
-                    <button class="play-button" onclick="speak('Il menu, per favore.')">🔊</button>
+                    <div class="italian-phrase">Il menu, per favore</div>
+                    <div class="spanish-phrase">El menú, por favor</div>
+                    <button class="audio-button" onclick="speak('Il menu, per favore')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
                 </div>
+
                 <div class="phrase-item">
-                    <div class="phrase-text">
-                        <div class="italian-phrase">Il conto, per favore.</div>
-                        <div class="spanish-phrase">La cuenta, por favor.</div>
-                    </div>
-                    <button class="play-button" onclick="speak('Il conto, per favore.')">🔊</button>
+                    <div class="italian-phrase">Il conto, per favore</div>
+                    <div class="spanish-phrase">La cuenta, por favor</div>
+                    <button class="audio-button" onclick="speak('Il conto, per favore')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                </div>
+            </div>
+
+            <!-- Pagos -->
+            <div class="category-card">
+                <h2 class="category-title">Pagamenti</h2>
+                
+                <div class="phrase-item">
+                    <div class="italian-phrase">Posso pagare con carta?</div>
+                    <div class="spanish-phrase">¿Puedo pagar con tarjeta?</div>
+                    <button class="audio-button" onclick="speak('Posso pagare con carta?')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                </div>
+
+                <div class="phrase-item">
+                    <div class="italian-phrase">Avete il POS?</div>
+                    <div class="spanish-phrase">¿Tienen datáfono?</div>
+                    <button class="audio-button" onclick="speak('Avete il POS?')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                </div>
+
+                <div class="phrase-item">
+                    <div class="italian-phrase">Solo in contanti</div>
+                    <div class="spanish-phrase">Solo en efectivo</div>
+                    <button class="audio-button" onclick="speak('Solo in contanti')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
                 </div>
             </div>
         </div>
@@ -305,6 +328,33 @@
         </a>
     </nav>
 
-    <script src="script.js"></script>
+    <script>
+        const synth = window.speechSynthesis;
+        let voices = [];
+
+        function loadVoices() {
+            voices = synth.getVoices();
+        }
+
+        loadVoices();
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = loadVoices;
+        }
+
+        function speak(text) {
+            if (synth.speaking) {
+                console.error('speechSynthesis.speaking');
+                return;
+            }
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'it-IT';
+            utterance.pitch = 1;
+            utterance.rate = 0.9;
+            utterance.volume = 1;
+
+            synth.speak(utterance);
+        }
+    </script>
 </body>
 </html>
