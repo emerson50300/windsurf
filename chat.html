@@ -217,6 +217,8 @@
 
     <script>
         let currentLanguage = 'it';
+        let userLevel = 'none'; // Nivel del usuario: none, principiante, intermedio, avanzado
+        let currentTopic = ''; // Tema actual que se está practicando
         const synth = window.speechSynthesis;
 
         function setLanguage(lang) {
@@ -305,42 +307,188 @@
         }
 
         function getResponse(message) {
-            // Detectar si el usuario está pidiendo frases en italiano
             const lowerMessage = message.toLowerCase();
-            if (lowerMessage.includes('frases') || lowerMessage.includes('ejemplos') || lowerMessage.includes('frasi')) {
-                // Extraer el número de frases solicitadas
-                const numMatch = message.match(/\d+/);
-                const numFrases = numMatch ? parseInt(numMatch[0]) : 5; // Por defecto 5 frases si no se especifica número
-                
-                return generatePhrases(numFrases);
+
+            // Si el usuario aún no tiene nivel, preguntar
+            if (userLevel === 'none') {
+                if (lowerMessage.includes('principiante') || lowerMessage.includes('básico')) {
+                    userLevel = 'principiante';
+                    return currentLanguage === 'it' ?
+                        "Perfetto! Iniziamo con le basi. Vuoi imparare:\n1. Saluti e presentazioni\n2. Numeri\n3. Frasi di base\n\nScegli un numero o dimmi cosa vuoi imparare!" :
+                        "¡Perfecto! Empecemos con lo básico. ¿Qué quieres aprender?\n1. Saludos y presentaciones\n2. Números\n3. Frases básicas\n\n¡Elige un número o dime qué quieres aprender!";
+                } else if (lowerMessage.includes('intermedio')) {
+                    userLevel = 'intermedio';
+                    return currentLanguage === 'it' ?
+                        "Ottimo! Possiamo lavorare su:\n1. Conversazione\n2. Grammatica\n3. Vocabolario specifico\n\nCosa preferisci?" :
+                        "¡Excelente! Podemos trabajar en:\n1. Conversación\n2. Gramática\n3. Vocabulario específico\n\n¿Qué prefieres?";
+                } else if (lowerMessage.includes('avanzado')) {
+                    userLevel = 'avanzado';
+                    return currentLanguage === 'it' ?
+                        "Fantastico! Possiamo concentrarci su:\n1. Espressioni idiomatiche\n2. Letteratura\n3. Cultura italiana\n\nDa dove vuoi iniziare?" :
+                        "¡Fantástico! Podemos concentrarnos en:\n1. Expresiones idiomáticas\n2. Literatura\n3. Cultura italiana\n\n¿Por dónde quieres empezar?";
+                } else {
+                    return currentLanguage === 'it' ?
+                        "Per iniziare, dimmi il tuo livello di italiano:\n- Principiante\n- Intermedio\n- Avanzato" :
+                        "Para empezar, dime tu nivel de italiano:\n- Principiante\n- Intermedio\n- Avanzado";
+                }
             }
 
-            // Respuestas normales del chat
-            const responses = {
-                it: [
-                    "Capisco quello che vuoi dire. Continua pure!",
-                    "Interessante! Vuoi elaborare questo concetto?",
-                    "Ottimo! Stai facendo progressi con l'italiano.",
-                    "Hai una buona pronuncia! Continuiamo a praticare.",
-                    "Questa è una bella frase! Vuoi provare a dire qualcos'altro?",
-                    "Vuoi che ti dia alcuni esempi di frasi in italiano?",
-                    "Posso aiutarti con la pronuncia se vuoi.",
-                    "Dimmi se vuoi praticare un tema specifico!"
+            // Detectar tipo de solicitud
+            if (lowerMessage.includes('traduc')) {
+                return handleTranslation(message);
+            } else if (lowerMessage.includes('vocabulario') || lowerMessage.includes('palabras')) {
+                return handleVocabulary(message);
+            } else if (lowerMessage.includes('gramática') || lowerMessage.includes('grammatica')) {
+                return handleGrammar(message);
+            } else if (lowerMessage.includes('ejercicio') || lowerMessage.includes('practica')) {
+                return handleExercise(message);
+            } else if (lowerMessage.includes('frases') || lowerMessage.includes('ejemplos')) {
+                return generatePhrases(getRequestedNumber(message));
+            } else if (lowerMessage.includes('historia') || lowerMessage.includes('diálogo')) {
+                return generateStory();
+            }
+
+            // Respuesta por defecto
+            return getDefaultResponse();
+        }
+
+        function getRequestedNumber(message) {
+            const numMatch = message.match(/\d+/);
+            return numMatch ? parseInt(numMatch[0]) : 5;
+        }
+
+        function handleTranslation(message) {
+            // Implementar lógica de traducción básica
+            const commonTranslations = {
+                'hola': 'ciao',
+                'gracias': 'grazie',
+                'por favor': 'per favore',
+                'buenos días': 'buongiorno',
+                'buenas noches': 'buonanotte',
+                'cómo estás': 'come stai',
+                'me llamo': 'mi chiamo'
+                // Agregar más traducciones
+            };
+
+            let response = currentLanguage === 'it' ?
+                "Ecco alcune traduzioni comuni:\n\n" :
+                "Aquí tienes algunas traducciones comunes:\n\n";
+
+            for (const [es, it] of Object.entries(commonTranslations)) {
+                response += `${es} → ${it}\n`;
+            }
+
+            return response;
+        }
+
+        function handleVocabulary(message) {
+            const vocabulary = {
+                comida: [
+                    {it: 'pane', es: 'pan'},
+                    {it: 'pasta', es: 'pasta'},
+                    {it: 'carne', es: 'carne'},
+                    {it: 'pesce', es: 'pescado'},
+                    {it: 'frutta', es: 'fruta'}
                 ],
-                es: [
-                    "Entiendo lo que quieres decir. ¡Continúa!",
-                    "¡Interesante! ¿Quieres elaborar este concepto?",
-                    "¡Excelente! Estás progresando con el italiano.",
-                    "¡Tienes buena pronunciación! Sigamos practicando.",
-                    "¡Esta es una buena frase! ¿Quieres intentar decir algo más?",
-                    "¿Quieres que te dé algunos ejemplos de frases en italiano?",
-                    "Puedo ayudarte con la pronunciación si quieres.",
-                    "¡Dime si quieres practicar algún tema específico!"
+                viajes: [
+                    {it: 'biglietto', es: 'billete'},
+                    {it: 'treno', es: 'tren'},
+                    {it: 'aereo', es: 'avión'},
+                    {it: 'albergo', es: 'hotel'},
+                    {it: 'passaporto', es: 'pasaporte'}
+                ],
+                clima: [
+                    {it: 'sole', es: 'sol'},
+                    {it: 'pioggia', es: 'lluvia'},
+                    {it: 'caldo', es: 'calor'},
+                    {it: 'freddo', es: 'frío'},
+                    {it: 'vento', es: 'viento'}
                 ]
             };
 
-            const randomIndex = Math.floor(Math.random() * responses[currentLanguage].length);
-            return responses[currentLanguage][randomIndex];
+            let topic = 'comida'; // tema por defecto
+            if (message.includes('viaj')) topic = 'viajes';
+            if (message.includes('clima')) topic = 'clima';
+
+            let response = currentLanguage === 'it' ?
+                `Vocabolario sul tema "${topic}":\n\n` :
+                `Vocabulario sobre "${topic}":\n\n`;
+
+            vocabulary[topic].forEach(word => {
+                response += `${word.it} → ${word.es}\n`;
+            });
+
+            return response;
+        }
+
+        function handleGrammar(message) {
+            const grammarLessons = {
+                principiante: [
+                    "Artículos definidos:\nil (masc. singular)\nla (fem. singular)\ni (masc. plural)\nle (fem. plural)\n\nEjemplos:\nil libro → el libro\nla casa → la casa",
+                    "Presente simple del verbo 'essere' (ser/estar):\nIo sono\nTu sei\nLui/Lei è\nNoi siamo\nVoi siete\nLoro sono"
+                ],
+                intermedio: [
+                    "Pasado próximo (passato prossimo):\nho mangiato → he comido\nsei andato → has ido\nè venuta → ha venido",
+                    "Pronombres directos:\nmi → me\nti → te\nlo/la → lo/la\nci → nos\nvi → os\nli/le → los/las"
+                ],
+                avanzado: [
+                    "Subjuntivo presente:\nche io sia\nche tu sia\nche lui/lei sia\nche noi siamo\nche voi siate\nche loro siano",
+                    "Condicional:\nIo vorrei → yo querría\nTu potresti → tú podrías\nLui/Lei dovrebbe → él/ella debería"
+                ]
+            };
+
+            const lessons = grammarLessons[userLevel];
+            const randomLesson = lessons[Math.floor(Math.random() * lessons.length)];
+
+            return currentLanguage === 'it' ?
+                "Lezione di grammatica:\n\n" + randomLesson :
+                "Lección de gramática:\n\n" + randomLesson;
+        }
+
+        function handleExercise(message) {
+            const exercises = {
+                principiante: [
+                    "Completa la frase:\nIo _____ Marco. (sono/sei/è)",
+                    "Traduce al italiano:\n'Hola, ¿cómo estás?'",
+                    "¿Qué artículo usar?\n___ pizza è buona. (il/la/i/le)"
+                ],
+                intermedio: [
+                    "Conjuga en pasado próximo:\nIo (mangiare) la pasta.",
+                    "Elige el pronombre correcto:\n___ vedo al parco. (lo/la/li/le)",
+                    "Traduce usando el condicional:\n'Me gustaría un café'"
+                ],
+                avanzado: [
+                    "Usa el subjuntivo:\nPenso che lui _____ (essere) felice.",
+                    "Transforma en pasiva:\n'Il gatto mangia il pesce'",
+                    "Usa el gerundio:\n'Mientras como, leo el periódico'"
+                ]
+            };
+
+            const levelExercises = exercises[userLevel];
+            const randomExercise = levelExercises[Math.floor(Math.random() * levelExercises.length)];
+
+            return currentLanguage === 'it' ?
+                "Esercizio:\n\n" + randomExercise + "\n\nScrivi la tua risposta!" :
+                "Ejercicio:\n\n" + randomExercise + "\n\n¡Escribe tu respuesta!";
+        }
+
+        function generateStory() {
+            const stories = [
+                {
+                    title: "Al Caffè",
+                    it: "Marco entra in un caffè. 'Buongiorno!' dice al barista. 'Un cappuccino, per favore.' Il barista sorride. 'Certo! Vuole anche un cornetto?' 'Sì, grazie!' risponde Marco.",
+                    es: "Marco entra en un café. '¡Buenos días!' dice al barista. 'Un cappuccino, por favor.' El barista sonríe. '¡Claro! ¿Quiere también un croissant?' 'Sí, ¡gracias!' responde Marco."
+                },
+                {
+                    title: "In Stazione",
+                    it: "Anna è in stazione. 'Scusi, a che ora parte il treno per Roma?' chiede a un impiegato. 'Il prossimo treno parte tra dieci minuti, dal binario tre.' 'Grazie mille!' dice Anna.",
+                    es: "Ana está en la estación. 'Disculpe, ¿a qué hora sale el tren a Roma?' pregunta a un empleado. 'El próximo tren sale en diez minutos, desde el andén tres.' '¡Muchas gracias!' dice Ana."
+                }
+            ];
+
+            const randomStory = stories[Math.floor(Math.random() * stories.length)];
+            
+            return `${randomStory.title}\n\nItaliano:\n${randomStory.it}\n\nEspañol:\n${randomStory.es}`;
         }
 
         function generatePhrases(num) {
@@ -448,6 +596,25 @@
                 "\n¿Quieres practicar estas frases? ¡Puedo ayudarte con la pronunciación!";
             
             return response;
+        }
+
+        function getDefaultResponse() {
+            const responses = {
+                it: [
+                    "Come posso aiutarti oggi? Possiamo:\n1. Praticare vocabolario\n2. Studiare grammatica\n3. Fare esercizi\n4. Leggere storie\n5. Tradurre frasi",
+                    "Hai qualche domanda specifica sull'italiano?",
+                    "Vuoi provare un esercizio di conversazione?",
+                    "Posso aiutarti con la pronuncia se vuoi!"
+                ],
+                es: [
+                    "¿Cómo puedo ayudarte hoy? Podemos:\n1. Practicar vocabulario\n2. Estudiar gramática\n3. Hacer ejercicios\n4. Leer historias\n5. Traducir frases",
+                    "¿Tienes alguna pregunta específica sobre el italiano?",
+                    "¿Quieres probar un ejercicio de conversación?",
+                    "¡Puedo ayudarte con la pronunciación si quieres!"
+                ]
+            };
+
+            return responses[currentLanguage][Math.floor(Math.random() * responses[currentLanguage].length)];
         }
     </script>
 </body>
