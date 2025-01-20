@@ -1,0 +1,502 @@
+/* Variables globales */
+:root {
+    --primary-color: #4CAF50;
+    --primary-dark: #388E3C;
+    --primary-light: #81C784;
+    --text-main: #2E3A59;
+    --background-main: #F7F9FC;
+    --background-white: #ffffff;
+    --shadow-soft: 0 2px 4px rgba(0,0,0,0.1);
+    --shadow-medium: 0 4px 6px rgba(0,0,0,0.1);
+    --border-radius: 15px;
+    --spacing-unit: 1rem;
+    --header-height: 60px;
+    --bottom-nav-height: 60px;
+    --accent-color: #FF5722;
+    --text-secondary: #666666;
+    --button-color: #388E3C;
+    --hover-color: #81C784;
+    --overlay-color: rgba(0,0,0,0.5);
+    --border-light: #ddd;
+    --verb-color: #2196F3;
+    --verb-background: #E3F2FD;
+    --verb-hover: #1976D2;
+    --conjugation-color: #673AB7;
+    --conjugation-background: #EDE7F6;
+}
+
+/* Reset y estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: var(--text-main);
+    background-color: var(--background-main);
+    overflow-x: hidden;
+    padding-bottom: var(--bottom-nav-height);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Header fijo */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-height);
+    background: var(--background-white);
+    box-shadow: var(--shadow-soft);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.header h1 {
+    font-size: 1.25rem;
+    margin: 0;
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    padding-top: calc(var(--header-height) + 20px);
+}
+
+/* Navegación inferior */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--bottom-nav-height);
+    background: var(--background-white);
+    box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 1000;
+}
+
+.nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.75rem;
+}
+
+.nav-item i {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.nav-item.active {
+    color: var(--primary-color);
+}
+
+/* Tarjetas */
+.card {
+    background: var(--background-white);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.3s ease;
+}
+
+/* Grid responsivo */
+.grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* Botones */
+.button, button {
+    background-color: var(--button-color);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover, button:hover {
+    background-color: var(--hover-color);
+}
+
+/* Enlaces */
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--hover-color);
+}
+
+/* Títulos */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-main);
+    margin-bottom: 1rem;
+}
+
+/* Cajas de explicación */
+.explanation-box {
+    background-color: var(--background-white);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+/* Botones de audio */
+.audio-button {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.audio-button:hover {
+    background-color: var(--hover-color);
+}
+
+/* Tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}
+
+th {
+    background-color: var(--background-main);
+    color: var(--text-main);
+    padding: 12px;
+    text-align: left;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+/* Formularios */
+input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
+    background-color: var(--background-white);
+    color: var(--text-main);
+}
+
+/* Modal */
+.modal {
+    background-color: var(--overlay-color);
+}
+
+.modal-content {
+    background-color: var(--background-white);
+    color: var(--text-main);
+}
+
+/* Verbos */
+.verb-button {
+    background-color: var(--background-white);
+    color: var(--text-main);
+    border: 1px solid var(--border-light);
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 1rem;
+}
+
+.verb-button:hover {
+    background-color: var(--background-main);
+}
+
+.verb-title {
+    color: var(--accent-color);
+    font-size: 24px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.verb-type {
+    color: var(--text-secondary);
+    font-style: italic;
+    margin-bottom: 20px;
+}
+
+.conjugation-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: var(--background-white);
+}
+
+.conjugation-table th {
+    background-color: var(--background-light);
+    padding: 12px;
+    text-align: left;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.conjugation-table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+/* Estilos para verbos y conjugaciones */
+.italian {
+    color: var(--verb-color);
+    font-weight: 600;
+    font-size: 1.2rem;
+    background-color: var(--verb-background);
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    display: inline-block;
+    margin: 0.2rem 0;
+    transition: all 0.3s ease;
+}
+
+.italian:hover {
+    color: var(--verb-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-soft);
+}
+
+.conjugation {
+    color: var(--conjugation-color);
+    background-color: var(--conjugation-background);
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 500;
+    margin: 0.1rem 0;
+    display: inline-block;
+}
+
+.verb-example {
+    border-left: 3px solid var(--verb-color);
+    padding-left: 1rem;
+    margin: 1rem 0;
+    background-color: var(--background-white);
+    padding: 1rem;
+    border-radius: 0 8px 8px 0;
+    box-shadow: var(--shadow-soft);
+}
+
+/* Estilos para el alfabeto y botón de escuchar */
+.alphabet-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.letter-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--background-white);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-soft);
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+.listen-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background-color: var(--accent-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.listen-button:hover {
+    background-color: var(--hover-color);
+    transform: translateY(-2px);
+}
+
+.listen-button i {
+    font-size: 1.1rem;
+}
+
+@media (min-width: 769px) {
+    .letter-item {
+        width: calc(20% - 1rem);
+        margin-bottom: 1rem;
+    }
+    
+    .listen-button {
+        width: auto;
+    }
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+
+    .container {
+        padding: 0.75rem;
+        padding-top: calc(var(--header-height) + 0.75rem);
+    }
+
+    .grid {
+        gap: 0.75rem;
+    }
+
+    .card {
+        padding: 0.75rem;
+    }
+
+    .button, button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 12px;
+    }
+
+    .container {
+        padding: 0.5rem;
+        padding-top: calc(var(--header-height) + 0.5rem);
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header h1 {
+        font-size: 1.1rem;
+    }
+
+    .nav-item {
+        font-size: 0.7rem;
+    }
+}
+
+/* Mejoras táctiles */
+@media (hover: none) {
+    .button:active, button:active {
+        transform: scale(0.98);
+    }
+}
+
+/* Modo oscuro */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-main: #121212;
+        --background-white: #1e1e1e;
+        --text-main: #ffffff;
+        --text-secondary: #b0b0b0;
+        --primary-light: #1b5e20;
+    }
+}
+
+/* Mejoras de rendimiento */
+* {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+img, video {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Estilos para la página de verbos */
+.verbs-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .verbs-container {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 10px;
+        padding: 10px;
+    }
+    
+    .verb-button {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    .modal-content {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+    }
+
+    .conjugation-table {
+        font-size: 14px;
+    }
+
+    .conjugation-table th,
+    .conjugation-table td {
+        padding: 8px;
+    }
+
+    .verb-title {
+        font-size: 20px;
+    }
+
+    .audio-button {
+        width: 28px;
+        height: 28px;
+        font-size: 1em;
+    }
+}
