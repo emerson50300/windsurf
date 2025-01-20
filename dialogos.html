@@ -1,28 +1,32 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diálogos en Italiano</title>
+    <title>Dialoghi Pratici - Italiano</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         :root {
-            --primary-color: #2196F3;
-            --hover-color: #1976D2;
-            --light-bg: #f5f5f5;
-            --shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            --primary-color: #FF6B6B;
+            --secondary-color: #4ECDC4;
+            --accent-color: #45B7AF;
+            --background-color: #F7F9FC;
+            --surface-color: #FFFFFF;
+            --text-primary: #2C3E50;
+            --text-secondary: #34495E;
+            --success-color: #2ECC71;
+            --error-color: #E74C3C;
+            --border-radius: 12px;
+            --shadow-elevation-1: 0 2px 4px rgba(0,0,0,0.1);
+            --shadow-elevation-2: 0 4px 8px rgba(0,0,0,0.15);
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-primary);
             line-height: 1.6;
-            background-color: var(--light-bg);
+            margin: 0;
             padding: 20px;
         }
 
@@ -30,329 +34,338 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
         }
 
         h1 {
             color: var(--primary-color);
             text-align: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .description {
-            text-align: center;
+            font-size: 2.5rem;
             margin-bottom: 2rem;
-            color: #666;
-            font-size: 1.1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
-        .dialogues-grid {
+        .category-section {
+            background: var(--surface-color);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-elevation-2);
+            border-left: 5px solid var(--secondary-color);
+            transition: transform 0.3s ease;
+        }
+
+        .category-section:hover {
+            transform: translateY(-4px);
+        }
+
+        .category-title {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .category-title i {
+            color: var(--secondary-color);
+        }
+
+        .dialog-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1rem;
-            padding: 1rem;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
         }
 
-        .dialogue-item {
-            background: white;
-            padding: 1rem;
-            border-radius: 8px;
-            box-shadow: var(--shadow);
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            border: 1px solid #eee;
+        .dialog-card {
+            background: var(--surface-color);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-elevation-1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(78, 205, 196, 0.2);
         }
 
-        .dialogue-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-            border-color: var(--primary-color);
+        .dialog-card:hover {
+            transform: translateX(8px);
+            box-shadow: var(--shadow-elevation-2);
+            border-color: var(--secondary-color);
         }
 
-        .category-header {
-            color: var(--primary-color);
-            margin: 2rem 0 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary-color);
-        }
-
-        .back-button {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            background-color: var(--primary-color);
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
+        .dialog-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 1rem;
-            transition: background-color 0.2s;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--secondary-color);
         }
 
-        .back-button:hover {
-            background-color: var(--hover-color);
+        .dialog-type {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .audio-icon {
+            background: none;
+            border: none;
+            color: var(--secondary-color);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .audio-icon:hover {
+            background: rgba(78, 205, 196, 0.1);
+            transform: scale(1.1);
+            color: var(--primary-color);
+        }
+
+        .audio-icon i {
+            font-size: 1.2rem;
+        }
+
+        .dialog-content {
+            margin-bottom: 1rem;
+        }
+
+        .speaker {
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        .italian {
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .spanish {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-style: italic;
+        }
+
+        .context {
+            margin-top: 1rem;
+            padding-top: 0.5rem;
+            border-top: 1px dashed var(--secondary-color);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
         }
 
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
             }
+            
+            .category-section {
+                padding: 1.5rem;
+            }
 
-            .dialogues-grid {
+            .dialog-grid {
                 grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <a href="index.html" class="back-button">← Volver al inicio</a>
-    
     <div class="container">
-        <h1>Diálogos en Italiano</h1>
-        <p class="description">Sesenta diálogos gratuitos en italiano (con transcripciones), que comienzan fáciles y gradualmente se vuelven más difíciles. ¡Escuche varias veces ANTES de mirar la transcripción!</p>
+        <h1>Dialoghi Pratici</h1>
 
-        <div class="dialogues-grid">
-            <a href="dialogos/cambio.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">💱</div>
-                <div>Cambiare i soldi</div>
-            </a>
-            <a href="dialogos/riparare.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🔧</div>
-                <div>Riparare la macchina</div>
-            </a>
-            <a href="dialogos/noleggio.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🚲</div>
-                <div>Noleggio macchine bici</div>
-            </a>
-            <a href="dialogos/bar.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">☕</div>
-                <div>Al Bar</div>
-            </a>
-            <a href="dialogos/pizza.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🍕</div>
-                <div>Pizza d'asporto</div>
-            </a>
-            <a href="dialogos/ristorante.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🍽️</div>
-                <div>Prenotare un ristorante</div>
-            </a>
-            <a href="dialogos/street-food.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🌭</div>
-                <div>Comida callejera</div>
-            </a>
-            <a href="dialogos/pub.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🍺</div>
-                <div>Al pub</div>
-            </a>
-            <a href="dialogos/scuola-ricerca.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🔍</div>
-                <div>La ricerca della scuola di lingua italiana</div>
-            </a>
-            <a href="dialogos/scuola-prenotazione.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">📝</div>
-                <div>Prenotazione di una scuola di italiano</div>
-            </a>
-            <a href="dialogos/scuola-sistemazione.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🏠</div>
-                <div>Scuola d'italiano: sistemazione</div>
-            </a>
-            <a href="dialogos/scuola-estancia.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">👪</div>
-                <div>Scuola d'italiano: estancia en casa de familia</div>
-            </a>
-            <a href="dialogos/scuola-primo-giorno.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">📚</div>
-                <div>Scuola d'italiano: primo giorno in classe</div>
-            </a>
-            <a href="dialogos/scuola-aiuto.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🤔</div>
-                <div>Scuola d'italiano: chiedere aiuto</div>
-            </a>
-            <a href="dialogos/internet-cafe.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">💻</div>
-                <div>Internet Cafè</div>
-            </a>
-            <a href="dialogos/ufficio-postale.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">📨</div>
-                <div>Ufficio postale (mandare/ricevere un pacco)</div>
-            </a>
-            <a href="dialogos/problemi-dottore.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🏥</div>
-                <div>Problemi, Dottore</div>
-            </a>
-            <a href="dialogos/problemi-dentista.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🦷</div>
-                <div>Problemi, Dentista</div>
-            </a>
-            <a href="dialogos/problemi-crimine.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🚔</div>
-                <div>Problemi, Raccontare una crimine</div>
-            </a>
-            <a href="dialogos/problemi-aiuto.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🤝</div>
-                <div>Problemi, Chiedere aiuto</div>
-            </a>
-            <a href="dialogos/problemi-bagaglio.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🧳</div>
-                <div>Problemi, Perdere il bagaglio</div>
-            </a>
-            <a href="dialogos/problemi-arrestato.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🚫</div>
-                <div>Problemi, Venire arrestato</div>
-            </a>
-            <a href="dialogos/problemi-crollo.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">😵</div>
-                <div>Problemi, Avere un crollo</div>
-            </a>
-            <a href="dialogos/problemi-incidente.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🚨</div>
-                <div>Problemi, Restare coinvolto in un incidente</div>
-            </a>
-            <a href="dialogos/problemi-reclami.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">📝</div>
-                <div>Problemi, Reclami</div>
-            </a>
-            <a href="dialogos/shopping-sim.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">📱</div>
-                <div>Shopping, Comprare una SIM e uno smartphone</div>
-            </a>
-            <a href="dialogos/shopping-supermercato.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🛍️</div>
-                <div>Compras, Supermercato</div>
-            </a>
-            <a href="dialogos/shopping-vestiti.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">👕</div>
-                <div>Compras, Vestiti</div>
-            </a>
-            <a href="dialogos/shopping-macelleria.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🍖️</div>
-                <div>Compras, Macelleria</div>
-            </a>
-            <a href="dialogos/shopping-pescheria.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🐟</div>
-                <div>Compras, Pescheria</div>
-            </a>
-            <a href="dialogos/shopping-enoteca.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🍷</div>
-                <div>Compras, Enoteca</div>
-            </a>
-            <a href="dialogos/shopping-fruttivendolo.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🍉</div>
-                <div>Compras, Fruttivendolo</div>
-            </a>
-            <a href="dialogos/shopping-panetteria.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🍞</div>
-                <div>Compras, Panetteria</div>
-            </a>
-            <a href="dialogos/shopping-edicola.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">📰</div>
-                <div>Compras, Edicola</div>
-            </a>
-            <a href="dialogos/shopping-tabaccheria.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🚭</div>
-                <div>Compras, Tabaccheria</div>
-            </a>
-            <a href="dialogos/shopping-parrucchieri.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">💇‍♀️</div>
-                <div>Compras, Parrucchieri</div>
-            </a>
-            <a href="dialogos/shopping-tatuaggi.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🎨</div>
-                <div>Compras, Studio di tatuaggi</div>
-            </a>
-            <a href="dialogos/shopping-libreria.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">📚</div>
-                <div>Compras, Librería</div>
-            </a>
-            <a href="dialogos/shopping-lavanderia.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🛍️</div>
-                <div>Compras, Lavanderia</div>
-            </a>
-            <a href="dialogos/shopping-gelateria.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🍦</div>
-                <div>Compras, Gelateria</div>
-            </a>
-            <a href="dialogos/shopping-contrattare.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">💰</div>
-                <div>Compras, Contrattare (al mercato delle pulci)</div>
-            </a>
-            <a href="dialogos/shopping-farmacia.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">💊</div>
-                <div>Compras, Farmacia</div>
-            </a>
-            <a href="dialogos/shopping-scarpe.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">👠</div>
-                <div>Compras, Negozio di scarpe</div>
-            </a>
-            <a href="dialogos/sport-palestra.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🏋️‍♀️</div>
-                <div>Sport, Iscriversi en palestra</div>
-            </a>
-            <a href="dialogos/sport-piscina.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🏊‍♀️</div>
-                <div>Deporte, Piscina</div>
-            </a>
-            <a href="dialogos/sport-sci.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🎿</div>
-                <div>Deporte, Noleggio sci</div>
-            </a>
-            <a href="dialogos/contesti-presentarsi.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">👋</div>
-                <div>Contesti sociali, Presentarsi</div>
-            </a>
-            <a href="dialogos/contesti-opinione.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">💭</div>
-                <div>Contesti sociali, Esprimere la propria opinione</div>
-            </a>
-            <a href="dialogos/contesti-invitare.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">📨</div>
-                <div>Contesti sociali, Invitare qualcuno</div>
-            </a>
-            <a href="dialogos/contesti-rifiutare.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">❌</div>
-                <div>Contesti sociali, Rifiutare un invito</div>
-            </a>
-            <a href="dialogos/viaggio-informazioni.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🗺️</div>
-                <div>In viaggio, Chiedere informazioni stradali</div>
-            </a>
-            <a href="dialogos/viaggio-biglietteria.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🎫</div>
-                <div>In viaggio, Alla biglietteria della stazione</div>
-            </a>
-            <a href="dialogos/viaggio-taxi-prenotare.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">📱</div>
-                <div>In viaggio, Prenotare un taxi</div>
-            </a>
-            <a href="dialogos/viaggio-taxi.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🚕</div>
-                <div>En viaggio, En taxi</div>
-            </a>
-            <a href="dialogos/viaggio-hotel.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🏨</div>
-                <div>En viaggio, Check-in/check-out del hotel</div>
-            </a>
-            <a href="dialogos/viaggio-aeroporto.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">✈️</div>
-                <div>In viaggio, Fare il check-in all'aeroporto</div>
-            </a>
-            <a href="dialogos/viaggio-stanza.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🏠</div>
-                <div>In viaggio, Affittare una stanza</div>
-            </a>
-            <a href="dialogos/viaggio-turismo.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">ℹ️</div>
-                <div>In viaggio, Ufficio informazioni turistiche</div>
-            </a>
-            <a href="dialogos/viaggio-citta.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🏛️</div>
-                <div>In viaggio, Un giro per la città</div>
-            </a>
-            <a href="dialogos/viaggio-casa.html" class="dialogue-item" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                <div style="font-size: 1.5rem; color: #2196F3;">🏡</div>
-                <div>In viaggio, Cambiare casa</div>
-            </a>
+        <div class="category-section">
+            <div class="category-title">
+                <i class="fas fa-handshake"></i>
+                Saluti e Presentazioni
+            </div>
+            <div class="dialog-grid">
+                <div class="dialog-card">
+                    <div class="dialog-header">
+                        <div class="dialog-type">Primo Incontro</div>
+                        <button class="audio-icon" onclick="speak('Ciao! Come ti chiami? Mi chiamo Marco. Piacere di conoscerti!')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
+                    <div class="dialog-content">
+                        <div class="italian">
+                            <span class="speaker">A:</span> Ciao! Come ti chiami?<br>
+                            <span class="speaker">B:</span> Mi chiamo Marco.<br>
+                            <span class="speaker">A:</span> Piacere di conoscerti!
+                        </div>
+                        <div class="spanish">
+                            <span class="speaker">A:</span> ¡Hola! ¿Cómo te llamas?<br>
+                            <span class="speaker">B:</span> Me llamo Marco.<br>
+                            <span class="speaker">A:</span> ¡Encantado de conocerte!
+                        </div>
+                    </div>
+                    <div class="context">Situación: Conociendo a alguien por primera vez</div>
+                </div>
+
+                <div class="dialog-card">
+                    <div class="dialog-header">
+                        <div class="dialog-type">Saluti Formali</div>
+                        <button class="audio-icon" onclick="speak('Buongiorno signora Rossi! Come sta? Molto bene, grazie. E Lei?')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
+                    <div class="dialog-content">
+                        <div class="italian">
+                            <span class="speaker">A:</span> Buongiorno signora Rossi!<br>
+                            <span class="speaker">B:</span> Come sta?<br>
+                            <span class="speaker">A:</span> Molto bene, grazie. E Lei?
+                        </div>
+                        <div class="spanish">
+                            <span class="speaker">A:</span> ¡Buenos días señora Rossi!<br>
+                            <span class="speaker">B:</span> ¿Cómo está?<br>
+                            <span class="speaker">A:</span> Muy bien, gracias. ¿Y usted?
+                        </div>
+                    </div>
+                    <div class="context">Situación: Saludando formalmente a una persona</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <div class="category-title">
+                <i class="fas fa-shopping-bag"></i>
+                Shopping e Negozi
+            </div>
+            <div class="dialog-grid">
+                <div class="dialog-card">
+                    <div class="dialog-header">
+                        <div class="dialog-type">Abbigliamento</div>
+                        <button class="audio-icon" onclick="speak('Scusi, posso provare questa maglietta? Certo, il camerino è là. Grazie mille!')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
+                    <div class="dialog-content">
+                        <div class="italian">
+                            <span class="speaker">Cliente:</span> Scusi, posso provare questa maglietta?<br>
+                            <span class="speaker">Commesso:</span> Certo, il camerino è là.<br>
+                            <span class="speaker">Cliente:</span> Grazie mille!
+                        </div>
+                        <div class="spanish">
+                            <span class="speaker">Cliente:</span> Disculpe, ¿puedo probarme esta camiseta?<br>
+                            <span class="speaker">Vendedor:</span> Claro, el probador está allí.<br>
+                            <span class="speaker">Cliente:</span> ¡Muchas gracias!
+                        </div>
+                    </div>
+                    <div class="context">Situación: Probándose ropa en una tienda</div>
+                </div>
+
+                <div class="dialog-card">
+                    <div class="dialog-header">
+                        <div class="dialog-type">Pagamento</div>
+                        <button class="audio-icon" onclick="speak('Quanto costa in totale? Sono cinquanta euro. Posso pagare con carta?')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
+                    <div class="dialog-content">
+                        <div class="italian">
+                            <span class="speaker">Cliente:</span> Quanto costa in totale?<br>
+                            <span class="speaker">Cassiere:</span> Sono cinquanta euro.<br>
+                            <span class="speaker">Cliente:</span> Posso pagare con carta?
+                        </div>
+                        <div class="spanish">
+                            <span class="speaker">Cliente:</span> ¿Cuánto es en total?<br>
+                            <span class="speaker">Cajero:</span> Son cincuenta euros.<br>
+                            <span class="speaker">Cliente:</span> ¿Puedo pagar con tarjeta?
+                        </div>
+                    </div>
+                    <div class="context">Situación: Pagando en la caja</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <div class="category-title">
+                <i class="fas fa-utensils"></i>
+                Al Ristorante
+            </div>
+            <div class="dialog-grid">
+                <div class="dialog-card">
+                    <div class="dialog-header">
+                        <div class="dialog-type">Prenotazione</div>
+                        <button class="audio-icon" onclick="speak('Vorrei prenotare un tavolo per questa sera. Per quante persone? Per quattro persone, alle otto.')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
+                    <div class="dialog-content">
+                        <div class="italian">
+                            <span class="speaker">Cliente:</span> Vorrei prenotare un tavolo per questa sera.<br>
+                            <span class="speaker">Cameriere:</span> Per quante persone?<br>
+                            <span class="speaker">Cliente:</span> Per quattro persone, alle otto.
+                        </div>
+                        <div class="spanish">
+                            <span class="speaker">Cliente:</span> Quisiera reservar una mesa para esta noche.<br>
+                            <span class="speaker">Camarero:</span> ¿Para cuántas personas?<br>
+                            <span class="speaker">Cliente:</span> Para cuatro personas, a las ocho.
+                        </div>
+                    </div>
+                    <div class="context">Situación: Haciendo una reserva telefónica</div>
+                </div>
+
+                <div class="dialog-card">
+                    <div class="dialog-header">
+                        <div class="dialog-type">Ordinare</div>
+                        <button class="audio-icon" onclick="speak('Che cosa ci consiglia oggi? Vi consiglio la pasta al pesto, è la nostra specialità.')">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
+                    <div class="dialog-content">
+                        <div class="italian">
+                            <span class="speaker">Cliente:</span> Che cosa ci consiglia oggi?<br>
+                            <span class="speaker">Cameriere:</span> Vi consiglio la pasta al pesto, è la nostra specialità.<br>
+                            <span class="speaker">Cliente:</span> Perfetto, prendo quella!
+                        </div>
+                        <div class="spanish">
+                            <span class="speaker">Cliente:</span> ¿Qué nos recomienda hoy?<br>
+                            <span class="speaker">Camarero:</span> Les recomiendo la pasta al pesto, es nuestra especialidad.<br>
+                            <span class="speaker">Cliente:</span> ¡Perfecto, tomaré esa!
+                        </div>
+                    </div>
+                    <div class="context">Situación: Pidiendo recomendaciones al camarero</div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <script>
+        const synth = window.speechSynthesis;
+        let voices = [];
+
+        function loadVoices() {
+            voices = synth.getVoices();
+        }
+
+        loadVoices();
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = loadVoices;
+        }
+
+        function speak(text) {
+            if (synth.speaking) {
+                synth.cancel();
+                return;
+            }
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'it-IT';
+            utterance.rate = 0.9;
+            utterance.pitch = 1;
+            
+            synth.speak(utterance);
+        }
+    </script>
 </body>
 </html>
