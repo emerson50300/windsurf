@@ -18,6 +18,11 @@
     --hover-color: #81C784;
     --overlay-color: rgba(0,0,0,0.5);
     --border-light: #ddd;
+    --verb-color: #2196F3;
+    --verb-background: #E3F2FD;
+    --verb-hover: #1976D2;
+    --conjugation-color: #673AB7;
+    --conjugation-background: #EDE7F6;
 }
 
 /* Reset y estilos base */
@@ -272,6 +277,102 @@ input, select, textarea {
 .conjugation-table td {
     padding: 12px;
     border-bottom: 1px solid #eee;
+}
+
+/* Estilos para verbos y conjugaciones */
+.italian {
+    color: var(--verb-color);
+    font-weight: 600;
+    font-size: 1.2rem;
+    background-color: var(--verb-background);
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    display: inline-block;
+    margin: 0.2rem 0;
+    transition: all 0.3s ease;
+}
+
+.italian:hover {
+    color: var(--verb-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-soft);
+}
+
+.conjugation {
+    color: var(--conjugation-color);
+    background-color: var(--conjugation-background);
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 500;
+    margin: 0.1rem 0;
+    display: inline-block;
+}
+
+.verb-example {
+    border-left: 3px solid var(--verb-color);
+    padding-left: 1rem;
+    margin: 1rem 0;
+    background-color: var(--background-white);
+    padding: 1rem;
+    border-radius: 0 8px 8px 0;
+    box-shadow: var(--shadow-soft);
+}
+
+/* Estilos para el alfabeto y botón de escuchar */
+.alphabet-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.letter-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--background-white);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-soft);
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+.listen-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background-color: var(--accent-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.listen-button:hover {
+    background-color: var(--hover-color);
+    transform: translateY(-2px);
+}
+
+.listen-button i {
+    font-size: 1.1rem;
+}
+
+@media (min-width: 769px) {
+    .letter-item {
+        width: calc(20% - 1rem);
+        margin-bottom: 1rem;
+    }
+    
+    .listen-button {
+        width: auto;
+    }
 }
 
 /* Media Queries */

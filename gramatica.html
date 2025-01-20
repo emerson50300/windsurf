@@ -124,6 +124,33 @@
             color: white;
         }
 
+        .alphabet-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .letter-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .listen-button {
+            background: var(--button-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .listen-button:hover {
+            background: var(--hover-color);
+        }
+
         @media (max-width: 768px) {
             .grammar-section {
                 padding: 1rem;
@@ -159,6 +186,160 @@
             <h1>Gramática Italiana</h1>
             <p>Passato Prossimo e Imperativo</p>
         </header>
+
+        <!-- Alfabeto Italiano -->
+        <section class="grammar-section">
+            <h2 class="section-title">Alfabeto Italiano</h2>
+            <div class="alphabet-container">
+                <div class="letter-item">
+                    <span class="italian">A</span>
+                    <button class="listen-button" onclick="speak('a')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">B</span>
+                    <button class="listen-button" onclick="speak('bi')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">C</span>
+                    <button class="listen-button" onclick="speak('ci')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">D</span>
+                    <button class="listen-button" onclick="speak('di')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">E</span>
+                    <button class="listen-button" onclick="speak('e')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">F</span>
+                    <button class="listen-button" onclick="speak('effe')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">G</span>
+                    <button class="listen-button" onclick="speak('gi')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">H</span>
+                    <button class="listen-button" onclick="speak('acca')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">I</span>
+                    <button class="listen-button" onclick="speak('i')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">L</span>
+                    <button class="listen-button" onclick="speak('elle')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">M</span>
+                    <button class="listen-button" onclick="speak('emme')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">N</span>
+                    <button class="listen-button" onclick="speak('enne')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">O</span>
+                    <button class="listen-button" onclick="speak('o')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">P</span>
+                    <button class="listen-button" onclick="speak('pi')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">Q</span>
+                    <button class="listen-button" onclick="speak('cu')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">R</span>
+                    <button class="listen-button" onclick="speak('erre')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">S</span>
+                    <button class="listen-button" onclick="speak('esse')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">T</span>
+                    <button class="listen-button" onclick="speak('ti')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">U</span>
+                    <button class="listen-button" onclick="speak('u')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">V</span>
+                    <button class="listen-button" onclick="speak('vi')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">Z</span>
+                    <button class="listen-button" onclick="speak('zeta')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+            </div>
+        </section>
 
         <!-- Passato Prossimo -->
         <section class="grammar-section">
