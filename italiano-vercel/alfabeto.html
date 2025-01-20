@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alfabeto Italiano</title>
+    <link rel="stylesheet" href="colors.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --background-white: #f9f9f9;
+            --background-main: #f2f2f2;
+            --text-main: #333;
+            --text-secondary: #666;
+            --accent-color: #4CAF50;
+            --button-color: #4CAF50;
+            --hover-color: #388E3C;
+            --hover-color-light: #e0e0e0;
+            --shadow-color: rgba(0,0,0,0.1);
+        }
+
+        .alphabet-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .letter-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: var(--background-white);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-soft);
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+
+        .listen-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .listen-button:hover {
+            background-color: var(--hover-color);
+            transform: translateY(-2px);
+        }
+
+        .listen-button i {
+            font-size: 1.1rem;
+        }
+
+        @media (min-width: 769px) {
+            .letter-item {
+                width: calc(20% - 1rem);
+                margin-bottom: 1rem;
+            }
+            
+            .listen-button {
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="grammar-section">
+            <h2 class="section-title">Alfabeto Italiano</h2>
+            <div class="alphabet-container">
+                <div class="letter-item">
+                    <span class="italian">A</span>
+                    <button class="listen-button" onclick="speak('a')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">B</span>
+                    <button class="listen-button" onclick="speak('bi')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">C</span>
+                    <button class="listen-button" onclick="speak('ci')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">D</span>
+                    <button class="listen-button" onclick="speak('di')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">E</span>
+                    <button class="listen-button" onclick="speak('e')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">F</span>
+                    <button class="listen-button" onclick="speak('effe')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">G</span>
+                    <button class="listen-button" onclick="speak('gi')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">H</span>
+                    <button class="listen-button" onclick="speak('acca')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">I</span>
+                    <button class="listen-button" onclick="speak('i')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">L</span>
+                    <button class="listen-button" onclick="speak('elle')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">M</span>
+                    <button class="listen-button" onclick="speak('emme')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">N</span>
+                    <button class="listen-button" onclick="speak('enne')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">O</span>
+                    <button class="listen-button" onclick="speak('o')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">P</span>
+                    <button class="listen-button" onclick="speak('pi')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">Q</span>
+                    <button class="listen-button" onclick="speak('cu')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">R</span>
+                    <button class="listen-button" onclick="speak('erre')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">S</span>
+                    <button class="listen-button" onclick="speak('esse')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">T</span>
+                    <button class="listen-button" onclick="speak('ti')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">U</span>
+                    <button class="listen-button" onclick="speak('u')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">V</span>
+                    <button class="listen-button" onclick="speak('vi')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+                <div class="letter-item">
+                    <span class="italian">Z</span>
+                    <button class="listen-button" onclick="speak('zeta')">
+                        <i class="fas fa-volume-up"></i>
+                        Escuchar
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+        </a>
+        <a href="verbos.html" class="nav-item">
+            <i class="fas fa-book"></i>
+            <span>Verbos</span>
+        </a>
+        <a href="gramatica.html" class="nav-item">
+            <i class="fas fa-graduation-cap"></i>
+            <span>Gramática</span>
+        </a>
+        <a href="dialogos.html" class="nav-item">
+            <i class="fas fa-comments"></i>
+            <span>Diálogos</span>
+        </a>
+    </nav>
+
+    <script>
+        function speak(text) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'it-IT';
+            speechSynthesis.speak(utterance);
+        }
+    </script>
+</body>
+</html>
