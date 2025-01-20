@@ -283,21 +283,211 @@
     </div>
 
     <script>
-        let userLevel = 'none'; // Nivel del usuario: none, principiante, intermedio, avanzado
-        let currentTopic = ''; // Tema actual que se está practicando
-        let userProgress = {
-            vocabulario: 0,
-            gramatica: 0,
-            expresiones: 0,
-            pronunciacion: 0
-        };
+        let currentLanguage = 'es';
+        let userLevel = 'none';
+        let currentTopic = '';
+        let currentStep = 'level'; // Nuevo: para seguir el paso actual (level, topic, subtopic)
+        let currentOptions = []; // Nuevo: para guardar las opciones actuales
+        const synth = window.speechSynthesis;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const sendButton = document.getElementById('send-button');
+            const input = document.getElementById('message-input');
+
+            sendButton.addEventListener('click', sendMessage);
+
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+
+            addMessage('assistant', currentLanguage === 'it' ? 
+                "Ciao! Per iniziare, scegli il tuo livello di italiano (1, 2 o 3):\n1. Principiante (A1-A2)\n2. Intermedio (B1-B2)\n3. Avanzato (C1-C2)" :
+                "¡Hola! Para empezar, elige tu nivel de italiano (1, 2 o 3):\n1. Principiante (A1-A2)\n2. Intermedio (B1-B2)\n3. Avanzado (C1-C2)");
+        });
+
+        function handleNumericSelection(number) {
+            switch(currentStep) {
+                case 'level':
+                    const levels = ['principiante', 'intermedio', 'avanzado'];
+                    if (number >= 1 && number <= 3) {
+                        selectLevel(levels[number - 1]);
+                        currentStep = 'topic';
+                    }
+                    break;
+                
+                case 'topic':
+                    const topics = ['vocabulario', 'gramatica', 'expresiones', 'pronunciacion'];
+                    if (number >= 1 && number <= 4) {
+                        selectTopic(topics[number - 1]);
+                        currentStep = 'subtopic';
+                    }
+                    break;
+                
+                case 'subtopic':
+                    handleSubtopicSelection(number);
+                    break;
+            }
+        }
+
+        function handleSubtopicSelection(number) {
+            const subtopics = {
+                vocabulario: {
+                    1: { name: 'comida', content: getVocabularyContent('comida') },
+                    2: { name: 'viajes', content: getVocabularyContent('viajes') },
+                    3: { name: 'tiempo_libre', content: getVocabularyContent('tiempo_libre') }
+                },
+                gramatica: {
+                    1: { name: 'verbos', content: getGrammarContent('verbos') },
+                    2: { name: 'articulos', content: getGrammarContent('articulos') },
+                    3: { name: 'preposiciones', content: getGrammarContent('preposiciones') }
+                },
+                expresiones: {
+                    1: { name: 'restaurante', content: getExpressionsContent('restaurante') },
+                    2: { name: 'viaje', content: getExpressionsContent('viaje') },
+                    3: { name: 'vida_cotidiana', content: getExpressionsContent('vida_cotidiana') }
+                },
+                pronunciacion: {
+                    1: { name: 'vocales', content: getPronunciationContent('vocales') },
+                    2: { name: 'consonantes', content: getPronunciationContent('consonantes') },
+                    3: { name: 'acentos', content: getPronunciationContent('acentos') }
+                }
+            };
+
+            if (currentTopic && subtopics[currentTopic] && subtopics[currentTopic][number]) {
+                const content = subtopics[currentTopic][number].content;
+                addMessage('assistant', content);
+                updateProgress(currentTopic, 10);
+                currentStep = 'practice'; // Cambiar a modo práctica
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('message-input');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            addMessage('user', message);
+            input.value = '';
+
+            const number = parseInt(message);
+            if (!isNaN(number)) {
+                handleNumericSelection(number);
+                return;
+            }
+
+            const response = getResponse(message);
+            setTimeout(() => {
+                addMessage('assistant', response);
+                speak(response);
+            }, 1000);
+        }
+
+        function getVocabularyContent(category) {
+            const vocabulary = {
+                comida: [
+                    {it: 'pane', es: 'pan'},
+                    {it: 'pasta', es: 'pasta'},
+                    {it: 'carne', es: 'carne'},
+                    {it: 'pesce', es: 'pescado'},
+                    {it: 'frutta', es: 'fruta'}
+                ],
+                viajes: [
+                    {it: 'biglietto', es: 'billete'},
+                    {it: 'treno', es: 'tren'},
+                    {it: 'aereo', es: 'avión'},
+                    {it: 'albergo', es: 'hotel'},
+                    {it: 'passaporto', es: 'pasaporte'}
+                ],
+                tiempo_libre: [
+                    {it: 'libro', es: 'libro'},
+                    {it: 'musica', es: 'música'},
+                    {it: 'cinema', es: 'cine'},
+                    {it: 'sport', es: 'deporte'},
+                    {it: 'amici', es: 'amigos'}
+                ]
+            };
+
+            let response = currentLanguage === 'it' ? 
+                `Vocabolario - ${category}:\n\n` :
+                `Vocabulario - ${category}:\n\n`;
+
+            vocabulary[category].forEach((word, index) => {
+                response += `${index + 1}. ${word.it} → ${word.es}\n`;
+            });
+
+            return response;
+        }
+
+        function getGrammarContent(topic) {
+            const grammar = {
+                verbos: {
+                    principiante: "Presente simple de 'essere':\n- Io sono\n- Tu sei\n- Lui/Lei è\n- Noi siamo\n- Voi siete\n- Loro sono",
+                    intermedio: "Passato prossimo:\n- Io ho mangiato\n- Tu hai bevuto\n- Lui ha parlato",
+                    avanzado: "Congiuntivo presente:\n- Che io sia\n- Che tu sia\n- Che lui/lei sia"
+                },
+                articulos: {
+                    principiante: "Artículos definidos:\n- il (masc. singular)\n- la (fem. singular)\n- i (masc. plural)\n- le (fem. plural)",
+                    intermedio: "Artículos partitivos:\n- del, dello, della\n- dei, degli, delle",
+                    avanzado: "Casos especiales:\n- lo studente\n- gli amici\n- l'albero"
+                }
+            };
+
+            return grammar[topic][userLevel];
+        }
+
+        function getExpressionsContent(topic) {
+            const expressions = {
+                restaurante: {
+                    principiante: "En el restaurante:\n- Ciao, vorrei il menu, per favore.\n- Un caffè, per favore.\n- Il conto, per favore.",
+                    intermedio: "En el restaurante:\n- Posso avere il menu, per favore?\n- Vorrei un'acqua, per favore.\n- Il conto, per favore.",
+                    avanzado: "En el restaurante:\n- Ciao, vorrei il menu del giorno, per favore.\n- Un vino rosso, per favore.\n- Il conto, per favore."
+                },
+                viaje: {
+                    principiante: "En el viaje:\n- Dov'è la stazione dei treni?\n- Vorrei un biglietto per Roma, per favore.\n- Dove posso trovare un albergo?",
+                    intermedio: "En el viaje:\n- Posso avere una mappa della città, per favore?\n- Vorrei un biglietto per il museo, per favore.\n- Dove posso trovare un ristorante?",
+                    avanzado: "En el viaje:\n- Ciao, vorrei informazioni sulla città, per favore.\n- Un biglietto per il teatro, per favore.\n- Dove posso trovare un negozio?"
+                },
+                vida_cotidiana: {
+                    principiante: "En la vida cotidiana:\n- Ciao, come stai?\n- Sto bene, grazie.\n- Come si chiama?",
+                    intermedio: "En la vida cotidiana:\n- Posso aiutarti?\n- Sì, grazie.\n- Come si dice... in italiano?",
+                    avanzado: "En la vida cotidiana:\n- Ciao, vorrei parlare con te.\n- Sì, certo.\n- Come posso aiutarti?"
+                }
+            };
+
+            return expressions[topic][userLevel];
+        }
+
+        function getPronunciationContent(topic) {
+            const pronunciation = {
+                vocales: {
+                    principiante: "Vocales:\n- a\n- e\n- i\n- o\n- u",
+                    intermedio: "Vocales:\n- à\n- è\n- ì\n- ò\n- ù",
+                    avanzado: "Vocales:\n- â\n- ê\n- î\n- ô\n- û"
+                },
+                consonantes: {
+                    principiante: "Consonantes:\n- b\n- c\n- d\n- f\n- g",
+                    intermedio: "Consonantes:\n- ch\n- gh\n- gn\n- sc\n- z",
+                    avanzado: "Consonantes:\n- bh\n- dh\n- fh\n- gh\n- kh"
+                },
+                acentos: {
+                    principiante: "Acentos:\n- à\n- è\n- ì\n- ò\n- ù",
+                    intermedio: "Acentos:\n- á\n- é\n- í\n- ó\n- ú",
+                    avanzado: "Acentos:\n- â\n- ê\n- î\n- ô\n- û"
+                }
+            };
+
+            return pronunciation[topic][userLevel];
+        }
 
         function selectLevel(level) {
             userLevel = level;
             document.getElementById('level-selector').classList.remove('active');
             document.getElementById('learning-plan').classList.add('active');
             
-            // Mensaje de bienvenida según el nivel
             const welcomeMessages = {
                 principiante: {
                     it: "Benvenuto al corso di italiano per principianti! Iniziamo con le basi. Scegli un argomento per cominciare.",
@@ -341,18 +531,21 @@
         }
 
         function updateProgress(topic, amount) {
+            let userProgress = {
+                vocabulario: 0,
+                gramatica: 0,
+                expresiones: 0,
+                pronunciacion: 0
+            };
+
             userProgress[topic] += amount;
             if (userProgress[topic] > 100) userProgress[topic] = 100;
             
-            // Actualizar barra de progreso visual si existe
             const progressBar = document.querySelector(`#${topic}-progress .progress`);
             if (progressBar) {
                 progressBar.style.width = `${userProgress[topic]}%`;
             }
         }
-
-        let currentLanguage = 'es';
-        const synth = window.speechSynthesis;
 
         function setLanguage(lang) {
             currentLanguage = lang;
@@ -395,27 +588,9 @@
             synth.speak(utterance);
         }
 
-        async function sendMessage() {
-            const input = document.getElementById('message-input');
-            const message = input.value.trim();
-            
-            if (!message) return;
-            
-            addMessage('user', message);
-            input.value = '';
-            
-            // Simular respuesta del bot después de un breve delay
-            setTimeout(() => {
-                const response = getResponse(message);
-                addMessage('assistant', response);
-                speak(response);
-            }, 1500);
-        }
-
         function getResponse(message) {
             const lowerMessage = message.toLowerCase();
 
-            // Si el usuario aún no tiene nivel, preguntar
             if (userLevel === 'none') {
                 if (lowerMessage.includes('principiante') || lowerMessage.includes('básico')) {
                     userLevel = 'principiante';
@@ -439,7 +614,6 @@
                 }
             }
 
-            // Detectar tipo de solicitud
             if (lowerMessage.includes('traduc')) {
                 return handleTranslation(message);
             } else if (lowerMessage.includes('vocabulario') || lowerMessage.includes('palabras')) {
@@ -454,7 +628,6 @@
                 return generateStory();
             }
 
-            // Respuesta por defecto
             return getDefaultResponse();
         }
 
@@ -464,7 +637,6 @@
         }
 
         function handleTranslation(message) {
-            // Implementar lógica de traducción básica
             const commonTranslations = {
                 'hola': 'ciao',
                 'gracias': 'grazie',
@@ -681,13 +853,10 @@
                 }
             ];
 
-            // Mezclar el array de frases aleatoriamente
             const shuffled = [...phrases].sort(() => 0.5 - Math.random());
             
-            // Tomar el número de frases solicitado
             const selected = shuffled.slice(0, Math.min(num, phrases.length));
             
-            // Formatear la respuesta
             let response = currentLanguage === 'it' ? 
                 "Ecco " + num + " frasi in italiano con la traduzione:\n\n" :
                 "Aquí tienes " + num + " frases en italiano con su traducción:\n\n";
