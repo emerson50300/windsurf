@@ -229,10 +229,51 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@google/generative-ai"></script>
     <script>
         let userLevel = 'principiante';
         let currentTopic = '';
         let hasInitialGreeting = false;
+
+        // Configuración de Gemini
+        const genAI = new GoogleGenerativeAI('TU_API_KEY_AQUI');
+        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+
+        async function getGeminiResponse(prompt) {
+            try {
+                const result = await model.generateContent(prompt);
+                const response = await result.response;
+                return response.text();
+            } catch (error) {
+                console.error('Error al obtener respuesta de Gemini:', error);
+                return "Lo siento, hubo un error al procesar tu pregunta. Por favor, intenta de nuevo.";
+            }
+        }
+
+        // Función para construir el prompt para Gemini
+        function buildGeminiPrompt(userMessage, userLevel) {
+            return `Actúa como un profesor de italiano experto y amigable. 
+            Nivel del estudiante: ${userLevel || 'principiante'}
+            
+            Responde a la siguiente pregunta o solicitud del estudiante:
+            "${userMessage}"
+            
+            Reglas para tu respuesta:
+            1. Si la pregunta es en español, responde en español
+            2. Si es sobre gramática, incluye ejemplos claros
+            3. Si es sobre vocabulario, incluye la pronunciación
+            4. Si es sobre cultura, proporciona información interesante y relevante
+            5. Siempre mantén un tono amigable y motivador
+            6. Usa emojis apropiados para hacer la respuesta más atractiva
+            7. Si es apropiado, incluye ejercicios de práctica
+            8. Si la pregunta no está clara, pide aclaraciones
+            
+            Formato de respuesta:
+            - Usa viñetas y números para organizar la información
+            - Destaca las palabras en italiano en cursiva
+            - Incluye traducciones cuando sea necesario
+            - Mantén las respuestas concisas pero informativas`;
+        }
 
         function showWelcomeMessage() {
             const welcomeMessage = `¡Bienvenido a tu Profesor de Italiano! 🇮🇹\n\n
@@ -258,412 +299,6 @@ Por ejemplo, puedes preguntarme:
             addMessage(welcomeMessage, 'assistant');
         }
 
-        function processUserRequest(text) {
-            const lowerText = text.toLowerCase();
-
-            // Detectar tipo de solicitud
-            if (lowerText.includes('conjuga') || lowerText.includes('verbo')) {
-                return handleVerbConjugation(text);
-            } else if (lowerText.includes('traduce') || lowerText.includes('traducir')) {
-                return handleTranslation(text);
-            } else if (lowerText.includes('pronuncia') || lowerText.includes('fonética')) {
-                return handlePronunciation(text);
-            } else if (lowerText.includes('cultura') || lowerText.includes('historia')) {
-                return handleCulture(text);
-            } else if (lowerText.includes('ejercicio') || lowerText.includes('práctica')) {
-                return generateExercise(text);
-            } else if (lowerText.includes('diálogo') || lowerText.includes('conversación')) {
-                return generateDialogue(text);
-            } else if (lowerText.includes('historia') || lowerText.includes('lectura')) {
-                return generateStory(text);
-            } else if (lowerText.includes('vocabulario') || lowerText.includes('palabras')) {
-                return teachVocabulary(text);
-            }
-
-            return handleGeneralQuestion(text);
-        }
-
-        function handleVerbConjugation(text) {
-            const verbs = {
-                'andare': {
-                    translation: 'ir',
-                    conjugation: {
-                        presente: {
-                            'io': 'vado',
-                            'tu': 'vai',
-                            'lui/lei': 'va',
-                            'noi': 'andiamo',
-                            'voi': 'andate',
-                            'loro': 'vanno'
-                        },
-                        passato: {
-                            'io': 'sono andato/a',
-                            'tu': 'sei andato/a',
-                            'lui/lei': 'è andato/a',
-                            'noi': 'siamo andati/e',
-                            'voi': 'siete andati/e',
-                            'loro': 'sono andati/e'
-                        }
-                    },
-                    examples: [
-                        {it: "Io vado al mercato", es: "Yo voy al mercado"},
-                        {it: "Dove vai?", es: "¿Dónde vas?"},
-                        {it: "Andiamo al cinema", es: "Vamos al cine"}
-                    ]
-                },
-                'essere': {
-                    translation: 'ser/estar',
-                    conjugation: {
-                        presente: {
-                            'io': 'sono',
-                            'tu': 'sei',
-                            'lui/lei': 'è',
-                            'noi': 'siamo',
-                            'voi': 'siete',
-                            'loro': 'sono'
-                        }
-                    },
-                    examples: [
-                        {it: "Sono italiano", es: "Soy italiano"},
-                        {it: "Sei a casa?", es: "¿Estás en casa?"},
-                        {it: "È bello", es: "Es bonito"}
-                    ]
-                }
-            };
-
-            // Detectar el verbo solicitado
-            let requestedVerb = '';
-            for (let verb in verbs) {
-                if (text.toLowerCase().includes(verb)) {
-                    requestedVerb = verb;
-                    break;
-                }
-            }
-
-            if (!requestedVerb) {
-                return "¿Qué verbo te gustaría aprender? Puedo enseñarte verbos como 'andare', 'essere', y muchos más.";
-            }
-
-            const verb = verbs[requestedVerb];
-            let response = `📚 El verbo '${requestedVerb}' (${verb.translation})\n\n`;
-            response += "Conjugación en presente:\n\n";
-
-            for (let pronoun in verb.conjugation.presente) {
-                response += `${pronoun}: ${verb.conjugation.presente[pronoun]}\n`;
-            }
-
-            response += "\nEjemplos de uso:\n";
-            verb.examples.forEach((example, index) => {
-                response += `${index + 1}. ${example.it}\n   ${example.es}\n`;
-            });
-
-            response += "\n💡 ¿Te gustaría practicar con ejercicios?";
-            return response;
-        }
-
-        function handlePronunciation(text) {
-            const pronunciationGuides = {
-                'c': {
-                    rules: [
-                        "La 'c' se pronuncia como 'ch' antes de 'e' o 'i' (cena, ciao)",
-                        "La 'c' se pronuncia como 'k' antes de 'a', 'o', 'u' (casa, cosa)"
-                    ],
-                    examples: [
-                        {word: "ciao", pronunciation: "chao", meaning: "hola"},
-                        {word: "casa", pronunciation: "kasa", meaning: "casa"},
-                        {word: "cena", pronunciation: "chena", meaning: "cena"}
-                    ]
-                },
-                'g': {
-                    rules: [
-                        "La 'g' se pronuncia como 'y' antes de 'e' o 'i' (gente, giorno)",
-                        "La 'g' se pronuncia como 'g' fuerte antes de 'a', 'o', 'u' (gatto, gonna)"
-                    ],
-                    examples: [
-                        {word: "gatto", pronunciation: "gatto", meaning: "gato"},
-                        {word: "gelato", pronunciation: "yelato", meaning: "helado"}
-                    ]
-                }
-            };
-
-            let response = "🗣️ Guía de pronunciación italiana\n\n";
-            
-            // Detectar si se pregunta por una letra específica
-            for (let letter in pronunciationGuides) {
-                if (text.toLowerCase().includes(letter)) {
-                    const guide = pronunciationGuides[letter];
-                    response += `Reglas para la letra '${letter}':\n`;
-                    guide.rules.forEach(rule => response += `• ${rule}\n`);
-                    response += "\nEjemplos:\n";
-                    guide.examples.forEach(ex => {
-                        response += `${ex.word} → ${ex.pronunciation} (${ex.meaning})\n`;
-                    });
-                    return response;
-                }
-            }
-
-            // Si no se especifica una letra, dar información general
-            response += "Aspectos importantes de la pronunciación italiana:\n\n";
-            response += "1. Vocales:\n";
-            response += "• Siempre se pronuncian claras y consistentes\n";
-            response += "• No existen diptongos como en español\n\n";
-            response += "2. Consonantes especiales:\n";
-            response += "• 'ch' se pronuncia como 'k'\n";
-            response += "• 'gh' se pronuncia como 'g' fuerte\n";
-            response += "• 'gn' se pronuncia como 'ñ'\n\n";
-            response += "¿Te gustaría practicar la pronunciación de alguna palabra o letra específica?";
-
-            return response;
-        }
-
-        function handleCulture(text) {
-            const culturalTopics = {
-                'gastronomia': {
-                    title: "Gastronomía Italiana",
-                    content: "La cocina italiana es famosa mundialmente. Cada región tiene sus especialidades:",
-                    examples: [
-                        "🍕 Nápoles: Pizza Margherita",
-                        "🍝 Bolonia: Pasta al Ragù",
-                        "🧀 Parma: Parmigiano Reggiano"
-                    ],
-                    vocabulary: [
-                        {it: "al dente", es: "pasta cocida pero firme"},
-                        {it: "antipasto", es: "entrante"},
-                        {it: "primo piatto", es: "primer plato"}
-                    ]
-                },
-                'regiones': {
-                    title: "Regiones de Italia",
-                    content: "Italia está dividida en 20 regiones, cada una con su dialecto y tradiciones:",
-                    examples: [
-                        "Toscana: Cuna del Renacimiento",
-                        "Sicilia: Influencia griega y árabe",
-                        "Véneto: República de Venecia"
-                    ],
-                    vocabulary: [
-                        {it: "regione", es: "región"},
-                        {it: "dialetto", es: "dialecto"},
-                        {it: "tradizione", es: "tradición"}
-                    ]
-                }
-            };
-
-            // Detectar el tema cultural
-            let topic = '';
-            for (let t in culturalTopics) {
-                if (text.toLowerCase().includes(t)) {
-                    topic = t;
-                    break;
-                }
-            }
-
-            if (!topic) {
-                return "¿Sobre qué aspecto de la cultura italiana te gustaría aprender?\n" +
-                       "• Gastronomía\n" +
-                       "• Regiones y dialectos\n" +
-                       "• Arte e historia\n" +
-                       "• Costumbres y tradiciones";
-            }
-
-            const cultureTopic = culturalTopics[topic];
-            let response = `📚 ${cultureTopic.title}\n\n`;
-            response += cultureTopic.content + "\n\n";
-            response += "Ejemplos:\n";
-            cultureTopic.examples.forEach(ex => response += ex + "\n");
-            response += "\nVocabulario relacionado:\n";
-            cultureTopic.vocabulary.forEach(word => {
-                response += `${word.it} → ${word.es}\n`;
-            });
-
-            return response;
-        }
-
-        function generateStory(text) {
-            const stories = {
-                principiante: {
-                    title: "Un Giorno al Caffè",
-                    content: [
-                        {it: "Marco va al caffè.", es: "Marco va al café."},
-                        {it: "Ordina un cappuccino.", es: "Pide un cappuccino."},
-                        {it: "Il cameriere è molto gentile.", es: "El camarero es muy amable."},
-                        {it: "Marco legge il giornale.", es: "Marco lee el periódico."}
-                    ],
-                    vocabulary: [
-                        {word: "caffè", meaning: "café"},
-                        {word: "ordinare", meaning: "pedir"},
-                        {word: "cameriere", meaning: "camarero"},
-                        {word: "giornale", meaning: "periódico"}
-                    ]
-                },
-                intermedio: {
-                    title: "Una Giornata a Roma",
-                    content: [
-                        {it: "Maria passeggia per le strade di Roma.", es: "María pasea por las calles de Roma."},
-                        {it: "Visita il Colosseo e fa molte foto.", es: "Visita el Coliseo y toma muchas fotos."},
-                        {it: "Nel pomeriggio incontra degli amici.", es: "Por la tarde se encuentra con unos amigos."}
-                    ]
-                }
-            };
-
-            const story = stories[userLevel] || stories.principiante;
-            let response = `📖 ${story.title}\n\n`;
-            
-            story.content.forEach((line, index) => {
-                response += `${line.it}\n${line.es}\n\n`;
-            });
-
-            if (story.vocabulary) {
-                response += "Vocabulario importante:\n";
-                story.vocabulary.forEach(item => {
-                    response += `${item.word} → ${item.meaning}\n`;
-                });
-            }
-
-            response += "\n💡 ¿Te gustaría practicar con preguntas sobre la historia?";
-            return response;
-        }
-
-        function teachVocabulary(text) {
-            const vocabularyTopics = {
-                'comida': [
-                    {it: "pane", es: "pan", example: "Vorrei del pane, per favore."},
-                    {it: "acqua", es: "agua", example: "Un bicchiere d'acqua."},
-                    {it: "pasta", es: "pasta", example: "La pasta è al dente."},
-                    {it: "vino", es: "vino", example: "Un bicchiere di vino rosso."},
-                    {it: "caffè", es: "café", example: "Un caffè espresso, per favore."}
-                ],
-                'viajes': [
-                    {it: "biglietto", es: "billete", example: "Dove posso comprare un biglietto?"},
-                    {it: "treno", es: "tren", example: "Il treno parte alle otto."},
-                    {it: "aeroporto", es: "aeropuerto", example: "L'aeroporto è lontano?"},
-                    {it: "albergo", es: "hotel", example: "Ho una prenotazione all'albergo."}
-                ],
-                'familia': [
-                    {it: "madre", es: "madre", example: "Mia madre è italiana."},
-                    {it: "padre", es: "padre", example: "Mio padre lavora molto."},
-                    {it: "fratello", es: "hermano", example: "Ho un fratello maggiore."},
-                    {it: "sorella", es: "hermana", example: "Mia sorella studia medicina."}
-                ]
-            };
-
-            // Detectar el tema de vocabulario
-            let topic = '';
-            for (let t in vocabularyTopics) {
-                if (text.toLowerCase().includes(t)) {
-                    topic = t;
-                    break;
-                }
-            }
-
-            if (!topic) {
-                return "¿Sobre qué tema te gustaría aprender vocabulario?\n" +
-                       "• Comida y bebidas\n" +
-                       "• Viajes y transporte\n" +
-                       "• Familia y relaciones\n" +
-                       "• Números y fechas";
-            }
-
-            const vocabulary = vocabularyTopics[topic];
-            let response = `📚 Vocabulario sobre ${topic}:\n\n`;
-            
-            vocabulary.forEach((word, index) => {
-                response += `${index + 1}. ${word.it} → ${word.es}\n`;
-                response += `   Ejemplo: ${word.example}\n\n`;
-            });
-
-            response += "💡 ¿Te gustaría practicar este vocabulario con ejercicios?";
-            return response;
-        }
-
-        function handleGeneralQuestion(text) {
-            // Detectar patrones comunes en preguntas generales
-            const lowerText = text.toLowerCase();
-            
-            if (lowerText.includes('qué') || lowerText.includes('que') || lowerText.includes('cómo') || 
-                lowerText.includes('como') || lowerText.includes('por qué') || lowerText.includes('cuál') || 
-                lowerText.includes('cuando') || lowerText.includes('dónde')) {
-                
-                // Preguntas sobre Italia
-                if (lowerText.includes('italia') || lowerText.includes('italiano')) {
-                    if (lowerText.includes('comida') || lowerText.includes('comer') || lowerText.includes('plato')) {
-                        return `La gastronomía italiana es mundialmente famosa por su variedad y calidad. Algunos platos típicos incluyen:
-
-1. 🍝 Pasta: Con diferentes salsas como:
-   - Carbonara (Roma)
-   - Pesto (Génova)
-   - Bolognese (Bolonia)
-
-2. 🍕 Pizza: Originaria de Nápoles, con variedades como:
-   - Margherita
-   - Marinara
-   - Quattro Formaggi
-
-3. 🧀 Quesos italianos:
-   - Parmigiano Reggiano
-   - Mozzarella
-   - Gorgonzola
-
-¿Te gustaría aprender más sobre algún plato específico o practicar el vocabulario relacionado?`;
-                    }
-                    
-                    if (lowerText.includes('ciudad') || lowerText.includes('ciudades') || lowerText.includes('visitar')) {
-                        return `Italia tiene numerosas ciudades históricas y culturales para visitar:
-
-1. 🏛️ Roma:
-   - Coliseo
-   - Vaticano
-   - Fontana di Trevi
-
-2. 🎨 Florencia:
-   - Galería Uffizi
-   - Duomo
-   - Ponte Vecchio
-
-3. 🚤 Venecia:
-   - Plaza San Marcos
-   - Gran Canal
-   - Puente de Rialto
-
-¿Te gustaría aprender vocabulario útil para viajar a alguna de estas ciudades?`;
-                    }
-                }
-
-                // Preguntas sobre aprendizaje
-                if (lowerText.includes('aprender') || lowerText.includes('estudiar') || lowerText.includes('practicar')) {
-                    return `Para aprender italiano efectivamente, te recomiendo:
-
-1. 📚 Práctica diaria:
-   - Escuchar música italiana
-   - Ver películas con subtítulos
-   - Leer noticias en italiano
-
-2. 🗣️ Conversación:
-   - Practicar con hablantes nativos
-   - Usar apps de intercambio de idiomas
-   - Participar en grupos de conversación
-
-3. 📝 Ejercicios:
-   - Gramática básica
-   - Vocabulario por temas
-   - Pronunciación
-
-¿Por cuál de estos aspectos te gustaría empezar?`;
-                }
-            }
-
-            // Respuesta por defecto para otras preguntas
-            return `Entiendo tu pregunta. Como asistente especializado en italiano, puedo ayudarte con:
-
-1. 🎯 Traducción y significado
-2. 📖 Gramática y conjugación
-3. 🗣️ Pronunciación
-4. 📚 Vocabulario temático
-5. 🎭 Cultura italiana
-6. ✍️ Ejercicios prácticos
-
-¿Qué aspecto te gustaría explorar?`;
-        }
-
         function addMessage(text, sender) {
             const messagesDiv = document.getElementById('chat-messages');
             const messageDiv = document.createElement('div');
@@ -678,6 +313,57 @@ Por ejemplo, puedes preguntarme:
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
 
+        // Modificar la función sendMessage para usar Gemini
+        async function sendMessage() {
+            const input = document.getElementById('message-input');
+            const message = input.value.trim();
+
+            if (message) {
+                // Mostrar el mensaje del usuario
+                addMessage(message, 'user');
+                
+                // Mostrar indicador de "escribiendo..."
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'message assistant-message typing';
+                typingDiv.innerHTML = 'Escribiendo...';
+                document.getElementById('chat-messages').appendChild(typingDiv);
+
+                // Construir el prompt y obtener respuesta de Gemini
+                const prompt = buildGeminiPrompt(message, userLevel);
+                const response = await getGeminiResponse(prompt);
+
+                // Eliminar el indicador de "escribiendo..."
+                typingDiv.remove();
+
+                // Mostrar la respuesta de Gemini
+                addMessage(response, 'assistant');
+
+                // Limpiar el input y ajustar su tamaño
+                input.value = '';
+                input.style.height = 'auto';
+            }
+        }
+
+        // Modificar el CSS para el indicador de "escribiendo..."
+        const style = document.createElement('style');
+        style.textContent = `
+            .typing {
+                opacity: 0.7;
+            }
+            .typing::after {
+                content: '';
+                display: inline-block;
+                animation: dots 1.5s infinite;
+                width: 20px;
+            }
+            @keyframes dots {
+                0%, 20% { content: '.'; }
+                40% { content: '..'; }
+                60%, 100% { content: '...'; }
+            }
+        `;
+        document.head.appendChild(style);
+
         // Inicializar el chat
         window.onload = function() {
             if (!hasInitialGreeting) {
@@ -686,15 +372,7 @@ Por ejemplo, puedes preguntarme:
             }
 
             document.getElementById('send-button').onclick = function() {
-                const input = document.getElementById('message-input');
-                const message = input.value.trim();
-                
-                if (message) {
-                    addMessage(message, 'user');
-                    const response = processUserRequest(message);
-                    addMessage(response, 'assistant');
-                    input.value = '';
-                }
+                sendMessage();
             };
 
             document.getElementById('message-input').addEventListener('keypress', function(e) {
