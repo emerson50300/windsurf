@@ -343,8 +343,11 @@
         // Función para limpiar el texto de caracteres especiales
         function cleanTextForSpeech(text) {
             return text
-                .replace(/[•*]/g, '') // Eliminar asteriscos y bullets
+                .replace(/[•*-]/g, '') // Eliminar bullets, asteriscos y guiones
+                .replace(/^\s*[•*-]\s*/gm, '') // Eliminar bullets al inicio de cada línea
+                .replace(/Italiano:\s*/i, '') // Eliminar la palabra "Italiano:"
                 .replace(/\s+/g, ' ') // Normalizar espacios
+                .replace(/[\[\]\(\){}]/g, '') // Eliminar corchetes, paréntesis y llaves
                 .trim(); // Eliminar espacios al inicio y final
         }
 
@@ -361,7 +364,8 @@
 
             // Limpiar el texto antes de reproducirlo
             const cleanText = cleanTextForSpeech(text);
-            console.log('Texto a reproducir:', cleanText);
+            console.log('Texto original:', text);
+            console.log('Texto limpio a reproducir:', cleanText);
 
             const utterance = new SpeechSynthesisUtterance(cleanText);
             utterance.voice = italianVoice;
@@ -500,13 +504,15 @@
                 const formattedLines = lines.map(line => {
                     if (line.includes('Italiano:')) {
                         const [italian, spanish] = line.split('|').map(part => part.trim());
-                        // Extraer solo el texto en italiano, sin "Italiano:" y limpiar caracteres especiales
+                        // Extraer solo el texto en italiano y escapar caracteres especiales para el HTML
                         const italianText = italian.replace('Italiano:', '').trim();
-                        const cleanItalianText = cleanTextForSpeech(italianText);
+                        const cleanItalianText = italianText
+                            .replace(/"/g, '&quot;') // Escapar comillas
+                            .replace(/'/g, '&apos;'); // Escapar apóstrofes
                         return `<div class="example-phrase">
                                     <div class="italian-text">
                                         ${italian}
-                                        <button class="play-button" onclick="playItalianText('${cleanItalianText}', this)">
+                                        <button class="play-button" onclick="playItalianText('${cleanItalianText}', this)" title="Escuchar pronunciación">
                                             <i class="fas fa-play"></i>
                                         </button>
                                     </div>
