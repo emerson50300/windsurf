@@ -181,6 +181,8 @@
         }
 
         .italian-text {
+            display: flex;
+            align-items: center;
             font-style: italic;
             color: var(--primary-color);
             font-size: 1.1em;
@@ -198,6 +200,32 @@
             flex-direction: column;
             gap: 8px;
             margin: 10px 0;
+        }
+
+        .play-button {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            padding: 5px;
+            margin-left: 10px;
+            transition: transform 0.2s;
+        }
+
+        .play-button:hover {
+            transform: scale(1.2);
+            color: var(--accent-color);
+        }
+
+        .play-button.playing {
+            color: var(--accent-color);
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
         }
 
         @media (max-width: 768px) {
@@ -292,6 +320,54 @@
         } catch (error) {
             console.error('Error al inicializar Gemini:', error);
         }
+
+        // Inicializar el sintetizador de voz
+        const synth = window.speechSynthesis;
+        let italianVoice = null;
+
+        // Cargar la voz italiana cuando esté disponible
+        function loadItalianVoice() {
+            const voices = synth.getVoices();
+            italianVoice = voices.find(voice => voice.lang.includes('it-IT'));
+            if (!italianVoice) {
+                italianVoice = voices.find(voice => voice.lang.includes('it')); // Fallback a cualquier voz italiana
+            }
+            console.log('Voz italiana cargada:', italianVoice);
+        }
+
+        // Cargar voces cuando estén disponibles
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = loadItalianVoice;
+        }
+
+        // Función para reproducir texto en italiano
+        window.playItalianText = function(text, button) {
+            // Detener cualquier reproducción anterior
+            synth.cancel();
+
+            // Remover clase 'playing' de todos los botones
+            document.querySelectorAll('.play-button').forEach(btn => {
+                btn.classList.remove('playing');
+                btn.innerHTML = '<i class="fas fa-play"></i>';
+            });
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.voice = italianVoice;
+            utterance.lang = 'it-IT';
+            utterance.rate = 0.9; // Velocidad ligeramente más lenta para mejor comprensión
+
+            // Añadir clase 'playing' al botón actual
+            button.classList.add('playing');
+            button.innerHTML = '<i class="fas fa-pause"></i>';
+
+            // Cuando termine de hablar
+            utterance.onend = function() {
+                button.classList.remove('playing');
+                button.innerHTML = '<i class="fas fa-play"></i>';
+            };
+
+            synth.speak(utterance);
+        };
 
         // Funciones globales
         window.setLevel = function(level) {
@@ -412,8 +488,14 @@
                 const formattedLines = lines.map(line => {
                     if (line.includes('Italiano:')) {
                         const [italian, spanish] = line.split('|').map(part => part.trim());
+                        const italianText = italian.replace('Italiano:', '').trim();
                         return `<div class="example-phrase">
-                                    <div class="italian-text">${italian}</div>
+                                    <div class="italian-text">
+                                        ${italian}
+                                        <button class="play-button" onclick="playItalianText('${italianText}', this)">
+                                            <i class="fas fa-play"></i>
+                                        </button>
+                                    </div>
                                     <div class="translation">${spanish}</div>
                                 </div>`;
                     }
@@ -421,7 +503,6 @@
                 });
                 contentDiv.innerHTML = formattedLines.join('');
             } else {
-                // Dividir el texto en líneas y crear divs para cada una
                 const lines = text.split('\n');
                 contentDiv.innerHTML = lines.map(line => `<div>${line}</div>`).join('');
             }
