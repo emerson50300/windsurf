@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat de Italiano</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://www.gstatic.com/ai-experiments/generative-ai/0.1.3/generative-ai.js"></script>
+    <script src="https://generativelanguage.googleapis.com/v1beta/models/gemini-pro?key=AIzaSyCEIicKmkzZQ7kOy0yBSVt4Dc3s80GwKYw"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -355,7 +355,6 @@
 
     <script>
         // Variables globales
-        let model = null;
         let currentApiKeyIndex = 0;
         let isInitialized = false;
 
@@ -367,56 +366,41 @@
             'AIzaSyCPjkG910sUn7eWG6aWLL3y9jOKlySOgUI'
         ];
 
-        // Función para inicializar el modelo
-        async function initializeModel(retryCount = 0) {
-            if (!window.GoogleGenerativeAI) {
-                console.log('Esperando a que se cargue la biblioteca...');
-                return false;
-            }
-
+        // Función para generar respuesta usando la API de Gemini directamente
+        async function generateResponse(prompt) {
+            const apiKey = API_KEYS[currentApiKeyIndex];
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`;
+            
             try {
-                const genAI = new window.GoogleGenerativeAI(API_KEYS[currentApiKeyIndex]);
-                model = genAI.getGenerativeModel({ model: "gemini-pro" });
-                console.log('Modelo inicializado con API key:', currentApiKeyIndex + 1);
-                isInitialized = true;
-                return true;
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: prompt
+                            }]
+                        }]
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Error en la respuesta de la API');
+                }
+
+                const data = await response.json();
+                if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                    return data.candidates[0].content.parts[0].text;
+                } else {
+                    throw new Error('Formato de respuesta inválido');
+                }
             } catch (error) {
-                console.error('Error al inicializar:', error);
-                
-                if (retryCount < API_KEYS.length - 1) {
-                    currentApiKeyIndex = (currentApiKeyIndex + 1) % API_KEYS.length;
-                    console.log('Intentando con API key:', currentApiKeyIndex + 1);
-                    return await initializeModel(retryCount + 1);
-                }
-                
-                return false;
+                console.error('Error al generar respuesta:', error);
+                throw error;
             }
         }
-
-        // Función para esperar la inicialización
-        async function waitForInitialization(attempts = 0) {
-            if (attempts > 10) {
-                throw new Error('No se pudo inicializar el modelo después de varios intentos');
-            }
-
-            if (!window.GoogleGenerativeAI) {
-                await new Promise(resolve => setTimeout(resolve, 1000));
-                return waitForInitialization(attempts + 1);
-            }
-
-            return initializeModel();
-        }
-
-        // Inicializar cuando la página esté lista
-        document.addEventListener('DOMContentLoaded', async function() {
-            // Intentar inicializar cada segundo hasta que la biblioteca esté cargada
-            const initInterval = setInterval(async () => {
-                if (window.GoogleGenerativeAI) {
-                    clearInterval(initInterval);
-                    await initializeModel();
-                }
-            }, 1000);
-        });
 
         // Función para enviar mensaje
         async function sendMessage() {
@@ -437,16 +421,29 @@
             document.getElementById('chat-messages').appendChild(loadingDiv);
 
             try {
-                if (!isInitialized) {
-                    await waitForInitialization();
+                // Construir el prompt
+                const prompt = `Actúa como un profesor de italiano amigable y paciente. 
+                Nivel del estudiante: principiante.
+                Responde en español, pero incluye ejemplos en italiano.
+                Cuando des ejemplos en italiano, marca el texto italiano con "Italiano: " al inicio.
+                No uses caracteres especiales como asteriscos o bullets.
+                Mensaje del estudiante: ${message}`;
+
+                // Intentar generar respuesta
+                let response = null;
+                let attempts = 0;
+                
+                while (!response && attempts < API_KEYS.length) {
+                    try {
+                        response = await generateResponse(prompt);
+                    } catch (error) {
+                        console.error(`Error con API key ${currentApiKeyIndex + 1}:`, error);
+                        currentApiKeyIndex = (currentApiKeyIndex + 1) % API_KEYS.length;
+                        attempts++;
+                    }
                 }
 
-                // Generar respuesta
-                const prompt = buildPrompt(message);
-                const result = await model.generateContent(prompt);
-                const response = result.response.text();
-
-                if (response && response.trim()) {
+                if (response) {
                     loadingDiv.remove();
                     addMessage(response, 'assistant');
                     
@@ -454,24 +451,17 @@
                     const chatMessages = document.querySelector('.chat-messages');
                     chatMessages.scrollTop = chatMessages.scrollHeight;
                 } else {
-                    throw new Error('Respuesta vacía');
+                    throw new Error('No se pudo obtener respuesta después de intentar con todas las API keys');
                 }
             } catch (error) {
                 console.error('Error:', error);
                 loadingDiv.remove();
-                addMessage('Lo siento, hubo un error. Intentando de nuevo...', 'assistant');
-                
-                // Reintentar con la siguiente API key
-                isInitialized = false;
-                model = null;
-                currentApiKeyIndex = (currentApiKeyIndex + 1) % API_KEYS.length;
-                setTimeout(() => sendMessage(), 1000);
+                addMessage('Lo siento, hubo un error al procesar tu mensaje. Por favor, intenta de nuevo.', 'assistant');
             }
         }
 
         // Función para cambiar el nivel
         function setLevel(level) {
-            // Actualizar botones activos
             document.querySelectorAll('.level-buttons button').forEach(btn => {
                 btn.classList.remove('active');
                 if (btn.textContent.toLowerCase().includes(level)) {
@@ -485,7 +475,6 @@
                 'avanzado': '¿Qué frases avanzadas me recomiendas practicar?'
             };
 
-            // Simular el envío del mensaje
             const input = document.getElementById('message-input');
             input.value = messages[level];
             sendMessage();
@@ -493,7 +482,6 @@
 
         // Función para cambiar el tema
         function setTopic(topic) {
-            // Actualizar botones activos
             document.querySelectorAll('.topic-buttons button').forEach(btn => {
                 btn.classList.remove('active');
                 if (btn.textContent.toLowerCase().includes(topic)) {
@@ -510,19 +498,23 @@
                 'conversacion': 'Frases útiles para mantener una conversación'
             };
 
-            // Simular el envío del mensaje
             const input = document.getElementById('message-input');
             input.value = messages[topic];
             sendMessage();
         }
 
-        // Función para construir el prompt
-        function buildPrompt(message) {
-            return `Actúa como un profesor de italiano. Nivel del estudiante: principiante. 
-            Responde en español, pero incluye ejemplos en italiano.
-            Cuando des ejemplos en italiano, marca el texto italiano con "Italiano: " al inicio.
-            No uses caracteres especiales como asteriscos o bullets.
-            Mensaje del estudiante: ${message}`;
+        // Evento para enviar mensaje con Enter
+        document.getElementById('message-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        // Función para ajustar tamaño del input
+        function autoResize(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
         }
 
         // Función para añadir mensaje al chat
@@ -536,44 +528,11 @@
                 const icons = ['🗣️', '💭', '💬', '🔊', '📢', '🎯', '✨', '🌟'];
                 const icon = icons[Math.floor(Math.random() * icons.length)];
                 messageDiv.innerHTML = `<span class="icon">${icon}</span> ${text}`;
-                
-                // Añadir botón de audio
-                const audioButton = document.createElement('button');
-                audioButton.className = 'audio-button';
-                audioButton.innerHTML = '<i class="fas fa-volume-up"></i>';
-                audioButton.onclick = () => speakText(text);
-                messageDiv.appendChild(audioButton);
             } else {
                 messageDiv.textContent = text;
             }
             
             messagesDiv.appendChild(messageDiv);
-        }
-
-        // Función para ajustar tamaño del input
-        function autoResize(textarea) {
-            textarea.style.height = 'auto';
-            textarea.style.height = textarea.scrollHeight + 'px';
-        }
-
-        // Manejar tecla Enter
-        document.getElementById('message-input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                sendMessage();
-            }
-        });
-
-        // Función para leer texto
-        function speakText(text) {
-            // Limpiar texto para la lectura
-            const cleanText = text.replace(/[0-9]/g, '')
-                                .replace(/[^\w\s,.!?:;]/g, '')
-                                .replace(/Italiano:/g, '');
-
-            const utterance = new SpeechSynthesisUtterance(cleanText);
-            utterance.lang = 'it-IT';
-            speechSynthesis.speak(utterance);
         }
     </script>
 </body>
