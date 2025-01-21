@@ -259,11 +259,53 @@
             .chat-container {
                 flex-direction: column;
                 padding: 10px;
+                height: 100vh;
+                position: relative;
             }
 
             .sidebar {
                 width: 100%;
                 margin-bottom: 20px;
+                position: absolute;
+                top: 0;
+                left: 0;
+                background: white;
+                z-index: 10;
+                transition: transform 0.3s ease;
+                padding: 10px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+
+            .sidebar.hidden {
+                transform: translateY(-100%);
+            }
+
+            .toggle-sidebar {
+                display: block;
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: var(--primary-color);
+                color: white;
+                border: none;
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+                cursor: pointer;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                z-index: 11;
+            }
+
+            .chat-main {
+                margin-top: 0;
+                height: calc(100vh - 20px);
+                position: relative;
+                z-index: 1;
+            }
+
+            .chat-messages {
+                height: calc(100vh - 140px);
             }
 
             .message-content {
@@ -318,7 +360,9 @@
                 <button onclick="setTopic('conversacion')">Conversación</button>
             </div>
         </div>
-
+        <button class="toggle-sidebar" style="display: none;">
+            <i class="fas fa-bars"></i>
+        </button>
         <div class="chat-main">
             <div class="chat-header">
                 <h2>Chat de Italiano 🇮🇹</h2>
@@ -435,10 +479,19 @@
                 'avanzado': '¿Qué frases avanzadas me recomiendas practicar?'
             };
 
+            // En móvil, ocultar el sidebar
+            const mediaQuery = window.matchMedia('(max-width: 768px)');
+            if (mediaQuery.matches) {
+                document.querySelector('.sidebar').classList.add('hidden');
+            }
+
             // Simular el envío del mensaje
             const input = document.getElementById('message-input');
             input.value = messages[level];
             window.sendMessage();
+
+            // Desplazarse al chat
+            setTimeout(scrollToChat, 100);
         };
 
         window.setTopic = function(topic) {
@@ -461,10 +514,19 @@
                 'conversacion': 'Frases útiles para mantener una conversación'
             };
 
+            // En móvil, ocultar el sidebar
+            const mediaQuery = window.matchMedia('(max-width: 768px)');
+            if (mediaQuery.matches) {
+                document.querySelector('.sidebar').classList.add('hidden');
+            }
+
             // Simular el envío del mensaje
             const input = document.getElementById('message-input');
             input.value = messages[topic];
             window.sendMessage();
+
+            // Desplazarse al chat
+            setTimeout(scrollToChat, 100);
         };
 
         window.autoResize = function(textarea) {
@@ -640,6 +702,37 @@
             }
         };
 
+        // Función para manejar el menú en móvil
+        function initializeMobileMenu() {
+            const sidebar = document.querySelector('.sidebar');
+            const toggleButton = document.querySelector('.toggle-sidebar');
+            const mediaQuery = window.matchMedia('(max-width: 768px)');
+
+            function updateMobileMenu(e) {
+                if (e.matches) {
+                    toggleButton.style.display = 'block';
+                    sidebar.classList.add('hidden');
+                } else {
+                    toggleButton.style.display = 'none';
+                    sidebar.classList.remove('hidden');
+                }
+            }
+
+            toggleButton.addEventListener('click', () => {
+                sidebar.classList.toggle('hidden');
+            });
+
+            mediaQuery.addListener(updateMobileMenu);
+            updateMobileMenu(mediaQuery);
+        }
+
+        // Función para desplazarse al chat
+        function scrollToChat() {
+            const chatMessages = document.querySelector('.chat-messages');
+            chatMessages.scrollIntoView({ behavior: 'smooth' });
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
         // Inicializar el chat
         window.onload = async function() {
             try {
@@ -657,6 +750,9 @@
                 });
 
                 document.getElementById('send-button').onclick = window.sendMessage;
+
+                // Inicializar el menú móvil cuando se carga la página
+                initializeMobileMenu();
             } catch (error) {
                 console.error('Error durante la inicialización:', error);
                 window.addMessage('Error al inicializar el chat. Por favor, recarga la página.', 'assistant');
