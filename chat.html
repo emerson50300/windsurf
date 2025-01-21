@@ -3,156 +3,229 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Interactivo de Italiano</title>
+    <title>Chat Italiano</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #1a5fb4;
+            --accent-color: #62a0ea;
+            --text-color: #333;
+            --bg-color: #f6f6f6;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 20px;
-            background-color: #f0f2f5;
+            display: flex;
+            gap: 20px;
+            min-height: calc(100vh - 60px);
         }
 
         .chat-container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
+            flex: 1;
+            background: var(--card-bg);
             border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-
-        .chat-header {
-            background: #0084ff;
-            color: white;
-            padding: 15px;
-            text-align: center;
-            font-size: 1.2em;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            max-height: calc(100vh - 100px);
         }
 
         .chat-messages {
-            height: 500px;
+            flex: 1;
             overflow-y: auto;
             padding: 20px;
         }
 
         .message {
-            margin-bottom: 15px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .message-content {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 10px;
             max-width: 80%;
-            padding: 10px 15px;
-            border-radius: 15px;
-            margin: 5px 0;
         }
 
-        .user {
-            align-items: flex-end;
+        .user-message {
+            background-color: var(--primary-color);
+            color: white;
+            margin-left: auto;
         }
 
-        .user .message-content {
-            background: #0084ff;
+        .assistant-message {
+            background-color: var(--accent-color);
             color: white;
         }
 
-        .assistant {
-            align-items: flex-start;
-        }
-
-        .assistant .message-content {
-            background: #e9ecef;
-            color: black;
-        }
-
-        .chat-input {
-            display: flex;
+        .input-container {
             padding: 20px;
+            border-top: 1px solid #eee;
             background: white;
-            border-top: 1px solid #ddd;
+            border-radius: 0 0 10px 10px;
         }
 
-        #message-input {
+        .input-box {
+            display: flex;
+            gap: 10px;
+        }
+
+        .message-input {
             flex: 1;
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #ddd;
-            border-radius: 20px;
-            margin-right: 10px;
-            font-size: 1em;
+            border-radius: 5px;
+            resize: none;
+            min-height: 50px;
+            max-height: 150px;
         }
 
-        #send-button {
-            background: #0084ff;
+        .send-button {
+            background-color: var(--primary-color);
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
+            padding: 0 20px;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 1em;
+            transition: background-color 0.3s;
         }
 
-        #send-button:hover {
-            background: #0073e6;
+        .send-button:hover {
+            background-color: var(--accent-color);
         }
 
-        .emoji {
-            font-size: 1.2em;
-            margin-right: 5px;
-        }
-
-        .level-selector, .topic-selector {
-            margin: 10px 0;
-            padding: 15px;
-            background: #f8f9fa;
+        .sidebar {
+            width: 300px;
+            background: var(--card-bg);
             border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .option {
-            cursor: pointer;
-            padding: 8px;
+        .level-selector {
+            margin-bottom: 20px;
+        }
+
+        .level-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .level-option {
+            padding: 10px;
             margin: 5px 0;
             border-radius: 5px;
-        }
-
-        .option:hover {
-            background: #e9ecef;
-        }
-
-        .selected {
-            background: #0084ff;
-            color: white;
-        }
-
-        .translation {
-            font-style: italic;
-            color: #666;
-            margin-top: 5px;
-        }
-
-        .practice-button {
-            background: #28a745;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 15px;
             cursor: pointer;
-            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .level-option:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .level-option.selected {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .topic-list {
+            margin-top: 20px;
+        }
+
+        .topic-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .topic-item {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .topic-item:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .message {
+                max-width: 90%;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="chat-container">
-        <div class="chat-header">
-            <i class="fas fa-comments"></i> Chat Interactivo de Italiano
+    <div class="header">
+        <h1>Chat Italiano Interactivo</h1>
+    </div>
+    <div class="container">
+        <div class="sidebar">
+            <div class="level-selector">
+                <div class="level-title">Nivel de Italiano</div>
+                <div class="level-option" onclick="selectLevel('A1-A2')">Principiante (A1-A2)</div>
+                <div class="level-option" onclick="selectLevel('B1-B2')">Intermedio (B1-B2)</div>
+                <div class="level-option" onclick="selectLevel('C1-C2')">Avanzado (C1-C2)</div>
+            </div>
+            <div class="topic-list">
+                <div class="topic-title">Temas de Aprendizaje</div>
+                <div class="topic-item" onclick="selectTopic('gramatica')">Gramática y Verbos</div>
+                <div class="topic-item" onclick="selectTopic('vocabulario')">Vocabulario</div>
+                <div class="topic-item" onclick="selectTopic('pronunciacion')">Pronunciación</div>
+                <div class="topic-item" onclick="selectTopic('cultura')">Cultura Italiana</div>
+                <div class="topic-item" onclick="selectTopic('ejercicios')">Ejercicios</div>
+                <div class="topic-item" onclick="selectTopic('conversacion')">Conversación</div>
+            </div>
         </div>
-        <div class="chat-messages" id="chat-messages"></div>
-        <div class="chat-input">
-            <input type="text" id="message-input" placeholder="Escribe tu mensaje...">
-            <button id="send-button">
-                <i class="fas fa-paper-plane"></i> Enviar
-            </button>
+        <div class="chat-container">
+            <div class="chat-messages" id="chat-messages">
+                <!-- Los mensajes se añadirán aquí -->
+            </div>
+            <div class="input-container">
+                <div class="input-box">
+                    <textarea 
+                        class="message-input" 
+                        id="message-input" 
+                        placeholder="Escribe tu pregunta o mensaje..."
+                        onInput="autoResize(this)"></textarea>
+                    <button class="send-button" onclick="sendMessage()">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -207,7 +280,7 @@ Por ejemplo, puedes preguntarme:
                 return teachVocabulary(text);
             }
 
-            return getDefaultResponse();
+            return handleGeneralQuestion(text);
         }
 
         function handleVerbConjugation(text) {
@@ -500,6 +573,95 @@ Por ejemplo, puedes preguntarme:
 
             response += "💡 ¿Te gustaría practicar este vocabulario con ejercicios?";
             return response;
+        }
+
+        function handleGeneralQuestion(text) {
+            // Detectar patrones comunes en preguntas generales
+            const lowerText = text.toLowerCase();
+            
+            if (lowerText.includes('qué') || lowerText.includes('que') || lowerText.includes('cómo') || 
+                lowerText.includes('como') || lowerText.includes('por qué') || lowerText.includes('cuál') || 
+                lowerText.includes('cuando') || lowerText.includes('dónde')) {
+                
+                // Preguntas sobre Italia
+                if (lowerText.includes('italia') || lowerText.includes('italiano')) {
+                    if (lowerText.includes('comida') || lowerText.includes('comer') || lowerText.includes('plato')) {
+                        return `La gastronomía italiana es mundialmente famosa por su variedad y calidad. Algunos platos típicos incluyen:
+
+1. 🍝 Pasta: Con diferentes salsas como:
+   - Carbonara (Roma)
+   - Pesto (Génova)
+   - Bolognese (Bolonia)
+
+2. 🍕 Pizza: Originaria de Nápoles, con variedades como:
+   - Margherita
+   - Marinara
+   - Quattro Formaggi
+
+3. 🧀 Quesos italianos:
+   - Parmigiano Reggiano
+   - Mozzarella
+   - Gorgonzola
+
+¿Te gustaría aprender más sobre algún plato específico o practicar el vocabulario relacionado?`;
+                    }
+                    
+                    if (lowerText.includes('ciudad') || lowerText.includes('ciudades') || lowerText.includes('visitar')) {
+                        return `Italia tiene numerosas ciudades históricas y culturales para visitar:
+
+1. 🏛️ Roma:
+   - Coliseo
+   - Vaticano
+   - Fontana di Trevi
+
+2. 🎨 Florencia:
+   - Galería Uffizi
+   - Duomo
+   - Ponte Vecchio
+
+3. 🚤 Venecia:
+   - Plaza San Marcos
+   - Gran Canal
+   - Puente de Rialto
+
+¿Te gustaría aprender vocabulario útil para viajar a alguna de estas ciudades?`;
+                    }
+                }
+
+                // Preguntas sobre aprendizaje
+                if (lowerText.includes('aprender') || lowerText.includes('estudiar') || lowerText.includes('practicar')) {
+                    return `Para aprender italiano efectivamente, te recomiendo:
+
+1. 📚 Práctica diaria:
+   - Escuchar música italiana
+   - Ver películas con subtítulos
+   - Leer noticias en italiano
+
+2. 🗣️ Conversación:
+   - Practicar con hablantes nativos
+   - Usar apps de intercambio de idiomas
+   - Participar en grupos de conversación
+
+3. 📝 Ejercicios:
+   - Gramática básica
+   - Vocabulario por temas
+   - Pronunciación
+
+¿Por cuál de estos aspectos te gustaría empezar?`;
+                }
+            }
+
+            // Respuesta por defecto para otras preguntas
+            return `Entiendo tu pregunta. Como asistente especializado en italiano, puedo ayudarte con:
+
+1. 🎯 Traducción y significado
+2. 📖 Gramática y conjugación
+3. 🗣️ Pronunciación
+4. 📚 Vocabulario temático
+5. 🎭 Cultura italiana
+6. ✍️ Ejercicios prácticos
+
+¿Qué aspecto te gustaría explorar?`;
         }
 
         function addMessage(text, sender) {
