@@ -377,6 +377,21 @@
         window.userLevel = 'principiante';
         window.currentTopic = 'gramatica';
         window.model = null;
+        window.currentApiKeyIndex = 0;
+
+        // Lista de API keys de Gemini
+        const API_KEYS = [
+            'AIzaSyCEIicKmkzZQ7kOy0yBSVt4Dc3s80GwKYw',
+            'AIzaSyDxkzxz5MsLHFtQqTM7FHMHGOZNwzVmQXY',
+            'AIzaSyBwPQWyLJEVJKjPfJjcKtqwwBYgZqYxKEo',
+            'AIzaSyA2D4tN_gxsXhGsHuV3ukUTsQHGcYzWNZw'
+        ];
+
+        // Función para obtener la siguiente API key
+        function getNextApiKey() {
+            window.currentApiKeyIndex = (window.currentApiKeyIndex + 1) % API_KEYS.length;
+            return API_KEYS[window.currentApiKeyIndex];
+        }
 
         // Función para construir el prompt para Gemini
         window.buildGeminiPrompt = function(message, level) {
@@ -388,17 +403,54 @@
         };
 
         // Función para inicializar el modelo de Gemini
-        async function initializeGemini() {
+        async function initializeGemini(retryCount = 0) {
             if (window.model) return true;
             
             try {
-                const genAI = new GoogleGenerativeAI('AIzaSyCEIicKmkzZQ7kOy0yBSVt4Dc3s80GwKYw');
+                const currentKey = API_KEYS[window.currentApiKeyIndex];
+                const genAI = new GoogleGenerativeAI(currentKey);
                 window.model = genAI.getGenerativeModel({ model: "gemini-pro" });
                 console.log('Modelo Gemini inicializado correctamente');
                 return true;
             } catch (error) {
                 console.error('Error al inicializar Gemini:', error);
+                
+                // Si hay más API keys disponibles, intentar con la siguiente
+                if (retryCount < API_KEYS.length - 1) {
+                    window.currentApiKeyIndex = (window.currentApiKeyIndex + 1) % API_KEYS.length;
+                    console.log('Intentando con siguiente API key...');
+                    return await initializeGemini(retryCount + 1);
+                }
+                
                 return false;
+            }
+        }
+
+        // Función para generar respuesta con reintentos
+        async function generateResponse(prompt, retryCount = 0) {
+            try {
+                const result = await window.model.generateContent(prompt);
+                const response = result.response;
+                const text = response.text();
+                
+                if (!text || !text.trim()) {
+                    throw new Error('Respuesta vacía');
+                }
+                
+                return text;
+            } catch (error) {
+                console.error('Error al generar respuesta:', error);
+                
+                // Si el error parece ser de la API key, intentar con otra
+                if (error.message.includes('API') && retryCount < API_KEYS.length - 1) {
+                    window.model = null;
+                    const initialized = await initializeGemini(retryCount);
+                    if (initialized) {
+                        return await generateResponse(prompt, retryCount + 1);
+                    }
+                }
+                
+                throw error;
             }
         }
 
@@ -426,7 +478,7 @@
                     const initialized = await initializeGemini();
                     if (!initialized) {
                         loadingDiv.remove();
-                        window.addMessage('Error al inicializar el chat. Por favor, recarga la página.', 'assistant');
+                        window.addMessage('Error al inicializar el chat. Intentando reconectar...', 'assistant');
                         return;
                     }
                 }
@@ -435,26 +487,24 @@
                 const prompt = window.buildGeminiPrompt(message, window.userLevel);
                 
                 try {
-                    const result = await window.model.generateContent(prompt);
-                    const response = result.response;
-                    const text = response.text();
-
-                    // Remover indicador de carga
+                    const text = await generateResponse(prompt);
                     loadingDiv.remove();
-
-                    // Mostrar respuesta
-                    if (text && text.trim()) {
-                        window.addMessage(text, 'assistant');
-                        // Desplazarse al final del chat
-                        const chatMessages = document.querySelector('.chat-messages');
-                        chatMessages.scrollTop = chatMessages.scrollHeight;
-                    } else {
-                        throw new Error('Respuesta vacía');
-                    }
+                    window.addMessage(text, 'assistant');
+                    
+                    // Desplazarse al final del chat
+                    const chatMessages = document.querySelector('.chat-messages');
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
                 } catch (error) {
-                    console.error('Error al generar respuesta:', error);
+                    console.error('Error en la generación:', error);
                     loadingDiv.remove();
-                    window.addMessage('Lo siento, hubo un error al generar la respuesta. Por favor, intenta de nuevo.', 'assistant');
+                    window.addMessage('Lo siento, hubo un error. Intentando reconectar...', 'assistant');
+                    
+                    // Reintentar con una nueva API key
+                    window.model = null;
+                    const initialized = await initializeGemini();
+                    if (initialized) {
+                        await window.sendMessage(); // Reintentar el mensaje
+                    }
                 }
             } catch (error) {
                 console.error('Error en sendMessage:', error);
