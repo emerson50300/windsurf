@@ -101,10 +101,13 @@
         }
 
         .message {
-            margin-bottom: 20px;
+            position: relative;
+            max-width: 80%;
+            margin: 10px;
             padding: 15px;
             border-radius: 10px;
-            max-width: 80%;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .user-message {
@@ -228,6 +231,30 @@
             100% { transform: scale(1); }
         }
 
+        .play-all-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .play-all-button:hover {
+            transform: scale(1.2);
+            background-color: rgba(0,0,0,0.05);
+        }
+
+        .play-all-button.playing {
+            color: var(--accent-color);
+            animation: pulse 1s infinite;
+        }
+
         @media (max-width: 768px) {
             .chat-container {
                 flex-direction: column;
@@ -262,6 +289,11 @@
             .level-buttons button, .topic-buttons button {
                 padding: 15px;
                 font-size: 1.1em;
+            }
+
+            .play-all-button {
+                padding: 12px;
+                font-size: 1.2em;
             }
         }
     </style>
@@ -490,10 +522,28 @@
             return prompt;
         };
 
+        // Función para extraer todo el texto en italiano de un mensaje
+        function extractItalianText(messageDiv) {
+            const italianPhrases = [];
+            messageDiv.querySelectorAll('.italian-text').forEach(element => {
+                const text = element.textContent.replace('Italiano:', '').trim();
+                if (text) {
+                    italianPhrases.push(text);
+                }
+            });
+            return italianPhrases.join('. ');
+        }
+
         window.addMessage = function(text, sender) {
             const messagesDiv = document.getElementById('chat-messages');
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${sender}-message`;
+            
+            // Agregar botón de reproducción para todo el mensaje
+            const playAllButton = document.createElement('button');
+            playAllButton.className = 'play-all-button';
+            playAllButton.innerHTML = '<i class="fas fa-volume-up"></i>';
+            playAllButton.title = 'Escuchar todo el texto en italiano';
             
             const contentDiv = document.createElement('div');
             contentDiv.className = 'message-content';
@@ -504,56 +554,53 @@
                 const formattedLines = lines.map(line => {
                     if (line.includes('Italiano:')) {
                         const [italian, spanish] = line.split('|').map(part => part.trim());
-                        // Extraer solo el texto en italiano y escapar caracteres especiales para el HTML
-                        const italianText = italian.replace('Italiano:', '').trim();
-                        const cleanItalianText = italianText
-                            .replace(/"/g, '&quot;') // Escapar comillas
-                            .replace(/'/g, '&apos;'); // Escapar apóstrofes
                         return `<div class="example-phrase">
-                                    <div class="italian-text">
-                                        ${italian}
-                                        <button class="play-button" onclick="playItalianText('${cleanItalianText}', this)" title="Escuchar pronunciación">
-                                            <i class="fas fa-play"></i>
-                                        </button>
-                                    </div>
+                                    <div class="italian-text">${italian}</div>
                                     <div class="translation">${spanish}</div>
                                 </div>`;
                     }
                     return `<div>${line}</div>`;
                 });
                 contentDiv.innerHTML = formattedLines.join('');
-            } else {
-                const lines = text.split('\n');
-                contentDiv.innerHTML = lines.map(line => `<div>${line}</div>`).join('');
+
+                // Configurar el evento de clic para el botón de reproducción
+                playAllButton.onclick = function() {
+                    const italianText = extractItalianText(messageDiv);
+                    if (italianText) {
+                        const cleanText = cleanTextForSpeech(italianText);
+                        console.log('Reproduciendo todo:', cleanText);
+                        
+                        // Detener cualquier reproducción anterior
+                        synth.cancel();
+
+                        // Remover clase 'playing' de todos los botones
+                        document.querySelectorAll('.play-all-button').forEach(btn => {
+                            btn.classList.remove('playing');
+                        });
+
+                        const utterance = new SpeechSynthesisUtterance(cleanText);
+                        utterance.voice = italianVoice;
+                        utterance.lang = 'it-IT';
+                        utterance.rate = 0.9;
+
+                        // Añadir clase 'playing' al botón actual
+                        this.classList.add('playing');
+
+                        // Cuando termine de hablar
+                        utterance.onend = () => {
+                            this.classList.remove('playing');
+                        };
+
+                        synth.speak(utterance);
+                    }
+                };
+
+                messageDiv.appendChild(playAllButton);
             }
 
             messageDiv.appendChild(contentDiv);
             messagesDiv.appendChild(messageDiv);
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        };
-
-        window.showWelcomeMessage = function() {
-            const welcomeMessage = `¡Bienvenido a tu Profesor de Italiano! 🇮🇹\n\n
-Puedo ayudarte con:
-1️⃣ Traducción y significado de palabras/frases
-2️⃣ Gramática y conjugación de verbos
-3️⃣ Pronunciación y fonética
-4️⃣ Vocabulario y expresiones
-5️⃣ Cultura e historia italiana
-6️⃣ Ejercicios prácticos
-7️⃣ Historias y lecturas
-8️⃣ Diálogos y conversación\n\n
-Primero, elige tu nivel:
-• Principiante (A1-A2)
-• Intermedio (B1-B2)
-• Avanzado (C1-C2)\n\n
-Por ejemplo, puedes preguntarme:
-• "¿Cómo se conjuga el verbo 'andare'?"
-• "Enséñame vocabulario sobre comida"
-• "Quiero practicar la pronunciación"
-• "Cuéntame sobre la cultura italiana"`;
-            
-            window.addMessage(welcomeMessage, 'assistant');
         };
 
         window.sendMessage = async function() {
