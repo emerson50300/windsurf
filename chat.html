@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat de Italiano</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@google/generative-ai"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@google/generative-ai@0.1.3/dist/generative-ai.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script async src="https://fundingchoicesmessages.google.com/i/pub-7643993399830665?ers=1"></script>
     <style>
         :root {
             --primary-color: #1a5fb4;
@@ -367,6 +366,53 @@
             'AIzaSyCPjkG910sUn7eWG6aWLL3y9jOKlySOgUI'
         ];
 
+        // Función para cambiar el nivel
+        window.setLevel = async function(level) {
+            // Actualizar botones activos
+            document.querySelectorAll('.level-buttons button').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase().includes(level)) {
+                    btn.classList.add('active');
+                }
+            });
+
+            const messages = {
+                'principiante': '¿Qué frases básicas debo aprender como principiante?',
+                'intermedio': '¿Cuáles son las expresiones más comunes para nivel intermedio?',
+                'avanzado': '¿Qué frases avanzadas me recomiendas practicar?'
+            };
+
+            // Simular el envío del mensaje
+            const input = document.getElementById('message-input');
+            input.value = messages[level];
+            await window.sendMessage();
+        };
+
+        // Función para cambiar el tema
+        window.setTopic = async function(topic) {
+            // Actualizar botones activos
+            document.querySelectorAll('.topic-buttons button').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase().includes(topic)) {
+                    btn.classList.add('active');
+                }
+            });
+
+            const messages = {
+                'gramatica': '¿Cuáles son las reglas gramaticales más importantes?',
+                'vocabulario': 'Dame las 10 palabras más usadas en italiano',
+                'pronunciacion': '¿Cómo se pronuncian correctamente las vocales en italiano?',
+                'cultura': 'Cuéntame sobre las tradiciones italianas más importantes',
+                'ejercicios': 'Dame ejercicios de práctica para mi nivel',
+                'conversacion': 'Frases útiles para mantener una conversación'
+            };
+
+            // Simular el envío del mensaje
+            const input = document.getElementById('message-input');
+            input.value = messages[topic];
+            await window.sendMessage();
+        };
+
         // Función para obtener la siguiente API key
         function getNextApiKey() {
             currentApiKeyIndex = (currentApiKeyIndex + 1) % API_KEYS.length;
@@ -377,7 +423,7 @@
         async function initializeModel(retryCount = 0) {
             try {
                 if (!model || retryCount > 0) {
-                    const genAI = new GoogleGenerativeAI(API_KEYS[currentApiKeyIndex]);
+                    const genAI = new window.GoogleGenerativeAI(API_KEYS[currentApiKeyIndex]);
                     model = genAI.getGenerativeModel({ model: "gemini-pro" });
                     console.log('Modelo inicializado con API key:', currentApiKeyIndex + 1);
                 }
@@ -516,9 +562,17 @@
             speechSynthesis.speak(utterance);
         }
 
-        // Inicializar el modelo al cargar la página
+        // Esperar a que la biblioteca de Google AI se cargue
         window.onload = async function() {
-            await initializeModel();
+            // Esperar un momento para asegurarse de que la biblioteca se cargue
+            setTimeout(async () => {
+                try {
+                    await initializeModel();
+                    console.log('Chat inicializado correctamente');
+                } catch (error) {
+                    console.error('Error en la inicialización:', error);
+                }
+            }, 1000);
         };
     </script>
 </body>
