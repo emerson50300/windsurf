@@ -4,7 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat de Italiano</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@google/generative-ai"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script async src="https://fundingchoicesmessages.google.com/i/pub-7643993399830665?ers=1"></script>
+    <script>
+        (function() {
+            function signalGooglefcPresent() {
+                if (!window.frames['googlefcPresent']) {
+                    if (document.body) {
+                        const iframe = document.createElement('iframe');
+                        iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                        iframe.style.display = 'none';
+                        iframe.name = 'googlefcPresent';
+                        document.body.appendChild(iframe);
+                    } else {
+                        setTimeout(signalGooglefcPresent, 0);
+                    }
+                }
+            }
+            signalGooglefcPresent();
+        })();
+    </script>
     <style>
         :root {
             --primary-color: #1a5fb4;
