@@ -260,82 +260,48 @@
                 flex-direction: column;
                 padding: 10px;
                 height: 100vh;
-                position: relative;
             }
 
             .sidebar {
                 width: 100%;
-                margin-bottom: 20px;
-                position: absolute;
-                top: 0;
-                left: 0;
+                margin-bottom: 10px;
                 background: white;
                 z-index: 10;
-                transition: transform 0.3s ease;
                 padding: 10px;
                 box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             }
 
-            .sidebar.hidden {
-                transform: translateY(-100%);
-            }
-
-            .toggle-sidebar {
-                display: block;
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                background: var(--primary-color);
-                color: white;
-                border: none;
-                border-radius: 50%;
-                width: 50px;
-                height: 50px;
-                font-size: 24px;
-                cursor: pointer;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-                z-index: 11;
-            }
-
             .chat-main {
-                margin-top: 0;
-                height: calc(100vh - 20px);
-                position: relative;
-                z-index: 1;
+                flex: 1;
+                height: calc(100vh - 200px);
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
             }
 
             .chat-messages {
-                height: calc(100vh - 140px);
-            }
-
-            .message-content {
-                font-size: 16px;
-                padding: 8px;
-            }
-
-            .example-phrase {
-                margin: 8px 0;
-                padding: 8px;
-            }
-
-            .italian-text, .translation {
-                font-size: 1em;
-                line-height: 1.6;
-            }
-
-            .chat-input textarea {
-                font-size: 16px;
+                flex: 1;
+                overflow-y: auto;
                 padding: 10px;
             }
 
-            .level-buttons button, .topic-buttons button {
-                padding: 15px;
-                font-size: 1.1em;
+            .chat-input {
+                padding: 10px;
+                background: white;
+                border-top: 1px solid #eee;
             }
 
-            .play-all-button {
-                padding: 12px;
-                font-size: 1.2em;
+            .level-buttons, .topic-buttons {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+
+            .level-buttons button, .topic-buttons button {
+                flex: 1;
+                min-width: calc(33% - 5px);
+                padding: 12px 8px;
+                font-size: 0.9em;
             }
         }
     </style>
@@ -479,19 +445,16 @@
                 'avanzado': '¿Qué frases avanzadas me recomiendas practicar?'
             };
 
-            // En móvil, ocultar el sidebar
-            const mediaQuery = window.matchMedia('(max-width: 768px)');
-            if (mediaQuery.matches) {
-                document.querySelector('.sidebar').classList.add('hidden');
-            }
-
             // Simular el envío del mensaje
             const input = document.getElementById('message-input');
             input.value = messages[level];
             window.sendMessage();
 
             // Desplazarse al chat
-            setTimeout(scrollToChat, 100);
+            setTimeout(() => {
+                const chatMessages = document.querySelector('.chat-messages');
+                chatMessages.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
         };
 
         window.setTopic = function(topic) {
@@ -514,19 +477,16 @@
                 'conversacion': 'Frases útiles para mantener una conversación'
             };
 
-            // En móvil, ocultar el sidebar
-            const mediaQuery = window.matchMedia('(max-width: 768px)');
-            if (mediaQuery.matches) {
-                document.querySelector('.sidebar').classList.add('hidden');
-            }
-
             // Simular el envío del mensaje
             const input = document.getElementById('message-input');
             input.value = messages[topic];
             window.sendMessage();
 
             // Desplazarse al chat
-            setTimeout(scrollToChat, 100);
+            setTimeout(() => {
+                const chatMessages = document.querySelector('.chat-messages');
+                chatMessages.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
         };
 
         window.autoResize = function(textarea) {
@@ -668,37 +628,51 @@
         window.sendMessage = async function() {
             const input = document.getElementById('message-input');
             const message = input.value.trim();
+            
+            if (!message) return;
 
-            if (message) {
+            try {
+                // Mostrar mensaje del usuario
+                window.addMessage(message, 'user');
+                input.value = '';
+                window.autoResize(input);
+
+                // Mostrar indicador de carga
+                const loadingDiv = document.createElement('div');
+                loadingDiv.className = 'message assistant-message loading';
+                loadingDiv.textContent = 'Escribiendo';
+                document.getElementById('chat-messages').appendChild(loadingDiv);
+
+                // Construir el prompt
+                const prompt = window.buildGeminiPrompt(message, window.userLevel);
+
                 try {
-                    // Mostrar el mensaje del usuario
-                    window.addMessage(message, 'user');
-                    
-                    // Mostrar indicador de "escribiendo..."
-                    const typingDiv = document.createElement('div');
-                    typingDiv.className = 'message assistant-message typing';
-                    typingDiv.innerHTML = 'Escribiendo...';
-                    document.getElementById('chat-messages').appendChild(typingDiv);
+                    // Generar respuesta
+                    const result = await model.generateContent(prompt);
+                    const response = result.response;
+                    const text = response.text();
 
-                    console.log('Procesando mensaje del usuario:', message);
+                    // Remover indicador de carga
+                    loadingDiv.remove();
 
-                    // Construir el prompt y obtener respuesta de Gemini
-                    const prompt = window.buildGeminiPrompt(message, window.userLevel);
-                    const response = await window.getGeminiResponse(prompt);
-
-                    // Eliminar el indicador de "escribiendo..."
-                    typingDiv.remove();
-
-                    // Mostrar la respuesta de Gemini
-                    window.addMessage(response, 'assistant');
-
-                    // Limpiar el input y ajustar su tamaño
-                    input.value = '';
-                    input.style.height = 'auto';
+                    // Mostrar respuesta
+                    if (text && text.trim()) {
+                        window.addMessage(text, 'assistant');
+                    } else {
+                        throw new Error('Respuesta vacía');
+                    }
                 } catch (error) {
-                    console.error('Error en sendMessage:', error);
-                    window.addMessage('Lo siento, ocurrió un error al procesar tu mensaje. Por favor, intenta de nuevo.', 'assistant');
+                    console.error('Error al generar respuesta:', error);
+                    loadingDiv.remove();
+                    window.addMessage('Lo siento, hubo un error al generar la respuesta. Por favor, intenta de nuevo.', 'assistant');
                 }
+
+                // Desplazarse al final del chat
+                const chatMessages = document.querySelector('.chat-messages');
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            } catch (error) {
+                console.error('Error en sendMessage:', error);
+                window.addMessage('Lo siento, ocurrió un error. Por favor, intenta de nuevo.', 'assistant');
             }
         };
 
