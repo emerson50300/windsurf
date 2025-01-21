@@ -552,84 +552,57 @@
             textarea.style.height = textarea.scrollHeight + 'px';
         }
 
-        // Función para añadir mensaje al chat
-        function addMessage(text, sender) {
-            const messagesDiv = document.getElementById('chat-messages');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${sender}-message`;
-
-            if (sender === 'assistant') {
-                // Seleccionar un icono aleatorio
-                const icons = ['🗣️', '💭', '💬', '🔊', '📢', '🎯', '✨', '🌟'];
-                const icon = icons[Math.floor(Math.random() * icons.length)];
-                
-                // Formatear el texto y resaltar el italiano
-                const formattedText = formatText(text);
-                messageDiv.innerHTML = `<span class="icon">${icon}</span> ${formattedText}`;
-                
-                // Añadir botón de audio
-                const audioButton = document.createElement('button');
-                audioButton.className = 'audio-button';
-                audioButton.innerHTML = '<i class="fas fa-volume-up"></i>';
-                audioButton.onclick = () => speakText(text);
-                messageDiv.appendChild(audioButton);
-
-                // Leer automáticamente el texto en italiano después de un breve retraso
-                setTimeout(() => speakText(text), 1000);
-            } else {
-                messageDiv.textContent = text;
-            }
-            
-            messagesDiv.appendChild(messageDiv);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        }
-
         // Función para extraer solo el texto en italiano
         function extractItalianText(text) {
-            const italianParts = [];
-            const lines = text.split('\n');
-            let isItalianBlock = false;
-
-            for (let line of lines) {
-                line = line.trim();
-                if (!line) continue;
-
-                if (line.startsWith('Italiano:')) {
-                    isItalianBlock = true;
-                    // Eliminar el prefijo "Italiano:" y cualquier espacio extra
-                    italianParts.push(line.replace('Italiano:', '').trim());
-                } else if (isItalianBlock && (line.startsWith('-') || line.startsWith('•'))) {
-                    // Incluir líneas de lista que son parte del bloque italiano
-                    italianParts.push(line.trim());
-                } else {
-                    isItalianBlock = false;
-                }
+            // Buscar texto entre corchetes
+            const matches = text.match(/\[(.*?)\]/g);
+            if (matches) {
+                // Tomar el texto dentro de los corchetes y limpiarlo
+                return matches
+                    .map(match => match.slice(1, -1).trim())
+                    .join(' ');
             }
-
-            return italianParts.join('. ');
+            return '';
         }
 
         // Función para leer texto en italiano
         function speakText(text) {
-            const italianText = extractItalianText(text);
+            // Extraer solo el texto en italiano y limpiar signos de puntuación
+            const italianText = extractItalianText(text).replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g, '');
             
-            if (italianText) {
-                // Cancelar cualquier lectura anterior
-                speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(italianText);
+            utterance.lang = 'it-IT';
+            utterance.rate = 0.9; // Velocidad un poco más lenta para mejor claridad
+            utterance.pitch = 1;
+            utterance.volume = 1;
+            window.speechSynthesis.cancel(); // Cancelar cualquier lectura anterior
+            window.speechSynthesis.speak(utterance);
+        }
 
-                const utterance = new SpeechSynthesisUtterance(italianText);
-                utterance.lang = 'it-IT';
-                utterance.rate = 0.9; // Velocidad ligeramente más lenta para mejor comprensión
-                utterance.pitch = 1.0; // Tono normal
-                utterance.volume = 1.0; // Volumen máximo
-                
-                // Evento para manejar errores
-                utterance.onerror = (event) => {
-                    console.error('Error en la síntesis de voz:', event);
-                };
-
-                speechSynthesis.speak(utterance);
+        // Función para añadir mensaje al chat
+        function addMessage(text, sender) {
+            const messagesContainer = document.querySelector('.chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            
+            // Formatear el texto y agregar el botón de audio solo si hay texto en italiano
+            const formattedText = formatText(text);
+            messageDiv.innerHTML = formattedText;
+            
+            // Si es un mensaje del asistente, agregar el botón de audio
+            if (sender === 'assistant') {
+                const italianText = extractItalianText(text);
+                if (italianText) {
+                    const audioButton = document.createElement('button');
+                    audioButton.className = 'audio-button';
+                    audioButton.innerHTML = '<i class="fas fa-volume-up"></i>';
+                    audioButton.onclick = () => speakText(italianText);
+                    messageDiv.appendChild(audioButton);
+                }
             }
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
         // Función para formatear el texto y resaltar el italiano
