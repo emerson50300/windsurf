@@ -382,14 +382,14 @@
             speechSynthesis.onvoiceschanged = loadItalianVoice;
         }
 
-        // Función para limpiar el texto de caracteres especiales
+        // Función para limpiar el texto de caracteres especiales y puntuación
         function cleanTextForSpeech(text) {
             return text
-                .replace(/[•*-]/g, '') // Eliminar bullets, asteriscos y guiones
-                .replace(/^\s*[•*-]\s*/gm, '') // Eliminar bullets al inicio de cada línea
+                .replace(/[•*\-\[\]\(\){}]/g, '') // Eliminar caracteres especiales
+                .replace(/[.,!?¡¿:;]/g, '') // Eliminar signos de puntuación
+                .replace(/^\s*[•*-]\s*/gm, '') // Eliminar bullets al inicio de línea
                 .replace(/Italiano:\s*/i, '') // Eliminar la palabra "Italiano:"
                 .replace(/\s+/g, ' ') // Normalizar espacios
-                .replace(/[\[\]\(\){}]/g, '') // Eliminar corchetes, paréntesis y llaves
                 .trim(); // Eliminar espacios al inicio y final
         }
 
@@ -428,7 +428,18 @@
         };
 
         // Funciones globales
-        window.setLevel = function(level) {
+        async function initializeGemini() {
+            try {
+                window.model = new GoogleGenerativeAI('AIzaSyCEIicKmkzZQ7kOy0yBSVt4Dc3s80GwKYw').getGenerativeModel({ model: "gemini-pro" });
+                console.log('Modelo Gemini inicializado correctamente');
+                return true;
+            } catch (error) {
+                console.error('Error al inicializar Gemini:', error);
+                return false;
+            }
+        }
+
+        window.setLevel = async function(level) {
             window.userLevel = level;
             // Actualizar botones activos
             document.querySelectorAll('.level-buttons button').forEach(btn => {
@@ -437,6 +448,15 @@
                     btn.classList.add('active');
                 }
             });
+
+            // Asegurarse de que el modelo esté inicializado
+            if (!window.model) {
+                const initialized = await initializeGemini();
+                if (!initialized) {
+                    window.addMessage('Error al inicializar el chat. Por favor, recarga la página.', 'assistant');
+                    return;
+                }
+            }
 
             // Enviar mensaje automático según el nivel
             const messages = {
@@ -448,16 +468,10 @@
             // Simular el envío del mensaje
             const input = document.getElementById('message-input');
             input.value = messages[level];
-            window.sendMessage();
-
-            // Desplazarse al chat
-            setTimeout(() => {
-                const chatMessages = document.querySelector('.chat-messages');
-                chatMessages.scrollIntoView({ behavior: 'smooth' });
-            }, 100);
+            await window.sendMessage();
         };
 
-        window.setTopic = function(topic) {
+        window.setTopic = async function(topic) {
             window.currentTopic = topic;
             // Actualizar botones activos
             document.querySelectorAll('.topic-buttons button').forEach(btn => {
@@ -466,6 +480,15 @@
                     btn.classList.add('active');
                 }
             });
+
+            // Asegurarse de que el modelo esté inicializado
+            if (!window.model) {
+                const initialized = await initializeGemini();
+                if (!initialized) {
+                    window.addMessage('Error al inicializar el chat. Por favor, recarga la página.', 'assistant');
+                    return;
+                }
+            }
 
             // Enviar mensaje automático según el tema
             const messages = {
@@ -480,13 +503,7 @@
             // Simular el envío del mensaje
             const input = document.getElementById('message-input');
             input.value = messages[topic];
-            window.sendMessage();
-
-            // Desplazarse al chat
-            setTimeout(() => {
-                const chatMessages = document.querySelector('.chat-messages');
-                chatMessages.scrollIntoView({ behavior: 'smooth' });
-            }, 100);
+            await window.sendMessage();
         };
 
         window.autoResize = function(textarea) {
@@ -632,6 +649,15 @@
             if (!message) return;
 
             try {
+                // Asegurarse de que el modelo esté inicializado
+                if (!window.model) {
+                    const initialized = await initializeGemini();
+                    if (!initialized) {
+                        window.addMessage('Error al inicializar el chat. Por favor, recarga la página.', 'assistant');
+                        return;
+                    }
+                }
+
                 // Mostrar mensaje del usuario
                 window.addMessage(message, 'user');
                 input.value = '';
@@ -710,23 +736,20 @@
         // Inicializar el chat
         window.onload = async function() {
             try {
-                if (!window.hasInitialGreeting) {
-                    window.showWelcomeMessage();
-                    window.hasInitialGreeting = true;
-                }
+                // Inicializar Gemini
+                await initializeGemini();
 
-                // Event listeners
-                document.getElementById('message-input').addEventListener('keypress', function(e) {
+                // Configurar eventos
+                const messageInput = document.getElementById('message-input');
+                messageInput.addEventListener('keypress', async function(e) {
                     if (e.key === 'Enter' && !e.shiftKey) {
                         e.preventDefault();
-                        window.sendMessage();
+                        await window.sendMessage();
                     }
                 });
 
                 document.getElementById('send-button').onclick = window.sendMessage;
 
-                // Inicializar el menú móvil cuando se carga la página
-                initializeMobileMenu();
             } catch (error) {
                 console.error('Error durante la inicialización:', error);
                 window.addMessage('Error al inicializar el chat. Por favor, recarga la página.', 'assistant');
