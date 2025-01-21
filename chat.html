@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Italiano</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Chat de Italiano</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --primary-color: #1a5fb4;
@@ -27,15 +27,7 @@
             line-height: 1.6;
         }
 
-        .header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 1rem;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .container {
+        .chat-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
@@ -44,7 +36,59 @@
             min-height: calc(100vh - 60px);
         }
 
-        .chat-container {
+        .sidebar {
+            width: 300px;
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .level-buttons {
+            margin-bottom: 20px;
+        }
+
+        .level-buttons button {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .level-buttons button:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .level-buttons button.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .topic-buttons {
+            margin-top: 20px;
+        }
+
+        .topic-buttons button {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .topic-buttons button:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .topic-buttons button.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .chat-main {
             flex: 1;
             background: var(--card-bg);
             border-radius: 10px;
@@ -52,6 +96,14 @@
             display: flex;
             flex-direction: column;
             max-height: calc(100vh - 100px);
+        }
+
+        .chat-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .chat-messages {
@@ -78,20 +130,14 @@
             color: white;
         }
 
-        .input-container {
+        .chat-input {
             padding: 20px;
             border-top: 1px solid #eee;
             background: white;
             border-radius: 0 0 10px 10px;
         }
 
-        .input-box {
-            display: flex;
-            gap: 10px;
-        }
-
         .message-input {
-            flex: 1;
             padding: 12px;
             border: 1px solid #ddd;
             border-radius: 5px;
@@ -114,67 +160,23 @@
             background-color: var(--accent-color);
         }
 
-        .sidebar {
-            width: 300px;
-            background: var(--card-bg);
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        .typing {
+            opacity: 0.7;
         }
-
-        .level-selector {
-            margin-bottom: 20px;
+        .typing::after {
+            content: '';
+            display: inline-block;
+            animation: dots 1.5s infinite;
+            width: 20px;
         }
-
-        .level-title {
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: var(--primary-color);
-        }
-
-        .level-option {
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .level-option:hover {
-            background-color: var(--accent-color);
-            color: white;
-        }
-
-        .level-option.selected {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .topic-list {
-            margin-top: 20px;
-        }
-
-        .topic-title {
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: var(--primary-color);
-        }
-
-        .topic-item {
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .topic-item:hover {
-            background-color: var(--accent-color);
-            color: white;
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
         }
 
         @media (max-width: 768px) {
-            .container {
+            .chat-container {
                 flex-direction: column;
             }
 
@@ -189,72 +191,96 @@
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Chat Italiano Interactivo</h1>
-    </div>
-    <div class="container">
+    <div class="chat-container">
         <div class="sidebar">
-            <div class="level-selector">
-                <div class="level-title">Nivel de Italiano</div>
-                <div class="level-option" onclick="selectLevel('A1-A2')">Principiante (A1-A2)</div>
-                <div class="level-option" onclick="selectLevel('B1-B2')">Intermedio (B1-B2)</div>
-                <div class="level-option" onclick="selectLevel('C1-C2')">Avanzado (C1-C2)</div>
+            <h3>Nivel de Italiano</h3>
+            <div class="level-buttons">
+                <button onclick="setLevel('principiante')" class="active">Principiante (A1-A2)</button>
+                <button onclick="setLevel('intermedio')">Intermedio (B1-B2)</button>
+                <button onclick="setLevel('avanzado')">Avanzado (C1-C2)</button>
             </div>
-            <div class="topic-list">
-                <div class="topic-title">Temas de Aprendizaje</div>
-                <div class="topic-item" onclick="selectTopic('gramatica')">Gramática y Verbos</div>
-                <div class="topic-item" onclick="selectTopic('vocabulario')">Vocabulario</div>
-                <div class="topic-item" onclick="selectTopic('pronunciacion')">Pronunciación</div>
-                <div class="topic-item" onclick="selectTopic('cultura')">Cultura Italiana</div>
-                <div class="topic-item" onclick="selectTopic('ejercicios')">Ejercicios</div>
-                <div class="topic-item" onclick="selectTopic('conversacion')">Conversación</div>
+
+            <h3>Temas</h3>
+            <div class="topic-buttons">
+                <button onclick="setTopic('gramatica')">Gramática</button>
+                <button onclick="setTopic('vocabulario')">Vocabulario</button>
+                <button onclick="setTopic('pronunciacion')">Pronunciación</button>
+                <button onclick="setTopic('cultura')">Cultura</button>
+                <button onclick="setTopic('ejercicios')">Ejercicios</button>
+                <button onclick="setTopic('conversacion')">Conversación</button>
             </div>
         </div>
-        <div class="chat-container">
-            <div class="chat-messages" id="chat-messages">
-                <!-- Los mensajes se añadirán aquí -->
+
+        <div class="chat-main">
+            <div class="chat-header">
+                <h2>Chat de Italiano 🇮🇹</h2>
             </div>
-            <div class="input-container">
-                <div class="input-box">
-                    <textarea 
-                        class="message-input" 
-                        id="message-input" 
-                        placeholder="Escribe tu pregunta o mensaje..."
-                        onInput="autoResize(this)"></textarea>
-                    <button class="send-button" onclick="sendMessage()">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </div>
+            <div id="chat-messages" class="chat-messages"></div>
+            <div class="chat-input">
+                <textarea id="message-input" placeholder="Escribe tu mensaje..." oninput="autoResize(this)"></textarea>
+                <button id="send-button" onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@google/generative-ai"></script>
-    <script>
-        let userLevel = 'principiante';
-        let currentTopic = '';
-        let hasInitialGreeting = false;
+    <script type="module">
+        // Importar Gemini
+        import { GoogleGenerativeAI } from 'https://esm.run/@google/generative-ai';
 
-        // Configuración de Gemini con manejo de errores
-        let genAI;
-        let model;
+        // Variables globales
+        window.userLevel = 'principiante';
+        window.currentTopic = '';
+        window.hasInitialGreeting = false;
+        window.genAI = null;
+        window.model = null;
 
+        // Inicializar Gemini
         try {
-            genAI = new window.GoogleGenerativeAI('AIzaSyCEIicKmkzZQ7kOy0yBSVt4Dc3s80GwKYw');
-            model = genAI.getGenerativeModel({ model: "gemini-pro" });
+            window.genAI = new GoogleGenerativeAI('AIzaSyCEIicKmkzZQ7kOy0yBSVt4Dc3s80GwKYw');
+            window.model = window.genAI.getGenerativeModel({ model: "gemini-pro" });
             console.log('Gemini API inicializada correctamente');
         } catch (error) {
             console.error('Error al inicializar Gemini:', error);
         }
 
-        async function getGeminiResponse(prompt) {
+        // Funciones globales
+        window.setLevel = function(level) {
+            window.userLevel = level;
+            // Actualizar botones activos
+            document.querySelectorAll('.level-buttons button').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase().includes(level)) {
+                    btn.classList.add('active');
+                }
+            });
+        };
+
+        window.setTopic = function(topic) {
+            window.currentTopic = topic;
+            // Actualizar botones activos
+            document.querySelectorAll('.topic-buttons button').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase().includes(topic)) {
+                    btn.classList.add('active');
+                }
+            });
+        };
+
+        window.autoResize = function(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
+        };
+
+        window.getGeminiResponse = async function(prompt) {
             try {
-                if (!model) {
+                if (!window.model) {
                     throw new Error('El modelo de Gemini no está inicializado');
                 }
 
                 console.log('Enviando prompt a Gemini:', prompt);
-                const result = await model.generateContent(prompt);
+                const result = await window.model.generateContent(prompt);
                 console.log('Respuesta recibida de Gemini');
                 const response = await result.response;
                 return response.text();
@@ -264,10 +290,9 @@
                 Error específico: ${error.message}
                 Por favor, intenta de nuevo en unos momentos.`;
             }
-        }
+        };
 
-        // Función para construir el prompt para Gemini
-        function buildGeminiPrompt(userMessage, userLevel) {
+        window.buildGeminiPrompt = function(userMessage, userLevel) {
             const prompt = `Actúa como un profesor de italiano experto y amigable. 
             Nivel del estudiante: ${userLevel || 'principiante'}
             
@@ -292,103 +317,18 @@
 
             console.log('Prompt construido:', prompt);
             return prompt;
-        }
+        };
 
-        // Modificar la función sendMessage para usar Gemini
-        async function sendMessage() {
-            const input = document.getElementById('message-input');
-            const message = input.value.trim();
-
-            if (message) {
-                try {
-                    // Mostrar el mensaje del usuario
-                    addMessage(message, 'user');
-                    
-                    // Mostrar indicador de "escribiendo..."
-                    const typingDiv = document.createElement('div');
-                    typingDiv.className = 'message assistant-message typing';
-                    typingDiv.innerHTML = 'Escribiendo...';
-                    document.getElementById('chat-messages').appendChild(typingDiv);
-
-                    console.log('Procesando mensaje del usuario:', message);
-
-                    // Construir el prompt y obtener respuesta de Gemini
-                    const prompt = buildGeminiPrompt(message, userLevel);
-                    const response = await getGeminiResponse(prompt);
-
-                    // Eliminar el indicador de "escribiendo..."
-                    typingDiv.remove();
-
-                    // Mostrar la respuesta de Gemini
-                    addMessage(response, 'assistant');
-
-                    // Limpiar el input y ajustar su tamaño
-                    input.value = '';
-                    input.style.height = 'auto';
-                } catch (error) {
-                    console.error('Error en sendMessage:', error);
-                    addMessage('Lo siento, ocurrió un error al procesar tu mensaje. Por favor, intenta de nuevo.', 'assistant');
-                }
-            }
-        }
-
-        // Modificar el CSS para el indicador de "escribiendo..."
-        const style = document.createElement('style');
-        style.textContent = `
-            .typing {
-                opacity: 0.7;
-            }
-            .typing::after {
-                content: '';
-                display: inline-block;
-                animation: dots 1.5s infinite;
-                width: 20px;
-            }
-            @keyframes dots {
-                0%, 20% { content: '.'; }
-                40% { content: '..'; }
-                60%, 100% { content: '...'; }
-            }
-        `;
-        document.head.appendChild(style);
-
-        function addMessage(text, sender) {
+        window.addMessage = function(text, sender) {
             const messagesDiv = document.getElementById('chat-messages');
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${sender}-message`;
             messageDiv.textContent = text;
             messagesDiv.appendChild(messageDiv);
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        }
-
-        // Inicializar el chat
-        window.onload = async function() {
-            try {
-                if (!hasInitialGreeting) {
-                    showWelcomeMessage();
-                    hasInitialGreeting = true;
-                }
-
-                // Verificar que Gemini está funcionando
-                const testPrompt = "Responde con un simple 'OK' si estás funcionando.";
-                const testResponse = await getGeminiResponse(testPrompt);
-                console.log('Test de Gemini completado:', testResponse);
-
-            } catch (error) {
-                console.error('Error durante la inicialización:', error);
-                addMessage('Error al inicializar el chat. Por favor, recarga la página.', 'assistant');
-            }
-
-            // Event listeners
-            document.getElementById('message-input').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    sendMessage();
-                }
-            });
         };
 
-        function showWelcomeMessage() {
+        window.showWelcomeMessage = function() {
             const welcomeMessage = `¡Bienvenido a tu Profesor de Italiano! 🇮🇹\n\n
 Puedo ayudarte con:
 1️⃣ Traducción y significado de palabras/frases
@@ -409,8 +349,68 @@ Por ejemplo, puedes preguntarme:
 • "Quiero practicar la pronunciación"
 • "Cuéntame sobre la cultura italiana"`;
             
-            addMessage(welcomeMessage, 'assistant');
-        }
+            window.addMessage(welcomeMessage, 'assistant');
+        };
+
+        window.sendMessage = async function() {
+            const input = document.getElementById('message-input');
+            const message = input.value.trim();
+
+            if (message) {
+                try {
+                    // Mostrar el mensaje del usuario
+                    window.addMessage(message, 'user');
+                    
+                    // Mostrar indicador de "escribiendo..."
+                    const typingDiv = document.createElement('div');
+                    typingDiv.className = 'message assistant-message typing';
+                    typingDiv.innerHTML = 'Escribiendo...';
+                    document.getElementById('chat-messages').appendChild(typingDiv);
+
+                    console.log('Procesando mensaje del usuario:', message);
+
+                    // Construir el prompt y obtener respuesta de Gemini
+                    const prompt = window.buildGeminiPrompt(message, window.userLevel);
+                    const response = await window.getGeminiResponse(prompt);
+
+                    // Eliminar el indicador de "escribiendo..."
+                    typingDiv.remove();
+
+                    // Mostrar la respuesta de Gemini
+                    window.addMessage(response, 'assistant');
+
+                    // Limpiar el input y ajustar su tamaño
+                    input.value = '';
+                    input.style.height = 'auto';
+                } catch (error) {
+                    console.error('Error en sendMessage:', error);
+                    window.addMessage('Lo siento, ocurrió un error al procesar tu mensaje. Por favor, intenta de nuevo.', 'assistant');
+                }
+            }
+        };
+
+        // Inicializar el chat
+        window.onload = async function() {
+            try {
+                if (!window.hasInitialGreeting) {
+                    window.showWelcomeMessage();
+                    window.hasInitialGreeting = true;
+                }
+
+                // Event listeners
+                document.getElementById('message-input').addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        window.sendMessage();
+                    }
+                });
+
+                document.getElementById('send-button').onclick = window.sendMessage;
+            } catch (error) {
+                console.error('Error durante la inicialización:', error);
+                window.addMessage('Error al inicializar el chat. Por favor, recarga la página.', 'assistant');
+            }
+        };
     </script>
 </body>
 </html>
