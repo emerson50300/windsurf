@@ -175,6 +175,40 @@
             60%, 100% { content: '...'; }
         }
 
+        .message-content {
+            white-space: pre-wrap;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .example-phrase {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 10px;
+            margin: 5px 0;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .example-phrase:nth-child(odd) {
+            background-color: rgba(0,0,0,0.03);
+        }
+
+        .italian-text {
+            font-style: italic;
+            color: var(--primary-color);
+        }
+
+        .translation {
+            color: #666;
+        }
+
+        .phrase-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 10px 0;
+        }
+
         @media (max-width: 768px) {
             .chat-container {
                 flex-direction: column;
@@ -525,13 +559,17 @@ Practicaremos:
             4. Si es sobre cultura, proporciona información interesante y relevante
             5. Siempre mantén un tono amigable y motivador
             6. Usa emojis apropiados para hacer la respuesta más atractiva
-            7. Si es apropiado, incluye ejercicios de práctica
+            7. Si la pregunta pide ejemplos o frases:
+               - Pon cada frase en una línea nueva
+               - Formato: "Italiano: [frase] | Español: [traducción]"
+               - Incluye pronunciación si es relevante
             8. Si la pregunta no está clara, pide aclaraciones
             
             Formato de respuesta:
             - Usa viñetas y números para organizar la información
             - Destaca las palabras en italiano en cursiva
             - Incluye traducciones cuando sea necesario
+            - Si son frases de ejemplo, una por línea
             - Mantén las respuestas concisas pero informativas`;
 
             console.log('Prompt construido:', prompt);
@@ -542,7 +580,30 @@ Practicaremos:
             const messagesDiv = document.getElementById('chat-messages');
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${sender}-message`;
-            messageDiv.textContent = text;
+            
+            // Crear el contenedor del contenido
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+
+            // Procesar el texto para dar formato a las frases de ejemplo
+            if (text.includes('Italiano:')) {
+                const lines = text.split('\n');
+                const formattedLines = lines.map(line => {
+                    if (line.includes('Italiano:')) {
+                        const [italian, spanish] = line.split('|').map(part => part.trim());
+                        return `<div class="example-phrase">
+                                    <span class="italian-text">${italian}</span>
+                                    <span class="translation">${spanish}</span>
+                                </div>`;
+                    }
+                    return line;
+                });
+                contentDiv.innerHTML = formattedLines.join('\n');
+            } else {
+                contentDiv.textContent = text;
+            }
+
+            messageDiv.appendChild(contentDiv);
             messagesDiv.appendChild(messageDiv);
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
         };
