@@ -48,44 +48,32 @@
             margin-bottom: 20px;
         }
 
-        .level-buttons button {
-            padding: 10px;
+        .level-buttons button, .topic-buttons button {
+            width: 100%;
+            padding: 12px;
             margin: 5px 0;
+            border: none;
             border-radius: 5px;
+            background-color: #f0f0f0;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
+            font-size: 1em;
         }
 
-        .level-buttons button:hover {
+        .level-buttons button:hover, .topic-buttons button:hover {
             background-color: var(--accent-color);
             color: white;
+            transform: translateY(-2px);
         }
 
-        .level-buttons button.active {
+        .level-buttons button.active, .topic-buttons button.active {
             background-color: var(--primary-color);
             color: white;
+            font-weight: bold;
         }
 
         .topic-buttons {
             margin-top: 20px;
-        }
-
-        .topic-buttons button {
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .topic-buttons button:hover {
-            background-color: var(--accent-color);
-            color: white;
-        }
-
-        .topic-buttons button.active {
-            background-color: var(--primary-color);
-            color: white;
         }
 
         .chat-main {
@@ -178,28 +166,31 @@
         .message-content {
             white-space: pre-wrap;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            padding: 10px;
         }
 
         .example-phrase {
-            display: grid;
-            grid-template-columns: auto 1fr;
-            gap: 10px;
-            margin: 5px 0;
-            padding: 5px;
+            display: flex;
+            flex-direction: column;
+            margin: 10px 0;
+            padding: 10px;
             border-radius: 5px;
-        }
-
-        .example-phrase:nth-child(odd) {
-            background-color: rgba(0,0,0,0.03);
+            background-color: #f8f9fa;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
         .italian-text {
             font-style: italic;
             color: var(--primary-color);
+            font-size: 1.1em;
+            margin-bottom: 5px;
         }
 
         .translation {
             color: #666;
+            padding-left: 10px;
+            border-left: 3px solid var(--accent-color);
         }
 
         .phrase-list {
@@ -212,14 +203,37 @@
         @media (max-width: 768px) {
             .chat-container {
                 flex-direction: column;
+                padding: 10px;
             }
 
             .sidebar {
                 width: 100%;
+                margin-bottom: 20px;
             }
 
-            .message {
-                max-width: 90%;
+            .message-content {
+                font-size: 16px;
+                padding: 8px;
+            }
+
+            .example-phrase {
+                margin: 8px 0;
+                padding: 8px;
+            }
+
+            .italian-text, .translation {
+                font-size: 1em;
+                line-height: 1.6;
+            }
+
+            .chat-input textarea {
+                font-size: 16px;
+                padding: 10px;
+            }
+
+            .level-buttons button, .topic-buttons button {
+                padding: 15px;
+                font-size: 1.1em;
             }
         }
     </style>
@@ -290,91 +304,17 @@
                 }
             });
 
-            // Mostrar información del nivel seleccionado
-            const levelInfo = {
-                'principiante': `🌟 Nivel Principiante (A1-A2) 🌟
-
-En este nivel aprenderás:
-
-1. Gramática Básica:
-   • Artículos (il, la, i, le)
-   • Presente de indicativo
-   • Números y género
-
-2. Vocabulario Esencial:
-   • Saludos y presentaciones
-   • Familia y profesiones
-   • Comida y bebida
-   • Números y colores
-
-3. Frases Comunes:
-   • Cómo presentarte
-   • Pedir en restaurantes
-   • Preguntar direcciones
-
-4. Pronunciación:
-   • Sonidos básicos
-   • Acentuación
-   • Entonación
-
-¿Por qué tema te gustaría empezar?`,
-
-                'intermedio': `🚀 Nivel Intermedio (B1-B2) 🚀
-
-En este nivel profundizarás en:
-
-1. Gramática Avanzada:
-   • Tiempos verbales compuestos
-   • Subjuntivo presente
-   • Condicional
-
-2. Vocabulario Expandido:
-   • Trabajo y negocios
-   • Cultura y arte
-   • Viajes y turismo
-   • Expresiones idiomáticas
-
-3. Conversación:
-   • Debates y opiniones
-   • Describir experiencias
-   • Expresar sentimientos
-
-4. Comprensión:
-   • Noticias y artículos
-   • Películas y música
-   • Literatura básica
-
-¿Qué área te gustaría explorar?`,
-
-                'avanzado': `🎯 Nivel Avanzado (C1-C2) 🎯
-
-En este nivel dominarás:
-
-1. Gramática Superior:
-   • Todos los tiempos verbales
-   • Construcciones complejas
-   • Matices lingüísticos
-
-2. Vocabulario Especializado:
-   • Términos académicos
-   • Jerga y modismos
-   • Literatura y poesía
-   • Términos técnicos
-
-3. Fluidez Natural:
-   • Discusiones complejas
-   • Argumentación
-   • Humor y sarcasmo
-
-4. Cultura Profunda:
-   • Literatura clásica
-   • Historia y política
-   • Arte y filosofía
-
-¿Qué aspecto avanzado te interesa explorar?`
+            // Enviar mensaje automático según el nivel
+            const messages = {
+                'principiante': '¿Qué frases básicas debo aprender como principiante?',
+                'intermedio': '¿Cuáles son las expresiones más comunes para nivel intermedio?',
+                'avanzado': '¿Qué frases avanzadas me recomiendas practicar?'
             };
 
-            window.addMessage(levelInfo[level], 'assistant');
+            // Simular el envío del mensaje
+            const input = document.getElementById('message-input');
+            input.value = messages[level];
+            window.sendMessage();
         };
 
         window.setTopic = function(topic) {
@@ -387,138 +327,20 @@ En este nivel dominarás:
                 }
             });
 
-            // Mostrar información del tema seleccionado
-            const topicInfo = {
-                'gramatica': `📚 Gramática Italiana
-
-Aspectos que cubriremos:
-
-1. Verbos:
-   • Conjugaciones regulares e irregulares
-   • Tiempos verbales principales
-   • Modos indicativo y subjuntivo
-
-2. Estructura:
-   • Orden de las palabras
-   • Concordancia
-   • Preposiciones
-
-3. Ejercicios Prácticos:
-   • Completar oraciones
-   • Transformar frases
-   • Corregir errores
-
-¿Qué aspecto de la gramática te gustaría practicar?`,
-
-                'vocabulario': `📖 Vocabulario Italiano
-
-Áreas temáticas:
-
-1. Vida Cotidiana:
-   • Comida y bebida
-   • Familia y amigos
-   • Casa y hogar
-   • Trabajo y estudio
-
-2. Situaciones:
-   • Viajes
-   • Compras
-   • Restaurantes
-   • Emergencias
-
-3. Expresiones:
-   • Modismos
-   • Frases hechas
-   • Jerga común
-
-¿Qué categoría de vocabulario te interesa aprender?`,
-
-                'pronunciacion': `🗣️ Pronunciación Italiana
-
-Aprenderemos:
-
-1. Sonidos Básicos:
-   • Vocales
-   • Consonantes
-   • Diptongos
-
-2. Reglas:
-   • Acentuación
-   • Entonación
-   • Ritmo
-
-3. Práctica:
-   • Ejercicios de repetición
-   • Trabalenguas
-   • Diálogos
-
-¿Por dónde te gustaría empezar?`,
-
-                'cultura': `🎭 Cultura Italiana
-
-Exploraremos:
-
-1. Historia y Arte:
-   • Renacimiento
-   • Arte clásico
-   • Arquitectura
-
-2. Gastronomía:
-   • Platos típicos
-   • Regiones culinarias
-   • Tradiciones
-
-3. Costumbres:
-   • Fiestas
-   • Tradiciones
-   • Vida cotidiana
-
-¿Qué aspecto de la cultura italiana te interesa más?`,
-
-                'ejercicios': `✍️ Ejercicios de Italiano
-
-Tipos de ejercicios:
-
-1. Comprensión:
-   • Lectura
-   • Audición
-   • Vocabulario
-
-2. Producción:
-   • Escritura
-   • Habla
-   • Gramática
-
-3. Interactivos:
-   • Diálogos
-   • Juegos
-   • Quiz
-
-¿Qué tipo de ejercicios prefieres practicar?`,
-
-                'conversacion': `💭 Conversación en Italiano
-
-Practicaremos:
-
-1. Diálogos:
-   • Situaciones cotidianas
-   • Temas de actualidad
-   • Intercambios culturales
-
-2. Expresión:
-   • Opiniones
-   • Sentimientos
-   • Descripciones
-
-3. Fluidez:
-   • Velocidad
-   • Naturalidad
-   • Pronunciación
-
-¿Sobre qué te gustaría conversar?`
+            // Enviar mensaje automático según el tema
+            const messages = {
+                'gramatica': '¿Cuáles son las reglas gramaticales más importantes?',
+                'vocabulario': 'Dame las 10 palabras más usadas en italiano',
+                'pronunciacion': '¿Cómo se pronuncian correctamente las vocales en italiano?',
+                'cultura': 'Cuéntame sobre las tradiciones italianas más importantes',
+                'ejercicios': 'Dame ejercicios de práctica para mi nivel',
+                'conversacion': 'Frases útiles para mantener una conversación'
             };
 
-            window.addMessage(topicInfo[topic], 'assistant');
+            // Simular el envío del mensaje
+            const input = document.getElementById('message-input');
+            input.value = messages[topic];
+            window.sendMessage();
         };
 
         window.autoResize = function(textarea) {
@@ -581,7 +403,6 @@ Practicaremos:
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${sender}-message`;
             
-            // Crear el contenedor del contenido
             const contentDiv = document.createElement('div');
             contentDiv.className = 'message-content';
 
@@ -592,15 +413,17 @@ Practicaremos:
                     if (line.includes('Italiano:')) {
                         const [italian, spanish] = line.split('|').map(part => part.trim());
                         return `<div class="example-phrase">
-                                    <span class="italian-text">${italian}</span>
-                                    <span class="translation">${spanish}</span>
+                                    <div class="italian-text">${italian}</div>
+                                    <div class="translation">${spanish}</div>
                                 </div>`;
                     }
-                    return line;
+                    return `<div>${line}</div>`;
                 });
-                contentDiv.innerHTML = formattedLines.join('\n');
+                contentDiv.innerHTML = formattedLines.join('');
             } else {
-                contentDiv.textContent = text;
+                // Dividir el texto en líneas y crear divs para cada una
+                const lines = text.split('\n');
+                contentDiv.innerHTML = lines.map(line => `<div>${line}</div>`).join('');
             }
 
             messageDiv.appendChild(contentDiv);
