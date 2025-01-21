@@ -340,6 +340,14 @@
             speechSynthesis.onvoiceschanged = loadItalianVoice;
         }
 
+        // Función para limpiar el texto de caracteres especiales
+        function cleanTextForSpeech(text) {
+            return text
+                .replace(/[•*]/g, '') // Eliminar asteriscos y bullets
+                .replace(/\s+/g, ' ') // Normalizar espacios
+                .trim(); // Eliminar espacios al inicio y final
+        }
+
         // Función para reproducir texto en italiano
         window.playItalianText = function(text, button) {
             // Detener cualquier reproducción anterior
@@ -351,7 +359,11 @@
                 btn.innerHTML = '<i class="fas fa-play"></i>';
             });
 
-            const utterance = new SpeechSynthesisUtterance(text);
+            // Limpiar el texto antes de reproducirlo
+            const cleanText = cleanTextForSpeech(text);
+            console.log('Texto a reproducir:', cleanText);
+
+            const utterance = new SpeechSynthesisUtterance(cleanText);
             utterance.voice = italianVoice;
             utterance.lang = 'it-IT';
             utterance.rate = 0.9; // Velocidad ligeramente más lenta para mejor comprensión
@@ -488,11 +500,13 @@
                 const formattedLines = lines.map(line => {
                     if (line.includes('Italiano:')) {
                         const [italian, spanish] = line.split('|').map(part => part.trim());
+                        // Extraer solo el texto en italiano, sin "Italiano:" y limpiar caracteres especiales
                         const italianText = italian.replace('Italiano:', '').trim();
+                        const cleanItalianText = cleanTextForSpeech(italianText);
                         return `<div class="example-phrase">
                                     <div class="italian-text">
                                         ${italian}
-                                        <button class="play-button" onclick="playItalianText('${italianText}', this)">
+                                        <button class="play-button" onclick="playItalianText('${cleanItalianText}', this)">
                                             <i class="fas fa-play"></i>
                                         </button>
                                     </div>
