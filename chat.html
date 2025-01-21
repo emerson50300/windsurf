@@ -49,36 +49,38 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .level-buttons {
-            margin-bottom: 20px;
-        }
-
-        .level-buttons button, .topic-buttons button {
-            width: 100%;
-            padding: 12px;
+        .level-buttons,
+        .topic-buttons {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
             margin: 5px 0;
-            border: none;
-            border-radius: 5px;
-            background-color: #f0f0f0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1em;
+            padding: 5px;
         }
 
-        .level-buttons button:hover, .topic-buttons button:hover {
-            background-color: var(--accent-color);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .level-buttons button.active, .topic-buttons button.active {
+        .level-buttons button,
+        .topic-buttons button {
             background-color: var(--primary-color);
             color: white;
-            font-weight: bold;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: all 0.3s ease;
+            opacity: 0.8;
         }
 
-        .topic-buttons {
-            margin-top: 20px;
+        .level-buttons button:hover,
+        .topic-buttons button:hover {
+            opacity: 1;
+            transform: translateY(-1px);
+        }
+
+        .level-buttons button.active,
+        .topic-buttons button.active {
+            background-color: var(--primary-color-dark);
+            opacity: 1;
         }
 
         .chat-main {
@@ -161,33 +163,53 @@
         }
 
         .chat-input {
-            padding: 20px;
-            border-top: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            padding: 10px;
             background: white;
-            border-radius: 0 0 10px 10px;
+            border-top: 1px solid #eee;
+            position: sticky;
+            bottom: 0;
         }
 
-        .message-input {
-            padding: 12px;
+        .chat-input textarea {
+            flex: 1;
             border: 1px solid #ddd;
-            border-radius: 5px;
+            border-radius: 20px;
+            padding: 10px 15px;
+            margin-right: 10px;
+            font-size: 1em;
             resize: none;
-            min-height: 50px;
-            max-height: 150px;
+            min-height: 40px;
+            max-height: 120px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .chat-input textarea:focus {
+            border-color: var(--primary-color);
         }
 
         .send-button {
-            background-color: var(--primary-color);
-            color: white;
+            background: none;
             border: none;
-            padding: 0 20px;
-            border-radius: 5px;
+            color: var(--primary-color);
             cursor: pointer;
-            transition: background-color 0.3s;
+            padding: 10px;
+            font-size: 1.5em;
+            transition: transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .send-button i {
+            font-size: 1.5em;
         }
 
         .send-button:hover {
-            background-color: var(--accent-color);
+            transform: scale(1.1);
+            color: var(--primary-color-dark);
         }
 
         .typing {
@@ -343,9 +365,9 @@
         <div class="sidebar">
             <h3>Nivel de Italiano</h3>
             <div class="level-buttons">
-                <button onclick="setLevel('principiante')" class="active">Principiante (A1-A2)</button>
-                <button onclick="setLevel('intermedio')">Intermedio (B1-B2)</button>
-                <button onclick="setLevel('avanzado')">Avanzado (C1-C2)</button>
+                <button onclick="setLevel('principiante')">Principiante</button>
+                <button onclick="setLevel('intermedio')">Intermedio</button>
+                <button onclick="setLevel('avanzado')">Avanzado</button>
             </div>
 
             <h3>Temas</h3>
@@ -358,17 +380,14 @@
                 <button onclick="setTopic('conversacion')">Conversación</button>
             </div>
         </div>
-        <button class="toggle-sidebar" style="display: none;">
-            <i class="fas fa-bars"></i>
-        </button>
         <div class="chat-main">
             <div class="chat-header">
                 <h2>Chat de Italiano 🇮🇹</h2>
             </div>
             <div id="chat-messages" class="chat-messages"></div>
             <div class="chat-input">
-                <textarea id="message-input" placeholder="Escribe tu mensaje..." oninput="autoResize(this)"></textarea>
-                <button id="send-button" onclick="sendMessage()">
+                <textarea id="message-input" placeholder="Escribe tu mensaje..." rows="1" oninput="autoResize(this)"></textarea>
+                <button class="send-button" onclick="sendMessage()">
                     <i class="fas fa-paper-plane"></i>
                 </button>
             </div>
