@@ -343,94 +343,28 @@
         </div>
     </div>
 
-    <script type="module">
-        // Importar Gemini
-        import { GoogleGenerativeAI } from 'https://esm.run/@google/generative-ai';
-
-        // Variables globales
+    <script>
+        // Inicializar variables globales
         window.userLevel = 'principiante';
-        window.currentTopic = '';
-        window.hasInitialGreeting = false;
-        window.genAI = null;
+        window.currentTopic = 'gramatica';
         window.model = null;
 
-        // Inicializar Gemini
-        try {
-            window.genAI = new GoogleGenerativeAI('AIzaSyCEIicKmkzZQ7kOy0yBSVt4Dc3s80GwKYw');
-            window.model = window.genAI.getGenerativeModel({ model: "gemini-pro" });
-            console.log('Gemini API inicializada correctamente');
-        } catch (error) {
-            console.error('Error al inicializar Gemini:', error);
-        }
-
-        // Inicializar el sintetizador de voz
-        const synth = window.speechSynthesis;
-        let italianVoice = null;
-
-        // Cargar la voz italiana cuando esté disponible
-        function loadItalianVoice() {
-            const voices = synth.getVoices();
-            italianVoice = voices.find(voice => voice.lang.includes('it-IT'));
-            if (!italianVoice) {
-                italianVoice = voices.find(voice => voice.lang.includes('it')); // Fallback a cualquier voz italiana
-            }
-            console.log('Voz italiana cargada:', italianVoice);
-        }
-
-        // Cargar voces cuando estén disponibles
-        if (speechSynthesis.onvoiceschanged !== undefined) {
-            speechSynthesis.onvoiceschanged = loadItalianVoice;
-        }
-
-        // Función para limpiar el texto de caracteres especiales y puntuación
-        function cleanTextForSpeech(text) {
-            return text
-                .replace(/[•*\-\[\]\(\){}]/g, '') // Eliminar caracteres especiales
-                .replace(/[.,!?¡¿:;]/g, '') // Eliminar signos de puntuación
-                .replace(/^\s*[•*-]\s*/gm, '') // Eliminar bullets al inicio de línea
-                .replace(/Italiano:\s*/i, '') // Eliminar la palabra "Italiano:"
-                .replace(/\s+/g, ' ') // Normalizar espacios
-                .trim(); // Eliminar espacios al inicio y final
-        }
-
-        // Función para reproducir texto en italiano
-        window.playItalianText = function(text, button) {
-            // Detener cualquier reproducción anterior
-            synth.cancel();
-
-            // Remover clase 'playing' de todos los botones
-            document.querySelectorAll('.play-button').forEach(btn => {
-                btn.classList.remove('playing');
-                btn.innerHTML = '<i class="fas fa-play"></i>';
-            });
-
-            // Limpiar el texto antes de reproducirlo
-            const cleanText = cleanTextForSpeech(text);
-            console.log('Texto original:', text);
-            console.log('Texto limpio a reproducir:', cleanText);
-
-            const utterance = new SpeechSynthesisUtterance(cleanText);
-            utterance.voice = italianVoice;
-            utterance.lang = 'it-IT';
-            utterance.rate = 0.9; // Velocidad ligeramente más lenta para mejor comprensión
-
-            // Añadir clase 'playing' al botón actual
-            button.classList.add('playing');
-            button.innerHTML = '<i class="fas fa-pause"></i>';
-
-            // Cuando termine de hablar
-            utterance.onend = function() {
-                button.classList.remove('playing');
-                button.innerHTML = '<i class="fas fa-play"></i>';
-            };
-
-            synth.speak(utterance);
+        // Función para construir el prompt para Gemini
+        window.buildGeminiPrompt = function(message, level) {
+            return `Actúa como un profesor de italiano. Nivel del estudiante: ${level || 'principiante'}. 
+            Responde en español, pero incluye ejemplos en italiano.
+            Cuando des ejemplos en italiano, marca el texto italiano con "Italiano: " al inicio.
+            No uses caracteres especiales como asteriscos o bullets.
+            Mensaje del estudiante: ${message}`;
         };
 
-        // Funciones globales
+        // Función para inicializar el modelo de Gemini
         async function initializeGemini() {
+            if (window.model) return true;
+            
             try {
-                window.model = new GoogleGenerativeAI('AIzaSyCEIicKmkzZQ7kOy0yBSVt4Dc3s80GwKYw').getGenerativeModel({ model: "gemini-pro" });
+                const genAI = new GoogleGenerativeAI('AIzaSyCEIicKmkzZQ7kOy0yBSVt4Dc3s80GwKYw');
+                window.model = genAI.getGenerativeModel({ model: "gemini-pro" });
                 console.log('Modelo Gemini inicializado correctamente');
                 return true;
             } catch (error) {
@@ -439,8 +373,70 @@
             }
         }
 
+        // Función para enviar mensaje
+        window.sendMessage = async function() {
+            const input = document.getElementById('message-input');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            try {
+                // Mostrar mensaje del usuario
+                window.addMessage(message, 'user');
+                input.value = '';
+                window.autoResize(input);
+
+                // Mostrar indicador de carga
+                const loadingDiv = document.createElement('div');
+                loadingDiv.className = 'message assistant-message loading';
+                loadingDiv.textContent = 'Escribiendo...';
+                document.getElementById('chat-messages').appendChild(loadingDiv);
+
+                // Asegurarse de que el modelo esté inicializado
+                if (!window.model) {
+                    const initialized = await initializeGemini();
+                    if (!initialized) {
+                        loadingDiv.remove();
+                        window.addMessage('Error al inicializar el chat. Por favor, recarga la página.', 'assistant');
+                        return;
+                    }
+                }
+
+                // Construir el prompt y obtener respuesta
+                const prompt = window.buildGeminiPrompt(message, window.userLevel);
+                
+                try {
+                    const result = await window.model.generateContent(prompt);
+                    const response = result.response;
+                    const text = response.text();
+
+                    // Remover indicador de carga
+                    loadingDiv.remove();
+
+                    // Mostrar respuesta
+                    if (text && text.trim()) {
+                        window.addMessage(text, 'assistant');
+                        // Desplazarse al final del chat
+                        const chatMessages = document.querySelector('.chat-messages');
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    } else {
+                        throw new Error('Respuesta vacía');
+                    }
+                } catch (error) {
+                    console.error('Error al generar respuesta:', error);
+                    loadingDiv.remove();
+                    window.addMessage('Lo siento, hubo un error al generar la respuesta. Por favor, intenta de nuevo.', 'assistant');
+                }
+            } catch (error) {
+                console.error('Error en sendMessage:', error);
+                window.addMessage('Lo siento, ocurrió un error. Por favor, intenta de nuevo.', 'assistant');
+            }
+        };
+
+        // Función para establecer el nivel
         window.setLevel = async function(level) {
             window.userLevel = level;
+            
             // Actualizar botones activos
             document.querySelectorAll('.level-buttons button').forEach(btn => {
                 btn.classList.remove('active');
@@ -449,16 +445,6 @@
                 }
             });
 
-            // Asegurarse de que el modelo esté inicializado
-            if (!window.model) {
-                const initialized = await initializeGemini();
-                if (!initialized) {
-                    window.addMessage('Error al inicializar el chat. Por favor, recarga la página.', 'assistant');
-                    return;
-                }
-            }
-
-            // Enviar mensaje automático según el nivel
             const messages = {
                 'principiante': '¿Qué frases básicas debo aprender como principiante?',
                 'intermedio': '¿Cuáles son las expresiones más comunes para nivel intermedio?',
@@ -471,8 +457,10 @@
             await window.sendMessage();
         };
 
+        // Función para establecer el tema
         window.setTopic = async function(topic) {
             window.currentTopic = topic;
+            
             // Actualizar botones activos
             document.querySelectorAll('.topic-buttons button').forEach(btn => {
                 btn.classList.remove('active');
@@ -481,16 +469,6 @@
                 }
             });
 
-            // Asegurarse de que el modelo esté inicializado
-            if (!window.model) {
-                const initialized = await initializeGemini();
-                if (!initialized) {
-                    window.addMessage('Error al inicializar el chat. Por favor, recarga la página.', 'assistant');
-                    return;
-                }
-            }
-
-            // Enviar mensaje automático según el tema
             const messages = {
                 'gramatica': '¿Cuáles son las reglas gramaticales más importantes?',
                 'vocabulario': 'Dame las 10 palabras más usadas en italiano',
@@ -506,233 +484,6 @@
             await window.sendMessage();
         };
 
-        window.autoResize = function(textarea) {
-            textarea.style.height = 'auto';
-            textarea.style.height = textarea.scrollHeight + 'px';
-        };
-
-        window.getGeminiResponse = async function(prompt) {
-            try {
-                if (!window.model) {
-                    throw new Error('El modelo de Gemini no está inicializado');
-                }
-
-                console.log('Enviando prompt a Gemini:', prompt);
-                const result = await window.model.generateContent(prompt);
-                console.log('Respuesta recibida de Gemini');
-                const response = await result.response;
-                return response.text();
-            } catch (error) {
-                console.error('Error al obtener respuesta de Gemini:', error);
-                return `Lo siento, hubo un error al procesar tu pregunta. 
-                Error específico: ${error.message}
-                Por favor, intenta de nuevo en unos momentos.`;
-            }
-        };
-
-        window.buildGeminiPrompt = function(userMessage, userLevel) {
-            const prompt = `Actúa como un profesor de italiano experto y amigable. 
-            Nivel del estudiante: ${userLevel || 'principiante'}
-            
-            Responde a la siguiente pregunta o solicitud del estudiante:
-            "${userMessage}"
-            
-            Reglas para tu respuesta:
-            1. Si la pregunta es en español, responde en español
-            2. Si es sobre gramática, incluye ejemplos claros
-            3. Si es sobre vocabulario, incluye la pronunciación
-            4. Si es sobre cultura, proporciona información interesante y relevante
-            5. Siempre mantén un tono amigable y motivador
-            6. Usa emojis apropiados para hacer la respuesta más atractiva
-            7. Si la pregunta pide ejemplos o frases:
-               - Pon cada frase en una línea nueva
-               - Formato: "Italiano: [frase] | Español: [traducción]"
-               - Incluye pronunciación si es relevante
-            8. Si la pregunta no está clara, pide aclaraciones
-            
-            Formato de respuesta:
-            - Usa viñetas y números para organizar la información
-            - Destaca las palabras en italiano en cursiva
-            - Incluye traducciones cuando sea necesario
-            - Si son frases de ejemplo, una por línea
-            - Mantén las respuestas concisas pero informativas`;
-
-            console.log('Prompt construido:', prompt);
-            return prompt;
-        };
-
-        // Función para extraer todo el texto en italiano de un mensaje
-        function extractItalianText(messageDiv) {
-            const italianPhrases = [];
-            messageDiv.querySelectorAll('.italian-text').forEach(element => {
-                const text = element.textContent.replace('Italiano:', '').trim();
-                if (text) {
-                    italianPhrases.push(text);
-                }
-            });
-            return italianPhrases.join('. ');
-        }
-
-        window.addMessage = function(text, sender) {
-            const messagesDiv = document.getElementById('chat-messages');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${sender}-message`;
-            
-            // Agregar botón de reproducción para todo el mensaje
-            const playAllButton = document.createElement('button');
-            playAllButton.className = 'play-all-button';
-            playAllButton.innerHTML = '<i class="fas fa-volume-up"></i>';
-            playAllButton.title = 'Escuchar todo el texto en italiano';
-            
-            const contentDiv = document.createElement('div');
-            contentDiv.className = 'message-content';
-
-            // Procesar el texto para dar formato a las frases de ejemplo
-            if (text.includes('Italiano:')) {
-                const lines = text.split('\n');
-                const formattedLines = lines.map(line => {
-                    if (line.includes('Italiano:')) {
-                        const [italian, spanish] = line.split('|').map(part => part.trim());
-                        return `<div class="example-phrase">
-                                    <div class="italian-text">${italian}</div>
-                                    <div class="translation">${spanish}</div>
-                                </div>`;
-                    }
-                    return `<div>${line}</div>`;
-                });
-                contentDiv.innerHTML = formattedLines.join('');
-
-                // Configurar el evento de clic para el botón de reproducción
-                playAllButton.onclick = function() {
-                    const italianText = extractItalianText(messageDiv);
-                    if (italianText) {
-                        const cleanText = cleanTextForSpeech(italianText);
-                        console.log('Reproduciendo todo:', cleanText);
-                        
-                        // Detener cualquier reproducción anterior
-                        synth.cancel();
-
-                        // Remover clase 'playing' de todos los botones
-                        document.querySelectorAll('.play-all-button').forEach(btn => {
-                            btn.classList.remove('playing');
-                        });
-
-                        const utterance = new SpeechSynthesisUtterance(cleanText);
-                        utterance.voice = italianVoice;
-                        utterance.lang = 'it-IT';
-                        utterance.rate = 0.9;
-
-                        // Añadir clase 'playing' al botón actual
-                        this.classList.add('playing');
-
-                        // Cuando termine de hablar
-                        utterance.onend = () => {
-                            this.classList.remove('playing');
-                        };
-
-                        synth.speak(utterance);
-                    }
-                };
-
-                messageDiv.appendChild(playAllButton);
-            }
-
-            messageDiv.appendChild(contentDiv);
-            messagesDiv.appendChild(messageDiv);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        };
-
-        window.sendMessage = async function() {
-            const input = document.getElementById('message-input');
-            const message = input.value.trim();
-            
-            if (!message) return;
-
-            try {
-                // Asegurarse de que el modelo esté inicializado
-                if (!window.model) {
-                    const initialized = await initializeGemini();
-                    if (!initialized) {
-                        window.addMessage('Error al inicializar el chat. Por favor, recarga la página.', 'assistant');
-                        return;
-                    }
-                }
-
-                // Mostrar mensaje del usuario
-                window.addMessage(message, 'user');
-                input.value = '';
-                window.autoResize(input);
-
-                // Mostrar indicador de carga
-                const loadingDiv = document.createElement('div');
-                loadingDiv.className = 'message assistant-message loading';
-                loadingDiv.textContent = 'Escribiendo';
-                document.getElementById('chat-messages').appendChild(loadingDiv);
-
-                // Construir el prompt
-                const prompt = window.buildGeminiPrompt(message, window.userLevel);
-
-                try {
-                    // Generar respuesta
-                    const result = await model.generateContent(prompt);
-                    const response = result.response;
-                    const text = response.text();
-
-                    // Remover indicador de carga
-                    loadingDiv.remove();
-
-                    // Mostrar respuesta
-                    if (text && text.trim()) {
-                        window.addMessage(text, 'assistant');
-                    } else {
-                        throw new Error('Respuesta vacía');
-                    }
-                } catch (error) {
-                    console.error('Error al generar respuesta:', error);
-                    loadingDiv.remove();
-                    window.addMessage('Lo siento, hubo un error al generar la respuesta. Por favor, intenta de nuevo.', 'assistant');
-                }
-
-                // Desplazarse al final del chat
-                const chatMessages = document.querySelector('.chat-messages');
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            } catch (error) {
-                console.error('Error en sendMessage:', error);
-                window.addMessage('Lo siento, ocurrió un error. Por favor, intenta de nuevo.', 'assistant');
-            }
-        };
-
-        // Función para manejar el menú en móvil
-        function initializeMobileMenu() {
-            const sidebar = document.querySelector('.sidebar');
-            const toggleButton = document.querySelector('.toggle-sidebar');
-            const mediaQuery = window.matchMedia('(max-width: 768px)');
-
-            function updateMobileMenu(e) {
-                if (e.matches) {
-                    toggleButton.style.display = 'block';
-                    sidebar.classList.add('hidden');
-                } else {
-                    toggleButton.style.display = 'none';
-                    sidebar.classList.remove('hidden');
-                }
-            }
-
-            toggleButton.addEventListener('click', () => {
-                sidebar.classList.toggle('hidden');
-            });
-
-            mediaQuery.addListener(updateMobileMenu);
-            updateMobileMenu(mediaQuery);
-        }
-
-        // Función para desplazarse al chat
-        function scrollToChat() {
-            const chatMessages = document.querySelector('.chat-messages');
-            chatMessages.scrollIntoView({ behavior: 'smooth' });
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
         // Inicializar el chat
         window.onload = async function() {
             try {
@@ -741,6 +492,8 @@
 
                 // Configurar eventos
                 const messageInput = document.getElementById('message-input');
+                
+                // Evento para Enter
                 messageInput.addEventListener('keypress', async function(e) {
                     if (e.key === 'Enter' && !e.shiftKey) {
                         e.preventDefault();
@@ -748,8 +501,13 @@
                     }
                 });
 
-                document.getElementById('send-button').onclick = window.sendMessage;
+                // Evento para el botón de enviar
+                const sendButton = document.getElementById('send-button');
+                sendButton.addEventListener('click', async function() {
+                    await window.sendMessage();
+                });
 
+                console.log('Chat inicializado correctamente');
             } catch (error) {
                 console.error('Error durante la inicialización:', error);
                 window.addMessage('Error al inicializar el chat. Por favor, recarga la página.', 'assistant');
