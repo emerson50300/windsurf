@@ -162,214 +162,343 @@
         let hasInitialGreeting = false;
 
         function showWelcomeMessage() {
-            const welcomeMessage = `¡Bienvenido/a! 😊 ¿Listo para aprender italiano?\n\n
-1️⃣ Elige tu nivel de italiano:\n
-• Principiante (A1-A2)\n
-• Intermedio (B1-B2)\n
+            const welcomeMessage = `¡Bienvenido a tu Profesor de Italiano! 🇮🇹\n\n
+Puedo ayudarte con:
+1️⃣ Traducción y significado de palabras/frases
+2️⃣ Gramática y conjugación de verbos
+3️⃣ Pronunciación y fonética
+4️⃣ Vocabulario y expresiones
+5️⃣ Cultura e historia italiana
+6️⃣ Ejercicios prácticos
+7️⃣ Historias y lecturas
+8️⃣ Diálogos y conversación\n\n
+Primero, elige tu nivel:
+• Principiante (A1-A2)
+• Intermedio (B1-B2)
 • Avanzado (C1-C2)\n\n
-2️⃣ Elige un tema para aprender:\n
-1: Presentaciones personales\n
-2: Vocabulario básico\n
-3: Frases útiles para viajar\n
-4: Gramática esencial\n
-5: Conversaciones del día a día\n
-6: Cultura italiana\n\n
-Puedes escribir por ejemplo: "Nivel A1, tema 3" o hacer preguntas directas como "Dame 10 frases sobre comida"`;
+Por ejemplo, puedes preguntarme:
+• "¿Cómo se conjuga el verbo 'andare'?"
+• "Enséñame vocabulario sobre comida"
+• "Quiero practicar la pronunciación"
+• "Cuéntame sobre la cultura italiana"`;
             
             addMessage(welcomeMessage, 'assistant');
         }
 
         function processUserRequest(text) {
-            // Procesar selección de nivel y tema
-            if (text.toLowerCase().includes('nivel')) {
-                const levelMatch = text.match(/[abc][12]/i);
-                if (levelMatch) {
-                    const level = levelMatch[0].toLowerCase();
-                    userLevel = level.startsWith('a') ? 'principiante' :
-                              level.startsWith('b') ? 'intermedio' : 'avanzado';
-                }
-
-                const topicMatch = text.match(/tema\s*(\d)/i);
-                if (topicMatch) {
-                    const topicNum = parseInt(topicMatch[1]);
-                    const topics = {
-                        1: 'presentaciones',
-                        2: 'vocabulario',
-                        3: 'viajes',
-                        4: 'gramatica',
-                        5: 'conversaciones',
-                        6: 'cultura'
-                    };
-                    currentTopic = topics[topicNum] || 'presentaciones';
-                }
-
-                return generateContentForTopic(currentTopic);
-            }
-
-            // Procesar solicitudes específicas
             const lowerText = text.toLowerCase();
 
-            // Solicitud de frases
-            if (lowerText.includes('frases') || lowerText.includes('dame') || lowerText.includes('dime')) {
-                const topics = {
-                    'comida': 'restaurante',
-                    'viaje': 'viajes',
-                    'presentacion': 'presentaciones',
-                    'restaurante': 'restaurante',
-                    'saludos': 'presentaciones',
-                    'familia': 'familia'
-                };
-
-                let topic = 'presentaciones';
-                for (let key in topics) {
-                    if (lowerText.includes(key)) {
-                        topic = topics[key];
-                        break;
-                    }
-                }
-
-                const numberMatch = text.match(/\d+/);
-                const count = numberMatch ? parseInt(numberMatch[0]) : 5;
-
-                return generatePhrases(topic, count);
+            // Detectar tipo de solicitud
+            if (lowerText.includes('conjuga') || lowerText.includes('verbo')) {
+                return handleVerbConjugation(text);
+            } else if (lowerText.includes('traduce') || lowerText.includes('traducir')) {
+                return handleTranslation(text);
+            } else if (lowerText.includes('pronuncia') || lowerText.includes('fonética')) {
+                return handlePronunciation(text);
+            } else if (lowerText.includes('cultura') || lowerText.includes('historia')) {
+                return handleCulture(text);
+            } else if (lowerText.includes('ejercicio') || lowerText.includes('práctica')) {
+                return generateExercise(text);
+            } else if (lowerText.includes('diálogo') || lowerText.includes('conversación')) {
+                return generateDialogue(text);
+            } else if (lowerText.includes('historia') || lowerText.includes('lectura')) {
+                return generateStory(text);
+            } else if (lowerText.includes('vocabulario') || lowerText.includes('palabras')) {
+                return teachVocabulary(text);
             }
 
-            // Solicitud de traducción
-            if (lowerText.includes('traduce') || lowerText.includes('traducir') || lowerText.includes('traduceme')) {
-                const textToTranslate = text.replace(/traduce(me)?|traducir/i, '').trim();
-                return translateText(textToTranslate);
-            }
-
-            // Solicitud de explicación gramatical
-            if (lowerText.includes('explica') || lowerText.includes('explicar')) {
-                let topic = 'verbos';
-                if (lowerText.includes('essere') || lowerText.includes('ser')) topic = 'essere';
-                if (lowerText.includes('condicional')) topic = 'condicional';
-                return explainGrammar(topic);
-            }
-
-            // Solicitud de diálogo
-            if (lowerText.includes('dialogo') || lowerText.includes('conversacion')) {
-                let context = 'restaurante';
-                if (lowerText.includes('viaje') || lowerText.includes('tren')) context = 'viajes';
-                if (lowerText.includes('direcciones') || lowerText.includes('ciudad')) context = 'direcciones';
-                return generateDialogue(context);
-            }
-
-            // Solicitud de ejercicios
-            if (lowerText.includes('ejercicio') || lowerText.includes('practica')) {
-                return generateExercise(currentTopic || 'general');
-            }
-
-            // Solicitud de corrección
-            if (lowerText.includes('corrige') || lowerText.includes('revisa')) {
-                return correctItalian(text.replace(/corrige|revisa/i, '').trim());
-            }
-
-            // Mensaje de ayuda por defecto
-            return `¿Cómo puedo ayudarte? Puedes:\n
-• Pedir frases sobre un tema (ej: "5 frases sobre comida")\n
-• Solicitar traducciones (ej: "traduce: buenos días")\n
-• Pedir explicaciones gramaticales (ej: "explica el verbo essere")\n
-• Generar diálogos (ej: "diálogo en un restaurante")\n
-• Hacer ejercicios (ej: "ejercicio de vocabulario")\n
-• Corregir frases (ej: "corrige: io va a casa")\n\n
-También puedes cambiar tu nivel o tema en cualquier momento.`;
+            return getDefaultResponse();
         }
 
-        function generateContentForTopic(topic) {
-            const content = {
-                presentaciones: {
-                    principiante: {
-                        title: "Presentaciones Personales Básicas",
-                        phrases: [
-                            {it: "Ciao, come ti chiami?", es: "Hola, ¿cómo te llamas?"},
-                            {it: "Mi chiamo Marco", es: "Me llamo Marco"},
-                            {it: "Piacere di conoscerti", es: "Encantado de conocerte"},
-                            {it: "Di dove sei?", es: "¿De dónde eres?"},
-                            {it: "Sono di Madrid", es: "Soy de Madrid"}
-                        ]
+        function handleVerbConjugation(text) {
+            const verbs = {
+                'andare': {
+                    translation: 'ir',
+                    conjugation: {
+                        presente: {
+                            'io': 'vado',
+                            'tu': 'vai',
+                            'lui/lei': 'va',
+                            'noi': 'andiamo',
+                            'voi': 'andate',
+                            'loro': 'vanno'
+                        },
+                        passato: {
+                            'io': 'sono andato/a',
+                            'tu': 'sei andato/a',
+                            'lui/lei': 'è andato/a',
+                            'noi': 'siamo andati/e',
+                            'voi': 'siete andati/e',
+                            'loro': 'sono andati/e'
+                        }
                     },
-                    intermedio: {
-                        title: "Presentaciones Profesionales",
-                        phrases: [
-                            {it: "Mi occupo di marketing", es: "Me dedico al marketing"},
-                            {it: "Lavoro nel settore tecnologico", es: "Trabajo en el sector tecnológico"},
-                            {it: "Ho studiato all'università di Roma", es: "Estudié en la universidad de Roma"}
-                        ]
-                    }
+                    examples: [
+                        {it: "Io vado al mercato", es: "Yo voy al mercado"},
+                        {it: "Dove vai?", es: "¿Dónde vas?"},
+                        {it: "Andiamo al cinema", es: "Vamos al cine"}
+                    ]
                 },
-                viajes: {
-                    principiante: {
-                        title: "Frases Esenciales para Viajar",
-                        phrases: [
-                            {it: "Scusi, dov'è la stazione?", es: "Disculpe, ¿dónde está la estación?"},
-                            {it: "Quanto costa il biglietto?", es: "¿Cuánto cuesta el billete?"},
-                            {it: "Vorrei prenotare una camera", es: "Quisiera reservar una habitación"}
-                        ]
-                    }
+                'essere': {
+                    translation: 'ser/estar',
+                    conjugation: {
+                        presente: {
+                            'io': 'sono',
+                            'tu': 'sei',
+                            'lui/lei': 'è',
+                            'noi': 'siamo',
+                            'voi': 'siete',
+                            'loro': 'sono'
+                        }
+                    },
+                    examples: [
+                        {it: "Sono italiano", es: "Soy italiano"},
+                        {it: "Sei a casa?", es: "¿Estás en casa?"},
+                        {it: "È bello", es: "Es bonito"}
+                    ]
                 }
             };
 
-            const levelContent = content[topic]?.[userLevel] || content.presentaciones.principiante;
-            let response = `📚 ${levelContent.title}\n\n`;
-            
-            levelContent.phrases.forEach((phrase, index) => {
-                response += `${index + 1}. ${phrase.it}\n   ${phrase.es}\n\n`;
+            // Detectar el verbo solicitado
+            let requestedVerb = '';
+            for (let verb in verbs) {
+                if (text.toLowerCase().includes(verb)) {
+                    requestedVerb = verb;
+                    break;
+                }
+            }
+
+            if (!requestedVerb) {
+                return "¿Qué verbo te gustaría aprender? Puedo enseñarte verbos como 'andare', 'essere', y muchos más.";
+            }
+
+            const verb = verbs[requestedVerb];
+            let response = `📚 El verbo '${requestedVerb}' (${verb.translation})\n\n`;
+            response += "Conjugación en presente:\n\n";
+
+            for (let pronoun in verb.conjugation.presente) {
+                response += `${pronoun}: ${verb.conjugation.presente[pronoun]}\n`;
+            }
+
+            response += "\nEjemplos de uso:\n";
+            verb.examples.forEach((example, index) => {
+                response += `${index + 1}. ${example.it}\n   ${example.es}\n`;
             });
 
-            response += "💡 ¿Quieres practicar estas frases con ejercicios?\n";
-            response += "También puedes pedir más ejemplos o cambiar de tema.";
+            response += "\n💡 ¿Te gustaría practicar con ejercicios?";
+            return response;
+        }
+
+        function handlePronunciation(text) {
+            const pronunciationGuides = {
+                'c': {
+                    rules: [
+                        "La 'c' se pronuncia como 'ch' antes de 'e' o 'i' (cena, ciao)",
+                        "La 'c' se pronuncia como 'k' antes de 'a', 'o', 'u' (casa, cosa)"
+                    ],
+                    examples: [
+                        {word: "ciao", pronunciation: "chao", meaning: "hola"},
+                        {word: "casa", pronunciation: "kasa", meaning: "casa"},
+                        {word: "cena", pronunciation: "chena", meaning: "cena"}
+                    ]
+                },
+                'g': {
+                    rules: [
+                        "La 'g' se pronuncia como 'y' antes de 'e' o 'i' (gente, giorno)",
+                        "La 'g' se pronuncia como 'g' fuerte antes de 'a', 'o', 'u' (gatto, gonna)"
+                    ],
+                    examples: [
+                        {word: "gatto", pronunciation: "gatto", meaning: "gato"},
+                        {word: "gelato", pronunciation: "yelato", meaning: "helado"}
+                    ]
+                }
+            };
+
+            let response = "🗣️ Guía de pronunciación italiana\n\n";
+            
+            // Detectar si se pregunta por una letra específica
+            for (let letter in pronunciationGuides) {
+                if (text.toLowerCase().includes(letter)) {
+                    const guide = pronunciationGuides[letter];
+                    response += `Reglas para la letra '${letter}':\n`;
+                    guide.rules.forEach(rule => response += `• ${rule}\n`);
+                    response += "\nEjemplos:\n";
+                    guide.examples.forEach(ex => {
+                        response += `${ex.word} → ${ex.pronunciation} (${ex.meaning})\n`;
+                    });
+                    return response;
+                }
+            }
+
+            // Si no se especifica una letra, dar información general
+            response += "Aspectos importantes de la pronunciación italiana:\n\n";
+            response += "1. Vocales:\n";
+            response += "• Siempre se pronuncian claras y consistentes\n";
+            response += "• No existen diptongos como en español\n\n";
+            response += "2. Consonantes especiales:\n";
+            response += "• 'ch' se pronuncia como 'k'\n";
+            response += "• 'gh' se pronuncia como 'g' fuerte\n";
+            response += "• 'gn' se pronuncia como 'ñ'\n\n";
+            response += "¿Te gustaría practicar la pronunciación de alguna palabra o letra específica?";
 
             return response;
         }
 
-        function generateExercise(topic = 'general') {
-            const exercises = {
-                completar: [
-                    {
-                        question: "Completa la frase: Io _____ italiano. (sono/sei/è)",
-                        answer: "sono",
-                        explanation: "Con el pronombre 'io' usamos 'sono'"
-                    },
-                    {
-                        question: "Completa: Mi _____ Paolo. (chiamo/chiami/chiama)",
-                        answer: "chiamo",
-                        explanation: "Para decir 'me llamo' usamos 'mi chiamo'"
-                    }
-                ],
-                traducir: [
-                    {
-                        question: "Traduce al italiano: 'Hola, ¿cómo estás?'",
-                        answer: "Ciao, come stai?",
-                        hint: "Recuerda que 'stai' es informal"
-                    }
-                ],
-                multiple: [
-                    {
-                        question: "¿Cómo se dice 'gracias' en italiano?",
-                        options: ["gracie", "grazia", "grazie", "gratia"],
-                        answer: "grazie",
-                        explanation: "Grazie es la forma correcta de decir gracias"
-                    }
-                ]
+        function handleCulture(text) {
+            const culturalTopics = {
+                'gastronomia': {
+                    title: "Gastronomía Italiana",
+                    content: "La cocina italiana es famosa mundialmente. Cada región tiene sus especialidades:",
+                    examples: [
+                        "🍕 Nápoles: Pizza Margherita",
+                        "🍝 Bolonia: Pasta al Ragù",
+                        "🧀 Parma: Parmigiano Reggiano"
+                    ],
+                    vocabulary: [
+                        {it: "al dente", es: "pasta cocida pero firme"},
+                        {it: "antipasto", es: "entrante"},
+                        {it: "primo piatto", es: "primer plato"}
+                    ]
+                },
+                'regiones': {
+                    title: "Regiones de Italia",
+                    content: "Italia está dividida en 20 regiones, cada una con su dialecto y tradiciones:",
+                    examples: [
+                        "Toscana: Cuna del Renacimiento",
+                        "Sicilia: Influencia griega y árabe",
+                        "Véneto: República de Venecia"
+                    ],
+                    vocabulary: [
+                        {it: "regione", es: "región"},
+                        {it: "dialetto", es: "dialecto"},
+                        {it: "tradizione", es: "tradición"}
+                    ]
+                }
             };
 
-            const types = ['completar', 'traducir', 'multiple'];
-            const type = types[Math.floor(Math.random() * types.length)];
-            const exercise = exercises[type][Math.floor(Math.random() * exercises[type].length)];
+            // Detectar el tema cultural
+            let topic = '';
+            for (let t in culturalTopics) {
+                if (text.toLowerCase().includes(t)) {
+                    topic = t;
+                    break;
+                }
+            }
 
-            let response = "🎯 Ejercicio de práctica:\n\n";
-            response += exercise.question + "\n\n";
+            if (!topic) {
+                return "¿Sobre qué aspecto de la cultura italiana te gustaría aprender?\n" +
+                       "• Gastronomía\n" +
+                       "• Regiones y dialectos\n" +
+                       "• Arte e historia\n" +
+                       "• Costumbres y tradiciones";
+            }
 
-            if (type === 'multiple') {
-                response += "Opciones:\n";
-                exercise.options.forEach((option, index) => {
-                    response += `${index + 1}. ${option}\n`;
+            const cultureTopic = culturalTopics[topic];
+            let response = `📚 ${cultureTopic.title}\n\n`;
+            response += cultureTopic.content + "\n\n";
+            response += "Ejemplos:\n";
+            cultureTopic.examples.forEach(ex => response += ex + "\n");
+            response += "\nVocabulario relacionado:\n";
+            cultureTopic.vocabulary.forEach(word => {
+                response += `${word.it} → ${word.es}\n`;
+            });
+
+            return response;
+        }
+
+        function generateStory(text) {
+            const stories = {
+                principiante: {
+                    title: "Un Giorno al Caffè",
+                    content: [
+                        {it: "Marco va al caffè.", es: "Marco va al café."},
+                        {it: "Ordina un cappuccino.", es: "Pide un cappuccino."},
+                        {it: "Il cameriere è molto gentile.", es: "El camarero es muy amable."},
+                        {it: "Marco legge il giornale.", es: "Marco lee el periódico."}
+                    ],
+                    vocabulary: [
+                        {word: "caffè", meaning: "café"},
+                        {word: "ordinare", meaning: "pedir"},
+                        {word: "cameriere", meaning: "camarero"},
+                        {word: "giornale", meaning: "periódico"}
+                    ]
+                },
+                intermedio: {
+                    title: "Una Giornata a Roma",
+                    content: [
+                        {it: "Maria passeggia per le strade di Roma.", es: "María pasea por las calles de Roma."},
+                        {it: "Visita il Colosseo e fa molte foto.", es: "Visita el Coliseo y toma muchas fotos."},
+                        {it: "Nel pomeriggio incontra degli amici.", es: "Por la tarde se encuentra con unos amigos."}
+                    ]
+                }
+            };
+
+            const story = stories[userLevel] || stories.principiante;
+            let response = `📖 ${story.title}\n\n`;
+            
+            story.content.forEach((line, index) => {
+                response += `${line.it}\n${line.es}\n\n`;
+            });
+
+            if (story.vocabulary) {
+                response += "Vocabulario importante:\n";
+                story.vocabulary.forEach(item => {
+                    response += `${item.word} → ${item.meaning}\n`;
                 });
             }
 
-            response += "\nEscribe tu respuesta y te ayudaré a corregirla.";
+            response += "\n💡 ¿Te gustaría practicar con preguntas sobre la historia?";
+            return response;
+        }
+
+        function teachVocabulary(text) {
+            const vocabularyTopics = {
+                'comida': [
+                    {it: "pane", es: "pan", example: "Vorrei del pane, per favore."},
+                    {it: "acqua", es: "agua", example: "Un bicchiere d'acqua."},
+                    {it: "pasta", es: "pasta", example: "La pasta è al dente."},
+                    {it: "vino", es: "vino", example: "Un bicchiere di vino rosso."},
+                    {it: "caffè", es: "café", example: "Un caffè espresso, per favore."}
+                ],
+                'viajes': [
+                    {it: "biglietto", es: "billete", example: "Dove posso comprare un biglietto?"},
+                    {it: "treno", es: "tren", example: "Il treno parte alle otto."},
+                    {it: "aeroporto", es: "aeropuerto", example: "L'aeroporto è lontano?"},
+                    {it: "albergo", es: "hotel", example: "Ho una prenotazione all'albergo."}
+                ],
+                'familia': [
+                    {it: "madre", es: "madre", example: "Mia madre è italiana."},
+                    {it: "padre", es: "padre", example: "Mio padre lavora molto."},
+                    {it: "fratello", es: "hermano", example: "Ho un fratello maggiore."},
+                    {it: "sorella", es: "hermana", example: "Mia sorella studia medicina."}
+                ]
+            };
+
+            // Detectar el tema de vocabulario
+            let topic = '';
+            for (let t in vocabularyTopics) {
+                if (text.toLowerCase().includes(t)) {
+                    topic = t;
+                    break;
+                }
+            }
+
+            if (!topic) {
+                return "¿Sobre qué tema te gustaría aprender vocabulario?\n" +
+                       "• Comida y bebidas\n" +
+                       "• Viajes y transporte\n" +
+                       "• Familia y relaciones\n" +
+                       "• Números y fechas";
+            }
+
+            const vocabulary = vocabularyTopics[topic];
+            let response = `📚 Vocabulario sobre ${topic}:\n\n`;
+            
+            vocabulary.forEach((word, index) => {
+                response += `${index + 1}. ${word.it} → ${word.es}\n`;
+                response += `   Ejemplo: ${word.example}\n\n`;
+            });
+
+            response += "💡 ¿Te gustaría practicar este vocabulario con ejercicios?";
             return response;
         }
 
