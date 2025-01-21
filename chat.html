@@ -8,24 +8,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@google/generative-ai"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script async src="https://fundingchoicesmessages.google.com/i/pub-7643993399830665?ers=1"></script>
-    <script>
-        (function() {
-            function signalGooglefcPresent() {
-                if (!window.frames['googlefcPresent']) {
-                    if (document.body) {
-                        const iframe = document.createElement('iframe');
-                        iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
-                        iframe.style.display = 'none';
-                        iframe.name = 'googlefcPresent';
-                        document.body.appendChild(iframe);
-                    } else {
-                        setTimeout(signalGooglefcPresent, 0);
-                    }
-                }
-            }
-            signalGooglefcPresent();
-        })();
-    </script>
     <style>
         :root {
             --primary-color: #1a5fb4;
@@ -373,286 +355,135 @@
     </div>
 
     <script>
-        // Inicializar variables globales
-        window.userLevel = 'principiante';
-        window.currentTopic = 'gramatica';
-        window.model = null;
-        window.currentApiKeyIndex = 0;
+        // Variables globales
+        let model = null;
+        const API_KEY = 'AIzaSyCEIicKmkzZQ7kOy0yBSVt4Dc3s80GwKYw';
 
-        // Lista de API keys de Gemini válidas
-        const API_KEYS = [
-            'AIzaSyCEIicKmkzZQ7kOy0yBSVt4Dc3s80GwKYw'  // API key principal
-        ];
+        // Inicializar el modelo al cargar la página
+        window.onload = async function() {
+            await initializeModel();
+        };
 
-        // Función mejorada para inicializar el modelo de Gemini
-        async function initializeGemini(retryCount = 0) {
-            if (window.model) return true;
-            
+        // Función para inicializar el modelo
+        async function initializeModel() {
             try {
-                const currentKey = API_KEYS[window.currentApiKeyIndex];
-                if (!currentKey) {
-                    console.error('No hay API key disponible');
-                    return false;
-                }
-
-                const genAI = new GoogleGenerativeAI(currentKey);
-                window.model = genAI.getGenerativeModel({ model: "gemini-pro" });
-                
-                // Verificar que el modelo funciona con un mensaje de prueba
-                const testResult = await window.model.generateContent("Test connection");
-                if (!testResult || !testResult.response) {
-                    throw new Error('Test de conexión fallido');
-                }
-
-                console.log('Modelo Gemini inicializado correctamente');
-                return true;
+                const genAI = new GoogleGenerativeAI(API_KEY);
+                model = genAI.getGenerativeModel({ model: "gemini-pro" });
+                console.log('Modelo inicializado correctamente');
             } catch (error) {
-                console.error('Error al inicializar Gemini:', error);
-                window.model = null;
-                return false;
+                console.error('Error al inicializar:', error);
             }
         }
 
-        // Función mejorada para generar respuestas
-        async function generateResponse(prompt) {
-            try {
-                if (!window.model) {
-                    const initialized = await initializeGemini();
-                    if (!initialized) {
-                        throw new Error('No se pudo inicializar el modelo');
-                    }
-                }
-
-                const result = await window.model.generateContent(prompt);
-                const response = result.response;
-                const text = response.text();
-                
-                if (!text || !text.trim()) {
-                    throw new Error('Respuesta vacía del modelo');
-                }
-                
-                return text;
-            } catch (error) {
-                console.error('Error al generar respuesta:', error);
-                throw error;
-            }
+        // Función para construir el prompt
+        function buildPrompt(message) {
+            return `Actúa como un profesor de italiano. Nivel del estudiante: principiante. 
+            Responde en español, pero incluye ejemplos en italiano.
+            Cuando des ejemplos en italiano, marca el texto italiano con "Italiano: " al inicio.
+            No uses caracteres especiales como asteriscos o bullets.
+            Mensaje del estudiante: ${message}`;
         }
 
-        // Función mejorada para enviar mensajes
+        // Función para enviar mensaje
         window.sendMessage = async function() {
             const input = document.getElementById('message-input');
             const message = input.value.trim();
             
             if (!message) return;
 
-            try {
-                // Mostrar mensaje del usuario
-                window.addMessage(message, 'user');
-                input.value = '';
-                window.autoResize(input);
+            // Mostrar mensaje del usuario
+            addMessage(message, 'user');
+            input.value = '';
+            autoResize(input);
 
-                // Mostrar indicador de carga
-                const loadingDiv = document.createElement('div');
-                loadingDiv.className = 'message assistant-message loading';
-                loadingDiv.textContent = 'Escribiendo...';
-                document.getElementById('chat-messages').appendChild(loadingDiv);
+            // Mostrar indicador de carga
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'message assistant-message loading';
+            loadingDiv.textContent = 'Escribiendo...';
+            document.getElementById('chat-messages').appendChild(loadingDiv);
+
+            try {
+                // Asegurarse de que el modelo esté inicializado
+                if (!model) {
+                    await initializeModel();
+                }
 
                 // Generar respuesta
-                const prompt = window.buildGeminiPrompt(message, window.userLevel);
+                const prompt = buildPrompt(message);
+                const result = await model.generateContent(prompt);
+                const text = result.response.text();
                 
-                try {
-                    const text = await generateResponse(prompt);
-                    loadingDiv.remove();
-                    window.addMessage(text, 'assistant');
-                    
-                    // Desplazarse al final del chat
-                    const chatMessages = document.querySelector('.chat-messages');
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
-                } catch (error) {
-                    console.error('Error en la generación:', error);
-                    loadingDiv.remove();
-                    window.addMessage('Lo siento, el servicio no está disponible en este momento. Por favor, intenta más tarde.', 'assistant');
-                    
-                    // Reinicializar el modelo para el próximo intento
-                    window.model = null;
-                }
+                // Mostrar respuesta
+                loadingDiv.remove();
+                addMessage(text, 'assistant');
+                
+                // Desplazarse al final del chat
+                const chatMessages = document.querySelector('.chat-messages');
+                chatMessages.scrollTop = chatMessages.scrollHeight;
             } catch (error) {
-                console.error('Error en sendMessage:', error);
-                window.addMessage('Error de conexión. Por favor, verifica tu conexión a internet e intenta de nuevo.', 'assistant');
+                console.error('Error:', error);
+                loadingDiv.remove();
+                
+                // Reintentar inicializar el modelo
+                model = null;
+                await initializeModel();
+                
+                // Mostrar mensaje de reintento
+                addMessage('Un momento, por favor...', 'assistant');
+                setTimeout(() => sendMessage(), 1000);
             }
         };
 
-        // Función para establecer el nivel
-        window.setLevel = async function(level) {
-            window.userLevel = level;
-            
-            // Actualizar botones activos
-            document.querySelectorAll('.level-buttons button').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.textContent.toLowerCase().includes(level)) {
-                    btn.classList.add('active');
-                }
-            });
-
-            const messages = {
-                'principiante': '¿Qué frases básicas debo aprender como principiante?',
-                'intermedio': '¿Cuáles son las expresiones más comunes para nivel intermedio?',
-                'avanzado': '¿Qué frases avanzadas me recomiendas practicar?'
-            };
-
-            // Simular el envío del mensaje
-            const input = document.getElementById('message-input');
-            input.value = messages[level];
-            await window.sendMessage();
-        };
-
-        // Función para establecer el tema
-        window.setTopic = async function(topic) {
-            window.currentTopic = topic;
-            
-            // Actualizar botones activos
-            document.querySelectorAll('.topic-buttons button').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.textContent.toLowerCase().includes(topic)) {
-                    btn.classList.add('active');
-                }
-            });
-
-            const messages = {
-                'gramatica': '¿Cuáles son las reglas gramaticales más importantes?',
-                'vocabulario': 'Dame las 10 palabras más usadas en italiano',
-                'pronunciacion': '¿Cómo se pronuncian correctamente las vocales en italiano?',
-                'cultura': 'Cuéntame sobre las tradiciones italianas más importantes',
-                'ejercicios': 'Dame ejercicios de práctica para mi nivel',
-                'conversacion': 'Frases útiles para mantener una conversación'
-            };
-
-            // Simular el envío del mensaje
-            const input = document.getElementById('message-input');
-            input.value = messages[topic];
-            await window.sendMessage();
-        };
-
-        // Función para limpiar el texto para la voz
-        function cleanTextForSpeech(text) {
-            return text
-                .replace(/^\d+[\.\)]\s*/gm, '') // Eliminar números al inicio de línea
-                .replace(/[•*\-\[\]\(\){}]/g, '') // Eliminar caracteres especiales
-                .replace(/[.,!?¡¿:;]/g, '') // Eliminar signos de puntuación
-                .replace(/^\s*[•*-]\s*/gm, '') // Eliminar bullets al inicio de línea
-                .replace(/Italiano:\s*/i, '') // Eliminar la palabra "Italiano:"
-                .replace(/\s+/g, ' ') // Normalizar espacios
-                .trim(); // Eliminar espacios al inicio y final
-        }
-
-        // Función para añadir mensajes al chat
-        window.addMessage = function(text, sender) {
+        // Función para añadir mensaje al chat
+        function addMessage(text, sender) {
             const messagesDiv = document.getElementById('chat-messages');
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${sender}-message`;
-
-            const contentDiv = document.createElement('div');
-            contentDiv.className = 'message-content';
-
-            if (sender === 'assistant' && text.includes('Italiano:')) {
-                // Agregar botón de reproducción para todo el mensaje
-                const playAllButton = document.createElement('button');
-                playAllButton.className = 'play-all-button';
-                playAllButton.innerHTML = '<i class="fas fa-volume-up"></i>';
-                playAllButton.title = 'Escuchar todo el texto en italiano';
-                messageDiv.appendChild(playAllButton);
-
-                // Procesar el texto y agregar iconos
-                const lines = text.split('\n');
-                const formattedLines = lines.map(line => {
-                    if (line.includes('Italiano:')) {
-                        // Elegir un icono aleatorio para cada frase
-                        const icons = ['🗣️', '💭', '💬', '🔊', '📢', '🎯', '✨', '🌟'];
-                        const randomIcon = icons[Math.floor(Math.random() * icons.length)];
-                        
-                        const [italian, spanish] = line.split('|').map(part => part.trim());
-                        return `<div class="example-phrase">
-                                    <div class="italian-text">
-                                        <i class="fas fa-comment"></i>
-                                        <span>${italian}</span>
-                                        <span class="icon">${randomIcon}</span>
-                                    </div>
-                                    <div class="translation">${spanish || ''}</div>
-                                </div>`;
-                    }
-                    return `<div>${line}</div>`;
-                });
-                contentDiv.innerHTML = formattedLines.join('');
-
-                // Configurar el botón de reproducción
-                playAllButton.onclick = function() {
-                    const italianPhrases = [];
-                    contentDiv.querySelectorAll('.italian-text span:not(.icon)').forEach(element => {
-                        const text = element.textContent.replace('Italiano:', '').trim();
-                        if (text) {
-                            italianPhrases.push(text);
-                        }
-                    });
-
-                    const cleanText = cleanTextForSpeech(italianPhrases.join('. '));
-                    if (cleanText) {
-                        // Detener cualquier reproducción anterior
-                        speechSynthesis.cancel();
-
-                        // Crear y configurar el utterance
-                        const utterance = new SpeechSynthesisUtterance(cleanText);
-                        utterance.lang = 'it-IT';
-                        utterance.rate = 0.9;
-
-                        // Añadir clase 'playing' al botón
-                        this.classList.add('playing');
-
-                        // Cuando termine de hablar
-                        utterance.onend = () => {
-                            this.classList.remove('playing');
-                        };
-
-                        speechSynthesis.speak(utterance);
-                    }
-                };
-            } else {
-                contentDiv.textContent = text;
-            }
-
-            messageDiv.appendChild(contentDiv);
-            messagesDiv.appendChild(messageDiv);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        };
-
-        // Inicializar el chat
-        window.onload = async function() {
-            try {
-                // Inicializar Gemini
-                await initializeGemini();
-
-                // Configurar eventos
-                const messageInput = document.getElementById('message-input');
+            
+            if (sender === 'assistant') {
+                // Añadir icono aleatorio para mensajes del asistente
+                const icons = ['🗣️', '💭', '💬', '🔊', '📢', '🎯', '✨', '🌟'];
+                const icon = icons[Math.floor(Math.random() * icons.length)];
+                messageDiv.innerHTML = `<span class="icon">${icon}</span> ${text}`;
                 
-                // Evento para Enter
-                messageInput.addEventListener('keypress', async function(e) {
-                    if (e.key === 'Enter' && !e.shiftKey) {
-                        e.preventDefault();
-                        await window.sendMessage();
-                    }
-                });
-
-                // Evento para el botón de enviar
-                const sendButton = document.getElementById('send-button');
-                sendButton.addEventListener('click', async function() {
-                    await window.sendMessage();
-                });
-
-                console.log('Chat inicializado correctamente');
-            } catch (error) {
-                console.error('Error durante la inicialización:', error);
-                window.addMessage('Error al inicializar el chat. Por favor, recarga la página.', 'assistant');
+                // Añadir botón de audio
+                const audioButton = document.createElement('button');
+                audioButton.className = 'audio-button';
+                audioButton.innerHTML = '<i class="fas fa-volume-up"></i>';
+                audioButton.onclick = () => speakText(text);
+                messageDiv.appendChild(audioButton);
+            } else {
+                messageDiv.textContent = text;
             }
-        };
+            
+            messagesDiv.appendChild(messageDiv);
+        }
+
+        // Función para ajustar tamaño del input
+        function autoResize(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
+        }
+
+        // Manejar tecla Enter
+        document.getElementById('message-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        // Función para leer texto
+        function speakText(text) {
+            // Limpiar texto para la lectura
+            const cleanText = text.replace(/[0-9]/g, '')
+                                .replace(/[^\w\s,.!?:;]/g, '')
+                                .replace(/Italiano:/g, '');
+
+            const utterance = new SpeechSynthesisUtterance(cleanText);
+            utterance.lang = 'it-IT';
+            speechSynthesis.speak(utterance);
+        }
     </script>
 </body>
 </html>
