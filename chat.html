@@ -579,12 +579,63 @@
                 audioButton.innerHTML = '<i class="fas fa-volume-up"></i>';
                 audioButton.onclick = () => speakText(text);
                 messageDiv.appendChild(audioButton);
+
+                // Leer automáticamente el texto en italiano después de un breve retraso
+                setTimeout(() => speakText(text), 1000);
             } else {
                 messageDiv.textContent = text;
             }
             
             messagesDiv.appendChild(messageDiv);
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        // Función para extraer solo el texto en italiano
+        function extractItalianText(text) {
+            const italianParts = [];
+            const lines = text.split('\n');
+            let isItalianBlock = false;
+
+            for (let line of lines) {
+                line = line.trim();
+                if (!line) continue;
+
+                if (line.startsWith('Italiano:')) {
+                    isItalianBlock = true;
+                    // Eliminar el prefijo "Italiano:" y cualquier espacio extra
+                    italianParts.push(line.replace('Italiano:', '').trim());
+                } else if (isItalianBlock && (line.startsWith('-') || line.startsWith('•'))) {
+                    // Incluir líneas de lista que son parte del bloque italiano
+                    italianParts.push(line.trim());
+                } else {
+                    isItalianBlock = false;
+                }
+            }
+
+            return italianParts.join('. ');
+        }
+
+        // Función para leer texto en italiano
+        function speakText(text) {
+            const italianText = extractItalianText(text);
+            
+            if (italianText) {
+                // Cancelar cualquier lectura anterior
+                speechSynthesis.cancel();
+
+                const utterance = new SpeechSynthesisUtterance(italianText);
+                utterance.lang = 'it-IT';
+                utterance.rate = 0.9; // Velocidad ligeramente más lenta para mejor comprensión
+                utterance.pitch = 1.0; // Tono normal
+                utterance.volume = 1.0; // Volumen máximo
+                
+                // Evento para manejar errores
+                utterance.onerror = (event) => {
+                    console.error('Error en la síntesis de voz:', event);
+                };
+
+                speechSynthesis.speak(utterance);
+            }
         }
 
         // Función para formatear el texto y resaltar el italiano
@@ -612,22 +663,6 @@
             }
 
             return formattedText;
-        }
-
-        // Función para leer texto en italiano
-        function speakText(text) {
-            // Extraer solo el texto en italiano
-            const italianParts = text.split('Italiano:')
-                                   .slice(1)
-                                   .map(part => part.split('\n')[0].trim())
-                                   .join('. ');
-
-            if (italianParts) {
-                const utterance = new SpeechSynthesisUtterance(italianParts);
-                utterance.lang = 'it-IT';
-                utterance.rate = 0.9; // Velocidad ligeramente más lenta para mejor comprensión
-                speechSynthesis.speak(utterance);
-            }
         }
     </script>
 </body>
