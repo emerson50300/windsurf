@@ -186,16 +186,48 @@
         .italian-text {
             display: flex;
             align-items: center;
-            font-style: italic;
-            color: var(--primary-color);
-            font-size: 1.1em;
-            margin-bottom: 5px;
+            gap: 10px;
+            margin: 10px 0;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 8px;
         }
 
-        .translation {
-            color: #666;
-            padding-left: 10px;
-            border-left: 3px solid var(--accent-color);
+        .italian-text i {
+            color: var(--primary-color);
+            font-size: 1.2em;
+        }
+
+        .play-all-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .play-all-button:hover {
+            transform: scale(1.1);
+            background: var(--accent-color);
+        }
+
+        .play-all-button.playing {
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
 
         .phrase-list {
@@ -229,30 +261,6 @@
             0% { transform: scale(1); }
             50% { transform: scale(1.2); }
             100% { transform: scale(1); }
-        }
-
-        .play-all-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: none;
-            border: none;
-            color: var(--primary-color);
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-            z-index: 2;
-        }
-
-        .play-all-button:hover {
-            transform: scale(1.2);
-            background-color: rgba(0,0,0,0.05);
-        }
-
-        .play-all-button.playing {
-            color: var(--accent-color);
-            animation: pulse 1s infinite;
         }
 
         @media (max-width: 768px) {
@@ -482,6 +490,97 @@
             const input = document.getElementById('message-input');
             input.value = messages[topic];
             await window.sendMessage();
+        };
+
+        // Función para limpiar el texto para la voz
+        function cleanTextForSpeech(text) {
+            return text
+                .replace(/^\d+[\.\)]\s*/gm, '') // Eliminar números al inicio de línea
+                .replace(/[•*\-\[\]\(\){}]/g, '') // Eliminar caracteres especiales
+                .replace(/[.,!?¡¿:;]/g, '') // Eliminar signos de puntuación
+                .replace(/^\s*[•*-]\s*/gm, '') // Eliminar bullets al inicio de línea
+                .replace(/Italiano:\s*/i, '') // Eliminar la palabra "Italiano:"
+                .replace(/\s+/g, ' ') // Normalizar espacios
+                .trim(); // Eliminar espacios al inicio y final
+        }
+
+        // Función para añadir mensajes al chat
+        window.addMessage = function(text, sender) {
+            const messagesDiv = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+
+            if (sender === 'assistant' && text.includes('Italiano:')) {
+                // Agregar botón de reproducción para todo el mensaje
+                const playAllButton = document.createElement('button');
+                playAllButton.className = 'play-all-button';
+                playAllButton.innerHTML = '<i class="fas fa-volume-up"></i>';
+                playAllButton.title = 'Escuchar todo el texto en italiano';
+                messageDiv.appendChild(playAllButton);
+
+                // Procesar el texto y agregar iconos
+                const lines = text.split('\n');
+                const formattedLines = lines.map(line => {
+                    if (line.includes('Italiano:')) {
+                        // Elegir un icono aleatorio para cada frase
+                        const icons = ['🗣️', '💭', '💬', '🔊', '📢', '🎯', '✨', '🌟'];
+                        const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+                        
+                        const [italian, spanish] = line.split('|').map(part => part.trim());
+                        return `<div class="example-phrase">
+                                    <div class="italian-text">
+                                        <i class="fas fa-comment"></i>
+                                        <span>${italian}</span>
+                                        <span class="icon">${randomIcon}</span>
+                                    </div>
+                                    <div class="translation">${spanish || ''}</div>
+                                </div>`;
+                    }
+                    return `<div>${line}</div>`;
+                });
+                contentDiv.innerHTML = formattedLines.join('');
+
+                // Configurar el botón de reproducción
+                playAllButton.onclick = function() {
+                    const italianPhrases = [];
+                    contentDiv.querySelectorAll('.italian-text span:not(.icon)').forEach(element => {
+                        const text = element.textContent.replace('Italiano:', '').trim();
+                        if (text) {
+                            italianPhrases.push(text);
+                        }
+                    });
+
+                    const cleanText = cleanTextForSpeech(italianPhrases.join('. '));
+                    if (cleanText) {
+                        // Detener cualquier reproducción anterior
+                        speechSynthesis.cancel();
+
+                        // Crear y configurar el utterance
+                        const utterance = new SpeechSynthesisUtterance(cleanText);
+                        utterance.lang = 'it-IT';
+                        utterance.rate = 0.9;
+
+                        // Añadir clase 'playing' al botón
+                        this.classList.add('playing');
+
+                        // Cuando termine de hablar
+                        utterance.onend = () => {
+                            this.classList.remove('playing');
+                        };
+
+                        speechSynthesis.speak(utterance);
+                    }
+                };
+            } else {
+                contentDiv.textContent = text;
+            }
+
+            messageDiv.appendChild(contentDiv);
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
         };
 
         // Inicializar el chat
