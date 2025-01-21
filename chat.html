@@ -14,6 +14,9 @@
             --text-color: #333;
             --bg-color: #f6f6f6;
             --card-bg: #ffffff;
+            --primary-color-light: #87ceeb;
+            --primary-color-dark: #0a3d62;
+            --secondary-color-light: #f7f7f7;
         }
 
         * {
@@ -103,24 +106,58 @@
         }
 
         .message {
-            position: relative;
-            max-width: 80%;
             margin: 10px;
             padding: 15px;
             border-radius: 10px;
-            background: white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            max-width: 80%;
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
 
         .user-message {
-            background-color: var(--primary-color);
-            color: white;
+            background-color: var(--primary-color-light);
             margin-left: auto;
+            color: var(--text-color);
         }
 
         .assistant-message {
-            background-color: var(--accent-color);
-            color: white;
+            background-color: var(--secondary-color-light);
+            margin-right: auto;
+            color: var(--text-color);
+            position: relative;
+            padding-right: 40px; /* Espacio para el botón de audio */
+        }
+
+        .assistant-message .icon {
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+
+        .audio-button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            font-size: 1.2em;
+            padding: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .audio-button:hover {
+            color: var(--primary-color-dark);
+        }
+
+        .italian-text {
+            background-color: rgba(0, 0, 0, 0.05);
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+            font-style: italic;
+            display: block;
         }
 
         .chat-input {
@@ -183,21 +220,6 @@
             border-radius: 5px;
             background-color: #f8f9fa;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .italian-text {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 10px 0;
-            padding: 10px;
-            background: #f5f5f5;
-            border-radius: 8px;
-        }
-
-        .italian-text i {
-            color: var(--primary-color);
-            font-size: 1.2em;
         }
 
         .play-all-button {
@@ -522,17 +544,71 @@
             const messagesDiv = document.getElementById('chat-messages');
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${sender}-message`;
-            
+
             if (sender === 'assistant') {
-                // Añadir icono aleatorio para mensajes del asistente
+                // Seleccionar un icono aleatorio
                 const icons = ['🗣️', '💭', '💬', '🔊', '📢', '🎯', '✨', '🌟'];
                 const icon = icons[Math.floor(Math.random() * icons.length)];
-                messageDiv.innerHTML = `<span class="icon">${icon}</span> ${text}`;
+                
+                // Formatear el texto y resaltar el italiano
+                const formattedText = formatText(text);
+                messageDiv.innerHTML = `<span class="icon">${icon}</span> ${formattedText}`;
+                
+                // Añadir botón de audio
+                const audioButton = document.createElement('button');
+                audioButton.className = 'audio-button';
+                audioButton.innerHTML = '<i class="fas fa-volume-up"></i>';
+                audioButton.onclick = () => speakText(text);
+                messageDiv.appendChild(audioButton);
             } else {
                 messageDiv.textContent = text;
             }
             
             messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        // Función para formatear el texto y resaltar el italiano
+        function formatText(text) {
+            // Dividir el texto en líneas
+            const lines = text.split('\n');
+            let formattedText = '';
+            let inItalianBlock = false;
+
+            for (let line of lines) {
+                line = line.trim();
+                if (!line) continue;
+
+                if (line.startsWith('Italiano:')) {
+                    // Resaltar texto en italiano
+                    inItalianBlock = true;
+                    formattedText += `<span class="italian-text">${line}</span>`;
+                } else if (inItalianBlock && (line.startsWith('-') || line.startsWith('•'))) {
+                    // Continuar el bloque italiano si es una lista
+                    formattedText += `<span class="italian-text">${line}</span>`;
+                } else {
+                    inItalianBlock = false;
+                    formattedText += `<p>${line}</p>`;
+                }
+            }
+
+            return formattedText;
+        }
+
+        // Función para leer texto en italiano
+        function speakText(text) {
+            // Extraer solo el texto en italiano
+            const italianParts = text.split('Italiano:')
+                                   .slice(1)
+                                   .map(part => part.split('\n')[0].trim())
+                                   .join('. ');
+
+            if (italianParts) {
+                const utterance = new SpeechSynthesisUtterance(italianParts);
+                utterance.lang = 'it-IT';
+                utterance.rate = 0.9; // Velocidad ligeramente más lenta para mejor comprensión
+                speechSynthesis.speak(utterance);
+            }
         }
     </script>
 </body>
