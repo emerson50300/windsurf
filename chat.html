@@ -255,6 +255,92 @@
                     btn.classList.add('active');
                 }
             });
+
+            // Mostrar información del nivel seleccionado
+            const levelInfo = {
+                'principiante': `🌟 Nivel Principiante (A1-A2) 🌟
+
+En este nivel aprenderás:
+
+1. Gramática Básica:
+   • Artículos (il, la, i, le)
+   • Presente de indicativo
+   • Números y género
+
+2. Vocabulario Esencial:
+   • Saludos y presentaciones
+   • Familia y profesiones
+   • Comida y bebida
+   • Números y colores
+
+3. Frases Comunes:
+   • Cómo presentarte
+   • Pedir en restaurantes
+   • Preguntar direcciones
+
+4. Pronunciación:
+   • Sonidos básicos
+   • Acentuación
+   • Entonación
+
+¿Por qué tema te gustaría empezar?`,
+
+                'intermedio': `🚀 Nivel Intermedio (B1-B2) 🚀
+
+En este nivel profundizarás en:
+
+1. Gramática Avanzada:
+   • Tiempos verbales compuestos
+   • Subjuntivo presente
+   • Condicional
+
+2. Vocabulario Expandido:
+   • Trabajo y negocios
+   • Cultura y arte
+   • Viajes y turismo
+   • Expresiones idiomáticas
+
+3. Conversación:
+   • Debates y opiniones
+   • Describir experiencias
+   • Expresar sentimientos
+
+4. Comprensión:
+   • Noticias y artículos
+   • Películas y música
+   • Literatura básica
+
+¿Qué área te gustaría explorar?`,
+
+                'avanzado': `🎯 Nivel Avanzado (C1-C2) 🎯
+
+En este nivel dominarás:
+
+1. Gramática Superior:
+   • Todos los tiempos verbales
+   • Construcciones complejas
+   • Matices lingüísticos
+
+2. Vocabulario Especializado:
+   • Términos académicos
+   • Jerga y modismos
+   • Literatura y poesía
+   • Términos técnicos
+
+3. Fluidez Natural:
+   • Discusiones complejas
+   • Argumentación
+   • Humor y sarcasmo
+
+4. Cultura Profunda:
+   • Literatura clásica
+   • Historia y política
+   • Arte y filosofía
+
+¿Qué aspecto avanzado te interesa explorar?`
+            };
+
+            window.addMessage(levelInfo[level], 'assistant');
         };
 
         window.setTopic = function(topic) {
@@ -266,6 +352,139 @@
                     btn.classList.add('active');
                 }
             });
+
+            // Mostrar información del tema seleccionado
+            const topicInfo = {
+                'gramatica': `📚 Gramática Italiana
+
+Aspectos que cubriremos:
+
+1. Verbos:
+   • Conjugaciones regulares e irregulares
+   • Tiempos verbales principales
+   • Modos indicativo y subjuntivo
+
+2. Estructura:
+   • Orden de las palabras
+   • Concordancia
+   • Preposiciones
+
+3. Ejercicios Prácticos:
+   • Completar oraciones
+   • Transformar frases
+   • Corregir errores
+
+¿Qué aspecto de la gramática te gustaría practicar?`,
+
+                'vocabulario': `📖 Vocabulario Italiano
+
+Áreas temáticas:
+
+1. Vida Cotidiana:
+   • Comida y bebida
+   • Familia y amigos
+   • Casa y hogar
+   • Trabajo y estudio
+
+2. Situaciones:
+   • Viajes
+   • Compras
+   • Restaurantes
+   • Emergencias
+
+3. Expresiones:
+   • Modismos
+   • Frases hechas
+   • Jerga común
+
+¿Qué categoría de vocabulario te interesa aprender?`,
+
+                'pronunciacion': `🗣️ Pronunciación Italiana
+
+Aprenderemos:
+
+1. Sonidos Básicos:
+   • Vocales
+   • Consonantes
+   • Diptongos
+
+2. Reglas:
+   • Acentuación
+   • Entonación
+   • Ritmo
+
+3. Práctica:
+   • Ejercicios de repetición
+   • Trabalenguas
+   • Diálogos
+
+¿Por dónde te gustaría empezar?`,
+
+                'cultura': `🎭 Cultura Italiana
+
+Exploraremos:
+
+1. Historia y Arte:
+   • Renacimiento
+   • Arte clásico
+   • Arquitectura
+
+2. Gastronomía:
+   • Platos típicos
+   • Regiones culinarias
+   • Tradiciones
+
+3. Costumbres:
+   • Fiestas
+   • Tradiciones
+   • Vida cotidiana
+
+¿Qué aspecto de la cultura italiana te interesa más?`,
+
+                'ejercicios': `✍️ Ejercicios de Italiano
+
+Tipos de ejercicios:
+
+1. Comprensión:
+   • Lectura
+   • Audición
+   • Vocabulario
+
+2. Producción:
+   • Escritura
+   • Habla
+   • Gramática
+
+3. Interactivos:
+   • Diálogos
+   • Juegos
+   • Quiz
+
+¿Qué tipo de ejercicios prefieres practicar?`,
+
+                'conversacion': `💭 Conversación en Italiano
+
+Practicaremos:
+
+1. Diálogos:
+   • Situaciones cotidianas
+   • Temas de actualidad
+   • Intercambios culturales
+
+2. Expresión:
+   • Opiniones
+   • Sentimientos
+   • Descripciones
+
+3. Fluidez:
+   • Velocidad
+   • Naturalidad
+   • Pronunciación
+
+¿Sobre qué te gustaría conversar?`
+            };
+
+            window.addMessage(topicInfo[topic], 'assistant');
         };
 
         window.autoResize = function(textarea) {
