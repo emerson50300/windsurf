@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat de Italiano</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@google/generative-ai@0.1.3/dist/generative-ai.min.js"></script>
+    <script src="https://www.gstatic.com/ai-experiments/generative-ai/0.1.3/generative-ai.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -357,6 +357,7 @@
         // Variables globales
         let model = null;
         let currentApiKeyIndex = 0;
+        let isInitialized = false;
 
         // Lista de API keys de Gemini
         const API_KEYS = [
@@ -366,8 +367,110 @@
             'AIzaSyCPjkG910sUn7eWG6aWLL3y9jOKlySOgUI'
         ];
 
+        // Función para inicializar el modelo
+        async function initializeModel(retryCount = 0) {
+            if (!window.GoogleGenerativeAI) {
+                console.log('Esperando a que se cargue la biblioteca...');
+                return false;
+            }
+
+            try {
+                const genAI = new window.GoogleGenerativeAI(API_KEYS[currentApiKeyIndex]);
+                model = genAI.getGenerativeModel({ model: "gemini-pro" });
+                console.log('Modelo inicializado con API key:', currentApiKeyIndex + 1);
+                isInitialized = true;
+                return true;
+            } catch (error) {
+                console.error('Error al inicializar:', error);
+                
+                if (retryCount < API_KEYS.length - 1) {
+                    currentApiKeyIndex = (currentApiKeyIndex + 1) % API_KEYS.length;
+                    console.log('Intentando con API key:', currentApiKeyIndex + 1);
+                    return await initializeModel(retryCount + 1);
+                }
+                
+                return false;
+            }
+        }
+
+        // Función para esperar la inicialización
+        async function waitForInitialization(attempts = 0) {
+            if (attempts > 10) {
+                throw new Error('No se pudo inicializar el modelo después de varios intentos');
+            }
+
+            if (!window.GoogleGenerativeAI) {
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                return waitForInitialization(attempts + 1);
+            }
+
+            return initializeModel();
+        }
+
+        // Inicializar cuando la página esté lista
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Intentar inicializar cada segundo hasta que la biblioteca esté cargada
+            const initInterval = setInterval(async () => {
+                if (window.GoogleGenerativeAI) {
+                    clearInterval(initInterval);
+                    await initializeModel();
+                }
+            }, 1000);
+        });
+
+        // Función para enviar mensaje
+        async function sendMessage() {
+            const input = document.getElementById('message-input');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            // Mostrar mensaje del usuario
+            addMessage(message, 'user');
+            input.value = '';
+            autoResize(input);
+
+            // Mostrar indicador de carga
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'message assistant-message loading';
+            loadingDiv.textContent = 'Escribiendo...';
+            document.getElementById('chat-messages').appendChild(loadingDiv);
+
+            try {
+                if (!isInitialized) {
+                    await waitForInitialization();
+                }
+
+                // Generar respuesta
+                const prompt = buildPrompt(message);
+                const result = await model.generateContent(prompt);
+                const response = result.response.text();
+
+                if (response && response.trim()) {
+                    loadingDiv.remove();
+                    addMessage(response, 'assistant');
+                    
+                    // Desplazarse al final del chat
+                    const chatMessages = document.querySelector('.chat-messages');
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                } else {
+                    throw new Error('Respuesta vacía');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                loadingDiv.remove();
+                addMessage('Lo siento, hubo un error. Intentando de nuevo...', 'assistant');
+                
+                // Reintentar con la siguiente API key
+                isInitialized = false;
+                model = null;
+                currentApiKeyIndex = (currentApiKeyIndex + 1) % API_KEYS.length;
+                setTimeout(() => sendMessage(), 1000);
+            }
+        }
+
         // Función para cambiar el nivel
-        window.setLevel = async function(level) {
+        function setLevel(level) {
             // Actualizar botones activos
             document.querySelectorAll('.level-buttons button').forEach(btn => {
                 btn.classList.remove('active');
@@ -385,11 +488,11 @@
             // Simular el envío del mensaje
             const input = document.getElementById('message-input');
             input.value = messages[level];
-            await window.sendMessage();
-        };
+            sendMessage();
+        }
 
         // Función para cambiar el tema
-        window.setTopic = async function(topic) {
+        function setTopic(topic) {
             // Actualizar botones activos
             document.querySelectorAll('.topic-buttons button').forEach(btn => {
                 btn.classList.remove('active');
@@ -410,36 +513,7 @@
             // Simular el envío del mensaje
             const input = document.getElementById('message-input');
             input.value = messages[topic];
-            await window.sendMessage();
-        };
-
-        // Función para obtener la siguiente API key
-        function getNextApiKey() {
-            currentApiKeyIndex = (currentApiKeyIndex + 1) % API_KEYS.length;
-            return API_KEYS[currentApiKeyIndex];
-        }
-
-        // Función para inicializar el modelo
-        async function initializeModel(retryCount = 0) {
-            try {
-                if (!model || retryCount > 0) {
-                    const genAI = new window.GoogleGenerativeAI(API_KEYS[currentApiKeyIndex]);
-                    model = genAI.getGenerativeModel({ model: "gemini-pro" });
-                    console.log('Modelo inicializado con API key:', currentApiKeyIndex + 1);
-                }
-                return true;
-            } catch (error) {
-                console.error('Error al inicializar:', error);
-                
-                // Si hay más API keys disponibles, intentar con la siguiente
-                if (retryCount < API_KEYS.length - 1) {
-                    currentApiKeyIndex = (currentApiKeyIndex + 1) % API_KEYS.length;
-                    console.log('Intentando con API key:', currentApiKeyIndex + 1);
-                    return await initializeModel(retryCount + 1);
-                }
-                
-                return false;
-            }
+            sendMessage();
         }
 
         // Función para construir el prompt
@@ -450,66 +524,6 @@
             No uses caracteres especiales como asteriscos o bullets.
             Mensaje del estudiante: ${message}`;
         }
-
-        // Función para enviar mensaje
-        window.sendMessage = async function() {
-            const input = document.getElementById('message-input');
-            const message = input.value.trim();
-            
-            if (!message) return;
-
-            // Mostrar mensaje del usuario
-            addMessage(message, 'user');
-            input.value = '';
-            autoResize(input);
-
-            // Mostrar indicador de carga
-            const loadingDiv = document.createElement('div');
-            loadingDiv.className = 'message assistant-message loading';
-            loadingDiv.textContent = 'Escribiendo...';
-            document.getElementById('chat-messages').appendChild(loadingDiv);
-
-            try {
-                // Asegurarse de que el modelo esté inicializado
-                await initializeModel();
-
-                // Generar respuesta
-                const prompt = buildPrompt(message);
-                let response = null;
-                
-                try {
-                    const result = await model.generateContent(prompt);
-                    response = result.response.text();
-                } catch (error) {
-                    // Si falla, intentar con otra API key
-                    console.error('Error con API key actual:', error);
-                    model = null;
-                    await initializeModel(1); // Forzar cambio de API key
-                    const retryResult = await model.generateContent(prompt);
-                    response = retryResult.response.text();
-                }
-
-                if (response && response.trim()) {
-                    loadingDiv.remove();
-                    addMessage(response, 'assistant');
-                    
-                    // Desplazarse al final del chat
-                    const chatMessages = document.querySelector('.chat-messages');
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
-                } else {
-                    throw new Error('Respuesta vacía');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                loadingDiv.remove();
-                addMessage('Un momento, intentando de nuevo...', 'assistant');
-                
-                // Reintentar con la siguiente API key
-                model = null;
-                currentApiKeyIndex = (currentApiKeyIndex + 1) % API_KEYS.length;
-                setTimeout(() => sendMessage(), 1000);
-            }
-        };
 
         // Función para añadir mensaje al chat
         function addMessage(text, sender) {
@@ -561,19 +575,6 @@
             utterance.lang = 'it-IT';
             speechSynthesis.speak(utterance);
         }
-
-        // Esperar a que la biblioteca de Google AI se cargue
-        window.onload = async function() {
-            // Esperar un momento para asegurarse de que la biblioteca se cargue
-            setTimeout(async () => {
-                try {
-                    await initializeModel();
-                    console.log('Chat inicializado correctamente');
-                } catch (error) {
-                    console.error('Error en la inicialización:', error);
-                }
-            }, 1000);
-        };
     </script>
 </body>
 </html>
