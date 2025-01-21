@@ -235,24 +235,40 @@
         let currentTopic = '';
         let hasInitialGreeting = false;
 
-        // Configuración de Gemini
-        const genAI = new GoogleGenerativeAI('AIzaSyCEIicKmkzZQ7kOy0yBSVt4Dc3s80GwKYw');
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        // Configuración de Gemini con manejo de errores
+        let genAI;
+        let model;
+
+        try {
+            genAI = new window.GoogleGenerativeAI('AIzaSyCEIicKmkzZQ7kOy0yBSVt4Dc3s80GwKYw');
+            model = genAI.getGenerativeModel({ model: "gemini-pro" });
+            console.log('Gemini API inicializada correctamente');
+        } catch (error) {
+            console.error('Error al inicializar Gemini:', error);
+        }
 
         async function getGeminiResponse(prompt) {
             try {
+                if (!model) {
+                    throw new Error('El modelo de Gemini no está inicializado');
+                }
+
+                console.log('Enviando prompt a Gemini:', prompt);
                 const result = await model.generateContent(prompt);
+                console.log('Respuesta recibida de Gemini');
                 const response = await result.response;
                 return response.text();
             } catch (error) {
                 console.error('Error al obtener respuesta de Gemini:', error);
-                return "Lo siento, hubo un error al procesar tu pregunta. Por favor, intenta de nuevo.";
+                return `Lo siento, hubo un error al procesar tu pregunta. 
+                Error específico: ${error.message}
+                Por favor, intenta de nuevo en unos momentos.`;
             }
         }
 
         // Función para construir el prompt para Gemini
         function buildGeminiPrompt(userMessage, userLevel) {
-            return `Actúa como un profesor de italiano experto y amigable. 
+            const prompt = `Actúa como un profesor de italiano experto y amigable. 
             Nivel del estudiante: ${userLevel || 'principiante'}
             
             Responde a la siguiente pregunta o solicitud del estudiante:
@@ -273,7 +289,104 @@
             - Destaca las palabras en italiano en cursiva
             - Incluye traducciones cuando sea necesario
             - Mantén las respuestas concisas pero informativas`;
+
+            console.log('Prompt construido:', prompt);
+            return prompt;
         }
+
+        // Modificar la función sendMessage para usar Gemini
+        async function sendMessage() {
+            const input = document.getElementById('message-input');
+            const message = input.value.trim();
+
+            if (message) {
+                try {
+                    // Mostrar el mensaje del usuario
+                    addMessage(message, 'user');
+                    
+                    // Mostrar indicador de "escribiendo..."
+                    const typingDiv = document.createElement('div');
+                    typingDiv.className = 'message assistant-message typing';
+                    typingDiv.innerHTML = 'Escribiendo...';
+                    document.getElementById('chat-messages').appendChild(typingDiv);
+
+                    console.log('Procesando mensaje del usuario:', message);
+
+                    // Construir el prompt y obtener respuesta de Gemini
+                    const prompt = buildGeminiPrompt(message, userLevel);
+                    const response = await getGeminiResponse(prompt);
+
+                    // Eliminar el indicador de "escribiendo..."
+                    typingDiv.remove();
+
+                    // Mostrar la respuesta de Gemini
+                    addMessage(response, 'assistant');
+
+                    // Limpiar el input y ajustar su tamaño
+                    input.value = '';
+                    input.style.height = 'auto';
+                } catch (error) {
+                    console.error('Error en sendMessage:', error);
+                    addMessage('Lo siento, ocurrió un error al procesar tu mensaje. Por favor, intenta de nuevo.', 'assistant');
+                }
+            }
+        }
+
+        // Modificar el CSS para el indicador de "escribiendo..."
+        const style = document.createElement('style');
+        style.textContent = `
+            .typing {
+                opacity: 0.7;
+            }
+            .typing::after {
+                content: '';
+                display: inline-block;
+                animation: dots 1.5s infinite;
+                width: 20px;
+            }
+            @keyframes dots {
+                0%, 20% { content: '.'; }
+                40% { content: '..'; }
+                60%, 100% { content: '...'; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        function addMessage(text, sender) {
+            const messagesDiv = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            messageDiv.textContent = text;
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        // Inicializar el chat
+        window.onload = async function() {
+            try {
+                if (!hasInitialGreeting) {
+                    showWelcomeMessage();
+                    hasInitialGreeting = true;
+                }
+
+                // Verificar que Gemini está funcionando
+                const testPrompt = "Responde con un simple 'OK' si estás funcionando.";
+                const testResponse = await getGeminiResponse(testPrompt);
+                console.log('Test de Gemini completado:', testResponse);
+
+            } catch (error) {
+                console.error('Error durante la inicialización:', error);
+                addMessage('Error al inicializar el chat. Por favor, recarga la página.', 'assistant');
+            }
+
+            // Event listeners
+            document.getElementById('message-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+        };
 
         function showWelcomeMessage() {
             const welcomeMessage = `¡Bienvenido a tu Profesor de Italiano! 🇮🇹\n\n
@@ -298,89 +411,6 @@ Por ejemplo, puedes preguntarme:
             
             addMessage(welcomeMessage, 'assistant');
         }
-
-        function addMessage(text, sender) {
-            const messagesDiv = document.getElementById('chat-messages');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${sender}`;
-            
-            const contentDiv = document.createElement('div');
-            contentDiv.className = 'message-content';
-            contentDiv.innerText = text;
-            
-            messageDiv.appendChild(contentDiv);
-            messagesDiv.appendChild(messageDiv);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        }
-
-        // Modificar la función sendMessage para usar Gemini
-        async function sendMessage() {
-            const input = document.getElementById('message-input');
-            const message = input.value.trim();
-
-            if (message) {
-                // Mostrar el mensaje del usuario
-                addMessage(message, 'user');
-                
-                // Mostrar indicador de "escribiendo..."
-                const typingDiv = document.createElement('div');
-                typingDiv.className = 'message assistant-message typing';
-                typingDiv.innerHTML = 'Escribiendo...';
-                document.getElementById('chat-messages').appendChild(typingDiv);
-
-                // Construir el prompt y obtener respuesta de Gemini
-                const prompt = buildGeminiPrompt(message, userLevel);
-                const response = await getGeminiResponse(prompt);
-
-                // Eliminar el indicador de "escribiendo..."
-                typingDiv.remove();
-
-                // Mostrar la respuesta de Gemini
-                addMessage(response, 'assistant');
-
-                // Limpiar el input y ajustar su tamaño
-                input.value = '';
-                input.style.height = 'auto';
-            }
-        }
-
-        // Modificar el CSS para el indicador de "escribiendo..."
-        const style = document.createElement('style');
-        style.textContent = `
-            .typing {
-                opacity: 0.7;
-            }
-            .typing::after {
-                content: '';
-                display: inline-block;
-                animation: dots 1.5s infinite;
-                width: 20px;
-            }
-            @keyframes dots {
-                0%, 20% { content: '.'; }
-                40% { content: '..'; }
-                60%, 100% { content: '...'; }
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Inicializar el chat
-        window.onload = function() {
-            if (!hasInitialGreeting) {
-                showWelcomeMessage();
-                hasInitialGreeting = true;
-            }
-
-            document.getElementById('send-button').onclick = function() {
-                sendMessage();
-            };
-
-            document.getElementById('message-input').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    document.getElementById('send-button').click();
-                }
-            });
-        };
     </script>
 </body>
 </html>
