@@ -357,21 +357,42 @@
     <script>
         // Variables globales
         let model = null;
-        const API_KEY = 'AIzaSyCEIicKmkzZQ7kOy0yBSVt4Dc3s80GwKYw';
+        let currentApiKeyIndex = 0;
 
-        // Inicializar el modelo al cargar la página
-        window.onload = async function() {
-            await initializeModel();
-        };
+        // Lista de API keys de Gemini
+        const API_KEYS = [
+            'AIzaSyCEIicKmkzZQ7kOy0yBSVt4Dc3s80GwKYw',
+            'AIzaSyC_PguDMrWEn4jWCHy_-Mzfn_Wi2vsjH4A',
+            'AIzaSyAV9lVQDjx6-s_Rh9ZiVhUHYYJJPaRh_OQ',
+            'AIzaSyCPjkG910sUn7eWG6aWLL3y9jOKlySOgUI'
+        ];
+
+        // Función para obtener la siguiente API key
+        function getNextApiKey() {
+            currentApiKeyIndex = (currentApiKeyIndex + 1) % API_KEYS.length;
+            return API_KEYS[currentApiKeyIndex];
+        }
 
         // Función para inicializar el modelo
-        async function initializeModel() {
+        async function initializeModel(retryCount = 0) {
             try {
-                const genAI = new GoogleGenerativeAI(API_KEY);
-                model = genAI.getGenerativeModel({ model: "gemini-pro" });
-                console.log('Modelo inicializado correctamente');
+                if (!model || retryCount > 0) {
+                    const genAI = new GoogleGenerativeAI(API_KEYS[currentApiKeyIndex]);
+                    model = genAI.getGenerativeModel({ model: "gemini-pro" });
+                    console.log('Modelo inicializado con API key:', currentApiKeyIndex + 1);
+                }
+                return true;
             } catch (error) {
                 console.error('Error al inicializar:', error);
+                
+                // Si hay más API keys disponibles, intentar con la siguiente
+                if (retryCount < API_KEYS.length - 1) {
+                    currentApiKeyIndex = (currentApiKeyIndex + 1) % API_KEYS.length;
+                    console.log('Intentando con API key:', currentApiKeyIndex + 1);
+                    return await initializeModel(retryCount + 1);
+                }
+                
+                return false;
             }
         }
 
@@ -404,32 +425,42 @@
 
             try {
                 // Asegurarse de que el modelo esté inicializado
-                if (!model) {
-                    await initializeModel();
-                }
+                await initializeModel();
 
                 // Generar respuesta
                 const prompt = buildPrompt(message);
-                const result = await model.generateContent(prompt);
-                const text = result.response.text();
+                let response = null;
                 
-                // Mostrar respuesta
-                loadingDiv.remove();
-                addMessage(text, 'assistant');
-                
-                // Desplazarse al final del chat
-                const chatMessages = document.querySelector('.chat-messages');
-                chatMessages.scrollTop = chatMessages.scrollHeight;
+                try {
+                    const result = await model.generateContent(prompt);
+                    response = result.response.text();
+                } catch (error) {
+                    // Si falla, intentar con otra API key
+                    console.error('Error con API key actual:', error);
+                    model = null;
+                    await initializeModel(1); // Forzar cambio de API key
+                    const retryResult = await model.generateContent(prompt);
+                    response = retryResult.response.text();
+                }
+
+                if (response && response.trim()) {
+                    loadingDiv.remove();
+                    addMessage(response, 'assistant');
+                    
+                    // Desplazarse al final del chat
+                    const chatMessages = document.querySelector('.chat-messages');
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                } else {
+                    throw new Error('Respuesta vacía');
+                }
             } catch (error) {
                 console.error('Error:', error);
                 loadingDiv.remove();
+                addMessage('Un momento, intentando de nuevo...', 'assistant');
                 
-                // Reintentar inicializar el modelo
+                // Reintentar con la siguiente API key
                 model = null;
-                await initializeModel();
-                
-                // Mostrar mensaje de reintento
-                addMessage('Un momento, por favor...', 'assistant');
+                currentApiKeyIndex = (currentApiKeyIndex + 1) % API_KEYS.length;
                 setTimeout(() => sendMessage(), 1000);
             }
         };
@@ -484,6 +515,11 @@
             utterance.lang = 'it-IT';
             speechSynthesis.speak(utterance);
         }
+
+        // Inicializar el modelo al cargar la página
+        window.onload = async function() {
+            await initializeModel();
+        };
     </script>
 </body>
 </html>
