@@ -554,33 +554,22 @@
 
         // Función para extraer solo el texto en italiano
         function extractItalianText(text) {
-            // Buscar texto entre corchetes y después de los dos puntos
-            const bracketsMatches = text.match(/\[(.*?)\]/g) || [];
-            const colonMatches = text.match(/:\s*([^.!?\n]*[.!?\n])/g) || [];
-            
-            let italianPhrases = [];
-            
-            // Procesar texto entre corchetes
-            bracketsMatches.forEach(match => {
-                italianPhrases.push(match.slice(1, -1).trim());
-            });
-            
-            // Procesar texto después de los dos puntos
-            colonMatches.forEach(match => {
-                const phrase = match.slice(1).trim();
-                // Solo agregar si parece italiano (contiene palabras comunes en italiano)
-                if (phrase.match(/\b(il|la|le|gli|un|una|sono|è|per|che|non|mi|ti|si|ci|vi)\b/i)) {
-                    italianPhrases.push(phrase);
-                }
-            });
-            
-            return italianPhrases.join('. ');
+            // Buscar texto después de los tres asteriscos
+            const asteriskMatch = text.match(/\*\*\*([\s\S]*?)(?=\*\*\*|$)/);
+            if (asteriskMatch) {
+                // Limpiar el texto de puntuación y espacios extra
+                return asteriskMatch[1]
+                    .trim()
+                    .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '')
+                    .replace(/\s+/g, ' ');
+            }
+            return '';
         }
 
         // Función para leer texto en italiano
         function speakText(text) {
             // Extraer todo el texto en italiano y limpiar signos de puntuación
-            const italianText = extractItalianText(text).replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g, '');
+            const italianText = extractItalianText(text).replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '');
             
             if (!italianText) {
                 console.log('No se encontró texto en italiano para reproducir');
