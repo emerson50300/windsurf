@@ -26,25 +26,27 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         :root {
-            --primary-color: #FF6B6B;
-            --secondary-color: #4ECDC4;
-            --accent-color: #45B7AF;
+            --background-white: #ffffff;
+            --primary-color: #4CAF50;
+            --secondary-color: #81C784;
             --background-color: #F7F9FC;
-            --surface-color: #FFFFFF;
-            --text-primary: #2C3E50;
-            --text-secondary: #34495E;
-            --success-color: #2ECC71;
-            --error-color: #E74C3C;
-            --border-radius: 12px;
-            --shadow-elevation-1: 0 2px 4px rgba(0,0,0,0.1);
-            --shadow-elevation-2: 0 4px 8px rgba(0,0,0,0.15);
+            --text-main: #1a1a1a;
+            --text-secondary: #404040;
+            --button-color: #4CAF50;
+            --hover-color: #388E3C;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --border-radius: 15px;
+            --border-light: #e0e0e0;
         }
 
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             background-color: var(--background-color);
-            color: var(--text-primary);
-            line-height: 1.6;
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.7;
+            padding-bottom: 70px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             margin: 0;
             padding: 20px;
         }
@@ -55,397 +57,323 @@
             padding: 2rem;
         }
 
-        h1 {
-            color: var(--primary-color);
+        header {
             text-align: center;
-            font-size: 2.5rem;
+            padding: 2rem;
+            background-color: var(--background-white);
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 4px var(--shadow-color);
             margin-bottom: 2rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
-        .category-section {
-            background: var(--surface-color);
+        h1 {
+            color: var(--text-main);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section-description {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .dialog-section {
+            background-color: var(--background-white);
             border-radius: var(--border-radius);
             padding: 2rem;
             margin-bottom: 2rem;
-            box-shadow: var(--shadow-elevation-2);
-            border-left: 5px solid var(--secondary-color);
-            transition: transform 0.3s ease;
+            box-shadow: 0 2px 4px var(--shadow-color);
         }
 
-        .category-section:hover {
-            transform: translateY(-4px);
-        }
-
-        .category-title {
-            color: var(--primary-color);
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--secondary-color);
+        .section-title {
+            color: var(--text-main);
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--primary-color);
             display: flex;
             align-items: center;
             gap: 1rem;
         }
 
-        .category-title i {
-            color: var(--secondary-color);
+        .section-title i {
+            color: var(--primary-color);
         }
 
         .dialog-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
         }
 
-        .dialog-card {
-            background: var(--surface-color);
+        .dialog-item {
+            background-color: var(--background-white);
             border-radius: var(--border-radius);
-            padding: 1.5rem;
-            box-shadow: var(--shadow-elevation-1);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(78, 205, 196, 0.2);
-        }
-
-        .dialog-card:hover {
-            transform: translateX(8px);
-            box-shadow: var(--shadow-elevation-2);
-            border-color: var(--secondary-color);
-        }
-
-        .dialog-header {
+            padding: 2rem;
+            box-shadow: 0 2px 4px var(--shadow-color);
+            transition: transform 0.3s ease;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid var(--secondary-color);
+            flex-direction: column;
+            gap: 1rem;
         }
 
-        .dialog-type {
-            color: var(--primary-color);
-            font-weight: 600;
-            font-size: 1.2rem;
-        }
-
-        .audio-icon {
-            background: none;
-            border: none;
-            color: var(--secondary-color);
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .audio-icon:hover {
-            background: rgba(78, 205, 196, 0.1);
-            transform: scale(1.1);
-            color: var(--primary-color);
-        }
-
-        .audio-icon i {
-            font-size: 1.2rem;
-        }
-
-        .dialog-content {
-            margin-bottom: 1rem;
-        }
-
-        .speaker {
-            color: var(--secondary-color);
-            font-weight: 600;
-            margin-right: 0.5rem;
+        .dialog-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px var(--shadow-color);
         }
 
         .italian {
-            color: var(--text-primary);
+            color: var(--text-main);
             font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            line-height: 1.4;
+            font-weight: bold;
         }
 
         .spanish {
             color: var(--text-secondary);
-            font-size: 1rem;
-            font-style: italic;
+            font-size: 1.1rem;
+        }
+
+        .audio-button {
+            background-color: var(--button-color);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .audio-button:hover {
+            background-color: var(--hover-color);
+            transform: scale(1.05);
+        }
+
+        .audio-button i {
+            font-size: 1.2rem;
         }
 
         .context {
-            margin-top: 1rem;
-            padding-top: 0.5rem;
-            border-top: 1px dashed var(--secondary-color);
             color: var(--text-secondary);
             font-size: 0.9rem;
+            font-style: italic;
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid var(--border-light);
         }
 
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
             }
-            
-            .category-section {
+
+            .dialog-section {
                 padding: 1.5rem;
             }
 
             .dialog-grid {
                 grid-template-columns: 1fr;
             }
+
+            .dialog-item {
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Dialoghi Pratici</h1>
+        <header>
+            <h1>Dialoghi in Italiano</h1>
+            <p class="section-description">Impara l'italiano attraverso conversazioni quotidiane</p>
+        </header>
 
-        <div class="category-section">
-            <div class="category-title">
-                <i class="fas fa-handshake"></i>
-                Saluti e Presentazioni
-            </div>
-            <div class="dialog-grid">
-                <div class="dialog-card">
-                    <div class="dialog-header">
-                        <div class="dialog-type">Primo Incontro</div>
-                        <button class="audio-icon" onclick="speak('Ciao! Come ti chiami? Mi chiamo Marco. Piacere di conoscerti!')">
-                            <i class="fas fa-volume-up"></i>
-                        </button>
-                    </div>
-                    <div class="dialog-content">
-                        <div class="italian">
-                            <span class="speaker">A:</span> Ciao! Come ti chiami?<br>
-                            <span class="speaker">B:</span> Mi chiamo Marco.<br>
-                            <span class="speaker">A:</span> Piacere di conoscerti!
-                        </div>
-                        <div class="spanish">
-                            <span class="speaker">A:</span> ¡Hola! ¿Cómo te llamas?<br>
-                            <span class="speaker">B:</span> Me llamo Marco.<br>
-                            <span class="speaker">A:</span> ¡Encantado de conocerte!
-                        </div>
-                    </div>
-                    <div class="context">Situación: Conociendo a alguien por primera vez</div>
-                </div>
-
-                <div class="dialog-card">
-                    <div class="dialog-header">
-                        <div class="dialog-type">Saluti Formali</div>
-                        <button class="audio-icon" onclick="speak('Buongiorno signora Rossi! Come sta? Molto bene, grazie. E Lei?')">
-                            <i class="fas fa-volume-up"></i>
-                        </button>
-                    </div>
-                    <div class="dialog-content">
-                        <div class="italian">
-                            <span class="speaker">A:</span> Buongiorno signora Rossi!<br>
-                            <span class="speaker">B:</span> Come sta?<br>
-                            <span class="speaker">A:</span> Molto bene, grazie. E Lei?
-                        </div>
-                        <div class="spanish">
-                            <span class="speaker">A:</span> ¡Buenos días señora Rossi!<br>
-                            <span class="speaker">B:</span> ¿Cómo está?<br>
-                            <span class="speaker">A:</span> Muy bien, gracias. ¿Y usted?
-                        </div>
-                    </div>
-                    <div class="context">Situación: Saludando formalmente a una persona</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="category-section">
-            <div class="category-title">
-                <i class="fas fa-shopping-bag"></i>
-                Shopping e Negozi
-            </div>
-            <div class="dialog-grid">
-                <div class="dialog-card">
-                    <div class="dialog-header">
-                        <div class="dialog-type">Abbigliamento</div>
-                        <button class="audio-icon" onclick="speak('Scusi, posso provare questa maglietta? Certo, il camerino è là. Grazie mille!')">
-                            <i class="fas fa-volume-up"></i>
-                        </button>
-                    </div>
-                    <div class="dialog-content">
-                        <div class="italian">
-                            <span class="speaker">Cliente:</span> Scusi, posso provare questa maglietta?<br>
-                            <span class="speaker">Commesso:</span> Certo, il camerino è là.<br>
-                            <span class="speaker">Cliente:</span> Grazie mille!
-                        </div>
-                        <div class="spanish">
-                            <span class="speaker">Cliente:</span> Disculpe, ¿puedo probarme esta camiseta?<br>
-                            <span class="speaker">Vendedor:</span> Claro, el probador está allí.<br>
-                            <span class="speaker">Cliente:</span> ¡Muchas gracias!
-                        </div>
-                    </div>
-                    <div class="context">Situación: Probándose ropa en una tienda</div>
-                </div>
-
-                <div class="dialog-card">
-                    <div class="dialog-header">
-                        <div class="dialog-type">Pagamento</div>
-                        <button class="audio-icon" onclick="speak('Quanto costa in totale? Sono cinquanta euro. Posso pagare con carta?')">
-                            <i class="fas fa-volume-up"></i>
-                        </button>
-                    </div>
-                    <div class="dialog-content">
-                        <div class="italian">
-                            <span class="speaker">Cliente:</span> Quanto costa in totale?<br>
-                            <span class="speaker">Cassiere:</span> Sono cinquanta euro.<br>
-                            <span class="speaker">Cliente:</span> Posso pagare con carta?
-                        </div>
-                        <div class="spanish">
-                            <span class="speaker">Cliente:</span> ¿Cuánto es en total?<br>
-                            <span class="speaker">Cajero:</span> Son cincuenta euros.<br>
-                            <span class="speaker">Cliente:</span> ¿Puedo pagar con tarjeta?
-                        </div>
-                    </div>
-                    <div class="context">Situación: Pagando en la caja</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="category-section">
-            <div class="category-title">
-                <i class="fas fa-utensils"></i>
-                Al Ristorante
-            </div>
-            <div class="dialog-grid">
-                <div class="dialog-card">
-                    <div class="dialog-header">
-                        <div class="dialog-type">Prenotazione</div>
-                        <button class="audio-icon" onclick="speak('Vorrei prenotare un tavolo per questa sera. Per quante persone? Per quattro persone, alle otto.')">
-                            <i class="fas fa-volume-up"></i>
-                        </button>
-                    </div>
-                    <div class="dialog-content">
-                        <div class="italian">
-                            <span class="speaker">Cliente:</span> Vorrei prenotare un tavolo per questa sera.<br>
-                            <span class="speaker">Cameriere:</span> Per quante persone?<br>
-                            <span class="speaker">Cliente:</span> Per quattro persone, alle otto.
-                        </div>
-                        <div class="spanish">
-                            <span class="speaker">Cliente:</span> Quisiera reservar una mesa para esta noche.<br>
-                            <span class="speaker">Camarero:</span> ¿Para cuántas personas?<br>
-                            <span class="speaker">Cliente:</span> Para cuatro personas, a las ocho.
-                        </div>
-                    </div>
-                    <div class="context">Situación: Haciendo una reserva telefónica</div>
-                </div>
-
-                <div class="dialog-card">
-                    <div class="dialog-header">
-                        <div class="dialog-type">Ordinare</div>
-                        <button class="audio-icon" onclick="speak('Che cosa ci consiglia oggi? Vi consiglio la pasta al pesto, è la nostra specialità.')">
-                            <i class="fas fa-volume-up"></i>
-                        </button>
-                    </div>
-                    <div class="dialog-content">
-                        <div class="italian">
-                            <span class="speaker">Cliente:</span> Che cosa ci consiglia oggi?<br>
-                            <span class="speaker">Cameriere:</span> Vi consiglio la pasta al pesto, è la nostra specialità.<br>
-                            <span class="speaker">Cliente:</span> Perfetto, prendo quella!
-                        </div>
-                        <div class="spanish">
-                            <span class="speaker">Cliente:</span> ¿Qué nos recomienda hoy?<br>
-                            <span class="speaker">Camarero:</span> Les recomiendo la pasta al pesto, es nuestra especialidad.<br>
-                            <span class="speaker">Cliente:</span> ¡Perfecto, tomaré esa!
-                        </div>
-                    </div>
-                    <div class="context">Situación: Pidiendo recomendaciones al camarero</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="category-section">
-            <div class="category-title">
+        <div class="dialog-section">
+            <h2 class="section-title">
                 <i class="fas fa-coffee"></i>
                 Al Bar
-            </div>
+            </h2>
             <div class="dialog-grid">
-                <div class="dialog-card">
-                    <div class="dialog-header">
-                        <div class="dialog-type">Ordinare</div>
-                        <button class="audio-icon" onclick="speak('Buongiorno, vorrei un caffè e un cornetto, per favore. Certo, subito. Desidera altro? No, grazie.')">
-                            <i class="fas fa-volume-up"></i>
-                        </button>
-                    </div>
-                    <div class="dialog-content">
-                        <div class="italian">
-                            <span class="speaker">Cliente:</span> Buongiorno, vorrei un caffè e un cornetto, per favore.<br>
-                            <span class="speaker">Barista:</span> Certo, subito. Desidera altro?<br>
-                            <span class="speaker">Cliente:</span> No, grazie.
-                        </div>
-                        <div class="spanish">
-                            <span class="speaker">Cliente:</span> Buenos días, quisiera un café y un croissant, por favor.<br>
-                            <span class="speaker">Barista:</span> Claro, enseguida. ¿Desea algo más?<br>
-                            <span class="speaker">Cliente:</span> No, gracias.
-                        </div>
-                    </div>
-                    <div class="context">Situación: Pidiendo el desayuno en un bar italiano</div>
+                <div class="dialog-item">
+                    <div class="italian">- Buongiorno, vorrei un caffè, per favore.</div>
+                    <div class="spanish">- Buenos días, quisiera un café, por favor.</div>
+                    <div class="italian">- Certo, lo vuole normale o lungo?</div>
+                    <div class="spanish">- Claro, ¿lo quiere normal o largo?</div>
+                    <div class="italian">- Normale, grazie.</div>
+                    <div class="spanish">- Normal, gracias.</div>
+                    <button class="audio-button" onclick="speak('Buongiorno, vorrei un caffè, per favore. Certo, lo vuole normale o lungo? Normale, grazie.')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                    <div class="context">Situazione: Ordinare un caffè al bar</div>
+                </div>
+
+                <div class="dialog-item">
+                    <div class="italian">- Mi scusi, quanto costa un cappuccino?</div>
+                    <div class="spanish">- Disculpe, ¿cuánto cuesta un capuchino?</div>
+                    <div class="italian">- Due euro e cinquanta.</div>
+                    <div class="spanish">- Dos euros con cincuenta.</div>
+                    <div class="italian">- Ne prendo uno, grazie.</div>
+                    <div class="spanish">- Tomaré uno, gracias.</div>
+                    <button class="audio-button" onclick="speak('Mi scusi, quanto costa un cappuccino? Due euro e cinquanta. Ne prendo uno, grazie.')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                    <div class="context">Situazione: Preguntar el precio de un capuchino</div>
                 </div>
             </div>
         </div>
 
-        <div class="category-section">
-            <div class="category-title">
-                <i class="fas fa-store"></i>
-                Al Negozio
-            </div>
-            <div class="dialog-grid">
-                <div class="dialog-card">
-                    <div class="dialog-header">
-                        <div class="dialog-type">Comprare</div>
-                        <button class="audio-icon" onclick="speak('Salve, cerco una maglietta bianca. Che taglia porta? Una medium. Le faccio vedere i modelli che abbiamo.')">
-                            <i class="fas fa-volume-up"></i>
-                        </button>
-                    </div>
-                    <div class="dialog-content">
-                        <div class="italian">
-                            <span class="speaker">Cliente:</span> Salve, cerco una maglietta bianca.<br>
-                            <span class="speaker">Commesso:</span> Che taglia porta?<br>
-                            <span class="speaker">Cliente:</span> Una medium.<br>
-                            <span class="speaker">Commesso:</span> Le faccio vedere i modelli che abbiamo.
-                        </div>
-                        <div class="spanish">
-                            <span class="speaker">Cliente:</span> Hola, busco una camiseta blanca.<br>
-                            <span class="speaker">Vendedor:</span> ¿Qué talla usa?<br>
-                            <span class="speaker">Cliente:</span> Una medium.<br>
-                            <span class="speaker">Vendedor:</span> Le muestro los modelos que tenemos.
-                        </div>
-                    </div>
-                    <div class="context">Situación: Comprando ropa en una tienda</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="category-section">
-            <div class="category-title">
+        <div class="dialog-section">
+            <h2 class="section-title">
                 <i class="fas fa-hotel"></i>
-                All'Hotel
-            </div>
+                In Hotel
+            </h2>
             <div class="dialog-grid">
-                <div class="dialog-card">
-                    <div class="dialog-header">
-                        <div class="dialog-type">Check-in</div>
-                        <button class="audio-icon" onclick="speak('Buonasera, ho una prenotazione a nome Rossi. Un attimo che controllo... Sì, camera doppia per tre notti. Può mostrarmi il suo documento?')">
-                            <i class="fas fa-volume-up"></i>
-                        </button>
-                    </div>
-                    <div class="dialog-content">
-                        <div class="italian">
-                            <span class="speaker">Cliente:</span> Buonasera, ho una prenotazione a nome Rossi.<br>
-                            <span class="speaker">Receptionist:</span> Un attimo che controllo... Sì, camera doppia per tre notti.<br>
-                            <span class="speaker">Receptionist:</span> Può mostrarmi il suo documento?
-                        </div>
-                        <div class="spanish">
-                            <span class="speaker">Cliente:</span> Buenas tardes, tengo una reserva a nombre de Rossi.<br>
-                            <span class="speaker">Recepcionista:</span> Un momento que verifico... Sí, habitación doble por tres noches.<br>
-                            <span class="speaker">Recepcionista:</span> ¿Puede mostrarme su documento?
-                        </div>
-                    </div>
-                    <div class="context">Situación: Haciendo el check-in en un hotel</div>
+                <div class="dialog-item">
+                    <div class="italian">- Buonasera, ho una prenotazione a nome Rossi.</div>
+                    <div class="spanish">- Buenas tardes, tengo una reserva a nombre de Rossi.</div>
+                    <div class="italian">- Un momento, controllo subito... Sì, camera doppia per tre notti?</div>
+                    <div class="spanish">- Un momento, lo verifico enseguida... Sí, ¿habitación doble por tres noches?</div>
+                    <div class="italian">- Esatto, grazie.</div>
+                    <div class="spanish">- Exacto, gracias.</div>
+                    <button class="audio-button" onclick="speak('Buonasera, ho una prenotazione a nome Rossi. Un momento, controllo subito... Sì, camera doppia per tre notti? Esatto, grazie.')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                    <div class="context">Situazione: Check-in in hotel</div>
+                </div>
+
+                <div class="dialog-item">
+                    <div class="italian">- Scusi, la colazione è inclusa?</div>
+                    <div class="spanish">- Disculpe, ¿el desayuno está incluido?</div>
+                    <div class="italian">- Sì, viene servita dalle 7 alle 10 al primo piano.</div>
+                    <div class="spanish">- Sí, se sirve de 7 a 10 en el primer piso.</div>
+                    <div class="italian">- Perfetto, grazie mille.</div>
+                    <div class="spanish">- Perfecto, muchas gracias.</div>
+                    <button class="audio-button" onclick="speak('Scusi, la colazione è inclusa? Sì, viene servita dalle 7 alle 10 al primo piano. Perfetto, grazie mille.')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                    <div class="context">Situazione: Preguntar por el desayuno en el hotel</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dialog-section">
+            <h2 class="section-title">
+                <i class="fas fa-train"></i>
+                Alla Stazione
+            </h2>
+            <div class="dialog-grid">
+                <div class="dialog-item">
+                    <div class="italian">- Mi scusi, da quale binario parte il treno per Roma?</div>
+                    <div class="spanish">- Disculpe, ¿de qué andén sale el tren a Roma?</div>
+                    <div class="italian">- Dal binario 5, parte tra dieci minuti.</div>
+                    <div class="spanish">- Del andén 5, sale en diez minutos.</div>
+                    <div class="italian">- Grazie mille!</div>
+                    <div class="spanish">- ¡Muchas gracias!</div>
+                    <button class="audio-button" onclick="speak('Mi scusi, da quale binario parte il treno per Roma? Dal binario 5, parte tra dieci minuti. Grazie mille!')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                    <div class="context">Situazione: Preguntar por el andén del tren</div>
+                </div>
+
+                <div class="dialog-item">
+                    <div class="italian">- Vorrei un biglietto per Firenze, per favore.</div>
+                    <div class="spanish">- Quisiera un billete para Florencia, por favor.</div>
+                    <div class="italian">- Andata e ritorno?</div>
+                    <div class="spanish">- ¿Ida y vuelta?</div>
+                    <div class="italian">- No, solo andata.</div>
+                    <div class="spanish">- No, solo ida.</div>
+                    <button class="audio-button" onclick="speak('Vorrei un biglietto per Firenze, per favore. Andata e ritorno? No, solo andata.')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                    <div class="context">Situazione: Comprar un billete de tren</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dialog-section">
+            <h2 class="section-title">
+                <i class="fas fa-utensils"></i>
+                Al Ristorante
+            </h2>
+            <div class="dialog-grid">
+                <div class="dialog-item">
+                    <div class="italian">- Buonasera, avete un tavolo per due persone?</div>
+                    <div class="spanish">- Buenas noches, ¿tienen una mesa para dos personas?</div>
+                    <div class="italian">- Sì, certo. Preferite all'interno o in terrazza?</div>
+                    <div class="spanish">- Sí, claro. ¿Prefieren adentro o en la terraza?</div>
+                    <div class="italian">- In terrazza, per favore.</div>
+                    <div class="spanish">- En la terraza, por favor.</div>
+                    <button class="audio-button" onclick="speak('Buonasera, avete un tavolo per due persone? Sì, certo. Preferite all'interno o in terrazza? In terrazza, per favore.')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                    <div class="context">Situazione: Reservar una mesa en un restaurante</div>
+                </div>
+
+                <div class="dialog-item">
+                    <div class="italian">- Che cosa ci consiglia oggi?</div>
+                    <div class="spanish">- ¿Qué nos recomienda hoy?</div>
+                    <div class="italian">- Vi consiglio gli spaghetti alle vongole, sono la nostra specialità.</div>
+                    <div class="spanish">- Les recomiendo los espaguetis con almejas, son nuestra especialidad.</div>
+                    <div class="italian">- Perfetto, ne prendo una porzione.</div>
+                    <div class="spanish">- Perfecto, tomaré una porción.</div>
+                    <button class="audio-button" onclick="speak('Che cosa ci consiglia oggi? Vi consiglio gli spaghetti alle vongole, sono la nostra specialità. Perfetto, ne prendo una porzione.')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                    <div class="context">Situazione: Pedir recomendaciones en el restaurante</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dialog-section">
+            <h2 class="section-title">
+                <i class="fas fa-shopping-bag"></i>
+                Fare Shopping
+            </h2>
+            <div class="dialog-grid">
+                <div class="dialog-item">
+                    <div class="italian">- Scusi, posso provare questa camicia?</div>
+                    <div class="spanish">- Disculpe, ¿puedo probarme esta camisa?</div>
+                    <div class="italian">- Certo, il camerino è in fondo a destra.</div>
+                    <div class="spanish">- Claro, el probador está al fondo a la derecha.</div>
+                    <div class="italian">- Grazie, che taglia è questa?</div>
+                    <div class="spanish">- Gracias, ¿qué talla es esta?</div>
+                    <button class="audio-button" onclick="speak('Scusi, posso provare questa camicia? Certo, il camerino è in fondo a destra. Grazie, che taglia è questa?')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                    <div class="context">Situazione: Probarse ropa en una tienda</div>
+                </div>
+
+                <div class="dialog-item">
+                    <div class="italian">- Avete questi pantaloni in blu?</div>
+                    <div class="spanish">- ¿Tienen estos pantalones en azul?</div>
+                    <div class="italian">- Mi dispiace, in blu sono finiti. Li abbiamo in nero o grigio.</div>
+                    <div class="spanish">- Lo siento, en azul se han agotado. Los tenemos en negro o gris.</div>
+                    <div class="italian">- Va bene, allora li provo in grigio.</div>
+                    <div class="spanish">- Está bien, entonces me los probaré en gris.</div>
+                    <button class="audio-button" onclick="speak('Avete questi pantaloni in blu? Mi dispiace, in blu sono finiti. Li abbiamo in nero o grigio. Va bene, allora li provo in grigio.')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
+                    <div class="context">Situazione: Buscar un color específico en una tienda de ropa</div>
                 </div>
             </div>
         </div>
