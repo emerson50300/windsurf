@@ -42,6 +42,9 @@
             display: flex;
             gap: 1rem;
             overflow-x: auto;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2rem;
         }
 
         nav button {
@@ -54,11 +57,26 @@
             transition: all 0.3s;
             white-space: nowrap;
             border-radius: 4px;
+            font-weight: 500;
+            min-width: 100px;
+            text-align: center;
         }
 
         nav button:hover {
             color: var(--hover-color);
             background-color: rgba(33, 150, 243, 0.1);
+            transform: translateY(-2px);
+        }
+
+        nav button.active {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        nav button.active:hover {
+            background-color: var(--hover-color);
+            transform: translateY(-2px);
         }
 
         .section {
@@ -213,7 +231,7 @@
 </head>
 <body>
     <nav>
-        <button onclick="showSection('home')">Inicio</button>
+        <button class="active" onclick="showSection('home')">Inicio</button>
         <button onclick="window.location.href='dialogos.html'">Diálogos</button>
         <button onclick="showSection('pronouns')">Pronombres</button>
         <button onclick="showSection('alphabet')">Alfabeto</button>
@@ -331,11 +349,31 @@
     <script>
         // Sistema de navegación y audio
         function showSection(sectionId) {
+            // Ocultar todas las secciones
             document.querySelectorAll('.section').forEach(section => {
                 section.classList.remove('active');
             });
-            document.getElementById(sectionId).classList.add('active');
+            
+            // Mostrar la sección seleccionada
+            const selectedSection = document.getElementById(sectionId);
+            if (selectedSection) {
+                selectedSection.classList.add('active');
+                
+                // Actualizar la navegación
+                document.querySelectorAll('nav button').forEach(button => {
+                    if (button.getAttribute('onclick') === `showSection('${sectionId}')`) {
+                        button.classList.add('active');
+                    } else {
+                        button.classList.remove('active');
+                    }
+                });
+            }
         }
+
+        // Inicializar la página mostrando la sección home
+        document.addEventListener('DOMContentLoaded', () => {
+            showSection('home');
+        });
 
         // Sistema de audio
         function speak(text) {
