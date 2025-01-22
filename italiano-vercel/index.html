@@ -215,7 +215,7 @@
     <nav>
         <button onclick="showSection('home')">Inicio</button>
         <button onclick="window.location.href='dialogos.html'">Diálogos</button>
-        <button onclick="window.location.href='pronombres.html'">Pronombres</button>
+        <button onclick="showSection('pronouns')">Pronombres</button>
         <button onclick="showSection('alphabet')">Alfabeto</button>
         <button onclick="showSection('numbers')">Números</button>
         <button onclick="showSection('time')">Hora</button>
@@ -227,20 +227,20 @@
         <div class="container">
             <h1>Aprende Italiano</h1>
             <div class="grid-container">
-                <div class="grid-item" onclick="window.location.href='alfabeto.html'">
-                    <div class="lesson-icon">
-                        <i class="fas fa-font"></i>
-                    </div>
-                    <h2 class="lesson-title">Alfabeto</h2>
-                    <p class="lesson-description">Aprende el alfabeto italiano y su pronunciación</p>
-                </div>
-
-                <div class="grid-item" onclick="window.location.href='pronombres.html'">
+                <div class="grid-item" onclick="showSection('pronouns')">
                     <div class="lesson-icon">
                         <i class="fas fa-user-friends"></i>
                     </div>
                     <h2 class="lesson-title">Pronombres</h2>
                     <p class="lesson-description">Aprende los pronombres personales y más</p>
+                </div>
+
+                <div class="grid-item" onclick="showSection('alphabet')">
+                    <div class="lesson-icon">
+                        <i class="fas fa-font"></i>
+                    </div>
+                    <h2 class="lesson-title">Alfabeto</h2>
+                    <p class="lesson-description">Aprende el alfabeto italiano y su pronunciación</p>
                 </div>
 
                 <div class="grid-item" onclick="window.location.href='numeros.html'">
@@ -249,6 +249,46 @@
                     </div>
                     <h2 class="lesson-title">Números</h2>
                     <p class="lesson-description">Domina los números en italiano</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Pronombres -->
+    <section id="pronouns" class="section">
+        <div class="container">
+            <h1>I Pronomi</h1>
+            <div class="grid-container">
+                <div class="grid-item">
+                    <div class="lesson-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h2 class="lesson-title">Pronombres Personales</h2>
+                    <p class="lesson-description">io, tu, lui/lei, noi, voi, loro</p>
+                </div>
+
+                <div class="grid-item">
+                    <div class="lesson-icon">
+                        <i class="fas fa-hand-point-right"></i>
+                    </div>
+                    <h2 class="lesson-title">Pronombres Posesivos</h2>
+                    <p class="lesson-description">mio/a, tuo/a, suo/a, nostro/a, vostro/a, loro</p>
+                </div>
+
+                <div class="grid-item">
+                    <div class="lesson-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <h2 class="lesson-title">Pronombres Reflexivos</h2>
+                    <p class="lesson-description">mi, ti, si, ci, vi, si</p>
+                </div>
+
+                <div class="grid-item">
+                    <div class="lesson-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h2 class="lesson-title">Pronombres Demostrativos</h2>
+                    <p class="lesson-description">questo/a, quello/a, ciò</p>
                 </div>
             </div>
         </div>
