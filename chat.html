@@ -570,13 +570,32 @@
             // Extraer solo el texto en italiano y limpiar signos de puntuación
             const italianText = extractItalianText(text).replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g, '');
             
+            if (!italianText) {
+                console.log('No se encontró texto en italiano para reproducir');
+                return;
+            }
+
+            // Cancelar cualquier lectura anterior
+            window.speechSynthesis.cancel();
+
             const utterance = new SpeechSynthesisUtterance(italianText);
+            
+            // Configurar la voz en italiano
+            const voices = window.speechSynthesis.getVoices();
+            const italianVoice = voices.find(voice => voice.lang.includes('it'));
+            if (italianVoice) {
+                utterance.voice = italianVoice;
+            }
+
             utterance.lang = 'it-IT';
             utterance.rate = 0.9; // Velocidad un poco más lenta para mejor claridad
             utterance.pitch = 1;
             utterance.volume = 1;
-            window.speechSynthesis.cancel(); // Cancelar cualquier lectura anterior
+
+            // Reproducir el audio
             window.speechSynthesis.speak(utterance);
+            
+            console.log('Reproduciendo texto en italiano:', italianText);
         }
 
         // Función para añadir mensaje al chat
