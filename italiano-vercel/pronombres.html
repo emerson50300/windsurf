@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pronombres en Italiano</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7643993399830665" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Los Pronombres en Italiano</h1>
+            <p>Guía completa de los pronombres italianos</p>
+        </header>
+
+        <nav class="main-nav">
+            <a href="index.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Inicio</span>
+            </a>
+            <a href="alfabeto.html" class="nav-item">
+                <i class="fas fa-font"></i>
+                <span>Alfabeto</span>
+            </a>
+            <a href="dialogos.html" class="nav-item">
+                <i class="fas fa-comments"></i>
+                <span>Diálogos</span>
+            </a>
+        </nav>
+
+        <main>
+            <section id="personales" class="content-section">
+                <h2>Pronombres Personales <button class="listen-btn" onclick="speak(this.parentElement.nextElementSibling.textContent)"><i class="fas fa-volume-up"></i></button></h2>
+                <p>[I pronomi personali sono il primo passo per imparare una lingua] Los pronombres personales son un primer paso para aprender un idioma.</p>
+                <div class="grid-container">
+                    <div class="grid-item">
+                        <h3>Singular</h3>
+                        <ul>
+                            <li>[io] - yo</li>
+                            <li>[tu] - tú</li>
+                            <li>[lui] - él</li>
+                            <li>[lei] - ella</li>
+                        </ul>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Plural</h3>
+                        <ul>
+                            <li>[noi] - nosotros/as</li>
+                            <li>[voi] - vosotros/as</li>
+                            <li>[loro] - ellos/as</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="directo" class="content-section">
+                <h2>Pronombres de Objeto Directo <button class="listen-btn" onclick="speak(this.parentElement.nextElementSibling.textContent)"><i class="fas fa-volume-up"></i></button></h2>
+                <p>[I pronomi diretti si mettono prima del verbo] Los pronombres de objeto directo se colocan antes del verbo.</p>
+                <div class="example-box">
+                    <ul>
+                        <li>[mi vede] - me ve</li>
+                        <li>[ti chiamo] - te llamo</li>
+                        <li>[lo mangio] - lo como</li>
+                        <li>[la guardo] - la miro</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="indirecto" class="content-section">
+                <h2>Pronombres de Objeto Indirecto <button class="listen-btn" onclick="speak(this.parentElement.nextElementSibling.textContent)"><i class="fas fa-volume-up"></i></button></h2>
+                <p>[I pronomi indiretti indicano a chi è diretta l'azione] Los pronombres indirectos indican a quién va dirigida la acción.</p>
+                <div class="example-box">
+                    <ul>
+                        <li>[mi dai il libro] - me das el libro</li>
+                        <li>[ti scrivo una lettera] - te escribo una carta</li>
+                        <li>[gli porto un regalo] - le llevo un regalo (a él)</li>
+                        <li>[le mando un messaggio] - le envío un mensaje (a ella)</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="posesivos" class="content-section">
+                <h2>Pronombres Posesivos <button class="listen-btn" onclick="speak(this.parentElement.nextElementSibling.textContent)"><i class="fas fa-volume-up"></i></button></h2>
+                <p>[I pronomi possessivi indicano il possesso] Los pronombres posesivos indican posesión.</p>
+                <div class="grid-container">
+                    <div class="grid-item">
+                        <h3>Masculino</h3>
+                        <ul>
+                            <li>[il mio] - el mío</li>
+                            <li>[il tuo] - el tuyo</li>
+                            <li>[il suo] - el suyo</li>
+                            <li>[il nostro] - el nuestro</li>
+                        </ul>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Femenino</h3>
+                        <ul>
+                            <li>[la mia] - la mía</li>
+                            <li>[la tua] - la tuya</li>
+                            <li>[la sua] - la suya</li>
+                            <li>[la nostra] - la nuestra</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 ItalianoSencillo.com - Todos los derechos reservados</p>
+        </footer>
+    </div>
+
+    <script>
+        function speak(text) {
+            // Extraer texto en italiano entre corchetes
+            const italianText = text.match(/\[(.*?)\]/);
+            if (italianText && italianText[1]) {
+                const utterance = new SpeechSynthesisUtterance(italianText[1]);
+                utterance.lang = 'it-IT';
+                utterance.rate = 0.9;
+                window.speechSynthesis.cancel();
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+    </script>
+</body>
+</html>

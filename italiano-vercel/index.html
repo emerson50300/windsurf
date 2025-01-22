@@ -193,7 +193,7 @@
     <nav>
         <button onclick="showSection('home')">Inicio</button>
         <button onclick="window.location.href='dialogos.html'">Diálogos</button>
-        <button onclick="window.location.href='../dialogos/pronombres.html'">Pronombres</button>
+        <button onclick="window.location.href='pronombres.html'">Pronombres</button>
         <button onclick="showSection('alphabet')">Alfabeto</button>
         <button onclick="showSection('numbers')">Números</button>
         <button onclick="showSection('time')">Hora</button>
@@ -203,23 +203,18 @@
     <!-- Sección Inicio -->
     <section id="home" class="section active">
         <div class="container">
-            <h1>Aprende Italiano - Curso Básico</h1>
+            <h1>Aprende Italiano</h1>
             <div class="grid-container">
-                <div class="grid-item">
-                    <h3>Alfabeto y Pronunciación</h3>
-                    <p>Aprende el alfabeto italiano y su correcta pronunciación.</p>
+                <div class="grid-item" onclick="window.location.href='alfabeto.html'">
+                    <i class="fas fa-font"></i>
+                    <h3>Alfabeto</h3>
+                    <p>Aprende la pronunciación del alfabeto italiano</p>
                 </div>
-                <div class="grid-item">
-                    <h3>Números</h3>
-                    <p>Domina los números en italiano, desde básicos hasta avanzados.</p>
-                </div>
-                <div class="grid-item">
-                    <h3>La Hora</h3>
-                    <p>Aprende a decir y preguntar la hora en italiano.</p>
-                </div>
-                <div class="grid-item">
-                    <h3>Los Animales</h3>
-                    <p>Vocabulario completo sobre animales en italiano.</p>
+
+                <div class="grid-item" onclick="window.location.href='pronombres.html'">
+                    <i class="fas fa-user-friends"></i>
+                    <h3>Pronombres</h3>
+                    <p>Aprende los pronombres personales y más</p>
                 </div>
             </div>
         </div>
