@@ -554,20 +554,32 @@
 
         // Función para extraer solo el texto en italiano
         function extractItalianText(text) {
-            // Buscar texto entre corchetes
-            const matches = text.match(/\[(.*?)\]/g);
-            if (matches) {
-                // Tomar el texto dentro de los corchetes y limpiarlo
-                return matches
-                    .map(match => match.slice(1, -1).trim())
-                    .join(' ');
-            }
-            return '';
+            // Buscar texto entre corchetes y después de los dos puntos
+            const bracketsMatches = text.match(/\[(.*?)\]/g) || [];
+            const colonMatches = text.match(/:\s*([^.!?\n]*[.!?\n])/g) || [];
+            
+            let italianPhrases = [];
+            
+            // Procesar texto entre corchetes
+            bracketsMatches.forEach(match => {
+                italianPhrases.push(match.slice(1, -1).trim());
+            });
+            
+            // Procesar texto después de los dos puntos
+            colonMatches.forEach(match => {
+                const phrase = match.slice(1).trim();
+                // Solo agregar si parece italiano (contiene palabras comunes en italiano)
+                if (phrase.match(/\b(il|la|le|gli|un|una|sono|è|per|che|non|mi|ti|si|ci|vi)\b/i)) {
+                    italianPhrases.push(phrase);
+                }
+            });
+            
+            return italianPhrases.join('. ');
         }
 
         // Función para leer texto en italiano
         function speakText(text) {
-            // Extraer solo el texto en italiano y limpiar signos de puntuación
+            // Extraer todo el texto en italiano y limpiar signos de puntuación
             const italianText = extractItalianText(text).replace(/[.,\/#!$%\^&\*;:{}=\-_`~()¿?¡!]/g, '');
             
             if (!italianText) {
@@ -578,24 +590,32 @@
             // Cancelar cualquier lectura anterior
             window.speechSynthesis.cancel();
 
-            const utterance = new SpeechSynthesisUtterance(italianText);
+            // Dividir el texto en frases para una mejor reproducción
+            const phrases = italianText.split(/[.!?]+/).filter(phrase => phrase.trim());
             
-            // Configurar la voz en italiano
+            // Configurar las voces
             const voices = window.speechSynthesis.getVoices();
             const italianVoice = voices.find(voice => voice.lang.includes('it'));
-            if (italianVoice) {
-                utterance.voice = italianVoice;
-            }
-
-            utterance.lang = 'it-IT';
-            utterance.rate = 0.9; // Velocidad un poco más lenta para mejor claridad
-            utterance.pitch = 1;
-            utterance.volume = 1;
-
-            // Reproducir el audio
-            window.speechSynthesis.speak(utterance);
             
-            console.log('Reproduciendo texto en italiano:', italianText);
+            // Reproducir cada frase
+            phrases.forEach((phrase, index) => {
+                setTimeout(() => {
+                    const utterance = new SpeechSynthesisUtterance(phrase.trim());
+                    
+                    if (italianVoice) {
+                        utterance.voice = italianVoice;
+                    }
+                    
+                    utterance.lang = 'it-IT';
+                    utterance.rate = 0.9;
+                    utterance.pitch = 1;
+                    utterance.volume = 1;
+                    
+                    window.speechSynthesis.speak(utterance);
+                    
+                    console.log('Reproduciendo frase en italiano:', phrase.trim());
+                }, index * 2000); // Esperar 2 segundos entre cada frase
+            });
         }
 
         // Función para añadir mensaje al chat
