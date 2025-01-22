@@ -26,6 +26,111 @@
     <link rel="stylesheet" href="colors.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --background-white: #ffffff;
+            --primary-color: #4CAF50;
+            --secondary-color: #81C784;
+            --background-color: #F7F9FC;
+            --text-main: #1a1a1a;
+            --text-secondary: #404040;
+            --button-color: #4CAF50;
+            --hover-color: #388E3C;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --border-radius: 15px;
+            --border-light: #e0e0e0;
+        }
+
+        .verbs-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .verb-card {
+            background-color: var(--background-white);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: 0 2px 4px var(--shadow-color);
+            transition: transform 0.3s ease;
+        }
+
+        .verb-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px var(--shadow-color);
+        }
+
+        .verb-title {
+            color: var(--text-main);
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .verb-meaning {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .conjugation-section {
+            margin-top: 1.5rem;
+        }
+
+        .conjugation-title {
+            color: var(--primary-color);
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .conjugation-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .pronoun {
+            color: var(--text-secondary);
+            font-weight: bold;
+        }
+
+        .conjugation {
+            color: var(--text-main);
+        }
+
+        .audio-button {
+            background-color: var(--button-color);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .audio-button:hover {
+            background-color: var(--hover-color);
+            transform: scale(1.05);
+        }
+
+        .audio-button i {
+            font-size: 1.2rem;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -59,7 +164,7 @@
         const verbs = {
             'abbaiare': {
                 meaning: 'ladrar',
-                type: 'irregolare',
+                type: 'regulare',
                 conjugations: {
                     presente: {
                         'io': 'abbaio',
@@ -76,6 +181,22 @@
                         'noi': 'abbiamo abbaiato',
                         'voi': 'avete abbaiato',
                         'loro': 'hanno abbaiato'
+                    },
+                    'imperfetto': {
+                        'io': 'abbaiavo',
+                        'tu': 'abbaiavi',
+                        'lui/lei': 'abbaiava',
+                        'noi': 'abbaiavamo',
+                        'voi': 'abbaiavate',
+                        'loro': 'abbaiavano'
+                    },
+                    'trapassato prossimo': {
+                        'io': 'avevo abbaiato',
+                        'tu': 'avevi abbaiato',
+                        'lui/lei': 'aveva abbaiato',
+                        'noi': 'avevamo abbaiato',
+                        'voi': 'avevate abbaiato',
+                        'loro': 'avevano abbaiato'
                     }
                 }
             },
@@ -98,6 +219,22 @@
                         'noi': 'abbiamo abbandonato',
                         'voi': 'avete abbandonato',
                         'loro': 'hanno abbandonato'
+                    },
+                    'imperfetto': {
+                        'io': 'abbandonavo',
+                        'tu': 'abbandonavi',
+                        'lui/lei': 'abbandonava',
+                        'noi': 'abbandonavamo',
+                        'voi': 'abbandonavate',
+                        'loro': 'abbandonavano'
+                    },
+                    'trapassato prossimo': {
+                        'io': 'avevo abbandonato',
+                        'tu': 'avevi abbandonato',
+                        'lui/lei': 'aveva abbandonato',
+                        'noi': 'avevamo abbandonato',
+                        'voi': 'avevate abbandonato',
+                        'loro': 'avevano abbandonato'
                     }
                 }
             },
@@ -120,6 +257,22 @@
                         'noi': 'abbiamo abbassato',
                         'voi': 'avete abbassato',
                         'loro': 'hanno abbassato'
+                    },
+                    'imperfetto': {
+                        'io': 'abbassavo',
+                        'tu': 'abbassavi',
+                        'lui/lei': 'abbassava',
+                        'noi': 'abbassavamo',
+                        'voi': 'abbassavate',
+                        'loro': 'abbassavano'
+                    },
+                    'trapassato prossimo': {
+                        'io': 'avevo abbassato',
+                        'tu': 'avevi abbassato',
+                        'lui/lei': 'aveva abbassato',
+                        'noi': 'avevamo abbassato',
+                        'voi': 'avevate abbassato',
+                        'loro': 'avevano abbassato'
                     }
                 }
             },
@@ -211,63 +364,84 @@
         }
 
         function showVerb(verb) {
-            const verbInfo = verbs[verb];
-            const modal = document.getElementById('verbModal');
-            const content = document.getElementById('modalContent');
+            const verbData = verbs[verb];
+            const modalContent = document.getElementById('modalContent');
+            
+            let content = `
+                <div class="verb-card">
+                    <div class="verb-title">Coniugazione di: ${verb}</div>
+                    <div class="verb-meaning">${verbData.meaning} - ${verbData.type}</div>
+                    
+                    <div class="conjugation-section">
+                        <div class="conjugation-title">Indicativo</div>
+                        
+                        <div class="conjugation-group">
+                            <h3>Presente</h3>
+                            <div class="conjugation-grid">
+                                ${Object.entries(verbData.conjugations.presente).map(([pronoun, conj]) => `
+                                    <div class="pronoun">${pronoun}</div>
+                                    <div class="conjugation">${conj}</div>
+                                `).join('')}
+                            </div>
+                        </div>
 
-            // Conjugaciones por defecto si no están definidas
-            const defaultConjugations = {
-                presente: {
-                    'io': '(conjugación pendiente)',
-                    'tu': '(conjugación pendiente)',
-                    'lui/lei': '(conjugación pendiente)',
-                    'noi': '(conjugación pendiente)',
-                    'voi': '(conjugación pendiente)',
-                    'loro': '(conjugación pendiente)'
-                },
-                'passato prossimo': {
-                    'io': '(conjugación pendiente)',
-                    'tu': '(conjugación pendiente)',
-                    'lui/lei': '(conjugación pendiente)',
-                    'noi': '(conjugación pendiente)',
-                    'voi': '(conjugación pendiente)',
-                    'loro': '(conjugación pendiente)'
-                }
-            };
+                        <div class="conjugation-group">
+                            <h3>Passato prossimo</h3>
+                            <div class="conjugation-grid">
+                                ${Object.entries(verbData.conjugations['passato prossimo']).map(([pronoun, conj]) => `
+                                    <div class="pronoun">${pronoun}</div>
+                                    <div class="conjugation">${conj}</div>
+                                `).join('')}
+                            </div>
+                        </div>
 
-            const conjugations = verbInfo.conjugations || defaultConjugations;
+                        <div class="conjugation-group">
+                            <h3>Imperfetto</h3>
+                            <div class="conjugation-grid">
+                                ${Object.entries(verbData.conjugations.imperfetto).map(([pronoun, conj]) => `
+                                    <div class="pronoun">${pronoun}</div>
+                                    <div class="conjugation">${conj}</div>
+                                `).join('')}
+                            </div>
+                        </div>
 
-            content.innerHTML = `
-                <div class="verb-header">
-                    <h2 class="verb-title">${verb.toUpperCase()} [${verbInfo.meaning}]</h2>
-                    <button onclick="playAudio('${verb}')" class="audio-button">🔊</button>
+                        <div class="conjugation-group">
+                            <h3>Trapassato prossimo</h3>
+                            <div class="conjugation-grid">
+                                ${Object.entries(verbData.conjugations['trapassato prossimo']).map(([pronoun, conj]) => `
+                                    <div class="pronoun">${pronoun}</div>
+                                    <div class="conjugation">${conj}</div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="audio-button" onclick="playAudio('${verb}')">
+                        <i class="fas fa-volume-up"></i>
+                        Ascolta
+                    </button>
                 </div>
-                <div class="verb-type">Verbo ${verbInfo.type}</div>
-                <h3>INDICATIVO</h3>
-                <table class="conjugation-table">
-                    <tr>
-                        <th>Presente</th>
-                        <th>Audio</th>
-                        <th>Passato Prossimo</th>
-                        <th>Audio</th>
-                    </tr>
-                    ${Object.keys(conjugations.presente).map(pronoun => `
-                        <tr>
-                            <td>${pronoun} ${conjugations.presente[pronoun]}</td>
-                            <td>${conjugations.presente[pronoun] !== '(conjugación pendiente)' ? 
-                                `<button onclick="playAudio('${pronoun} ${conjugations.presente[pronoun]}')" class="audio-button">🔊</button>` : 
-                                ''}</td>
-                            <td>${pronoun} ${conjugations['passato prossimo'][pronoun]}</td>
-                            <td>${conjugations['passato prossimo'][pronoun] !== '(conjugación pendiente)' ? 
-                                `<button onclick="playAudio('${pronoun} ${conjugations['passato prossimo'][pronoun]}')" class="audio-button">🔊</button>` : 
-                                ''}</td>
-                        </tr>
-                    `).join('')}
-                </table>
             `;
-
-            modal.style.display = 'block';
+            
+            modalContent.innerHTML = content;
+            document.getElementById('verbModal').style.display = 'block';
         }
+
+        // Crear botones de verbos
+        const container = document.getElementById('verbsContainer');
+        Object.keys(verbs).forEach(verb => {
+            const card = document.createElement('div');
+            card.className = 'verb-card';
+            card.innerHTML = `
+                <div class="verb-title">${verb}</div>
+                <div class="verb-meaning">${verbs[verb].meaning} - ${verbs[verb].type}</div>
+                <button class="audio-button" onclick="showVerb('${verb}')">
+                    <i class="fas fa-book"></i>
+                    Ver conjugación
+                </button>
+            `;
+            container.appendChild(card);
+        });
 
         // Cerrar modal
         document.querySelector('.close').onclick = function() {
@@ -281,19 +455,6 @@
                 modal.style.display = 'none';
             }
         }
-
-        // Crear botones de verbos
-        const container = document.getElementById('verbsContainer');
-        Object.keys(verbs).forEach(verb => {
-            const button = document.createElement('div');
-            button.className = 'verb-button';
-            button.innerHTML = `
-                ${verb}
-                <button onclick="event.stopPropagation(); playAudio('${verb}')" class="audio-button">🔊</button>
-            `;
-            button.onclick = () => showVerb(verb);
-            container.appendChild(button);
-        });
     </script>
 </body>
 </html>
