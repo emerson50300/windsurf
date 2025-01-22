@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pronombres en Italiano</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a5fb4;
+            --accent-color: #62a0ea;
+            --text-color: #333;
+            --bg-color: #f6f6f6;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        nav {
+            background-color: var(--card-bg);
+            padding: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        nav a {
+            color: var(--primary-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        section {
+            background-color: var(--card-bg);
+            margin: 2rem auto;
+            padding: 2rem;
+            max-width: 800px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .example {
+            background-color: #f0f7ff;
+            padding: 1rem;
+            border-left: 4px solid var(--primary-color);
+            margin: 1rem 0;
+        }
+
+        .italian {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .listen-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0.5rem 0;
+        }
+
+        .listen-btn:hover {
+            background-color: var(--accent-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--primary-color);
+            color: white;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Los Pronombres en Italiano</h1>
+        <p>Guía completa de los pronombres italianos</p>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#personales">Pronombres Personales</a></li>
+            <li><a href="#directo">Objeto Directo</a></li>
+            <li><a href="#indirecto">Objeto Indirecto</a></li>
+            <li><a href="#posesivos">Posesivos</a></li>
+            <li><a href="#reflexivos">Reflexivos</a></li>
+            <li><a href="#demostrativos">Demostrativos</a></li>
+            <li><a href="../index.html">Volver al Inicio</a></li>
+        </ul>
+    </nav>
+    <section id="personales">
+        <h2>Pronombres Personales <button class="listen-btn" onclick="speakText(this.parentElement.nextElementSibling.textContent)"><i class="fas fa-volume-up"></i></button></h2>
+        <p>[I pronomi personali sono il primo passo per imparare una lingua] Los pronombres personales son un primer paso para aprender un idioma.</p>
+        <table>
+            <tr>
+                <th>Pronombre</th>
+                <th>Significado</th>
+                <th>Ejemplo</th>
+            </tr>
+            <tr>
+                <td>io</td>
+                <td>yo</td>
+                <td>[Io sono italiano] - Yo soy italiano</td>
+            </tr>
+            <tr>
+                <td>tu</td>
+                <td>tú</td>
+                <td>[Tu sei spagnolo] - Tú eres español</td>
+            </tr>
+            <tr>
+                <td>lui</td>
+                <td>él</td>
+                <td>[Lui è americano] - Él es americano</td>
+            </tr>
+            <tr>
+                <td>lei</td>
+                <td>ella</td>
+                <td>[Lei è francese] - Ella es francesa</td>
+            </tr>
+            <tr>
+                <td>noi</td>
+                <td>nosotros/as</td>
+                <td>[Noi siamo studenti] - Nosotros somos estudiantes</td>
+            </tr>
+            <tr>
+                <td>voi</td>
+                <td>vosotros/as</td>
+                <td>[Voi siete amici] - Vosotros sois amigos</td>
+            </tr>
+            <tr>
+                <td>loro</td>
+                <td>ellos/as</td>
+                <td>[Loro sono tedeschi] - Ellos son alemanes</td>
+            </tr>
+        </table>
+    </section>
+
+    <section id="directo">
+        <h2>Pronombres de Objeto Directo <button class="listen-btn" onclick="speakText(this.parentElement.nextElementSibling.textContent)"><i class="fas fa-volume-up"></i></button></h2>
+        <p>[I pronomi diretti si mettono prima del verbo] Los pronombres de objeto directo se colocan antes del verbo.</p>
+        <div class="example">
+            <table>
+                <tr>
+                    <th>Pronombre</th>
+                    <th>Ejemplo</th>
+                </tr>
+                <tr>
+                    <td>mi (me)</td>
+                    <td>[Roberto mi aspetta] - Roberto me espera</td>
+                </tr>
+                <tr>
+                    <td>ti (te)</td>
+                    <td>[Maria ti cerca] - María te busca</td>
+                </tr>
+                <tr>
+                    <td>lo (lo)</td>
+                    <td>[Lo vedo ogni giorno] - Lo veo cada día</td>
+                </tr>
+                <tr>
+                    <td>la (la)</td>
+                    <td>[La chiamo domani] - La llamo mañana</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <section id="indirecto">
+        <h2>Pronombres de Objeto Indirecto <button class="listen-btn" onclick="speakText(this.parentElement.nextElementSibling.textContent)"><i class="fas fa-volume-up"></i></button></h2>
+        <p>[I pronomi indiretti indicano a chi è diretta l'azione] Los pronombres de objeto indirecto indican a quién va dirigida la acción.</p>
+        <div class="example">
+            <table>
+                <tr>
+                    <th>Pronombre</th>
+                    <th>Ejemplo</th>
+                </tr>
+                <tr>
+                    <td>mi (me)</td>
+                    <td>[Mi dai il libro?] - ¿Me das el libro?</td>
+                </tr>
+                <tr>
+                    <td>ti (te)</td>
+                    <td>[Ti scrivo una lettera] - Te escribo una carta</td>
+                </tr>
+                <tr>
+                    <td>gli (le)</td>
+                    <td>[Gli porto un regalo] - Le llevo un regalo (a él)</td>
+                </tr>
+                <tr>
+                    <td>le (le)</td>
+                    <td>[Le mando un messaggio] - Le envío un mensaje (a ella)</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <section id="posesivos">
+        <h2>Pronombres Posesivos <button class="listen-btn" onclick="speakText(this.parentElement.nextElementSibling.textContent)"><i class="fas fa-volume-up"></i></button></h2>
+        <p>[I pronomi possessivi indicano il possesso] Los pronombres posesivos indican posesión.</p>
+        <div class="example">
+            <table>
+                <tr>
+                    <th>Pronombre</th>
+                    <th>Ejemplo</th>
+                </tr>
+                <tr>
+                    <td>mio/mia</td>
+                    <td>[Questo libro è mio] - Este libro es mío</td>
+                </tr>
+                <tr>
+                    <td>tuo/tua</td>
+                    <td>[Quella penna è tua] - Ese bolígrafo es tuyo</td>
+                </tr>
+                <tr>
+                    <td>suo/sua</td>
+                    <td>[La macchina è sua] - El coche es suyo</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <section id="reflexivos">
+        <h2>Pronombres Reflexivos <button class="listen-btn" onclick="speakText(this.parentElement.nextElementSibling.textContent)"><i class="fas fa-volume-up"></i></button></h2>
+        <p>[I pronomi riflessivi si usano quando l'azione ricade sul soggetto] Los pronombres reflexivos se usan cuando la acción recae sobre el sujeto.</p>
+        <div class="example">
+            <table>
+                <tr>
+                    <th>Pronombre</th>
+                    <th>Ejemplo</th>
+                </tr>
+                <tr>
+                    <td>mi</td>
+                    <td>[Mi lavo le mani] - Me lavo las manos</td>
+                </tr>
+                <tr>
+                    <td>ti</td>
+                    <td>[Ti vesti per la festa?] - ¿Te vistes para la fiesta?</td>
+                </tr>
+                <tr>
+                    <td>si</td>
+                    <td>[Si guarda allo specchio] - Se mira al espejo</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <section id="demostrativos">
+        <h2>Pronombres Demostrativos <button class="listen-btn" onclick="speakText(this.parentElement.nextElementSibling.textContent)"><i class="fas fa-volume-up"></i></button></h2>
+        <p>[I pronomi dimostrativi indicano la posizione degli oggetti] Los pronombres demostrativos indican la posición de los objetos.</p>
+        <div class="example">
+            <table>
+                <tr>
+                    <th>Pronombre</th>
+                    <th>Ejemplo</th>
+                </tr>
+                <tr>
+                    <td>questo/questa</td>
+                    <td>[Questo è il mio libro] - Este es mi libro</td>
+                </tr>
+                <tr>
+                    <td>quello/quella</td>
+                    <td>[Quella è la mia casa] - Aquella es mi casa</td>
+                </tr>
+                <tr>
+                    <td>ciò</td>
+                    <td>[Ciò che dici è vero] - Lo que dices es verdad</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 ItalianoSencillo.com - Todos los derechos reservados</p>
+    </footer>
+
+    <script>
+        function speakText(text) {
+            // Extraer texto en italiano entre corchetes
+            const italianText = text.match(/\[(.*?)\]/);
+            if (italianText && italianText[1]) {
+                const utterance = new SpeechSynthesisUtterance(italianText[1]);
+                utterance.lang = 'it-IT';
+                utterance.rate = 0.9;
+                window.speechSynthesis.cancel();
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+    </script>
+</body>
+</html>
