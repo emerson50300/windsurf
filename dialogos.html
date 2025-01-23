@@ -53,7 +53,7 @@
 
         .container {
             max-width: 1200px;
-            margin: 0 auto;
+            margin: 40px auto;
             padding: 2rem;
         }
 
@@ -172,6 +172,20 @@
             border-top: 1px solid var(--border-light);
         }
 
+        .ad-banner {
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+            background-color: #f8f9fa;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .ad-banner img {
+            max-width: 100%;
+            height: auto;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
@@ -192,6 +206,12 @@
     </style>
 </head>
 <body>
+    <!-- Banner de anuncios -->
+    <div class="ad-banner">
+        <a href="" rel="nofollow">
+            <img alt="banner" src="https://landings-cdn.adsterratech.com/referralBanners/png/80%20x%2030%20px.png" />
+        </a>
+    </div>
     <div class="container">
         <header>
             <h1>Dialoghi in Italiano</h1>
