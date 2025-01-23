@@ -6,6 +6,12 @@
   to = "/index.html"
   status = 200
 
+[[redirects]]
+  from = "/ads.txt"
+  to = "/ads.txt"
+  status = 200
+  force = true
+
 [build.processing]
   skip_processing = false
 [build.processing.html]
@@ -16,3 +22,10 @@
   minify = true
 [build.processing.images]
   compress = true
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Content-Security-Policy = "upgrade-insecure-requests"
+    X-Frame-Options = "SAMEORIGIN"

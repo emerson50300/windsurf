@@ -1,0 +1,4 @@
+/*
+  Content-Security-Policy: upgrade-insecure-requests
+  Access-Control-Allow-Origin: *
+  X-Frame-Options: SAMEORIGIN
