@@ -1,0 +1,21 @@
+# Archivos de configuración con información sensible
+config.js
+
+# Dependencias
+node_modules/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de entorno
+.env
+.env.local
+.env.*.local
+
+# Archivos de log
+*.log
+
+# Directorios de build
+/dist
+/build
